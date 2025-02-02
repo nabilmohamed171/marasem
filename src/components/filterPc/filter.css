@@ -1,0 +1,66 @@
+.dropdown-filter {
+  padding: 25px 0 20px;
+  color: #fff;
+  text-align: center;
+  border-bottom: 1px solid #333;
+  z-index: 9999;
+}
+
+.dropdown-filter .dropdown-toggle::after {
+  float: right;
+  color: #c7c7c7;
+  margin-top: 8px;
+}
+
+.dropdown-filter .best-seller .dropdown-toggle::after {
+  float: none !important;
+}
+
+.dropdown-filter h2 {
+  font-size: 32px;
+}
+
+.dropdown-filter .dropdown .btn {
+  background: #1a1a1a !important;
+  border: 2px solid transparent;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 7px 15px;
+  color: #7f7f7f;
+  text-align: left;
+  transition: all 0.3s ease-in-out;
+  font-weight: 300;
+}
+
+.dropdown-filter .dropdown .btn:focus {
+  border: 2px solid var(--main-color);
+}
+
+.dropdown-filter .dropdown-menu {
+  min-width: 17rem;
+  background: #1a1a1a;
+  border-radius: 10px;
+}
+
+.dropdown-filter .dropdown-item {
+  color: #fff;
+}
+
+.dropdown-filter .dropdown-item:hover {
+  color: #222;
+}
+
+.dropdown-filter .clear-all {
+  background: transparent;
+  color: #7f7f7f;
+  border: none;
+  font-size: 15px;
+  padding: 8px 0;
+}
+
+.dropdown-filter .best-seller {
+  background: transparent !important;
+  color: #fff !important;
+  border: none !important;
+}

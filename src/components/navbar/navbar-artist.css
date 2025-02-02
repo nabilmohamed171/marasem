@@ -1,0 +1,288 @@
+.navbar .nav-artist {
+  margin: 0 10px;
+  display: inline-block;
+  position: relative;
+}
+
+.navbar .nav-artist .photo-artist {
+  width: 45px;
+  height: 45px;
+  display: inline-block;
+}
+
+.navbar .nav-artist .photo-artist-img {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;
+}
+
+.navbar .nav-artist .photo-artist-img img {
+  width: 100%;
+  height: 100%;
+}
+
+.navbar .nav-artist span {
+  color: #f1ad56;
+  padding: 0;
+  font-size: 14px;
+}
+
+.navbar .nav-artist .dropdown button {
+  color: #fff;
+  padding: 0;
+  font-size: 14px !important;
+}
+
+.navbar .nav-hr {
+  width: 2px;
+  height: 24px;
+  background-color: #4c4c4c;
+  margin: 0 10px;
+  border: 1px solid #4c4c4c;
+}
+
+.artist-menu-mobile {
+  display: none;
+}
+
+@media (max-width: 576px) {
+  .navbar-nav,
+  .nav-search,
+  .nav-login,
+  .nav-hr,
+  .nav-artist,
+  .nav-notification,
+  .nav-cart,
+  .nav-artist .photo-artist {
+    display: none !important;
+  }
+
+  .artist-menu-mobile {
+    display: block;
+    height: 100vh;
+  }
+
+  .artist-menu-mobile .box-menu .box-search .form-search {
+    position: relative;
+  }
+
+  .artist-menu-mobile .box-menu .box-search .form-search .search-icon-mobile {
+    position: absolute;
+    top: 25px;
+    font-size: 25px;
+    color: #fff;
+    left: 20px;
+  }
+
+  .artist-menu-mobile .box-menu .box-search input {
+    margin-top: 20px;
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 20px;
+    border-radius: 30px;
+    border: 1px solid #141414;
+    background: #141414;
+    text-indent: 40px;
+    color: #fff;
+  }
+
+  .artist-menu-mobile .box-menu .box-profile {
+    background: #141414;
+    padding: 30px 30px 30px;
+    margin-bottom: 45px;
+    border-radius: 20px;
+    color: #fff;
+    position: relative;
+  }
+
+  .artist-menu-mobile .box-menu .box-collection,
+  .artist-menu-mobile .box-menu .box-orders {
+    background: #141414;
+    padding: 10px 30px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+    color: #fff;
+    position: relative;
+  }
+
+  .artist-menu-mobile .box-menu .box-collection .arrow-icon-1,
+  .artist-menu-mobile .box-menu .box-collection .arrow-icon-2,
+  .artist-menu-mobile .box-menu .box-collection .arrow-icon-3 {
+    position: absolute;
+    right: 25px;
+    font-size: 20px;
+    top: 25px;
+  }
+
+  .artist-menu-mobile .box-menu .box-collection .arrow-icon-2 {
+    top: 65px;
+  }
+
+  .artist-menu-mobile .box-menu .box-collection .arrow-icon-3 {
+    top: 105px;
+  }
+
+  .artist-menu-mobile .box-menu .box-orders .addresses-icon,
+  .artist-menu-mobile .box-menu .box-orders .order-icon,
+  .artist-menu-mobile .box-menu .box-orders .credit-icon {
+    position: absolute;
+    right: 28px;
+    font-size: 20px;
+    top: 20px;
+  }
+
+  .artist-menu-mobile .box-menu .box-orders .order-icon {
+    top: 65px;
+  }
+
+  .artist-menu-mobile .box-menu .box-orders .credit-icon {
+    top: 105px;
+  }
+
+  .artist-menu-mobile .box-menu .box-list-profile,
+  .artist-menu-mobile .box-menu .box-list-collection,
+  .artist-menu-mobile .box-menu .box-list-orders {
+    margin-top: 20px;
+  }
+
+  .artist-menu-mobile .box-menu .box-list-profile ul li,
+  .artist-menu-mobile .box-menu .box-list-collection ul li,
+  .artist-menu-mobile .box-menu .box-list-orders ul li {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #3d3d3d;
+  }
+
+  .artist-menu-mobile .box-menu .box-list-profile ul li {
+    position: relative;
+  }
+
+  .artist-menu-mobile .box-menu .cart-icon-mobile,
+  .artist-menu-mobile .box-menu .favorites-icon-mobile,
+  .artist-menu-mobile .box-menu .notification-icon-mobile {
+    position: absolute;
+    right: 0;
+    top: -10px;
+    font-size: 20px;
+  }
+
+  .artist-menu-mobile .box-menu .cart-icon-mobile {
+    font-size: 30px;
+  }
+
+  .artist-menu-mobile .box-menu .notification-icon-mobile {
+    font-size: 25px;
+  }
+
+  .artist-menu-mobile .box-menu .cart-number-mobile,
+  .artist-menu-mobile .box-menu .favorites-number-mobile,
+  .artist-menu-mobile .box-menu .notification-number-mobile {
+    position: absolute;
+    top: 22px;
+    font-size: 12px;
+    right: -3px;
+    background: #f3ae4d;
+    width: 15px;
+    height: 15px;
+    line-height: 17px;
+    text-align: center;
+    border-radius: 50%;
+    color: #222;
+  }
+
+  .artist-menu-mobile .box-menu .cart-number-mobile {
+    background-color: red;
+    color: #fff;
+  }
+
+  .artist-menu-mobile .box-menu .favorites-number-mobile {
+    top: 15px;
+    right: -5px;
+    background-color: red;
+    color: #fff;
+  }
+
+  .artist-menu-mobile .box-menu .notification-number-mobile {
+    top: 8px;
+    right: -3px;
+  }
+
+  .artist-menu-mobile .box-menu .box-list-profile ul li:last-child,
+  .artist-menu-mobile .box-menu .box-list-collection ul li:last-child,
+  .artist-menu-mobile .box-menu .box-list-orders ul li:last-child {
+    border-bottom: none;
+  }
+
+  .artist-menu-mobile .box-menu .box-list-profile ul li a,
+  .artist-menu-mobile .box-menu .box-list-collection ul li a,
+  .artist-menu-mobile .box-menu .box-list-orders ul li a {
+    font-size: 14px;
+    text-decoration: none;
+    color: #fff;
+    padding: 0px 0 10px 0;
+    display: block;
+  }
+
+  .artist-menu-mobile .box-menu .box-button-profile {
+    padding: 15px 20px;
+    background: #f3ae4d;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 0;
+    border-radius: 40px;
+    left: 25%;
+    bottom: -20px;
+  }
+
+  .artist-menu-mobile .box-menu .box-button-profile a {
+    color: #222;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .artist-menu-mobile .box-menu .box-button-logout a {
+    padding: 12px;
+    width: 100%;
+    text-align: center;
+    display: block;
+    border: 1px solid #fff;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+  }
+
+  .artist-menu-mobile .box-menu .profile-name {
+    margin-top: 7px;
+    margin-left: 15px;
+  }
+
+  .artist-menu-mobile .box-menu .profile-name span {
+    color: #777;
+  }
+
+  .artist-menu-mobile .box-menu .arrow-icon {
+    position: absolute;
+    right: 25px;
+    font-size: 20px;
+    top: 35px;
+  }
+
+  .artist-menu-mobile .box-menu .map-icon {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 1400px) {
+}

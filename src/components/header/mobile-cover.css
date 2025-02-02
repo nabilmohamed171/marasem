@@ -1,0 +1,87 @@
+.main-mobile-cover .first-image .img-fluid {
+  height: 495px;
+  width: 100%;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.main-mobile-cover .sec-image .img-fluid,
+.main-mobile-cover .thr-image .img-fluid {
+  height: 237.5px;
+  margin-bottom: 20px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.main-mobile-cover .fou-image .img-fluid,
+.main-mobile-cover .fiv-image .img-fluid,
+.main-mobile-cover .six-image .img-fluid {
+  height: 150px;
+  margin-bottom: 20px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.main-mobile-cover .first-image,
+.main-mobile-cover .thr-image,
+.main-mobile-cover .fou-image,
+.main-mobile-cover .fiv-image,
+.main-mobile-cover .six-image {
+  position: relative;
+}
+
+.main-mobile-cover .fou-image,
+.main-mobile-cover .fiv-image,
+.main-mobile-cover .six-image {
+  height: 150px;
+}
+
+.main-mobile-cover .fou-image img,
+.main-mobile-cover .fiv-image img,
+.main-mobile-cover .six-image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.main-mobile-cover .first-image .full-info {
+  position: absolute;
+  bottom: 100px;
+  left: 30px;
+  font-size: 20px;
+}
+
+.main-mobile-cover .large-info {
+  position: absolute;
+  bottom: 100px;
+  left: 50px;
+  color: #fff;
+}
+
+.main-mobile-cover .x-small-info {
+  position: absolute;
+  bottom: 5px;
+  left: 30px;
+}
+
+.main-mobile-cover .x-small-info h2 {
+  font-weight: normal;
+}
+
+@media (max-width: 575.98px) {
+  .main-mobile-cover {
+    display: block !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+@media (max-width: 1399.98px) {
+}

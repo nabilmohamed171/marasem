@@ -1,0 +1,252 @@
+.slider-tags {
+  margin: 20px 0;
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+.slider-tags span {
+  color: var(--text-color);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.slider-wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.slider-content {
+  display: flex;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  transition: transform 0.3s ease-in-out;
+  white-space: nowrap;
+}
+
+.slider-content .tags {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #161616;
+  border: 1px solid var(--sec-main-color);
+  border-radius: 5px;
+  padding: 7px 19px;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  color: var(--text-color);
+  margin-right: 10px;
+  font-size: 13px;
+}
+
+.slider-content .tags.active {
+  background-color: var(--main-color);
+  color: var(--sec-main-color);
+  border-color: var(--main-color);
+}
+
+.icon-x-tags {
+  position: absolute;
+  top: 2px;
+  right: -15px;
+  display: none;
+  cursor: pointer;
+  color: var(--text-color);
+  background: #161616;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  border-radius: 30px;
+  font-size: 12px !important;
+}
+
+.tags.active .icon-x-tags {
+  display: inline-block;
+}
+
+.slider-scroll {
+  position: absolute;
+  top: 50%;
+  right: -100px;
+  transform: translateY(-50%);
+  background-color: var(--text-color);
+  color: var(--background-input);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 23px;
+}
+
+.images-items-collections {
+  padding: 0 0 50px 0;
+}
+
+.images-items-collections .items-collections-image,
+.images-items-collections .items-collections-image.magic {
+  height: 390px !important;
+}
+
+.images-items-collections .items-collections-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.image-card {
+  position: relative;
+}
+
+.image-card .overley {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.image-card .overley:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.images-items-collections h2 {
+  color: #fff;
+  padding: 10px 0 5px;
+  font-size: 16px;
+}
+
+.images-items-collections p {
+  color: #ebebf599;
+  font-size: 14px;
+  width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 0 10px 0;
+}
+
+.images-items-collections h3 {
+  color: #fff;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.image-card .overley-info .heart {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 22px;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.image-card .overley-info .cart-shopping {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 23px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #f1ad56 !important;
+}
+
+.image-card .overley-info .plus {
+  position: absolute;
+  left: 34px;
+  top: 28px;
+  font-size: 12px;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  line-height: 11px;
+  text-align: center;
+  color: #333 !important;
+  background-color: #f1ad56 !important;
+}
+
+.image-card .overley-info .user-art {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+}
+
+.image-card .overley-info .user-art span {
+  color: #fff;
+  font-size: 14px;
+  margin-left: 10px;
+  text-transform: capitalize;
+}
+
+.image-card .overley-info .user-image {
+  width: 50px;
+  height: 50px;
+  margin-left: 15px;
+  display: inline-block;
+}
+
+.image-card .overley-info .user-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.overley-info {
+  opacity: 0;
+}
+
+.image-card:hover .overley-info {
+  opacity: 1;
+}
+
+@media (max-width: 575.98px) {
+  .images-items-collections .items-collections-image,
+  .images-items-collections .items-collections-image.magic {
+    height: 280px !important;
+  }
+
+  .slider-tags span {
+    margin-bottom: 0 !important;
+    font-size: 12px !important;
+    font-weight: 300 !important;
+  }
+
+  .images-items-collections p {
+    width: 180px;
+  }
+}
+
+@media (max-width: 767.98px) {
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+@media (max-width: 1399.98px) {
+}

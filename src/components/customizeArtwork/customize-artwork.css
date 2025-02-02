@@ -1,0 +1,233 @@
+.customize-artwork {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  color: #fff;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 99999;
+}
+
+.customize-artwork span.close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 25px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.artwork {
+  width: 60%;
+  margin: 120px auto;
+  background-color: #000;
+  padding: 70px 20px 20px;
+  position: relative;
+  border-radius: 20px;
+}
+
+.customize-image {
+  background-color: #1a1a1a;
+  text-align: center;
+  height: 390px;
+  padding: 80px 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.user-name {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 30px;
+}
+
+.user-name img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user .name {
+  font-size: 16px;
+}
+
+.user .address {
+  position: relative;
+  left: -111px;
+  top: 17px;
+  color: #777;
+}
+
+.main-image-container {
+  width: 118px;
+  height: 110px;
+  margin: 0 auto 30px;
+}
+
+.main-image-container img {
+  width: 100%;
+  height: 100%;
+}
+
+.main-image-container p.first {
+  font-size: 16px;
+}
+
+.main-image-container p.sec {
+  font-size: 14px;
+}
+
+.main-image-upload img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}
+
+.iamge-1,
+.iamge-2,
+.iamge-3 {
+  background: #1a1a1a;
+  text-align: center;
+  height: 60px;
+  border-radius: 10px;
+  font-size: 25px;
+  line-height: 60px;
+  color: #777;
+}
+
+.iamge-1 img,
+.iamge-2 img,
+.iamge-3 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+input[type="file"] {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 0;
+}
+
+.user-info h2 {
+  font-size: 27px;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 13px;
+}
+
+input[type="text"],
+textarea {
+  background: #1a1a1a !important;
+  border: 1px solid #1a1a1a !important;
+  padding: 10px !important;
+  color: #eee !important;
+  margin-bottom: 15px !important;
+  border-radius: 10px !important;
+  outline: none !important;
+}
+
+.desc {
+  height: 95px !important;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  background: #1a1a1a !important;
+  border: 1px solid #1a1a1a !important;
+  color: #fff !important;
+}
+
+.button-send-request {
+  float: right;
+}
+
+.button-send-request button {
+  padding: 10px 30px;
+  background-color: #f1ad56 !important;
+  color: #333 !important;
+  margin-top: 50px !important;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+@media (max-width: 575.98px) {
+  .artwork {
+    width: 100%;
+    margin: 50px auto;
+    border-radius: 45px 45px 0 0;
+    padding: 50px 20px 20px !important;
+  }
+
+  .user-info h2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  .user {
+    margin-bottom: 25px;
+  }
+
+  .button-send-request button {
+    width: 100%;
+  }
+
+  .customize-image {
+    height: 300px;
+  }
+
+  .main-image-container {
+    width: 95px;
+  }
+
+  .customize-image {
+    padding: 55px 20px;
+  }
+
+  .user {
+    margin-bottom: 0px;
+  }
+
+  input[type="text"],
+  textarea {
+    margin-bottom: 0px !important;
+  }
+
+  .button-send-request button {
+    margin-top: 0 !important;
+  }
+
+  .customize-artwork span.close {
+    top: 0px !important;
+    right: 23px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+@media (max-width: 1399.98px) {
+}

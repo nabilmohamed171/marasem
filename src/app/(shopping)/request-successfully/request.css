@@ -1,0 +1,57 @@
+.request {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 100px);
+  text-align: left;
+  color: #fff;
+}
+
+.request-image {
+  text-align: center;
+  font-size: 100px;
+  color: #f1ad56;
+  text-align: right;
+  margin: 0 auto;
+  position: relative;
+  top: -55px;
+}
+
+.request h2 {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.request p {
+  color: #777;
+  font-size: 20px;
+}
+
+@media (max-width: 575.98px) {
+  .request {
+    text-align: center;
+  }
+
+  .request-image {
+    text-align: center;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .request {
+    text-align: center;
+  }
+
+  .request-image {
+    text-align: center;
+  }
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+@media (max-width: 1399.98px) {
+}

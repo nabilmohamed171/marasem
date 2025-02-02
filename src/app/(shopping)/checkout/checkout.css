@@ -1,0 +1,348 @@
+.item-number {
+  padding: 20px 0;
+}
+
+.item-number span:first-child {
+  color: #fff;
+  font-size: 30px;
+  margin-right: 15px;
+  display: inline-block;
+}
+
+.item-number span:last-child {
+  font-size: 20px;
+  color: #fff;
+}
+
+.shipping-address {
+  position: relative;
+}
+
+.shipping-address .change-address {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  background-color: #1a1a1a;
+  border-radius: 3px;
+  border: 1px solid #1a1a1a;
+  color: #f1ad56;
+  padding: 5px 15px;
+  font-size: 15px;
+  display: block;
+}
+
+.check-number-phone-checkout {
+  background-color: #f1ad56;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  color: #333;
+  margin-left: 10px;
+}
+
+.address-info-checkout {
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 15px;
+  display: none;
+}
+
+.address-info-checkout .username {
+  color: #fff;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.address-info-checkout .full-address {
+  color: #777;
+  width: 60%;
+  line-height: 1.6;
+  margin: 0 0 10px 0;
+}
+
+.address-info-checkout .phone-number {
+  color: #fff;
+  margin: 0;
+  display: inline-block;
+}
+
+.shipping-address,
+.your-marasem-credit,
+.payment-method {
+  border-radius: 10px;
+  border: 5px solid #1a1a1a;
+  margin-bottom: 20px;
+}
+
+.shipping-address h2,
+.your-marasem-credit h2,
+.payment-method h2 {
+  background-color: #1a1a1a;
+  color: #777;
+  margin: 0;
+  padding: 10px;
+  font-size: 17px;
+}
+
+.address {
+  display: block;
+  text-align: center;
+}
+
+.address button {
+  margin: 0 auto;
+  color: #fff;
+  padding: 0;
+  line-height: 100px;
+  height: 100px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.credit {
+  margin: 0;
+  color: #fff;
+  padding: 0;
+  line-height: 50px;
+  height: 50px;
+}
+
+.payment-method .card,
+.payment-method .valu,
+.payment-method .cash {
+  background: transparent;
+  padding: 20px;
+  font-size: 15px;
+  color: #fff;
+  border-bottom: 5px solid #1a1a1a;
+}
+
+.payment-method .cash {
+  border-bottom: 1px solid #1a1a1a;
+  padding: 20px;
+}
+
+input[type="checkbox"] {
+  padding: 10px;
+  margin-right: 15px !important;
+}
+
+.payment-method .form-check-input {
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
+  margin-top: 2px;
+  border: 2px solid #f1ad56;
+}
+
+input [type="radio"] {
+  padding: 10px;
+  background: transparent;
+  margin: 14px 12px 0 5px !important;
+  color: #fff;
+  margin-top: -1px;
+}
+
+.credit label {
+  font-size: 14px !important;
+}
+
+.credit span {
+  font-size: 14px !important;
+}
+
+.balance {
+  text-align: right;
+  padding: 0 30px;
+}
+
+.credit .your-balance {
+  margin-right: 10px;
+  color: #777;
+}
+
+.credit .your-balance-number {
+  color: #f1ad56;
+}
+
+.order-summary {
+  border: 5px solid #1a1a1a;
+  border-radius: 10px;
+  margin-top: 0 !important;
+}
+
+.order-summary h2 {
+  padding: 10px;
+  margin: 0;
+  background-color: #1a1a1a;
+  color: #777;
+  font-size: 18px;
+}
+
+.order-summary p {
+  padding: 0 10px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.subtotal,
+.promocode,
+.total-price {
+  margin-top: 10px;
+  color: #777 !important;
+}
+
+.price-all-items,
+.price-promocode,
+.total-price-number {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.total-price,
+.total-price-number {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.order-summary-button {
+  background-color: #1a1a1a;
+  padding-top: 5px;
+}
+
+.order-summary-button a {
+  width: 100%;
+  border: 1px solid #f1ad56;
+  border-radius: 5px;
+  background-color: #f1ad56;
+  color: #333;
+  padding: 10px;
+  font-weight: 500;
+  font-size: 16px;
+  width: 100%;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.default-address {
+  position: relative;
+  top: 10px;
+}
+
+.payment-right {
+  float: right;
+}
+
+.balance-credit {
+  position: relative;
+  top: 9px !important;
+  margin: 4px 0px 0 0 !important;
+}
+
+@media (max-width: 575.98px) {
+  .address-info-checkout {
+    border-radius: 27px;
+    padding: 30px 20px;
+    background-color: #1a1a1a;
+  }
+
+  .shipping-address h2,
+  .your-marasem-credit h2,
+  .payment-method h2,
+  .order-summary h2 {
+    background-color: transparent;
+    color: #777;
+  }
+
+  .shipping-address,
+  .your-marasem-credit,
+  .payment-method {
+    border: none;
+  }
+
+  .address {
+    background: #1a1a1a;
+    border-radius: 25px;
+  }
+
+  .credit {
+    background: #1a1a1a;
+    border-radius: 25px;
+    padding: 30px 0 80px 0;
+  }
+
+  .payment-method .card,
+  .payment-method .valu,
+  .payment-method .cash {
+    border-bottom: 2px solid #373737;
+    background: #1a1a1a;
+  }
+
+  .payment-method .card {
+    border-radius: 27px 27px 0 0;
+  }
+
+  .payment-method .cash {
+    border-radius: 0 0 27px 27px;
+    border-bottom: none;
+  }
+
+  .payment-right {
+    width: 45px;
+    height: auto;
+  }
+
+  .payment-right img {
+    margin-right: 10px;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  hr {
+    color: #333;
+  }
+
+  .order-summary {
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 27px;
+  }
+
+  .map-home-mobile {
+    display: none;
+    margin-bottom: 10px;
+  }
+
+  .map-home {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #000;
+    text-align: center;
+    margin-right: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+}
+
+@media (max-width: 767.98px) {
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+@media (max-width: 1399.98px) {
+}

@@ -1,0 +1,234 @@
+
+
+var owl = $('#slider_1');
+owl.owlCarousel({
+    items:4, 
+  // items change number for slider display on desktop
+  
+    loop:true,
+    margin:0,
+  navigation: true,
+    autoplay: true,
+    smartSpeed: 800,
+    rtl:true,
+    nav: true,
+    navElement: "dots",
+    navText:[`<i class="fa-solid fa-chevron-right"></i>` , `<i class="fa-solid fa-chevron-left"></i>`],
+    paginationSpeed : 800,
+    dots: false,  
+    dotsEach:true,
+    responsive:{
+        0:{
+            items: 1,
+        },
+        600:{
+            items: 1,
+        },
+        1100:{
+            items: 1,
+        },
+        1200:{
+            items:1
+        }
+    }
+});
+
+
+
+var owl = $('#slider_88522');
+owl.owlCarousel({
+    items:4, 
+  // items change number for slider display on desktop
+  
+    loop:true,
+    margin:0,
+  navigation: true,
+    autoplay: true,
+    smartSpeed: 800,
+    rtl:true,
+    nav: true,
+    navElement: "dots",
+    navText:[`<i class="fa-solid fa-chevron-right"></i>` , `<i class="fa-solid fa-chevron-left"></i>`],
+    paginationSpeed : 800,
+    dots: false,  
+    dotsEach:true,
+    responsive:{
+        0:{
+            items: 1,
+        },
+        600:{
+            items: 1,
+        },
+        1100:{
+            items: 1,
+        },
+        1200:{
+            items:1
+        }
+    }
+});
+
+
+var owl = $('#slider_2');
+owl.owlCarousel({
+    items:4, 
+  // items change number for slider display on desktop
+  
+    loop:true,
+    margin:0,
+  navigation: true,
+    autoplay: true,
+    smartSpeed: 800,
+    rtl:true,
+    nav: true,
+    navElement: "dots",
+    navText:[`<i class="fa-solid fa-chevron-right"></i>` , `<i class="fa-solid fa-chevron-left"></i>`],
+    paginationSpeed : 800,
+    dots: false,  
+    dotsEach:true,
+    responsive:{
+        0:{
+            items: 1,
+        },
+        600:{
+            items: 2,
+        },
+        1100:{
+            items: 3,
+        },
+        1200:{
+            items:6
+        }
+    }
+});
+
+var owl = $('#slider_3');
+owl.owlCarousel({
+    items:4, 
+  // items change number for slider display on desktop
+  
+    loop:true,
+    margin:10,
+    navigation: true,
+    autoplay: true,
+    smartSpeed: 800,
+    rtl:true,
+    nav: true,
+    navElement: "dots",
+    navText:[`<i class="fa-solid fa-chevron-right"></i>` , `<i class="fa-solid fa-chevron-left"></i>`],
+    paginationSpeed : 800,
+    dots: false,  
+    dotsEach:true,
+    responsive:{
+        0:{
+            items: 1,
+        },
+        600:{
+            items: 2,
+        },
+        1100:{
+            items: 3,
+        },
+        1200:{
+            items:9
+        }
+    }
+});
+
+var owl = $('#slider_5');
+owl.owlCarousel({
+    items:4, 
+  // items change number for slider display on desktop
+  
+    loop:true,
+    margin:10,
+  navigation: true,
+    autoplay: true,
+    smartSpeed: 800,
+    rtl:true,
+    nav: true,
+    navElement: "dots",
+    navText:[`<i class="fa-solid fa-chevron-right"></i>` , `<i class="fa-solid fa-chevron-left"></i>`],
+    paginationSpeed : 800,
+    dots: false,  
+    dotsEach:true,
+    responsive:{
+        0:{
+            items: 1,
+        },
+        600:{
+            items:2,
+        },
+        1380:{
+        items: 4,
+        },
+        1380:{
+            items: 5,
+        },
+        1200:{
+            items:6
+        }
+    }
+});
+
+
+
+////////////////
+function fucas(){
+document.getElementById("search_bar").focus();
+}
+
+
+
+document.getElementById("search_bar").addEventListener("input", function() {
+    var input = document.getElementById("search_bar");
+    var element = document.getElementById("product_in_search");
+
+    if (this.value.trim() !== '') {
+        element.style.display = "block"  ;
+    } else {
+        element.style.display = "none " ;
+    }
+});
+
+function show() {
+    let drop_links = document.getElementById("drop_links")
+    drop_links.classList.add("show_drop_links")
+}
+function UnShow() {
+    let drop_links = document.getElementById("drop_links")
+    drop_links.classList.remove("show_drop_links")
+}
+/////////////////////
+let dark = document.querySelector("#darkMode");
+let darkIcon = document.querySelector("#moon_icon");
+
+dark.addEventListener("click", function () {
+    document.body.classList.toggle("dark_mode");
+    if (document.body.classList.contains("dark_mode")) {
+        darkIcon.src = "img/moon.png";
+        darkIcon.classList.add("sun_icon");
+    } else {
+        darkIcon.src = "img/sun.png";
+    }
+    
+})
+// ////////////////////////////////////
+
+function showArtist_2() {
+    let artist_rig_2 = document.getElementById("artist_rig_2")
+    let artist_rig_1 = document.getElementById("artist_rig_1")
+    artist_rig_2.classList.toggle("d-block")
+    artist_rig_1.classList.toggle("d-none")
+}
+
+
+function showArtist_3() {
+    let artist_rig_2 = document.getElementById("artist_rig_2")
+    let artist_rig_3 = document.getElementById("artist_rig_3")
+    artist_rig_3.classList.toggle("d-block")
+    artist_rig_2.classList.toggle("d-none")
+}
+
+
+

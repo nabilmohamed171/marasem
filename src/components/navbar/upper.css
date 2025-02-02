@@ -1,0 +1,25 @@
+.upper-nav {
+  background: var(--upper-navbar);
+  color: var(--text-color)
+}
+
+.upper-nav .dropdown-toggle {
+  background: transparent;
+  border: none;
+  box-shadow: none
+}
+
+.upper-nav .dropdown-menu.show {
+  padding: 0;
+}
+
+.upper-nav .upper-nav-link {
+  text-align: right;
+  line-height: 27px;
+}
+
+.upper-nav .upper-nav-link a {
+  text-align: right;
+  color: var(--text-color);
+  text-decoration: none
+}

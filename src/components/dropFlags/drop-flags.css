@@ -1,0 +1,71 @@
+.phone-input-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.phone-input-container .dropdown-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.phone-input-container .dropdown-toggle {
+  padding: 8px;
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 2px;
+  color: #333;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.phone-input-container .flag-icon {
+  margin-right: 8px;
+}
+
+.phone-input-container .dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #777;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1;
+  width: 45%;
+}
+
+.phone-input-container .dropdown-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #1a1a1a !important;
+  font-weight: 500;
+}
+
+.phone-input-container .dropdown-item:hover {
+  background-color: #f0f0f0 !important;
+}
+
+.phone-input-container .phone-input {
+  margin-top: 0;
+  padding: 10px;
+  border: 1px solid #1a1a1a;
+  border-radius: 10px;
+  width: 100%;
+  background: #1a1a1a;
+  text-indent: 100px !important;
+  color: #fff;
+}

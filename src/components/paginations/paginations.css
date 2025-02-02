@@ -1,0 +1,39 @@
+.number-pages {
+  text-align: center;
+  margin-top: 70px;
+  margin-bottom: 140px;
+}
+
+.number-pages .number > span {
+  background: #404040;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: #fff;
+  margin: 0 2px;
+  cursor: pointer;
+}
+
+.number-pages .number span.active {
+  cursor: pointer;
+  background: #f1ad56;
+  color: #000;
+}
+
+.number-pages .number span.first {
+  margin-right: 10px;
+}
+
+.number-pages .number span.last {
+  margin-left: 10px;
+}
+
+.number-pages .dropdown-number-pages {
+  display: inline-block;
+  padding: 0;
+  margin-left: 10px;
+}
+
+.number-pages .dropdown-number-pages .dropdown .btn {
+  background: transparent;
+  padding: 7px 15px;
+}

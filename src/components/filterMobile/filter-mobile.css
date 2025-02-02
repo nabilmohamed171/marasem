@@ -1,0 +1,192 @@
+.background-fixed-filter-mobile {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.filter-mobile {
+  padding: 50px 30px;
+  position: fixed;
+  background-color: #000;
+  margin-top: 100px;
+  border-radius: 40px 40px 0 0;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.filter-mobile .find h3 {
+  color: var(--text-color);
+  font-size: 30px;
+}
+
+.filter-mobile .find .xmark {
+  position: absolute;
+  right: 40px;
+  top: 50px;
+  color: var(--text-color);
+  font-size: 20px;
+  background-color: transparent;
+  border: none;
+}
+
+.filter-mobile .find-links {
+  margin-top: 30px;
+  padding: 10px 0;
+  border-bottom: 1px solid #161616;
+}
+
+.filter-mobile .find-links li {
+  display: inline-block;
+  margin-right: 3px;
+  padding: 10px;
+  color: var(--text-color);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.filter-mobile .find-links li.active {
+  background-color: var(--text-color);
+  border-radius: 30px;
+  color: var(--background-input);
+}
+
+.filter-mobile .accordion-section {
+  margin-top: 30px;
+}
+
+.filter-mobile .accordion-item {
+  background-color: transparent;
+  border-bottom: 1px solid #161616;
+}
+
+.filter-mobile
+  .accordion-flush
+  > .accordion-item
+  > .accordion-header
+  .accordion-button {
+  background-color: transparent;
+  padding: 20px 0;
+  color: var(--text-color);
+  font-size: 16px !important;
+  transition: color 0.3s ease;
+}
+
+.filter-mobile
+  .accordion-flush
+  > .accordion-item
+  > .accordion-header
+  .accordion-button.active {
+  color: var(--main-color) !important;
+}
+
+.filter-mobile .buttons {
+  margin-top: 30px;
+  font-size: 16px;
+  position: absolute;
+  width: 85%;
+  bottom: 115px;
+}
+
+.filter-mobile .buttons button:first-child {
+  background-color: var(--sec-main-color);
+  color: var(--text-color);
+  border-radius: 10px;
+  padding: 10px 15px;
+  border: 1px solid var(--sec-main-color);
+  margin-right: 4%;
+  width: 40%;
+}
+
+.filter-mobile .accordion-button:not(.collapsed) {
+  box-shadow: none;
+}
+
+.filter-mobile .buttons button:last-child {
+  background-color: var(--main-color);
+  color: var(--sec-main-color);
+  border-radius: 10px;
+  padding: 10px 15px;
+  border: 1px solid var(--border-color);
+  width: 55%;
+}
+
+.find-photo {
+  padding: 30px 0 15px 0;
+}
+
+.find-photo .find-click-popup button {
+  padding: 10px 40px;
+  border: 2px solid #fff;
+  border-radius: 30px;
+  color: #fff;
+  background: transparent;
+  font-size: 14px;
+}
+
+.find-photo .best-seller {
+  background-color: transparent;
+  color: #fff;
+  font-size: 14px;
+  float: right;
+  top: 7px;
+  border: none;
+  position: relative;
+  font-weight: 600;
+}
+
+.filter-mobile .accordion-body {
+  padding: 0 !important;
+}
+
+.filter-mobile .accordion-body ul li {
+  display: inline-block;
+  margin-right: 10px;
+  background-color: #161616;
+  border: 1px solid #161616;
+  color: var(--text-color);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 7px 9px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 15px;
+}
+
+.filter-mobile .accordion-body li.active {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: var(--sec-main-color);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ffffff' class='bi bi-chevron-up' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z'/%3E%3C/svg%3E");
+  color: white;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.accordion-button:not(.collapsed)::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ffffff' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3E%3C/svg%3E");
+  color: white;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.selected-count-items {
+  color: var(--main-color);
+  margin-left: 10px;
+  display: inline-block;
+}

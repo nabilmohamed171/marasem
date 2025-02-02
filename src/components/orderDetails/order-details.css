@@ -1,0 +1,382 @@
+.order-details .color-f {
+  color: #fff;
+}
+.order-details .color-m {
+  color: #c57999;
+}
+
+.order-details .color-g {
+  color: #e5e5e5;
+}
+
+.order-details {
+  margin: 50px 0;
+}
+
+.order-details .profile {
+  background-color: #1a1a1a;
+  padding: 20px 30px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.order-details .profile span {
+  margin: 10px 0;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-block;
+}
+
+.order-details .profile ul li {
+  padding: 10px 0;
+  border-bottom: 1px solid #333;
+  font-size: 15px;
+  color: #777 !important;
+}
+
+.order-details .profile ul li span {
+  margin-right: 10px;
+  color: #777;
+  font-size: 20px;
+}
+
+.order-details .button-logout button {
+  background-color: transparent;
+  color: #777;
+  border: 1px solid #777;
+  padding: 5px;
+  border-radius: 10px;
+  text-align: center;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.order-details .button-logout span {
+  margin-right: 10px;
+  color: #777;
+  font-size: 20px;
+}
+
+.order-details .order-summary {
+  border: 5px solid #1a1a1a;
+  border-radius: 20px;
+}
+
+.order-details .order-summary h2 {
+  padding: 10px;
+  margin: 0;
+  background-color: #1a1a1a;
+  color: #777;
+  font-size: 18px;
+}
+
+.order-details .order-summary p {
+  padding: 0 10px;
+  font-size: 14px;
+}
+
+.order-details .order-summary .subtotal,
+.promocode,
+.total-price {
+  margin-top: 10px;
+  color: #777;
+}
+
+.order-details .price-all-items,
+.price-promocode,
+.total-price-number {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.order-details .total-price,
+.total-price-number {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.order-details .order-number-items {
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.order-details .order-number-items .order-number {
+  color: #fff;
+  font-size: 18px;
+}
+
+.order-details .order-number-items .order-date {
+  color: #777;
+  font-size: 14px;
+}
+
+.order-details .order-number-items .pending {
+  color: #fff;
+  text-align: right;
+  font-weight: 600;
+}
+
+.order-details .order-number-items .item-number {
+  color: #777;
+  text-align: right;
+  font-size: 14px;
+}
+
+.item-number {
+  padding: 0;
+}
+
+.order-details .order-number-items .icon-invoice {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.order-details .order-number-items a {
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  background: rgb(180, 99, 136);
+  background: linear-gradient(
+    84deg,
+    rgba(180, 99, 136, 1) 9%,
+    rgba(53, 34, 74, 1) 93%
+  );
+  border: none;
+  display: block;
+  text-align: center;
+}
+
+.order-details .address-info {
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 15px;
+}
+
+.order-details .address-info .username {
+  color: #fff;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.order-details .address-info .full-address {
+  color: #777;
+  width: 90%;
+  line-height: 1.6;
+  margin: 0 0 10px 0;
+}
+
+.order-details .address-info .phone-number {
+  color: #fff;
+  margin: 0;
+  display: inline-block;
+  font-size: 13px;
+}
+
+.order-details .shipping-address {
+  position: relative;
+  border: 5px solid #1a1a1a;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.order-details .shipping-address .change-address {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  background-color: #1a1a1a;
+  border-radius: 3px;
+  border: 1px solid #1a1a1a;
+  color: #f1ad56;
+  padding: 5px 15px;
+  font-size: 15px;
+}
+
+.order-details .check-number-phone {
+  background-color: #f1ad56;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  color: #333;
+  margin-left: 10px;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.order-details .payment-method {
+  border: 5px solid #1a1a1a;
+  margin-bottom: 20px;
+  border-radius: 20px;
+}
+
+.order-details .shipping-address h2,
+.order-details .payment-method h2 {
+  background-color: #1a1a1a;
+  color: #777;
+  margin: 0;
+  padding: 10px;
+  font-size: 17px;
+}
+
+.order-details .payment-method .icon-credit {
+  margin-right: 10px;
+}
+
+.order-details .payment-method button {
+  width: 100%;
+  padding: 0;
+  text-align: center;
+  font-size: 17px;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+}
+
+.shipment {
+  margin: 20px 0;
+  background-color: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.item {
+  margin-bottom: 20px;
+}
+
+.image-item {
+  height: 105px;
+}
+
+.image-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.info-item h2 {
+  font-size: 16px;
+  margin: 0;
+  padding: 10px 0;
+  width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #e5e5e5;
+}
+
+.info-item p {
+  font-size: 14px;
+  line-height: 1.5;
+  width: 80%;
+  color: #777;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info-item span {
+  color: #fff;
+  font-size: 16px;
+  display: block;
+}
+
+.shipment-number {
+  color: #777;
+  font-size: 18px;
+}
+
+.delevired {
+  float: right;
+  color: #f1ad56;
+  font-size: 18px;
+}
+
+.shipment-upper {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 575.98px) {
+  .order-details .address-info,
+  .order-summary-mobile {
+    background-color: #1a1a1a;
+  }
+
+  .order-details .shipping-address h2,
+  .order-details .payment-method h2,
+  .order-details .order-summary h2 {
+    background-color: transparent;
+  }
+
+  .order-details .shipping-address,
+  .order-details .payment-method,
+  .order-details .order-summary {
+    border: none;
+  }
+
+  .order-details .address-info,
+  .order-details .payment-method button {
+    border-radius: 20px;
+    padding: 30px 20px;
+  }
+
+  .order-details .address-info .username {
+    margin-left: 10px;
+  }
+
+  .map-home {
+    background-color: #000;
+    padding: 5px;
+    margin-right: 10px;
+    border-radius: 5px;
+  }
+
+  .order-details .payment-method button {
+    background-color: #1a1a1a;
+  }
+
+  .shipment {
+    border-radius: 0;
+    margin: 5px 0;
+  }
+
+  .first-shipment {
+    border-radius: 30px 30px 0 0;
+  }
+
+  .last-shipment {
+    border-radius: 0 0 30px 30px;
+  }
+  .order-details .order-summary {
+    margin-top: 30px;
+  }
+
+  .order-summary-mobile {
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 767.98px) {
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+@media (max-width: 1399.98px) {
+}

@@ -1,0 +1,251 @@
+.overley-r-r-b {
+  position: absolute;
+  width: 100%;
+  height: 96%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 0 0 20px 0;
+}
+
+.first-collections,
+.sec-collections,
+.three-collections {
+  padding: 50px 0;
+}
+
+.sec-collections .first,
+.first-collections .first,
+.first-collections .sec,
+.sec-collections .sec,
+.three-collections .first,
+.three-collections .sec {
+  background: #f2f2f2;
+  width: 49%;
+  margin-right: 1%;
+  padding: 40px 40px 0;
+  border-radius: 26px;
+  overflow: hidden;
+}
+
+.three-collections .sec {
+  background: #cc4438;
+}
+
+.three-collections .first {
+  background: #a2e1e0;
+}
+
+.sec-collections .sec {
+  background: #472f5b;
+}
+
+.sec-collections .first {
+  background: #c57999;
+}
+
+.first-collections .sec {
+  background: var(--main-color);
+}
+
+.sec-collections .first .info h2,
+.first-collections .first .info h2,
+.first-collections .sec .info h2,
+.sec-collections .sec .info h2,
+.three-collections .first .info h2,
+.three-collections .sec .info h2 {
+  font-size: 32px;
+}
+
+.first-collections .first .info p,
+.first-collections .sec .info p,
+.sec-collections .first .info p,
+.sec-collections .sec .info p,
+.three-collections .first .info p,
+.three-collections .sec .info p {
+  font-size: 16px;
+  color: var(--sec-main-color);
+}
+
+.sec-collections .sec .info h2,
+.three-collections .sec .info h2 {
+  color: var(--text-color);
+}
+
+.sec-collections .sec .info p,
+.three-collections .sec .info p {
+  color: var(--text-color);
+}
+
+.sec-collections .first .info a,
+.first-collections .sec .info a,
+.first-collections .first .info a,
+.sec-collections .sec .info a,
+.three-collections .first .info a,
+.three-collections .sec .info a {
+  background: var(--main-color);
+  font-size: 16px;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: var(--sec-main-color);
+  display: inline-block;
+  margin-top: 10px;
+  border-radius: 10px;
+  width: 100px;
+  text-align: center;
+}
+
+.three-collections .sec .info a {
+  background: var(--text-color);
+  color: #000;
+}
+
+.first-collections .sec .info a,
+.sec-collections .first .info a,
+.three-collections .first .info a {
+  background: var(--background-input);
+  color: var(--text-color);
+  display: inline-block;
+}
+
+.sec-collections .first .first-image,
+.first-collections .first .first-image,
+.first-collections .sec .first-image,
+.sec-collections .sec .first-image,
+.three-collections .first .first-image,
+.three-collections .sec .first-image {
+  position: relative;
+  right: -15px;
+  overflow: hidden;
+}
+
+.sec-collections .first .first-image img,
+.first-collections .first .first-image img,
+.first-collections .sec .first-image img,
+.sec-collections .sec .first-image img,
+.three-collections .first .first-image img,
+.three-collections .sec .first-image img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 20px 0 0 20px;
+}
+
+.first-collections .first .sec-image .dark-theme,
+.first-collections .sec .sec-image .dark-theme,
+.sec-collections .first .sec-image .dark-theme,
+.sec-collections .sec .sec-image .dark-theme,
+.three-collections .first .sec-image .dark-theme,
+.three-collections .sec .sec-image .dark-theme {
+  position: relative;
+}
+
+.first-collections .sec .sec-image span,
+.first-collections .first .sec-image span,
+.sec-collections .first .sec-image span,
+.sec-collections .sec .sec-image span,
+.three-collections .first .sec-image span,
+.three-collections .sec .sec-image span {
+  position: relative;
+  top: -60px;
+  left: 20px;
+  font-size: 25px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.sec-collections .first .sec-image img,
+.first-collections .first .sec-image img,
+.first-collections .sec .sec-image img,
+.sec-collections .sec .sec-image img,
+.three-collections .first .sec-image img,
+.three-collections .sec .sec-image img {
+  width: 100%;
+  height: calc(167px / 2);
+  object-fit: cover;
+  border-radius: 0 20px 0 0;
+  margin-bottom: 3px;
+}
+
+.sec-collections .first .sec-image img:last-child,
+.first-collections .sec .sec-image img:last-child,
+.first-collections .first .sec-image img:last-child,
+.sec-collections .sec .sec-image img:last-child,
+.three-collections .first .sec-image img:last-child,
+.three-collections .sec .sec-image img:last-child {
+  border-radius: 0 0 20px 0;
+}
+
+@media (max-width: 575.98px) {
+  .first-collections,
+  .sec-collections,
+  .three-collections {
+    margin: auto 20px;
+  }
+
+  .sec-collections .first .first-image img,
+  .first-collections .first .first-image img,
+  .first-collections .sec .first-image img,
+  .sec-collections .sec .first-image img,
+  .three-collections .first .first-image img,
+  .three-collections .sec .first-image img {
+    height: 140px;
+  }
+
+  .sec-collections .first .sec-image img,
+  .first-collections .first .sec-image img,
+  .first-collections .sec .sec-image img,
+  .sec-collections .sec .sec-image img,
+  .three-collections .first .sec-image img,
+  .three-collections .sec .sec-image img {
+    height: calc(137px / 2);
+  }
+
+  .sec-collections .first,
+  .first-collections .first,
+  .first-collections .sec,
+  .sec-collections .sec,
+  .three-collections .first,
+  .three-collections .sec {
+    padding: 20px 20px 0;
+    height: 180px;
+  }
+
+  .sec-collections .first .info h2,
+  .first-collections .first .info h2,
+  .first-collections .sec .info h2,
+  .sec-collections .sec .info h2,
+  .three-collections .first .info h2,
+  .three-collections .sec .info h2 {
+    font-size: 20px !important;
+    margin-top: 25px !important;
+  }
+
+  .first-collections .sec .sec-image span,
+  .first-collections .first .sec-image span,
+  .sec-collections .first .sec-image span,
+  .sec-collections .sec .sec-image span,
+  .three-collections .first .sec-image span,
+  .three-collections .sec .sec-image span {
+    top: -56px;
+    left: 25px;
+  }
+
+  .three-collections {
+    padding: 50px 0 0px;
+  }
+}
+
+@media (max-width: 767.98px) {
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+@media (max-width: 1399.98px) {
+}

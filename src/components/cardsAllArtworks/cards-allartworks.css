@@ -1,0 +1,282 @@
+.cards-allartworks {
+  padding-top: 50px;
+}
+
+.cards-allartworks h2 {
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+.dropdown-filter {
+  border-top: 1px solid #333;
+  margin-top: 50px;
+}
+
+.cards-allartworks .card-image {
+  height: 390px;
+  position: relative;
+}
+
+.cards-allartworks .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.cards-allartworks .card-info h2 {
+  margin: 0;
+  padding: 10px 0;
+  color: #fff;
+  font-size: 16px;
+  width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cards-allartworks .card-info p {
+  color: #ebebf599;
+  font-size: 14px;
+  margin: 0;
+  padding: 0 0 10px 0;
+  width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cards-allartworks .card-info h3 {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.cards-allartworks .overley {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.cards-allartworks .add-cart .cart-shopping {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 22px;
+}
+
+.cards-allartworks .add-cart .plus {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 22px;
+}
+
+.cards-allartworks .overley-info .heart {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 16px;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background: rgb(0 0 0 / 56%);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.cards-allartworks .overley-info .cart-shopping {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 16px;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background: rgb(0 0 0 / 56%);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.cards-allartworks .overley-info .plus {
+  position: absolute;
+  left: 32px;
+  top: 24px;
+  background: var(--main-color);
+  font-size: 12px;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  line-height: 11px;
+  text-align: center;
+}
+
+.cards-allartworks .overley-info .user-art {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+}
+
+.cards-allartworks .user-art span {
+  color: #fff;
+  font-size: 14px;
+  margin-left: 10px;
+  text-transform: capitalize;
+}
+
+.cards-allartworks .user-image {
+  width: 50px;
+  height: 50px;
+  margin-left: 15px;
+  display: inline-block;
+}
+
+.cards-allartworks .user-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.add-cart .cart-shopping,
+.add-cart .plus,
+.overley-info .heart,
+.overley-info .user-art {
+  opacity: 0;
+}
+
+.card-image:hover .add-cart,
+.card-image:hover .cart-shopping,
+.card-image:hover .add-cart .plus,
+.card-image:hover .overley-info .heart,
+.card-image:hover .overley-info .user-art,
+.card-image:hover .overley {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.cards-allartworks .fixed-card {
+  background-color: #1a1a1a;
+}
+
+.cards-allartworks .fixed-card .main-image {
+  height: 290px;
+}
+
+.cards-allartworks .fixed-card .main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cards-allartworks .main-image h2 {
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 0;
+  margin: 0;
+}
+
+.cards-allartworks .main-image span {
+  color: #777;
+  font-size: 13px;
+}
+
+.cards-allartworks .main-image p {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #777;
+}
+
+.cards-allartworks .main-image p.price {
+  color: #fff;
+  font-size: 18px;
+}
+
+.cards-allartworks .main-image hr {
+  color: #7b7b7b;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.cards-allartworks .fees,
+.total-price {
+  color: #fff;
+  font-size: 16px;
+}
+
+.cards-allartworks p.value-fees,
+.cards-allartworks p.value-total-price {
+  float: right;
+  font-size: 13px;
+  color: #fff !important;
+}
+
+.cards-allartworks .value-total-price {
+  font-weight: 700;
+}
+
+.cards-allartworks .btn-own {
+  background-color: #00568b;
+  color: #fff;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #00568b;
+  border-radius: 10px;
+}
+
+.cards-allartworks .pars-icon {
+  font-size: 25px !important;
+  color: #fff !important;
+  background: #373737;
+  width: 43px;
+  display: inline-block;
+  height: 43px;
+  text-align: center;
+  line-height: 43px;
+  border-radius: 50%;
+}
+
+.info-card {
+  background-color: #1a1a1a;
+  padding: 0 10px 10px;
+  border-radius: 0 0 20px 20px;
+}
+
+@media (max-width: 575.98px) {
+  .cards-allartworks .card-image {
+    height: 280px;
+  }
+
+  .cards-allartworks .card-info h2 {
+    width: 170px;
+  }
+
+  .cards-allartworks .card-info p {
+    width: 180px;
+  }
+}
+
+@media (max-width: 767.98px) {
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+@media (max-width: 1399.98px) {
+}

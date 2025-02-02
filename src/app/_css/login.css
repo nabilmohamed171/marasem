@@ -1,0 +1,1298 @@
+.hidden {
+  display: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+.req {
+  color: var(--main-color);
+  text-decoration: none;
+}
+
+.scale-hover {
+  display: inline-block;
+  transition: transform 0.3s;
+}
+
+.scale-hover:hover {
+  transform: scale(1.05);
+}
+
+::placeholder {
+  font-size: 12px;
+}
+
+.select-type .active {
+  border: 2px solid var(--main-color);
+  color: var(--main-color);
+}
+
+.active-cate {
+  background-color: var(--text-color) !important;
+  color: var(--background-color) !important;
+}
+
+input,
+textarea {
+  font-size: 12px;
+}
+
+.error {
+  font-size: 12px;
+  color: red;
+  display: block;
+  position: relative;
+  margin-top: 5px;
+}
+
+.lastname-error {
+  margin-left: 17px;
+}
+
+input:focus {
+  background-color: transparent !important;
+  border-color: #007bff;
+  outline: none;
+}
+
+input:active {
+  background-color: transparent !important;
+  border-color: #007bff;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-country .dropdown-flags-login .dropdown-toggle,
+.dropdown-country .dropdown-flags-forgetpassword {
+  color: #222;
+  width: 103px;
+  border-radius: 10px;
+  position: absolute;
+  left: 3px;
+  cursor: pointer;
+}
+
+.dropdown-country .dropdown-flags-create-account .dropdown-toggle {
+  width: 93px;
+}
+
+.dropdown-country .flag-icon {
+  width: 20px;
+  margin-right: 5px;
+}
+
+.dropdown-country .dropdown-list {
+  padding: 0;
+  border-radius: 10px;
+  position: absolute;
+  width: 43%;
+  background-color: #fff;
+  z-index: 10;
+  left: 3px;
+  top: 63px;
+  overflow-y: auto;
+}
+
+.dropdown-country .dropdown-flags-forgetpassword .dropdown-list {
+  top: 37px;
+  width: 95%;
+}
+
+.dropdown-country .dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.dropdown-country .dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-country .dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+/*  End
+    This section is general and applies to all pages of the website.
+    It includes styles, scripts, and functions that are used site-wide.
+    Any changes here will affect everything across the entire site.
+*/
+
+/*  Start
+    This section contains the common code for the login page, create account page,
+    section creation, about us, and other shared styles and functions between them.
+    Any changes here will affect all screens and pages related to these sections.
+*/
+
+.login-page .row,
+.login-page .col,
+.login-page .col-md-7,
+.create-account-page .row,
+.create-account-page .col,
+.create-account-page .col-md-7,
+.categories-page .row,
+.categories-page .col,
+.categories-page .col-md-7,
+.about-you-page .row,
+.about-you-page .col,
+.about-you-page .col-md-7 {
+  margin: 0;
+  padding: 0;
+}
+
+.login-page .login-header-image img,
+.create-account-page .create-account-header-image img,
+.categories-page .categories-header-image img,
+.about-you-page .about-you-image img {
+  object-fit: cover;
+  display: block;
+  width: 100%;
+  height: 100vh !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  object-fit: cover;
+}
+
+.login-page .login-form,
+.create-account-page .create-account-form {
+  padding: 40px 100px;
+  color: var(--text-color);
+}
+
+.login-page .login-form .website-logo,
+.create-account-page .create-account-form .website-logo,
+.categories-page .categories-form .website-logo,
+.about-you-page .website-logo {
+  width: 150px;
+  position: relative;
+}
+
+.login-page .login-form .website-logo img,
+.create-account-page .create-account-form .website-logo img,
+.categories-page .categories-form .website-logo img,
+.categories-page .categories-form .website-logo img,
+.about-you-page .website-logo img {
+  width: 100%;
+}
+
+.login-page .login-form .website-logo span,
+.create-account-page .create-account-form .website-logo span,
+.categories-page .categories-form .website-logo span {
+  position: absolute;
+  top: 5px;
+  left: 55px;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.login-page .login-form form h4,
+.create-account-page .create-account-form form h4,
+.categories-page .categories-form h4 {
+  font-size: 15px;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+.login-page .login-form form h4 span a,
+.create-account-page .create-account-form form h4 span a {
+  color: var(--main-color);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.artist,
+.lover,
+.create-account-page,
+.create-account-page {
+  border: 2px solid transparent; /* border transparent as default */
+  transition: border-color 0.3s;
+}
+
+.login-page .login-form form label,
+.create-account-page .create-account-form form label {
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.login-page .login-form form input,
+.create-account-page .create-account-form form input,
+.forget-password .forget form input,
+.reset-passowrd .reset form input {
+  display: block;
+  width: 100%;
+  background: var(--background-input);
+  border: 1px solid var(--background-color);
+  padding: 10px 5px;
+  color: var(--text-color);
+  outline: 1px solid var(--outline-input);
+  border-radius: 10px;
+  text-indent: 10px;
+}
+
+.login-page .login-form .enter-email,
+.login-page .login-form .enter-password,
+.login-page .login-form .enter-phone,
+.create-account-page .create-account-form .enter-email,
+.create-account-page .create-account-form .enter-password,
+.create-account-page .create-account-form .enter-phone {
+  position: relative;
+}
+
+.login-page .login-form form span.show-password button,
+.create-account-page .create-account-form span.show-password button {
+  position: absolute;
+  right: 0;
+  text-decoration: none;
+  color: #585858;
+  top: 20px;
+  line-height: 40px;
+  right: 10px;
+  z-index: 9999;
+  font-size: 15px;
+  border: none;
+  background: transparent;
+}
+
+.login-page .login-form form input,
+.create-account-page .create-account-form form input:focus,
+.login-page .login-form form input:focus,
+.create-account-page .create-account-form form input:focus,
+.forget-password .forget form input:focus,
+.reset-passowrd .reset form input:focus {
+  background-color: var(--background-input) !important;
+  border-color: var(--background-input);
+  outline: none;
+  color: var(--text-color);
+}
+
+.login-page .login-form form input[name="phone"],
+.create-account-page .create-account-form form input[name="phone"] {
+  text-indent: 105px;
+}
+
+.login-page .login-form form .login-btn {
+  margin-bottom: 30px;
+}
+
+/*  End
+    This section contains the common code for the login page, create account page,
+    section creation, about us, and other shared styles and functions between them.
+    Any changes here will affect all screens and pages related to these sections.
+*/
+
+/*
+    This code is specific to the create user and art user page.
+    It includes styles, scripts, and functions tailored for user registration and artist accounts.
+*/
+
+.create-account-page .create-account-form form h2 {
+  margin-top: 20px;
+  font-size: 25px;
+}
+
+.create-account-page .create-account-form form .select-type {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.create-account-page .create-account-form form .select-type .artist,
+.create-account-page .create-account-form form .select-type .lover {
+  padding: 10px 20px 25px;
+  background-color: var(--background-input);
+  border-radius: 20px;
+  height: 145px;
+  cursor: pointer;
+}
+
+.create-account-page .create-account-form form .select-type .artist h4,
+.create-account-page .create-account-form form .select-type .lover h4 {
+  margin: 0;
+  padding: 20px 0;
+  font-weight: 700;
+}
+
+.create-account-page .create-account-form form .select-type .artist p,
+.create-account-page .create-account-form form .select-type .lover p {
+  color: #ccc;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.create-account-page .create-account-form form .select-type .artist,
+.create-account-page .create-account-form .section-firstname input {
+  width: 95%;
+  margin-right: 5%;
+}
+
+.create-account-page .create-account-form form .select-type .lover,
+.create-account-page .create-account-form .section-lastname input {
+  width: 95%;
+  margin-left: 5%;
+}
+
+.create-account-page .create-account-form form label.lastname {
+  margin-left: 15px;
+}
+
+.create-account-page .create-account-form form input {
+  margin-bottom: 16px;
+}
+
+/*
+    This code is specific to the create user and art user page.
+    It includes styles, scripts, and functions tailored for user registration and artist accounts.
+*/
+
+/*
+    This code is specific to the login page. 
+    It includes styles, scripts, and functions tailored for user authentication.
+*/
+
+.login-page .login-form {
+  padding: 70px 150px;
+}
+
+.login-page .login-form form h2 {
+  margin-top: 30px;
+  font-size: 35px;
+}
+
+.login-page .login-form form h4 {
+  margin-bottom: 40px;
+}
+
+.login-page .login-form form input {
+  margin-bottom: 30px;
+}
+
+.login-page .login-form form span.user-phone button,
+.login-page .login-form form span.user-email button {
+  position: absolute;
+  right: 0;
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 12px;
+  background: transparent;
+  border: none;
+}
+
+.login-page .login-form form .forget-password a {
+  text-decoration: none;
+}
+
+.login-page .login-form form .forget-password button {
+  display: block;
+  margin: 0 0 10px 0;
+  background-color: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 12px;
+}
+
+.login-form .social-login {
+  text-align: center;
+}
+
+.login-form .social-login span {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.login-form .social-login a {
+  text-decoration: none;
+  text-align: center;
+  padding: 5px;
+  background: var(--text-color);
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  font-size: 20px;
+  line-height: 40px;
+  border-radius: 50%;
+  margin: 0 10px;
+  color: #222;
+}
+
+.login-form .social-login .google {
+  background-color: #fff;
+}
+
+.login-form .social-login .facebook {
+  background-color: #0268f9;
+  color: #fff;
+}
+
+.login-form .social-login .behance {
+  background-color: #fff;
+}
+
+/*
+    This code is specific to the login page. 
+    It includes styles, scripts, and functions tailored for user authentication.
+*/
+
+/*
+    This code is specific to the category selection section. 
+    It includes event listeners and functions to handle user interactions with category options,
+    allowing users to select and manage their preferred categories for their profile.
+*/
+
+.categories-page .categories-form {
+  padding: 70px 100px;
+  color: var(--text-color);
+}
+
+.categories-page .categories-form .categories-form {
+  position: relative;
+}
+
+.categories-page .categories-form .cate-info h2 {
+  margin-top: 20px;
+  font-size: 25px;
+}
+
+.categories-page .categories-form .cate-info h4 {
+  margin-bottom: 40px;
+  color: #ccc;
+  line-height: 1.7;
+  font-size: 12px;
+}
+
+.categories-page .categories-form span.skip {
+  position: absolute;
+  top: 70px;
+  right: 150px;
+  display: inline-block;
+}
+
+.categories-page .categories-form span.skip a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.categories-page .categories-form .cate-section h3 {
+  font-size: 15px;
+  color: var(--main-color);
+}
+
+.categories-page .categories-form .cate-section ul li {
+  display: inline-block;
+  padding: 7px 15px;
+  background-color: var(--background-input);
+  color: var(--text-color);
+  margin: 5px 3px;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.categories-page .categories-form .cate-section .active-cate {
+  background-color: var(--text-color) !important;
+  color: #222 !important;
+}
+
+.categories-page .categories-form .cate-section .col-md-12 {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+    This code is specific to the category selection section. 
+    It includes event listeners and functions to handle user interactions with category options,
+    allowing users to select and manage their preferred categories for their profile.
+*/
+
+.about-you-page .about-you-form {
+  padding: 70px 100px;
+  color: var(--text-color);
+}
+
+.about-you-page .about-you-form .about-you-info h2 {
+  margin-top: 30px;
+  font-size: 35px;
+  margin-bottom: 20px;
+}
+
+.about-you-page .about-you-form .about-you-info h4 {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.about-you-page .about-you-form form .enter-media-link label {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.about-you-page .about-you-form form .enter-media-link input,
+.about-you-page .about-you-form form .enter-media-link textarea {
+  display: block;
+  width: 100%;
+  background: var(--background-input);
+  border: 1px solid var(--background-color);
+  padding: 10px 5px;
+  color: var(--text-color);
+  outline: 1px solid var(--outline-input);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-indent: 10px;
+}
+
+.about-you-page .about-you-form form .enter-media-link .entry-socail-media,
+.about-you-page .about-you-form form .enter-media-link .entry-website-url {
+  width: 95%;
+  margin-right: 5%;
+}
+
+.about-you-page .about-you-form .about-you-btn {
+  width: 100%;
+  background: var(--main-color);
+  border-radius: 10px;
+  border: 1px solid var(--main-color);
+  margin-bottom: 20px;
+  padding: 10px;
+  color: black;
+  font-size: 16px;
+  transform: 0.3s ease-in-out;
+  margin-top: 20px;
+}
+
+/*
+    This code is specific to the forget password page. 
+    It includes event listeners and functions to toggle input fields and password visibility.
+*/
+
+.reset-passowrd,
+.forget-password,
+.verify-phone-number,
+.pickup-location {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  height: 100vh;
+}
+
+.reset-passowrd .container-reset-password,
+.forget-password .container-forget-password,
+.verify-phone-number .container-verify-phone-number,
+.pickup-location .container-pickup-location {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.reset-passowrd .reset,
+.forget-password .forget,
+.verify-phone-number .verify,
+.pickup-location .location {
+  padding: 60px 60px 50px;
+  background: #000000b5;
+  border-radius: 10px;
+  width: 450px;
+  position: relative;
+}
+
+.reset-passowrd .reset .close-btn a,
+.forget-password .forget .close-btn a,
+.verify-phone-number .verify .close-btn a,
+.pickup-location .location .close-btn a {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 15px 25px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 25px;
+}
+
+.reset-passowrd .reset h2 {
+  font-size: 25px;
+  margin: 0 0 15px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.reset-passowrd .reset p {
+  color: #bababa;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.reset-passowrd .reset form label,
+.pickup-location .location form .add-user-location .form-label {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.reset-passowrd .reset form .enter-password {
+  position: relative;
+}
+
+.reset-passowrd .reset form span.show-password a {
+  position: absolute;
+  text-decoration: none;
+  color: var(--main-color);
+  top: 35px;
+  right: 20px;
+  z-index: 9999;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+/*
+    This code is specific to the forget password page. 
+    It includes event listeners and functions to toggle input fields and password visibility.
+*/
+
+/*
+    This code is specific to the location and address selection section. 
+    It includes event listeners and functions to handle user interactions with location dropdowns (city and zone),
+    as well as the input for entering detailed address information.
+*/
+
+.pickup-location .location {
+  width: 600px;
+}
+
+.pickup-location .location h2 {
+  font-size: 25px;
+  margin: 0 0 15px;
+}
+
+.pickup-location .location p {
+  color: #bababa;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.pickup-location .location form .add-user-location .form-select,
+.pickup-location .location form .add-user-location textarea {
+  background: var(--background-input);
+  border: 1px solid var(--background-color);
+  padding: 10px;
+  color: var(--text-color);
+  border-radius: 10px;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+/*
+    This code is specific to the location and address selection section. 
+    It includes event listeners and functions to handle user interactions with location dropdowns (city and zone),
+    as well as the input for entering detailed address information.
+*/
+
+/*
+    This code is specific to the reset password page. 
+    It includes event listeners and functions to handle input validation and password recovery.
+*/
+
+.forget-password .forget h2 {
+  font-size: 25px;
+  margin: 0 0 15px;
+}
+
+.forget-password .forget p {
+  color: #bababa;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.forget-password .forget form .enter-email,
+.forget-password .forget form .enter-phone {
+  position: relative;
+  font-size: 12px;
+}
+
+.forget-password .forget form .enter-email label,
+.forget-password .forget form .enter-phone label {
+  margin-bottom: 5px;
+}
+
+.forget-password .forget form span.user-phone a,
+.forget-password .forget form span.user-email a {
+  position: absolute;
+  right: 0;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.forget-password .forget form input[name="phone"] {
+  text-indent: 120px;
+}
+
+/*
+    This code is specific to the reset password page. 
+    It includes event listeners and functions to handle input validation and password recovery.
+*/
+
+/*
+    This code is specific to the verify phone number page. 
+    It includes event listeners and functions to validate phone number inputs and manage verification.
+*/
+
+.verify-phone-number .verify h2 {
+  font-size: 25px;
+  margin: 0 0 15px;
+  text-align: center;
+}
+
+.verify-phone-number .verify p {
+  color: #bababa;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.verify-phone-number .verify form input {
+  display: block;
+  width: 100%;
+  background: var(--background-input);
+  padding: 10px;
+  outline: 1px solid var(--outline-input);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+  color: #f1ad56;
+  height: 80px;
+  font-size: 40px;
+  border: 2px solid #f1ad56;
+}
+
+/*
+    This code is specific to the verify phone number page. 
+    It includes event listeners and functions to validate phone number inputs and manage verification.
+*/
+
+/*
+    This code is grouped for handling four distinct pages:
+    1. **Reset Password**: Includes functionality for resetting the user's password.
+    2. **Verify Phone**: Handles the process of verifying the user's phone number.
+    3. **Backup Location**: Manages the backup location features, including saving and managing user locations.
+    4. **Forgot Password**: Deals with the process of initiating password recovery when the user forgets their password.
+*/
+
+.login-page .login-form form .login-btn,
+.create-account-page .create-account-form form .create-account-btn,
+.categories-page .categories-form .cate-section .create-cate-btn,
+.verify-phone-number .verify form .verify-phone-btn,
+.forget-password .forget form .forget-passowrd-btn,
+.reset-passowrd .reset form .reset-password-btn,
+.pickup-location .location form .location-btn {
+  width: 100%;
+  background: var(--main-color);
+  border-radius: 10px;
+  border: 1px solid var(--main-color);
+  padding: 7px;
+  color: #000;
+  font-size: 16px;
+  transform: 0.3s ease-in-out;
+  margin-top: 20px;
+}
+
+.login-btn:disabled,
+.create-account-btn:disabled,
+.forget-password .forget form .forget-passowrd-btn:disabled,
+.reset-passowrd .reset form .reset-password-btn:disabled,
+.verify-phone-number .verify form .verify-phone-btn:disabled {
+  background-color: #f1ad45 !important;
+  color: #000 !important;
+  cursor: not-allowed;
+  border: 1px solid #f1ad45 !important;
+  opacity: 0.3;
+}
+
+/*
+    This code is grouped for handling four distinct pages:
+    1. **Reset Password**: Includes functionality for resetting the user's password.
+    2. **Verify Phone**: Handles the process of verifying the user's phone number.
+    3. **Backup Location**: Manages the backup location features, including saving and managing user locations.
+    4. **Forgot Password**: Deals with the process of initiating password recovery when the user forgets their password.
+*/
+
+@media (min-width: 10px) {
+  .login-page .login-header-image img,
+  .create-account-page .create-account-header-image img,
+  .about-you-page .about-you-image img {
+    display: none;
+  }
+
+  .login-page .login-form,
+  .create-account-page .create-account-form,
+  .about-you-page .about-you-form {
+    width: 100vw;
+    height: 100%;
+  }
+
+  .login-page .login-form {
+    padding: 60px 50px;
+  }
+
+  .login-page .login-form form .forget-password a {
+    text-align: center;
+  }
+
+  .create-account-page .create-account-form {
+    padding: 30px 70px;
+  }
+
+  .about-you-page .about-you-form {
+    padding: 50px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist h4,
+  .create-account-page .create-account-form form .select-type .lover h4 {
+    padding: 5px 0;
+    font-size: 13px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist p,
+  .create-account-page .create-account-form form .select-type .lover h4 {
+    font-size: 12px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist,
+  .create-account-page .create-account-form form .select-type .lover {
+    padding: 20px 5px 10px;
+    height: 110px;
+  }
+
+  .categories-page .categories-header-image img {
+    display: none;
+  }
+
+  .categories-page .categories-form {
+    width: 100vw;
+    height: 100%;
+  }
+
+  .categories-page .categories-form {
+    padding: 40px;
+  }
+
+  .categories-page .categories-form span.skip {
+    top: 50px;
+    right: 55px;
+  }
+
+  .forget-password .forget,
+  .reset-passowrd .reset,
+  .verify-phone-number .verify,
+  .pickup-location .location {
+    padding: 45px 35px 40px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    border-radius: 50px 50px 0 0;
+    background-color: black;
+  }
+}
+
+@media (min-width: 576px) {
+  .login-page .login-header-image img,
+  .create-account-page .create-account-header-image img,
+  .about-you-page .about-you-image img {
+    display: none;
+  }
+
+  .login-page .login-form,
+  .create-account-page .create-account-form,
+  .about-you-page .about-you-form {
+    width: 100vw;
+    height: 100%;
+  }
+
+  .login-page .login-form {
+    padding: 60px 50px;
+  }
+
+  .login-page .login-form form .forget-password a {
+    text-align: center;
+  }
+
+  .create-account-page .create-account-form {
+    padding: 30px 50px;
+  }
+
+  .about-you-page .about-you-form {
+    padding: 50px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist h4,
+  .create-account-page .create-account-form form .select-type .lover h4 {
+    padding: 5px 0;
+    font-size: 13px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist p,
+  .create-account-page .create-account-form form .select-type .lover h4 {
+    font-size: 12px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist,
+  .create-account-page .create-account-form form .select-type .lover {
+    padding: 20px 5px 10px;
+    height: 110px;
+  }
+
+  .categories-page .categories-header-image img {
+    display: none;
+  }
+
+  .categories-page .categories-form {
+    width: 100vw;
+    height: 100%;
+  }
+
+  .categories-page .categories-form {
+    padding: 60px 50px;
+  }
+
+  .categories-page .categories-form span.skip {
+    top: 50px;
+    right: 55px;
+  }
+
+  .forget-password .forget,
+  .reset-passowrd .reset,
+  .verify-phone-number .verify,
+  .pickup-location .location {
+    padding: 45px 35px 40px;
+    width: 100%;
+    background: #000000b5;
+    border-radius: 10px;
+    position: fixed;
+    bottom: 0;
+    border-radius: 50px 50px 0 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .login-page .login-header-image img,
+  .create-account-page .create-account-header-image img,
+  .about-you-page .about-you-image img {
+    display: none;
+  }
+
+  .login-page .login-form,
+  .create-account-page .create-account-form,
+  .about-you-page .about-you-form {
+    width: 100vw;
+    height: 100%;
+  }
+
+  .login-page .login-form {
+    padding: 66px 55px;
+  }
+
+  .login-page .login-form form .forget-password a {
+    text-align: center;
+  }
+
+  .create-account-page .create-account-form {
+    padding: 36px 56px;
+  }
+
+  .about-you-page .about-you-form {
+    padding: 50px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist h4,
+  .create-account-page .create-account-form form .select-type .lover h4 {
+    padding: 5px 0;
+    font-size: 13px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist p,
+  .create-account-page .create-account-form form .select-type .lover h4 {
+    font-size: 12px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist,
+  .create-account-page .create-account-form form .select-type .lover {
+    padding: 20px 5px 10px;
+    height: 110px;
+  }
+
+  .categories-page .categories-header-image img {
+    display: none;
+  }
+
+  .categories-page .categories-form {
+    width: 100vw;
+    height: 100%;
+  }
+
+  .categories-page .categories-form {
+    padding: 66px 55px;
+  }
+
+  .categories-page .categories-form span.skip {
+    top: 70px;
+    right: 60px;
+  }
+
+  .forget-password .forget,
+  .reset-passowrd .reset,
+  .verify-phone-number .verify,
+  .pickup-location .location {
+    padding: 60px 60px 50px;
+    border-radius: 10px;
+    width: 450px;
+    position: relative;
+  }
+}
+
+@media (min-width: 992px) {
+  .login-page .login-header-image img,
+  .create-account-page .create-account-header-image img,
+  .about-you-page .about-you-image img {
+    display: block;
+  }
+
+  .login-page .login-form,
+  .create-account-page .create-account-form,
+  .about-you-page .about-you-form {
+    width: 100%;
+    height: 100%;
+  }
+
+  .login-page .login-form {
+    padding: 70px;
+  }
+
+  .login-page .login-form form .forget-password a {
+    text-align: left;
+  }
+
+  .create-account-page .create-account-form {
+    padding: 50px;
+  }
+
+  .about-you-page .about-you-form {
+    padding: 70px 50px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist h4,
+  .create-account-page .create-account-form form .select-type .lover h4 {
+    padding: 5px 0;
+    font-size: 13px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist p,
+  .create-account-page .create-account-form form .select-type .lover h4 {
+    font-size: 12px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist,
+  .create-account-page .create-account-form form .select-type .lover {
+    padding: 20px 5px 10px;
+    height: 110px;
+  }
+
+  .categories-page .categories-header-image img {
+    display: block;
+  }
+
+  .categories-page .categories-form {
+    width: 100%;
+    height: 100%;
+  }
+
+  .categories-page .categories-form {
+    padding: 35px 30px;
+  }
+
+  .categories-page .categories-form span.skip {
+    top: 43px;
+    right: 45px;
+  }
+
+  .forget-password .forget,
+  .reset-passowrd .reset,
+  .verify-phone-number .verify,
+  .pickup-location .location {
+    padding: 60px 60px 50px;
+    border-radius: 10px;
+    width: 450px;
+    position: relative;
+  }
+
+  .pickup-location .location {
+    width: 650px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .login-page .login-header-image img,
+  .create-account-page .create-account-header-image img,
+  .about-you-page .about-you-image img {
+    display: block;
+  }
+
+  .login-page .login-form,
+  .create-account-page .create-account-form,
+  .about-you-page .about-you-form {
+    width: 100%;
+    height: 100%;
+  }
+
+  .login-page .login-form {
+    padding: 70px 100px;
+  }
+
+  .login-page .login-form form .forget-password a {
+    text-align: left;
+  }
+
+  .create-account-page .create-account-form {
+    padding: 50px 100px;
+  }
+
+  .about-you-page .about-you-form {
+    padding: 70px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist h4,
+  .create-account-page .create-account-form form .select-type .lover h4 {
+    padding: 5px 0;
+    font-size: 13px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist p,
+  .create-account-page .create-account-form form .select-type .lover h4 {
+    font-size: 12px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist,
+  .create-account-page .create-account-form form .select-type .lover {
+    padding: 20px 5px 10px;
+    height: 110px;
+  }
+
+  .categories-page .categories-header-image img {
+    display: block;
+  }
+
+  .categories-page .categories-form {
+    width: 100%;
+    height: 100%;
+  }
+
+  .categories-page .categories-form {
+    padding: 70px 100px;
+  }
+
+  .categories-page .categories-form span.skip {
+    top: 77px;
+    right: 115px;
+  }
+
+  .forget-password .forget,
+  .reset-passowrd .reset,
+  .verify-phone-number .verify,
+  .pickup-location .location {
+    padding: 60px 60px 50px;
+    border-radius: 10px;
+    width: 450px;
+    position: relative;
+  }
+
+  .pickup-location .location {
+    width: 650px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .login-page .login-header-image img,
+  .create-account-page .create-account-header-image img,
+  .about-you-page .about-you-image img {
+    display: block;
+  }
+
+  .login-page .login-form,
+  .create-account-page .create-account-form,
+  .about-you-page .about-you-form {
+    width: 100%;
+    height: 100%;
+  }
+
+  .login-page .login-form {
+    padding: 70px 100px;
+  }
+
+  .login-page .login-form form .forget-password a {
+    text-align: left;
+  }
+
+  .create-account-page .create-account-form {
+    padding: 50px 100px;
+  }
+
+  .about-you-page .about-you-form {
+    padding: 70px 100px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist h4,
+  .create-account-page .create-account-form form .select-type .lover h4 {
+    padding: 5px 0;
+    font-size: 13px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist p,
+  .create-account-page .create-account-form form .select-type .lover h4 {
+    font-size: 12px;
+  }
+
+  .create-account-page .create-account-form form .select-type .artist,
+  .create-account-page .create-account-form form .select-type .lover {
+    padding: 20px 5px 10px;
+    height: 110px;
+  }
+
+  .categories-page .categories-header-image img {
+    display: block;
+  }
+
+  .categories-page .categories-form {
+    width: 100%;
+    height: 100%;
+  }
+
+  .categories-page .categories-form {
+    padding: 70px 100px;
+  }
+
+  .categories-page .categories-form span.skip {
+    top: 77px;
+    right: 115px;
+  }
+
+  .forget-password .forget,
+  .reset-passowrd .reset,
+  .verify-phone-number .verify,
+  .pickup-location .location {
+    padding: 60px 60px 50px;
+    border-radius: 10px;
+    width: 450px;
+    position: relative;
+  }
+
+  .pickup-location .location {
+    width: 650px;
+  }
+}

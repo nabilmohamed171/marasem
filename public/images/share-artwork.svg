@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="116.62" height="128.396" viewBox="0 0 116.62 128.396">
+  <g id="Group_8453" data-name="Group 8453" transform="translate(-12455.389 -3296.986)">
+    <rect id="Rectangle_2138" data-name="Rectangle 2138" width="91.7" height="108.354" rx="10" transform="matrix(0.966, -0.259, 0.259, 0.966, 12455.389, 3320.72)" fill="#4c4c4c" opacity="0.6"/>
+    <g id="Group_8457" data-name="Group 8457" transform="translate(12467.766 3307.254)">
+      <g id="Rectangle_2136" data-name="Rectangle 2136" transform="translate(0)" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="3">
+        <rect width="91.918" height="107.54" rx="10" stroke="none"/>
+        <rect x="-1.5" y="-1.5" width="94.918" height="110.54" rx="11.5" fill="none"/>
+      </g>
+      <g id="Group_8456" data-name="Group 8456" transform="translate(0)">
+        <g id="Rectangle_2132" data-name="Rectangle 2132" transform="translate(0)" fill="#7f7f7f" stroke="#1a1a1a" stroke-width="3" opacity="0.2">
+          <rect width="91.918" height="107.54" rx="10" stroke="none"/>
+          <rect x="-1.5" y="-1.5" width="94.918" height="110.54" rx="11.5" fill="none"/>
+        </g>
+        <g id="Group_8455" data-name="Group 8455" transform="translate(0 16.5)">
+          <g id="Group_8454" data-name="Group 8454" transform="translate(0 24.301)">
+            <path id="Intersection_6" data-name="Intersection 6" d="M10,66.74a10,10,0,0,1-10-10V34.525L27.034,3.693s6.393-8.308,13.63,0c5.627,6.456,36.851,42.291,50.49,57.946a10,10,0,0,1-8.72,5.1Z" transform="translate(0 0)" fill="#f1ad56"/>
+            <path id="Intersection_5" data-name="Intersection 5" d="M0,36.473V21.206L19.373,1.953s3.881-4.395,8.275,0L39.605,13.91v14.46a9.987,9.987,0,0,1-4.139,8.1Z" transform="translate(52.313 28.202)" fill="#f1ad56" opacity="0.2"/>
+          </g>
+          <circle id="Ellipse_51" data-name="Ellipse 51" cx="8.25" cy="8.25" r="8.25" transform="translate(58.1)" fill="#f1ad56"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,82 @@
+.event-page {
+  color: #fff;
+  padding: 50px 0;
+}
+
+.event-page h4 {
+  color: #7ed321;
+  font-size: 15px;
+  padding: 10px 0;
+  font-weight: 600;
+}
+
+.event-page h3 {
+  color: #f1ad56;
+  font-size: 20px;
+  padding: 10px 0;
+  font-weight: 600;
+}
+
+.event-page h2 {
+  color: #fff;
+  font-size: 80px;
+  padding: 10px 0;
+  font-weight: 700;
+}
+
+.event-page span.icon-map {
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #000;
+  display: inline-block;
+  font-size: 20px;
+}
+
+.event-page p {
+  color: #fff;
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 17px;
+  margin-bottom: 20px;
+}
+
+.event-page .event-info p {
+  color: #ebebf599;
+  font-size: 14px;
+  text-align: justify;
+  padding: 10px 50px 0 0;
+  line-height: 1.7;
+}
+
+.event-page .event-info a {
+  color: #f1ad56;
+  font-size: 16px;
+  text-transform: uppercase;
+  margin: 0 0 0 10px;
+}
+
+.event-hr {
+  color: #777;
+  margin: 50px 0;
+}
+
+.event-image {
+  width: 100%;
+  height: auto;
+}
+
+.event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.two-event,
+.thr-event,
+.four-event {
+  margin-top: 80px;
+}

@@ -1,0 +1,41 @@
+.prev-cart {
+  color: #fff;
+  padding: 20px 0;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.prev-cart span {
+  margin-left: 20px;
+}
+
+.empty-cart {
+  padding: 150px 0 200px;
+  color: #fff;
+}
+
+.empty-cart h2 {
+  font-size: 30px;
+  padding: 20px 0;
+  margin: 0;
+}
+
+.empty-cart p {
+  color: #777;
+  line-height: 1.5;
+  font-size: 14px;
+  margin: 0;
+  padding: 10px 0;
+}
+
+.empty-cart button {
+  border: 1px solid #fff;
+  border-radius: 10px;
+  padding: 10px 30px;
+  background-color: transparent;
+  margin-top: 20px;
+  color: #fff;
+  font-weight: 500;
+  width: 200px;
+  font-size: 15px;
+}

@@ -1,0 +1,545 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --sec-main-color: #1a1a1a;
+  --text-color: #fff;
+  --border-color: #2b2b2b;
+  --heading-color: #2c3e50;
+  --main-color: #f1ad56;
+  --background-input: #1a1a1a;
+  --outline-input: #161616;
+  --main-color-hover: #ffd036;
+  --upper-navbar: #4c4c4c;
+}
+
+.wahmi {
+  color: #fff;
+  padding: 30px 0;
+}
+
+body,
+html {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif !important;
+  font-weight: normal !important;
+  background-color: #0a0a0a !important;
+  overflow-x: hidden;
+}
+
+.hidden {
+  display: none;
+}
+
+hr {
+  color: #8f8f8f;
+}
+
+::placeholder {
+  color: #777 !important;
+}
+
+.flex-r-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.accordion-button:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: inherit;
+}
+
+.accordion input:focus,
+.accordion textarea:focus,
+.accordion select:focus,
+.accordion button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
+}
+
+.overley-o-b {
+  position: absolute;
+  width: 100%;
+  height: 30%;
+  bottom: 0;
+  left: 0;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.9808298319327731) 9%,
+    rgba(0, 0, 0, 1) 19%,
+    rgba(0, 0, 0, 1) 25%,
+    rgba(0, 0, 0, 0.9808298319327731) 36%,
+    rgba(0, 0, 0, 1) 49%,
+    rgba(27, 27, 27, 1) 70%,
+    rgba(50, 49, 49, 0.7343312324929971) 84%,
+    rgba(84, 84, 84, 0) 100%
+  );
+  opacity: 0.8;
+}
+
+.wrap {
+  width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.overley {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.reser-link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.main-color {
+  color: #f1ad56;
+}
+
+.form-check-input:checked {
+  background-color: #f1ad56 !important;
+  border-color: #f1ad56 !important;
+}
+
+.form-control {
+  -webkit-appearance: auto !important;
+  appearance: auto !important;
+}
+
+.dropdown-menu.show {
+  display: block;
+  background: #0a0a0a;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.dropdown-item {
+  color: #fff !important;
+  font-size: 13px;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: #474747 !important;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  background-color: #1a1a1a !important;
+  border: 1px solid #1a1a1a !important;
+  color: #fff !important;
+  outline: none;
+}
+
+.form-check-input {
+  --bs-form-check-bg: #ffffff00 !important;
+  border: var(--bs-border-width) solid #f1ad56 !important;
+}
+
+@media (min-width: 0) {
+  .navbar {
+    background-color: #000 !important;
+  }
+
+  .cover-header {
+    display: none !important;
+  }
+
+  .main-mobile-cover {
+    display: none !important;
+  }
+
+  .dropdown-filter {
+    display: none !important;
+  }
+
+  .collections-page .collections-all .follow-collection {
+    top: -45px !important;
+    right: -20px !important;
+  }
+
+  .collections-page .collections-all h2 {
+    font-size: 20px !important;
+  }
+
+  .slider-tags {
+    margin-top: 0 !important;
+  }
+
+  .slider-category {
+    padding: 50px 0 50px 0 !important;
+  }
+
+  .slider-tags span {
+    display: block !important;
+    margin-bottom: 25px !important;
+  }
+
+  .new-artwork {
+    padding: 50px 0 0 0 !important;
+  }
+
+  .sec-collections .first,
+  .first-collections .first,
+  .first-collections .sec,
+  .sec-collections .sec,
+  .three-collections .first,
+  .three-collections .sec {
+    width: 100% !important;
+    margin-bottom: 20px !important;
+  }
+
+  .first-collections .info > p,
+  .sec-collections .info > p,
+  .three-collections .info > p {
+    display: none !important;
+  }
+
+  .images-items-collections h3 {
+    margin-bottom: 30px !important;
+  }
+
+  .new-artwork .see-all h2 {
+    margin-bottom: 0 !important;
+  }
+
+  .dropdown-filter,
+  .main-footer {
+    display: none !important;
+  }
+
+  .number-pages .dropdown-number-pages .dropdown .btn {
+    position: relative !important;
+    top: 20px !important;
+    width: 100px !important;
+  }
+
+  .copyright {
+    display: none !important;
+  }
+}
+
+@media (min-width: 576px) {
+  .navbar {
+    background-color: #000 !important;
+  }
+
+  .cover-header {
+    display: none !important;
+  }
+
+  .main-mobile-cover {
+    display: block !important;
+  }
+
+  .dropdown-filter {
+    display: none !important;
+  }
+
+  .first-collections .info > p,
+  .sec-collections .info > p,
+  .three-collections .info > p {
+    display: none !important;
+  }
+
+  .sec-collections .first,
+  .first-collections .first,
+  .first-collections .sec,
+  .sec-collections .sec,
+  .three-collections .first,
+  .three-collections .sec {
+    width: 100% !important;
+    margin-bottom: 20px !important;
+  }
+
+  .number-pages .dropdown-number-pages .dropdown .btn {
+    position: static !important;
+    top: 0 !important;
+    width: auto !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    background-color: #1a1a1a !important;
+  }
+
+  .cover-header {
+    display: none !important;
+  }
+
+  .main-mobile-cover {
+    display: block !important;
+  }
+
+  .dropdown-filter {
+    display: none !important;
+  }
+
+  .sec-collections .first,
+  .first-collections .first,
+  .first-collections .sec,
+  .sec-collections .sec,
+  .three-collections .first,
+  .three-collections .sec {
+    width: 100% !important;
+    margin-bottom: 20px !important;
+  }
+
+  .first-collections .info > p,
+  .sec-collections .info > p,
+  .three-collections .info > p {
+    display: block !important;
+  }
+
+  .new-artwork {
+    padding-top: 0 !important;
+  }
+
+  .new-artwork .see-all h2 {
+    margin-bottom: 35px !important;
+  }
+
+  .slider-category {
+    padding: 50px 0 0 0 !important;
+  }
+
+  .slider-tags span {
+    margin-bottom: 0px !important;
+  }
+
+  .number-pages .dropdown-number-pages .dropdown .btn {
+    position: static !important;
+    top: 0 !important;
+    width: auto !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar {
+    background-color: #1a1a1a !important;
+  }
+
+  .cover-header {
+    display: block !important;
+  }
+
+  .main-mobile-cover {
+    display: none !important;
+  }
+
+  .dropdown-filter {
+    display: block !important;
+  }
+
+  .collections-page .collections-all .follow-collection {
+    top: -7px !important;
+  }
+
+  .slider-tags {
+    margin: 20px 0 !important;
+  }
+
+  .collections-page .collections-all h2 {
+    font-size: 40px !important;
+  }
+
+  .find-photo,
+  .main-mobile-cover {
+    display: none !important;
+  }
+
+  .slider-category {
+    padding: 50px 0 0 0 !important;
+  }
+
+  .slider-tags span {
+    margin-bottom: 0px !important;
+  }
+
+  .new-artwork {
+    padding-top: 0 !important;
+  }
+
+  .new-artwork .see-all h2 {
+    margin-bottom: 35px !important;
+  }
+
+  .sec-collections .first,
+  .first-collections .first,
+  .first-collections .sec,
+  .sec-collections .sec,
+  .three-collections .first,
+  .three-collections .sec {
+    width: 100% !important;
+    margin-bottom: 20px;
+  }
+
+  .first-collections .info > p,
+  .sec-collections .info > p,
+  .three-collections .info > p {
+    display: block !important;
+  }
+
+  .number-pages .dropdown-number-pages .dropdown .btn {
+    position: static !important;
+    top: 0 !important;
+    width: auto !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .navbar {
+    background-color: #1a1a1a !important;
+  }
+
+  .cover-header {
+    display: block !important;
+  }
+
+  .main-mobile-cover {
+    display: none !important;
+  }
+
+  .dropdown-filter {
+    display: block !important;
+  }
+
+  .collections-page .collections-all .follow-collection {
+    top: -7px !important;
+  }
+
+  .slider-tags {
+    margin: 20px 0 !important;
+  }
+
+  .collections-page .collections-all h2 {
+    font-size: 40px !important;
+  }
+
+  .find-photo,
+  .main-mobile-cover {
+    display: none !important;
+  }
+
+  .slider-category {
+    padding: 50px 0 0 0 !important;
+  }
+
+  .new-artwork {
+    padding-top: 0 !important;
+  }
+
+  .new-artwork .see-all h2 {
+    margin-bottom: 35px !important;
+  }
+
+  .number-pages .dropdown-number-pages .dropdown .btn {
+    position: static !important;
+    top: 0 !important;
+    width: auto !important;
+  }
+
+  .sec-collections .first,
+  .first-collections .first,
+  .first-collections .sec,
+  .sec-collections .sec,
+  .three-collections .first,
+  .three-collections .sec {
+    width: 49% !important;
+    margin-bottom: 0 !important;
+  }
+
+  .first-collections .info > p,
+  .sec-collections .info > p,
+  .three-collections .info > p {
+    display: block !important;
+  }
+
+  .slider-tags span {
+    margin-bottom: 0px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .navbar {
+    background-color: #1a1a1a !important;
+  }
+
+  .cover-header {
+    display: block !important;
+  }
+
+  .main-mobile-cover {
+    display: none !important;
+  }
+
+  .dropdown-filter {
+    display: block !important;
+  }
+
+  .collections-page .collections-all .follow-collection {
+    top: -7px !important;
+  }
+
+  .slider-tags {
+    margin: 20px 0 !important;
+  }
+
+  .collections-page .collections-all h2 {
+    font-size: 40px !important;
+  }
+
+  .find-photo {
+    display: none !important;
+  }
+
+  .slider-category {
+    padding: 50px 0 0 0 !important;
+  }
+
+  .new-artwork {
+    padding-top: 0 !important;
+  }
+
+  .new-artwork .see-all h2 {
+    margin-bottom: 35px !important;
+  }
+
+  .number-pages .dropdown-number-pages .dropdown .btn {
+    position: static !important;
+    top: 0 !important;
+    width: auto !important;
+  }
+
+  .sec-collections .first,
+  .first-collections .first,
+  .first-collections .sec,
+  .sec-collections .sec,
+  .three-collections .first,
+  .three-collections .sec {
+    width: 49% !important;
+    margin-bottom: 0 !important;
+  }
+
+  .first-collections .info > p,
+  .sec-collections .info > p,
+  .three-collections .info > p {
+    display: block !important;
+  }
+
+  .slider-tags span {
+    margin-bottom: 0px !important;
+  }
+}

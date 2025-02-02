@@ -1,0 +1,212 @@
+.main-footer {
+  border-top: 1px solid #3c3c3c;
+  padding: 100px 0;
+  margin-top: 50px;
+}
+
+.footer-mobile {
+  border-top: 1px solid #3c3c3c;
+  padding: 50px 0;
+  margin-top: 50px;
+}
+
+.main-footer .social-media .logo-image,
+.footer-mobile .social-media .logo-image {
+  width: 145px;
+  display: inline-block;
+}
+
+.main-footer .social-media .logo-image .marasem-logo,
+.footer-mobile .social-media .logo-image .marasem-logo {
+  width: 100%;
+}
+
+.main-footer .social-media p,
+.footer-mobile .social-media p {
+  font-size: 14px;
+  margin-top: 20px;
+  color: #e5e5e5;
+}
+
+.main-footer .social-media hr,
+.footer-mobile .social-media hr {
+  color: #7f7f7f;
+  width: 60%;
+  margin: 20px 0;
+}
+
+.main-footer .social-media h4,
+.footer-mobile .social-media h4 {
+  color: #7f7f7f;
+  margin: 10px 0;
+}
+
+.main-footer .social-media ul li,
+.footer-mobile .social-media ul li {
+  display: inline-block;
+  margin: 0 10px 0 0;
+  font-size: 30px;
+  color: var(--text-color);
+}
+
+.main-footer .company-info h2,
+.main-footer .help h2 {
+  color: #777;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.main-footer .company-info ul,
+.main-footer .help ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.main-footer .company-info ul li .company-info-link,
+.main-footer .help ul li .help-link,
+.footer-mobile .company-info ul li .company-info-link,
+.footer-mobile .help ul li .help-link {
+  color: #f2f2f2;
+  font-size: 14px;
+  text-decoration: none;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.main-footer .subscribe,
+.footer-mobile .subscribe {
+  margin-bottom: 30px;
+}
+
+.main-footer .subscribe form input[type="email"],
+.footer-mobile .subscribe form input[type="email"] {
+  padding: 10px;
+  background-color: #0d0d0d;
+  font-size: 14px;
+  color: #b7b7b7;
+  outline: none;
+  border: 1px solid #353535;
+  border-radius: 20px;
+  text-indent: 20px;
+}
+
+::placeholder {
+  color: #777 !important;
+}
+
+.main-footer .subscribe form .btn-subscribe,
+.footer-mobile .subscribe form .btn-subscribe {
+  background-color: var(--main-color);
+  color: #000;
+  border-radius: 20px;
+  width: 130px;
+  font-size: 14px;
+  height: 44px !important;
+}
+
+.main-footer .payment h3 {
+  color: #e5e5e5;
+  margin-bottom: 20px;
+}
+
+.main-footer .payment ul li,
+.footer-mobile .payment ul li {
+  display: inline-block;
+  margin: 0 20px 0 0;
+}
+
+.footer-mobile .accordion-body .info-mobile ul {
+  padding: 0 !important;
+}
+
+.footer-mobile .accordion-button,
+.footer-mobile .accordion-body {
+  background-color: #0a0a0a !important;
+  color: #fff !important;
+  font-size: 16px !important;
+}
+
+.footer-mobile .accordion-button {
+  border-bottom: 1px solid #2d2d2d;
+}
+
+.footer-mobile .accordion-item {
+  border: none !important;
+  border-bottom: none !important;
+}
+
+.footer-mobile .accordion-button:not(.collapsed) {
+  box-shadow: none;
+}
+
+.footer-mobile
+  .accordion-item:last-of-type
+  > .accordion-header
+  .accordion-button.collapsed,
+.footer-mobile
+  .accordion-item:first-of-type
+  > .accordion-header
+  .accordion-button {
+  border-radius: 0 !important;
+}
+
+.footer-mobile .accordion-button:not(.collapsed)::after,
+.footer-mobile .accordion-button:not(.collapsed)::before {
+  background-image: none;
+}
+
+.footer-mobile .payment-mobile ul,
+.footer-mobile .help-mobile ul,
+.footer-mobile .info-mobile ul {
+  padding: 10px 0 !important;
+}
+
+.footer-mobile .payment-mobile ul li,
+.footer-mobile .help-mobile ul li,
+.footer-mobile .info-mobile ul li {
+  display: block;
+  color: #fff;
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.footer-mobile .payment-mobile ul li a,
+.footer-mobile .help-mobile ul li a,
+.footer-mobile .info-mobile ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.copyright {
+  padding: 0 0 10px;
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+}
+
+.copyright-mobile {
+  padding: 0 0 10px;
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+}
+
+.accordion-button::after,
+.footer-mobile .accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ffffff' class='bi bi-chevron-up' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z'/%3E%3C/svg%3E");
+  color: white;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.footer-mobile .accordion-button:not(.collapsed)::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ffffff' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3E%3C/svg%3E");
+  color: white;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.3s ease-in-out;
+}
