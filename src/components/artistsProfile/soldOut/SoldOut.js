@@ -88,7 +88,8 @@ const SoldOut = () => {
                   </Link>
                 </span>
                 <div className="sold-to">
-                  <span>Sold to {item.soldTo}</span>
+                  <span className="current-owner">Current Owner</span>
+                  <span>{item.soldTo}</span>
                 </div>
               </div>
             </div>

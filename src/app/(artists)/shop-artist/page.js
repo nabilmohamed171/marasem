@@ -1,5 +1,5 @@
 import React from "react";
-import NavbarBuyer from "@/components/navbar/NavbarArtists";
+import NavbarBuyer from "@/components/all-navbars/NavbarBuyer";
 import Artists from "@/components/artists/Artists";
 import FindMobile from "@/components/filterMobile/FindMobile";
 import Footer from "@/components/footer/Footer";

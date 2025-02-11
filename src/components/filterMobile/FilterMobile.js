@@ -400,8 +400,16 @@ const FilterMobile = () => {
               </div>
 
               <div className="buttons">
-                <button onClick={clearFilters}>Clear all</button>
-                <button>Apply Filter</button>
+                <div className="row">
+                  <div className="col-6">
+                    <button className="clear" onClick={clearFilters}>
+                      Clear all
+                    </button>
+                  </div>
+                  <div className="col-6">
+                    <button className="apply">Apply Filter</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

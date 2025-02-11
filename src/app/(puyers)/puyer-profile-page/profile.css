@@ -1,103 +1,145 @@
-.header-artist-profile {
-  width: 100%;
-  height: 200px;
-  position: relative;
-  z-index: 1;
-}
-
-.header-artist-profile .overley {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-.header-artist-profile img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.artist-profile-info {
+.puyer-profile-info {
   color: #fff;
   position: relative;
-  top: -100px;
+  top: 0;
   left: 0;
+  margin-top: 50px;
   z-index: 1;
   background-color: #1a1a1a;
-  padding: 30px 20px;
+  padding: 30px 0;
   border-radius: 20px;
 }
 
-.artist-profile-info .artist-photo {
+.puyer-profile-info .overley {
+  border-radius: 50%;
+  display: none;
+}
+
+.puyer-profile-info .puyer-photo {
   width: 92px;
   height: 92px;
   margin: 0 auto;
+  position: relative;
 }
 
-.artist-profile-info .artist-photo img {
+.puyer-profile-info .puyer-photo .edit-photo-profile {
+  position: absolute;
+  top: 33px;
+  left: 18px;
+  cursor: pointer;
+  display: none;
+}
+
+.puyer-profile-info .upload-photo-profile {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.puyer-profile-info .puyer-photo span.edit {
+  font-size: 15px;
+  color: #fff;
+}
+
+.puyer-profile-info .puyer-photo span.pen-icon {
+  margin-right: 5px;
+  font-size: 20px;
+}
+
+.puyer-profile-info .puyer-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
 }
 
-.artist-profile-info .artist-name {
+.puyer-profile-info .puyer-name {
   margin: 20px 0;
 }
 
-.artist-profile-info .artist-name h2 {
+.puyer-profile-info .puyer-name h2 {
   font-size: 18px;
   margin: 0;
   padding: 0 0 10px;
 }
 
-.artist-profile-info .artist-name span {
+.puyer-profile-info .puyer-name span {
   font-size: 14px;
   color: #ebebf599;
   margin-bottom: 20px;
   display: block;
 }
 
-.artist-profile-info .box-orders-profile-page .box-list-orders ul li {
+.puyer-profile-info .box-orders-profile-page .box-list-orders ul li {
   border-bottom: 1px solid #5a5a5a;
-  padding: 10px 0;
+  padding: 15px 20px;
 }
 
-.artist-profile-info .box-orders-profile-page .box-list-orders ul li a {
+.puyer-profile-info .box-orders-profile-page .box-list-orders ul li.active {
+  background: #060606;
+}
+
+.puyer-profile-info
+  .box-orders-profile-page
+  .box-list-orders
+  ul
+  li
+  span.active-color {
+  color: #f1ad56;
+}
+
+.puyer-profile-info
+  .box-orders-profile-page
+  .box-list-orders
+  ul
+  li:first-of-type {
+  border-bottom: none;
+}
+
+.puyer-profile-info
+  .box-orders-profile-page
+  .box-list-orders
+  ul
+  li:nth-child(2) {
+  border-bottom: none;
+}
+
+.puyer-profile-info .box-orders-profile-page .box-list-orders ul li a {
   color: #fff;
   text-decoration: none;
   font-size: 14px;
 }
 
-.artist-profile-info .button-more-info {
+.puyer-profile-info .button-more-info {
   background: #353535;
   border: 1px solid #353535;
   font-size: 15px;
   font-weight: 400;
 }
 
-.artist-profile-info .active-more-info {
+.puyer-profile-info .active-more-info {
   background-color: #f1ad56 !important;
   border: 1px solid #f1ad56 !important;
   color: #222 !important;
 }
 
-.artist-profile-info .box-orders-profile-page .box-list-orders .addresses-icon,
-.artist-profile-info .box-orders-profile-page .box-list-orders .order-icon,
-.artist-profile-info .box-orders-profile-page .box-list-orders .credit-icon {
+.puyer-profile-info .box-orders-profile-page .box-list-orders .addresses-icon,
+.puyer-profile-info .box-orders-profile-page .box-list-orders .order-icon,
+.puyer-profile-info .box-orders-profile-page .box-list-orders .credit-icon {
   margin-right: 10px;
   font-size: 20px;
   color: #777;
 }
 
-.artist-profile-info .artist-name button,
-.artist-profile-info .buttons .logout {
+.box-orders-profile-page .box-list-orders .favorites-number,
+.box-orders-profile-page .box-list-orders .following-number {
+  float: right;
+  font-weight: 600;
+}
+
+.puyer-profile-info .puyer-name button,
+.puyer-profile-info .buttons .logout {
   background-color: transparent;
   border: 1px solid #fff;
   color: #fff;
@@ -108,65 +150,29 @@
   width: 80%;
 }
 
-.artist-profile-info .artist-name .button-more-info {
+.puyer-profile-info .buttons .logout {
+  width: 90%;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 15px;
+}
+
+.puyer-profile-info .puyer-name .button-more-info {
   background-color: #252525;
   border: 1px solid #252525;
   font-weight: 400;
 }
 
-.artist-profile-info .artist-name .arrow-down-icon {
+.puyer-profile-info .puyer-name .arrow-down-icon {
   display: inline-block;
   position: absolute;
   margin-left: 3px;
   color: #fff;
 }
 
-.artist-profile-info .buttons .logout {
-  width: 100%;
-}
-
-.artist-profile-info .buttons .logout-icon {
+.puyer-profile-info .buttons .logout-icon {
   font-size: 20px;
   margin-right: 10px;
-}
-
-.artist-profile-info .artist-public-info p {
-  color: #ebebf599;
-  font-size: 14px;
-}
-
-.artist-profile-info .artist-public-info .number p {
-  text-align: right;
-  display: block;
-}
-
-.artist-profile-info .about-me,
-.tags {
-  margin-bottom: 20px;
-}
-
-.artist-profile-info .about-me {
-  margin-top: 25px;
-}
-
-.artist-profile-info .about-me h2,
-.tags h2 {
-  color: #ebebf599;
-  font-size: 18px;
-}
-
-.artist-profile-info .about-me p {
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.artist-profile-info .tags span {
-  margin-right: 5px;
-}
-
-.artist-profile-info .member {
-  color: #ebebf599;
-  margin-bottom: 20px;
 }
 
 .nav-hr {
@@ -177,7 +183,7 @@
   border: 1px solid #4c4c4c;
 }
 
-.artist-profile-info .buttons button {
+.puyer-profile-info .buttons button {
   background-color: transparent;
   border: none;
   color: #ebebf599;
@@ -188,7 +194,7 @@
 }
 
 .links-profile {
-  margin: 20px 0;
+  margin: 50px 0 20px 0;
 }
 
 .links-profile ul .nav-link {
@@ -427,6 +433,10 @@
   color: #fff !important;
 }
 
+.item-count {
+  color: #f1ad56;
+}
+
 @media (max-width: 575.98px) {
   .artist-public-info,
   .box-orders-profile-page,
@@ -446,7 +456,7 @@
     margin: 20px 0 35px !important;
   }
 
-  .artist-profile-info .artist-name button {
+  .puyer-profile-info .puyer-name button {
     width: 100% !important;
   }
 
@@ -481,7 +491,7 @@
     margin: 20px 0 35px !important;
   }
 
-  .artist-profile-info .artist-name button {
+  .puyer-profile-info .puyer-name button {
     width: 100% !important;
   }
 

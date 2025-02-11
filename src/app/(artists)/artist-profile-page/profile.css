@@ -1,0 +1,563 @@
+.header-artist-profile {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  z-index: 1;
+}
+
+.header-artist-profile .overley {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.header-artist-profile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.artist-profile-info {
+  color: #fff;
+  position: relative;
+  top: -100px;
+  left: 0;
+  z-index: 1;
+  background-color: #1a1a1a;
+  padding: 30px 20px;
+  border-radius: 20px;
+}
+
+.header-artist-profile .edit-cover-profile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #fff;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  display: none !important;
+}
+
+.header-artist-profile .edit-cover-profile .pen-icon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.header-artist-profile .edit-cover-profile .edit-cover {
+  font-size: 16px;
+}
+
+.artist-profile-info .overley {
+  border-radius: 50%;
+  display: none;
+}
+
+.artist-profile-info .artist-photo {
+  width: 92px;
+  height: 92px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.artist-profile-info .artist-photo .edit-photo-profile {
+  position: absolute;
+  top: 33px;
+  left: 18px;
+  cursor: pointer;
+  display: none;
+}
+
+.artist-profile-info .upload-photo-profile {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.header-artist-profile .upload-cover-profile {
+  position: relative;
+  top: -113px;
+  left: 48%;
+  z-index: 99999;
+  opacity: 0;
+}
+
+.artist-profile-info .artist-photo span.edit {
+  font-size: 15px;
+  color: #fff;
+}
+
+.artist-profile-info .artist-photo span.pen-icon {
+  margin-right: 5px;
+  font-size: 20px;
+}
+
+.artist-profile-info .artist-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.artist-profile-info .artist-name {
+  margin: 20px 0;
+}
+
+.artist-profile-info .artist-name h2 {
+  font-size: 18px;
+  margin: 0;
+  padding: 0 0 10px;
+}
+
+.artist-profile-info .artist-name span {
+  font-size: 14px;
+  color: #ebebf599;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.artist-profile-info .box-orders-profile-page .box-list-orders ul li {
+  border-bottom: 1px solid #5a5a5a;
+  padding: 10px 0;
+}
+
+.artist-profile-info .box-orders-profile-page .box-list-orders ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.artist-profile-info .button-more-info {
+  background: #353535;
+  border: 1px solid #353535;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.artist-profile-info .active-more-info {
+  background-color: #f1ad56 !important;
+  border: 1px solid #f1ad56 !important;
+  color: #222 !important;
+}
+
+.artist-profile-info .box-orders-profile-page .box-list-orders .addresses-icon,
+.artist-profile-info .box-orders-profile-page .box-list-orders .order-icon,
+.artist-profile-info .box-orders-profile-page .box-list-orders .credit-icon {
+  margin-right: 10px;
+  font-size: 20px;
+  color: #777;
+}
+
+.artist-profile-info .artist-name button,
+.artist-profile-info .buttons .logout {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 10px;
+  padding: 8px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  width: 80%;
+}
+
+.artist-profile-info .artist-name .button-more-info {
+  background-color: #252525;
+  border: 1px solid #252525;
+  font-weight: 400;
+}
+
+.artist-profile-info .artist-name .arrow-down-icon {
+  display: inline-block;
+  position: absolute;
+  margin-left: 3px;
+  color: #fff;
+}
+
+.artist-profile-info .buttons .logout {
+  width: 100%;
+}
+
+.artist-profile-info .buttons .logout-icon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.artist-profile-info .artist-public-info p {
+  color: #ebebf599;
+  font-size: 14px;
+}
+
+.artist-profile-info .artist-public-info .number p {
+  text-align: right;
+  display: block;
+}
+
+.artist-profile-info .about-me,
+.tags {
+  margin-bottom: 20px;
+}
+
+.artist-profile-info .about-me {
+  margin-top: 25px;
+}
+
+.artist-profile-info .about-me h2,
+.tags h2 {
+  color: #ebebf599;
+  font-size: 18px;
+}
+
+.artist-profile-info .about-me p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.artist-profile-info .tags span {
+  margin-right: 5px;
+}
+
+.artist-profile-info .member {
+  color: #ebebf599;
+  margin-bottom: 20px;
+}
+
+.nav-hr {
+  width: 2px;
+  height: 24px;
+  background-color: #4c4c4c;
+  margin: 0 10px;
+  border: 1px solid #4c4c4c;
+}
+
+.artist-profile-info .buttons button {
+  background-color: transparent;
+  border: none;
+  color: #ebebf599;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+}
+
+.links-profile {
+  margin: 20px 0;
+}
+
+.links-profile ul .nav-link {
+  color: #fff;
+  margin-right: 10px;
+  padding: 7px 15px;
+  transition: all 0.3s ease-out;
+  font-size: 15px;
+}
+
+.links-profile ul .nav-link:hover {
+  background-color: #fff;
+  color: #333 !important;
+  border-radius: 30px;
+}
+
+.active-sub-menu {
+  background-color: #fff;
+  color: #333 !important;
+  border-radius: 30px;
+}
+
+.collections-artist {
+  color: #fff;
+  position: relative;
+}
+
+.collections-artist .item-image {
+  position: relative;
+}
+
+.collections-artist .overley-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+}
+
+.collections-artist .photo {
+  height: 390px;
+}
+
+.collections-artist .photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.cart-heart {
+  position: absolute;
+  top: 0;
+  display: none;
+}
+
+.photo-info {
+  margin-bottom: 20px;
+}
+
+.photo-info h2 {
+  font-size: 16px;
+  padding: 0;
+  margin: 10px 0;
+  line-height: 1.5;
+  width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.photo-info p {
+  font-size: 14px;
+  padding: 0;
+  margin: 0 0 10px;
+  color: #777;
+  line-height: 1.5;
+  width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.photo-info span {
+  font-size: 18px;
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+
+.item-image .overley {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.item-image .overley:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.item-image {
+  position: relative;
+}
+
+.item-image .overley-info .plus {
+  position: absolute;
+  left: 34px;
+  top: 28px;
+  font-size: 12px;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  line-height: 11px;
+  text-align: center;
+  color: #333 !important;
+  background-color: #f1ad56 !important;
+}
+
+.item-image .overley-info .user-art {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+}
+
+.item-image .overley-info .heart {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 22px;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.item-image .overley-info .heart:hover {
+  color: #f1ad56;
+  fill: #f1ad56;
+}
+
+.item-image .overley-info .cart-shopping {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 23px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #f1ad56 !important;
+}
+
+.item-image .overley-info .plus {
+  position: absolute;
+  left: 34px;
+  top: 28px;
+  font-size: 12px;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  line-height: 11px;
+  text-align: center;
+  color: #333 !important;
+  background-color: #f1ad56 !important;
+}
+
+.item-image .overley-info .user-art span {
+  color: #fff;
+  font-size: 14px;
+  margin-left: 10px;
+  text-transform: capitalize;
+}
+
+.item-image .overley-info .user-image {
+  width: 50px;
+  height: 50px;
+  margin-left: 15px;
+  display: inline-block;
+}
+
+.item-image .overley-info .user-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.item-image .overley-info {
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.item-image:hover .overley-info {
+  opacity: 1;
+}
+
+.dropdown-more-info-mobile button.dropdown-toggle {
+  border-radius: 10px;
+  background-color: #2f2f30;
+  color: #fff;
+  border: 1px solid #2f2f30;
+  font-weight: 400;
+}
+
+.art-name {
+  padding-top: 17px;
+  text-align: center;
+}
+
+.art-name span {
+  color: #777;
+}
+
+.follow-active {
+  background-color: transparent !important;
+  border: 1px solid #fff !important;
+  color: #fff !important;
+}
+
+@media (max-width: 575.98px) {
+  .artist-public-info,
+  .box-orders-profile-page,
+  .about-me,
+  .tags,
+  .member,
+  .buttons {
+    display: none;
+  }
+
+  .custom-mobile {
+    position: relative !important;
+    top: -85px !important;
+  }
+
+  .links-profile {
+    margin: 20px 0 35px !important;
+  }
+
+  .artist-profile-info .artist-name button {
+    width: 100% !important;
+  }
+
+  .art-name {
+    text-align: left !important;
+  }
+
+  .collections-artist .photo {
+    height: 280px;
+  }
+
+  .photo-info p {
+    width: 185px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .artist-public-info,
+  .about-me,
+  .tags,
+  .member,
+  .buttons {
+    display: none;
+  }
+
+  .custom-mobile {
+    position: relative !important;
+    top: -85px !important;
+  }
+
+  .links-profile {
+    margin: 20px 0 35px !important;
+  }
+
+  .artist-profile-info .artist-name button {
+    width: 100% !important;
+  }
+
+  .art-name {
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+@media (max-width: 1399.98px) {
+}

@@ -7,13 +7,7 @@
 }
 
 .dropdown-filter .dropdown-toggle::after {
-  float: right;
-  color: #c7c7c7;
-  margin-top: 8px;
-}
-
-.dropdown-filter .best-seller .dropdown-toggle::after {
-  float: none !important;
+  display: none;
 }
 
 .dropdown-filter h2 {
@@ -60,7 +54,18 @@
 }
 
 .dropdown-filter .best-seller {
-  background: transparent !important;
+  background: #000 !important;
   color: #fff !important;
   border: none !important;
+}
+
+.dropdown-filter .dropdown {
+  position: relative;
+}
+
+.dropdown-filter .dropdown .arrow-down-icon {
+  position: absolute;
+  top: 5px;
+  right: 12px;
+  font-size: 18px;
 }

@@ -1,0 +1,159 @@
+.section-edit-profile input,
+.section-edit-profile textarea {
+  transition: none;
+  background: #0a0a0a;
+  border: 1px solid #0a0a0a;
+  padding: 10px;
+  color: #fff;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+.section-edit-profile textarea {
+  height: 100px !important;
+}
+.section-edit-profile input:focus,
+.section-edit-profile textarea:focus,
+.section-edit-profile .phone-input-container .phone-input:focus {
+  background-color: #0a0a0a !important;
+  border: 1px solid #0a0a0a !important;
+}
+
+.section-edit-profile label {
+  font-weight: 300;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.section-edit-profile .form-select {
+  background: #0a0a0a;
+  color: #fff;
+  border: 1px solid #0a0a0a;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.dropdown-selected {
+  position: relative;
+}
+
+.dropdown-selected span {
+  position: absolute;
+  top: 28px;
+  right: 13px;
+  font-size: 20px;
+  color: #fff;
+}
+
+.section-edit-profile .phone-input-container .phone-input {
+  margin-top: 0;
+  padding: 10px;
+  border: 1px solid #0a0a0a;
+  border-radius: 10px;
+  width: 100%;
+  background: #0a0a0a;
+  text-indent: 100px !important;
+  color: #fff;
+}
+
+.section-edit-profile .form-edit-profile,
+.section-edit-profile .form-edit-about-me,
+.section-edit-profile .form-pickup-location,
+.section-edit-profile .form-focus {
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.section-edit-profile .form-edit-profile .general-info h2,
+.section-edit-profile .form-edit-about-me h2,
+.section-edit-profile .form-pickup-location .pickup-location h2,
+.section-edit-profile .form-focus .focus p {
+  margin-bottom: 30px;
+}
+
+.section-edit-profile .form-focus .focus h2 {
+  margin-bottom: 5px;
+}
+
+.section-edit-profile .form-focus .focus p {
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.section-edit-profile .form-edit-profile .button-reset-update,
+.section-edit-profile .form-edit-about-me .button-reset-update,
+.section-edit-profile .form-pickup-location .button-reset-update,
+.section-edit-profile .form-focus .focus .button-reset-update {
+  text-align: right;
+  margin-bottom: 13px;
+}
+
+.section-edit-profile .form-edit-profile .button-reset-update button,
+.section-edit-profile .form-edit-about-me .button-reset-update button,
+.section-edit-profile .form-pickup-location .button-reset-update button,
+.section-edit-profile .form-focus .focus .button-reset-update button {
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  border: 1px solid #fff;
+  margin-right: 10px;
+  width: 150px;
+  background: transparent;
+  color: #fff;
+}
+
+.section-edit-profile .form-edit-profile .button-reset-update button.update,
+.section-edit-profile .form-edit-about-me .button-reset-update button.update,
+.section-edit-profile .form-pickup-location .button-reset-update button.update,
+.section-edit-profile .form-focus .focus .button-reset-update button.update {
+  border: 1px solid #0a0a0a;
+  background: #0a0a0a;
+}
+
+.section-edit-profile .form-edit-profile button.change-password {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.section-edit-profile .form-focus .focus h3 {
+  color: #f1ad56;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.section-edit-profile .form-focus .focus ul {
+  list-style: none;
+  padding: 0;
+}
+
+.section-edit-profile .form-focus .focus ul li {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 10px 15px;
+  background-color: #0a0a0a;
+  border: 1px solid #0a0a0a;
+  border-radius: 10px;
+  color: #fff;
+  text-transform: capitalize;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.section-edit-profile .form-focus .focus ul li:hover {
+  background-color: #fff;
+  color: #222;
+}
+
+.section-edit-profile .form-focus .focus ul li.active {
+  background-color: #fff;
+  color: #222;
+}

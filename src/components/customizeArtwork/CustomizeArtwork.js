@@ -5,6 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import Image from "next/image";
 import AddAddress from "@/components/addressCart/addAddress/AddAddress";
+import Link from "next/link";
 import "./customize-artwork.css";
 
 const CustomizeArtwork = () => {
@@ -182,14 +183,17 @@ const CustomizeArtwork = () => {
                 </div>
                 <div className="col-12">
                   <div className="button-send-request">
-                    <button
-                      type="button"
-                      className="btn"
-                      disabled={!isFormValid}
-                      onClick={handleSendRequestClick}
-                    >
-                      Send Request
-                    </button>
+                    {"/request-successfully"}
+                    <Link href="">
+                      <button
+                        type="button"
+                        className="btn"
+                        disabled={!isFormValid}
+                        onClick={handleSendRequestClick}
+                      >
+                        Send Request
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

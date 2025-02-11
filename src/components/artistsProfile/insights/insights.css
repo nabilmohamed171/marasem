@@ -1,0 +1,208 @@
+.insights .box-insights {
+  background-color: #1a1a1a;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.insights .total-sales h3,
+.insights .total-sold h3,
+.insights .total-todo h3,
+.insights .total-viewa h3,
+.insights .project-amount h3,
+.insights .appreciations h3,
+.insights .followers h3,
+.insights .following h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.insights .total-sales span,
+.insights .total-sold span,
+.insights .total-todo span,
+.insights .total-viewa span,
+.insights .project-amount span,
+.insights .appreciations span,
+.insights .followers span,
+.insights .following span {
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.insights .total-sales span {
+  color: #f1ad56;
+}
+
+.insights .box-project-amount {
+  text-align: center;
+  margin: 30px 0;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.insights .project-amount,
+.insights .appreciations,
+.insights .followers,
+.insights .following {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.table-artwork-performance {
+  background-color: #1a1a1a;
+  color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.table-artwork-performance .artwork-performance .table-head {
+  margin-bottom: 20px;
+}
+
+.table-artwork-performance .artwork-performance h3,
+.table-artwork-performance .performance-info h3 {
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.table-artwork-performance .performance-info h3 {
+  margin-top: 20px;
+}
+
+.table-artwork-performance .performance-info span {
+  color: #777;
+  font-size: 12px;
+}
+
+.table-artwork-performance .table-row {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #2e2e2e;
+}
+
+.table-artwork-performance .table-row:last-child {
+  border-bottom: none;
+}
+
+.table-artwork-performance .table-row .performance-image {
+  position: relative;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.table-artwork-performance .table-row .performance-image .overley {
+  border-radius: 10px;
+}
+
+.table-artwork-performance .table-row .performance-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.table-artwork-performance .performance-view span,
+.table-artwork-performance .performance-appreciations span,
+.table-artwork-performance .performance-artwork-status span {
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 40px;
+  display: inline-block;
+}
+
+.table-artwork-performance .performance-artwork-status span {
+  color: #f1ad56;
+}
+
+.insights-mobile .box-total-sales-mobile {
+  margin-bottom: 20px;
+}
+
+.insights-mobile .box-total-sales-mobile .total-sales,
+.insights-mobile .box-total-sales-mobile .total-sold {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.insights-mobile .box-total-sales-mobile .total-sales h3,
+.insights-mobile .box-total-sales-mobile .total-sold h3 {
+  font-size: 13px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.insights-mobile .box-total-sales-mobile .total-sales span,
+.insights-mobile .box-total-sales-mobile .total-sold span {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  font-weight: 500;
+}
+
+.insights-mobile .box-total-sales-mobile .total-sales span {
+  color: #f1ad56;
+}
+
+.insights-mobile .box-views-mobile {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.insights-mobile .box-views-mobile h3 {
+  font-size: 13px;
+}
+
+.insights-mobile .box-views-mobile span {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.insights-mobile .box-followers-mobile {
+  margin-bottom: 20px;
+}
+
+.insights-mobile .box-followers-mobile .followers,
+.insights-mobile .box-followers-mobile .following,
+.insights-mobile .box-followers-mobile .sold-out {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.insights-mobile .box-followers-mobile h3 {
+  font-size: 13px;
+}
+
+.insights-mobile .box-followers-mobile span {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+@media (max-width: 575.98px) {
+  .insights {
+    display: none;
+  }
+
+  .insights-mobile {
+    display: block;
+  }
+}
+
+@media (max-width: 767.98px) {
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+@media (max-width: 1399.98px) {
+}

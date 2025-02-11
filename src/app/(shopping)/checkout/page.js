@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { FaMapMarkerAlt, FaCheck } from "react-icons/fa";
 import { RiArrowLeftSLine } from "react-icons/ri";
-import Upper from "@/components/navbar/Upper";
-import NabvarBuyer from "@/components/navbar/NavbarArtists";
+import Upper from "@/components/all-navbars/NavbarUpper";
+import NabvarBuyer from "@/components/all-navbars/NavbarArtists";
 import Footer from "@/components/footer/Footer";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 import ShoppingAddress from "@/components/addressCart/shippingAddress/ShippingAddress";
@@ -15,6 +15,8 @@ import "./checkout.css";
 const CheckOut = () => {
   const [showShippingAddress, setShowShippingAddress] = useState(false);
   const [showAddAddress, setShowAddAddress] = useState(true);
+  const [isChecked, setIsChecked] = useState(false); // State for checkbox
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 
   const handleChangeAddress = () => {
     setShowShippingAddress((prevState) => !prevState);
@@ -22,6 +24,14 @@ const CheckOut = () => {
 
   const handleAddAddress = () => {
     setShowAddAddress((prevState) => !prevState);
+  };
+
+  const handleRadioChange = (method) => {
+    setSelectedPaymentMethod(method);
+  };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked); // Toggle checkbox state
   };
 
   return (
@@ -86,9 +96,12 @@ const CheckOut = () => {
                           type="checkbox"
                           value=""
                           id="flexCheckDefault"
+                          onChange={handleCheckboxChange} // Handle checkbox change
                         />
                         <label
-                          className="form-check-label"
+                          className={`form-check-label ${
+                            isChecked ? "text-white" : ""
+                          }`} // Change label color based on checkbox state
                           htmlFor="flexCheckDefault"
                         >
                           Pay with Etmana Credit
@@ -116,9 +129,14 @@ const CheckOut = () => {
                             type="radio"
                             name="paymentMethod"
                             id="flexRadioDefault1"
+                            onChange={() => handleRadioChange("card")}
                           />
                           <label
-                            className="form-check-label"
+                            className={`form-check-label ${
+                              selectedPaymentMethod === "card"
+                                ? "text-white"
+                                : ""
+                            }`}
                             htmlFor="flexRadioDefault1"
                           >
                             Debit/Credit Card
@@ -158,9 +176,14 @@ const CheckOut = () => {
                             name="paymentMethod"
                             id="flexRadioDefault2"
                             defaultChecked
+                            onChange={() => handleRadioChange("valu")}
                           />
                           <label
-                            className="form-check-label"
+                            className={`form-check-label ${
+                              selectedPaymentMethod === "valu"
+                                ? "text-white"
+                                : ""
+                            }`}
                             htmlFor="flexRadioDefault2"
                           >
                             Pay with ValU
@@ -190,9 +213,14 @@ const CheckOut = () => {
                             type="radio"
                             name="paymentMethod"
                             id="flexRadioDefault3"
+                            onChange={() => handleRadioChange("cash")}
                           />
                           <label
-                            className="form-check-label"
+                            className={`form-check-label ${
+                              selectedPaymentMethod === "cash"
+                                ? "text-white"
+                                : ""
+                            }`}
                             htmlFor="flexRadioDefault3"
                           >
                             Cash On Delivery
@@ -232,7 +260,7 @@ const CheckOut = () => {
                   </div>
                 </div>
                 <div className="order-summary-button">
-                  <Link href="/order-details">Order Placed</Link>
+                  <Link href="/order-details">Placed Order</Link>
                 </div>
               </div>
             </div>

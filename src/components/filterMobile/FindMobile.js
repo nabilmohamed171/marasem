@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
 import FilterMobile from "@/components/filterMobile/FilterMobile";
 
 const FindMobile = () => {
@@ -55,6 +56,9 @@ const FindMobile = () => {
                     </a>
                   </li>
                 </ul>
+                <span className="arrow-down-icon">
+                  <IoIosArrowDown />
+                </span>
               </div>
             </div>
           </div>

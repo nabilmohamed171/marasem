@@ -1,15 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
 import NavbarArtists from "@/components/navbar/NavbarArtists";
+import Link from "next/link";
+import Image from "next/image";
+import Footer from "@/components/footer/Footer";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { LiaMapMarkedAltSolid } from "react-icons/lia";
 import { CgNotes } from "react-icons/cg";
 import { TbCreditCard } from "react-icons/tb";
 import { IoIosArrowDown } from "react-icons/io";
-import Link from "next/link";
-import Image from "next/image";
-import Footer from "@/components/footer/Footer";
+import { GoPencil } from "react-icons/go";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 import SectionFavorites from "@/components/artistsProfile/favorites/Favorites";
 import SectionSoldOut from "@/components/artistsProfile/soldOut/SoldOut";
@@ -17,12 +18,23 @@ import SectionGallery from "@/components/artistsProfile/gallery/Gallary";
 import SectionToDo from "@/components/artistsProfile/toDo/ToDo";
 import SectionDraft from "@/components/artistsProfile/draft/Draft";
 import SectionInsights from "@/components/artistsProfile/insights/Insights";
-
-import "./my-profile-page.css";
+import SectionEditProfile from "@/components/artistsProfile/edit-profile-artist/EditProfile";
+import SectionOrders from "@/components/artistsProfile/orders/Orders";
+import SectionCredit from "@/components/artistsProfile/credit/Credit";
+import SectionCollections from "@/components/artistsProfile/collections/Collections";
+import SectionAddresses from "@/components/artistsProfile/addresses/Addresses";
+import "./profile.css";
 
 const MyProfilePage = () => {
   const [activeSection, setActiveSection] = useState("gallery");
   const [moreInfoActive, setMoreInfoActive] = useState(false);
+  const [editProfileVisible, setEditProfileVisible] = useState(true);
+  const [editCoverProfileVisible, setEditCoverProfileVisible] = useState(false);
+  const [editPhotoProfileVisible, setEditPhotoProfileVisible] = useState(false);
+  const [overlayVisible, setOverlayVisible] = useState(false);
+
+  const [avatar, setAvatar] = useState("/images/avatar2.png");
+  const [headerImage, setHeaderImage] = useState("/images/header3.jpg");
 
   const artistData = {
     name: "Nour Elmasry",
@@ -53,6 +65,35 @@ const MyProfilePage = () => {
     setMoreInfoActive(!moreInfoActive);
   };
 
+  const handleEditProfileClick = () => {
+    setEditProfileVisible(false);
+    setEditCoverProfileVisible(true);
+    setEditPhotoProfileVisible(true);
+    setOverlayVisible(true);
+  };
+
+  const handleCoverImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setHeaderImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleAvatarImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatar(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <>
       <NavbarArtists />
@@ -60,13 +101,33 @@ const MyProfilePage = () => {
       <div className="header-artist-profile">
         <div className="overley"></div>
         <Image
-          src={artistData.headerImage}
+          src={headerImage}
           alt="Artist Header"
           width={1920}
           height={600}
           quality={100}
           loading="lazy"
         />
+        <form className="upload-cover-profile">
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleCoverImageChange}
+          />
+        </form>
+
+        <div
+          className={`edit-cover-profile ${
+            editCoverProfileVisible ? "d-block" : "d-none"
+          }`}
+        >
+          <span className="pen-icon">
+            {" "}
+            <GoPencil />
+          </span>
+          <span className="edit-cover">Edit Cover</span>
+        </div>
       </div>
 
       <div className="container">
@@ -76,14 +137,36 @@ const MyProfilePage = () => {
               <div className="row">
                 <div className="col-md-12 col-3">
                   <div className="artist-photo">
+                    <div
+                      className="overley"
+                      style={{ display: overlayVisible ? "block" : "none" }}
+                    ></div>
                     <Image
-                      src={artistData.avatar}
+                      src={avatar}
                       alt="Artist Avatar"
                       width={150}
                       height={150}
                       loading="lazy"
                       quality={100}
                     />
+                    <div
+                      className={`edit-photo-profile ${
+                        editPhotoProfileVisible ? "d-block" : "d-none"
+                      }`}
+                    >
+                      <form className="upload-photo-profile">
+                        <input
+                          type="file"
+                          name="image"
+                          accept="image/*"
+                          onChange={handleAvatarImageChange}
+                        />
+                      </form>
+                      <span className="pen-icon">
+                        <GoPencil />
+                      </span>
+                      <span className="edit">Edit</span>
+                    </div>
                   </div>
                 </div>
                 <div className="col-md-12 col-9">
@@ -99,13 +182,19 @@ const MyProfilePage = () => {
               <div className="artist-name text-center">
                 <div className="row">
                   <div className="col-md-12 col-8">
-                    <button
-                      type="button"
-                      aria-label="Edit Profile"
-                      className="edit-profile-button"
-                    >
-                      Edit Profile
-                    </button>
+                    {editProfileVisible && (
+                      <button
+                        type="button"
+                        aria-label="Edit Profile"
+                        className="edit-profile-button"
+                        onClick={() => {
+                          handleEditProfileClick();
+                          handleMenuClick("editProfile");
+                        }}
+                      >
+                        Edit Profile
+                      </button>
+                    )}
                   </div>
                   <div className="col-md-12 col-4">
                     <div className="d-block d-md-none">
@@ -138,13 +227,13 @@ const MyProfilePage = () => {
                 }`}
               >
                 <div className="row">
-                  <div className="col-md-8">
+                  <div className="col-md-8 col-6">
                     <p>Project Views</p>
                     <p>Appreciations</p>
                     <p>Followers</p>
                     <p>Following</p>
                   </div>
-                  <div className="col-md-4 number">
+                  <div className="col-md-4 col-6 number">
                     <p>{artistData.stats.projectViews}</p>
                     <p>{artistData.stats.appreciations}</p>
                     <p>{artistData.stats.followers}</p>
@@ -161,7 +250,10 @@ const MyProfilePage = () => {
                 <div className="box-list-orders">
                   <ul className="list-unstyled">
                     <li>
-                      <Link href="">
+                      <Link
+                        href="#"
+                        onClick={() => handleMenuClick("addresses")}
+                      >
                         <span className="addresses-icon">
                           <LiaMapMarkedAltSolid />
                         </span>
@@ -169,7 +261,7 @@ const MyProfilePage = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="">
+                      <Link href="#" onClick={() => handleMenuClick("orders")}>
                         <span className="order-icon">
                           <CgNotes />
                         </span>
@@ -177,7 +269,7 @@ const MyProfilePage = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="">
+                      <Link href="#" onClick={() => handleMenuClick("credit")}>
                         <span className="credit-icon">
                           <TbCreditCard />
                         </span>
@@ -188,21 +280,27 @@ const MyProfilePage = () => {
                 </div>
               </div>
 
-              <div className={`about-me ${moreInfoActive ? "d-block" : ""}`}>
-                <h2>About Me</h2>
-                <p>{artistData.about}</p>
-              </div>
+              {editProfileVisible && (
+                <>
+                  <div
+                    className={`about-me ${moreInfoActive ? "d-block" : ""}`}
+                  >
+                    <h2>About Me</h2>
+                    <p>{artistData.about}</p>
+                  </div>
 
-              <div className={`tags ${moreInfoActive ? "d-block" : ""}`}>
-                <h2>Focus</h2>
-                {artistData.focus.map((tag, index) => (
-                  <span key={index}>{tag}</span>
-                ))}
-              </div>
+                  <div className={`tags ${moreInfoActive ? "d-block" : ""}`}>
+                    <h2>Focus</h2>
+                    {artistData.focus.map((tag, index) => (
+                      <span key={index}>{tag}</span>
+                    ))}
+                  </div>
 
-              <p className="text-center member">
-                MEMBER SINCE {artistData.memberSince}
-              </p>
+                  <p className="text-center member">
+                    MEMBER SINCE {artistData.memberSince}
+                  </p>
+                </>
+              )}
 
               <div className={`buttons ${moreInfoActive ? "d-block" : ""}`}>
                 <div className="row">
@@ -318,7 +416,7 @@ const MyProfilePage = () => {
               )}
               {activeSection === "collections" && (
                 <div className="collections-artist">
-                  <SectionGallery />
+                  <SectionCollections />
                 </div>
               )}
               {activeSection === "favorites" && (
@@ -344,6 +442,26 @@ const MyProfilePage = () => {
               {activeSection === "insights" && (
                 <div className="collections-insights">
                   <SectionInsights />
+                </div>
+              )}
+              {activeSection === "editProfile" && (
+                <div className="collections-edit-profile">
+                  <SectionEditProfile />
+                </div>
+              )}
+              {activeSection === "addresses" && (
+                <div className="collections-addresses">
+                  <SectionAddresses />
+                </div>
+              )}
+              {activeSection === "orders" && (
+                <div className="collections-orders">
+                  <SectionOrders />
+                </div>
+              )}
+              {activeSection === "credit" && (
+                <div className="collections-credit">
+                  <SectionCredit />
                 </div>
               )}
             </div>

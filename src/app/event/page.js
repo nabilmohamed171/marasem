@@ -1,13 +1,20 @@
-import Navbar_Home from "@/components/navbar/Navbar_Home";
+"use client";
+import { useState } from "react";
+import Navbar_Home from "@/components/all-navbars/NavbarHome";
 import Footer from "@/components/footer/Footer";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 import { FaMapMarkerAlt } from "react-icons/fa";
-
 import Link from "next/link";
 import Image from "next/image";
 import "./event.css";
 
 const EventPage = () => {
+  const [showMore, setShowMore] = useState(false);
+
+  const toggleText = () => {
+    setShowMore(!showMore);
+  };
+
   return (
     <>
       <Navbar_Home />
@@ -99,7 +106,17 @@ const EventPage = () => {
                     contradictions, both still and humming with life, unruly yet
                     organized by mysterious …
                   </p>
-                  <Link href="/">SHOW MORE</Link>
+                  <Link href="#" onClick={toggleText}>
+                    {showMore ? "SHOW LESS" : "SHOW MORE"}
+                  </Link>
+                  <p className={`more-text ${showMore ? "show" : ""}`}>
+                    Following his last exhibition, Threshold, which explored the
+                    spaces where forest and wetlands meet, Aho’s series of new
+                    work emerges out through the woods into the light and air of
+                    an open meadow. Aho embraces the meadow as a space of
+                    contradictions, both still and humming with life, unruly yet
+                    organized by mysterious …
+                  </p>
                 </div>
               </div>
             </div>
@@ -135,7 +152,17 @@ const EventPage = () => {
                     contradictions, both still and humming with life, unruly yet
                     organized by mysterious …
                   </p>
-                  <Link href="/">SHOW MORE</Link>
+                  <Link href="#" onClick={toggleText}>
+                    {showMore ? "SHOW LESS" : "SHOW MORE"}
+                  </Link>
+                  <p className={`more-text ${showMore ? "show" : ""}`}>
+                    Following his last exhibition, Threshold, which explored the
+                    spaces where forest and wetlands meet, Aho’s series of new
+                    work emerges out through the woods into the light and air of
+                    an open meadow. Aho embraces the meadow as a space of
+                    contradictions, both still and humming with life, unruly yet
+                    organized by mysterious …
+                  </p>
                 </div>
               </div>
             </div>
@@ -171,7 +198,17 @@ const EventPage = () => {
                     contradictions, both still and humming with life, unruly yet
                     organized by mysterious …
                   </p>
-                  <Link href="/">SHOW MORE</Link>
+                  <Link href="#" onClick={toggleText}>
+                    {showMore ? "SHOW LESS" : "SHOW MORE"}
+                  </Link>
+                  <p className={`more-text ${showMore ? "show" : ""}`}>
+                    Following his last exhibition, Threshold, which explored the
+                    spaces where forest and wetlands meet, Aho’s series of new
+                    work emerges out through the woods into the light and air of
+                    an open meadow. Aho embraces the meadow as a space of
+                    contradictions, both still and humming with life, unruly yet
+                    organized by mysterious …
+                  </p>
                 </div>
               </div>
             </div>

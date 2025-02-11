@@ -1,5 +1,5 @@
-import NavbarArtist from "@/components/navbar/NavbarArtists";
-import ShareArt from "@/components/saleArtwork/ShareArtwork";
+import NavbarArtist from "@/components/all-navbars/NavbarArtists";
+import SaleArt from "@/components/saleArtwork/SaleArtwork";
 import Footer from "@/components/footer/Footer";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 
@@ -7,7 +7,7 @@ const ShareArtwork = () => {
   return (
     <>
       <NavbarArtist />
-      <ShareArt />
+      <SaleArt />
       <Footer />
       <FooterAccordion />
     </>

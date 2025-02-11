@@ -1,13 +1,30 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import "@/app/_css/login.css";
 import Link from "next/link";
 import Image from "next/image";
-import DropFlag from "@/components/dropFlags/DropFlags";
+import PhoneInput from "@/components/dropFlags/DropFlags";
 import { GoEye } from "react-icons/go";
+import "@/app/_css/login.css";
 
 function CreateAccount() {
-  const [isArtist, setIsArtist] = useState(null);
+  const TEXTS = {
+    createAccountHeader: "Create an account",
+    alreadyHaveAccount: "Already have an account? ",
+    loginLinkText: "Login",
+    artistHeader: "I’m an Artist",
+    artLoverHeader: "I’m an Art Lover",
+    artistDescription: "Register as an artist & sell your own artwork",
+    artLoverDescription: "Register as a buyer",
+    firstNameLabel: "First Name",
+    lastNameLabel: "Last Name",
+    phoneLabel: "Phone",
+    emailLabel: "Email",
+    passwordLabel: "Password",
+    passwordPlaceholder: "Password",
+    createAccountBtn: "Create Account",
+  };
+
+  const [isArtist, setIsArtist] = useState("lover");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [formData, setFormData] = useState({
     firstname: "",
@@ -101,6 +118,13 @@ function CreateAccount() {
     setIsFormValid(isArtist && validateForm());
   }, [formData, isArtist]);
 
+  const handlePhoneNumberInput = (value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      phone: value,
+    }));
+  };
+
   return (
     <div className="create-account-page">
       <div className="row">
@@ -117,165 +141,215 @@ function CreateAccount() {
             />
           </div>
         </div>
-        <div className="col">
+        <div className="col-md-5">
           <div className="create-account-form">
             <div className="website-logo scale-hover">
               <img src="/images/main-logo.png" alt="marasem" />
-              <span></span>
             </div>
 
             <form method="POST" onSubmit={handleSubmit}>
-              <h2>Create an account</h2>
-              <h4>
-                Already have an account?{" "}
-                <span>
-                  <Link href="login">Login</Link>
-                </span>
-              </h4>
+              <div className="row">
+                <div className="col-12">
+                  <h2>{TEXTS.createAccountHeader}</h2>
+                  <h4>
+                    {TEXTS.alreadyHaveAccount}{" "}
+                    <span>
+                      <Link href="login">{TEXTS.loginLinkText}</Link>
+                    </span>
+                  </h4>
+                </div>
+              </div>
 
               <div className="select-type">
                 <div className="row">
-                  <div className="col">
-                    <div
-                      className={`artist ${
-                        isArtist === "artist" ? "active" : ""
-                      }`}
-                      onClick={() => handleSelectType("artist")}
-                    >
-                      <h4>I’m an Artist</h4>
-                      <p>Register as an artist & sell your own artwork</p>
-                    </div>
-                  </div>
-                  <div className="col">
+                  <div className="col-6">
                     <div
                       className={`lover ${
                         isArtist === "lover" ? "active" : ""
                       }`}
                       onClick={() => handleSelectType("lover")}
                     >
-                      <h4>I’m an Art Lover</h4>
-                      <p>Register as a buyer</p>
+                      <h4>{TEXTS.artLoverHeader}</h4>
+                      <p>{TEXTS.artLoverDescription}</p>
+                    </div>
+                  </div>
+                  <div className="col-6">
+                    <div
+                      className={`artist ${
+                        isArtist === "artist" ? "active" : ""
+                      }`}
+                      onClick={() => handleSelectType("artist")}
+                    >
+                      <h4>{TEXTS.artistHeader}</h4>
+                      <p>{TEXTS.artistDescription}</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="enter-username">
-                <div className="row section-firstname">
-                  <div className="col section-firstname">
-                    <label htmlFor="firstname" className="form-label firstname">
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="firstname"
-                      name="firstname"
-                      placeholder="First Name"
-                      value={formData.firstname}
-                      onChange={handleChange}
-                    />
-                    {touchedFields.firstname && errors.firstname && (
-                      <span className="error firstname-error">
-                        * {errors.firstname}
-                      </span>
-                    )}
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="section-firstname">
+                      <label
+                        htmlFor="firstname"
+                        className="form-label firstname"
+                      >
+                        <span className="req">*</span>
+                        {TEXTS.firstNameLabel}
+                      </label>
+                      <input
+                        type="text"
+                        className={`form-control ${
+                          errors.firstname && touchedFields.firstname
+                            ? "border-red"
+                            : ""
+                        }`}
+                        id="firstname"
+                        name="firstname"
+                        placeholder="First Name"
+                        value={formData.firstname}
+                        onChange={handleChange}
+                      />
+                      {touchedFields.firstname && errors.firstname && (
+                        <span className="error firstname-error">
+                          * {errors.firstname}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div className="col section-lastname">
-                    <label htmlFor="lastname" className="form-label lastname">
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="lastname"
-                      name="lastname"
-                      placeholder="Last Name"
-                      value={formData.lastname}
-                      onChange={handleChange}
-                    />
-                    {touchedFields.lastname && errors.lastname && (
-                      <span className="error lastname-error">
-                        * {errors.lastname}
-                      </span>
-                    )}
+                  <div className="col-md-6">
+                    <div className="section-lastname">
+                      <label htmlFor="lastname" className="form-label lastname">
+                        <span className="req">*</span>
+                        {TEXTS.lastNameLabel}
+                      </label>
+                      <input
+                        type="text"
+                        className={`form-control ${
+                          errors.lastname && touchedFields.lastname
+                            ? "border-red"
+                            : ""
+                        }`}
+                        id="lastname"
+                        name="lastname"
+                        placeholder="Last Name"
+                        value={formData.lastname}
+                        onChange={handleChange}
+                      />
+                      {touchedFields.lastname && errors.lastname && (
+                        <span className="error lastname-error">
+                          * {errors.lastname}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div className="enter-phone">
-                <label className="phone" htmlFor="phone">
-                  <span className="req">*</span>Phone
-                </label>
-                <div className="dropdown-country">
-                  <div className="dropdown-flags-create-account">
-                    <DropFlag onChange={(country) => console.log(country)} />
+                <div className="row">
+                  <div className="col-12">
+                    <label className="phone" htmlFor="phone">
+                      <span className="req">*</span>
+                      {TEXTS.phoneLabel}
+                    </label>
+                    <div className="dropdown-country">
+                      <div className="dropdown-flags-create-account">
+                        <PhoneInput
+                          onChange={handlePhoneNumberInput}
+                          value={formData.phone}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div className="enter-email" id="email-field">
-                <label className="email" htmlFor="email">
-                  <span className="req">*</span>Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  placeholder="email@gmail.com"
-                  className="form-control"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-                {touchedFields.email && errors.email && (
-                  <span className="error email-error">* {errors.email}</span>
-                )}
+                <div className="row">
+                  <div className="col-12">
+                    <label className="email" htmlFor="email">
+                      <span className="req">*</span>
+                      {TEXTS.emailLabel}
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      placeholder="email@gmail.com"
+                      className={`form-control ${
+                        errors.email && touchedFields.email ? "border-red" : ""
+                      }`}
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                    {touchedFields.email && errors.email && (
+                      <span className="error email-error">
+                        * {errors.email}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className="enter-password">
-                <span className="show-password">
-                  <button
-                    type="button"
-                    onClick={togglePasswordVisibility}
-                    aria-label="Toggle Password Visibility"
-                  >
-                    <GoEye
-                      className={`fa-regular ${
-                        passwordVisible ? "eye-open" : "eye-closed"
+                <div className="row">
+                  <div className="col-12">
+                    <span className="show-password">
+                      <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        aria-label="Toggle Password Visibility"
+                      >
+                        <GoEye
+                          className={`fa-regular ${
+                            passwordVisible ? "eye-open" : "eye-closed"
+                          }`}
+                        />
+                      </button>
+                    </span>
+                    <label className="password" htmlFor="password">
+                      <span className="req">*</span>
+                      {TEXTS.passwordLabel}
+                    </label>
+                    <input
+                      type={passwordVisible ? "text" : "password"}
+                      id="password"
+                      name="password"
+                      required
+                      placeholder={TEXTS.passwordPlaceholder}
+                      className={`form-control ${
+                        errors.password && touchedFields.password
+                          ? "border-red"
+                          : ""
                       }`}
+                      value={formData.password}
+                      onChange={handleChange}
                     />
-                  </button>
-                </span>
-                <label className="password" htmlFor="password">
-                  <span className="req">*</span>Password
-                </label>
-                <input
-                  type={passwordVisible ? "text" : "password"}
-                  id="password"
-                  name="password"
-                  required
-                  placeholder="Password"
-                  className="form-control"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-                {touchedFields.password && errors.password && (
-                  <span className="error password-error">
-                    * {errors.password}
-                  </span>
-                )}
+                    {touchedFields.password && errors.password && (
+                      <span className="error password-error">
+                        * {errors.password}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </div>
 
-              <Link href="about-you">
-                <button
-                  type="submit"
-                  className="create-account-btn"
-                  disabled={!isFormValid}
-                >
-                  Create Account
-                </button>
-              </Link>
+              <div className="row">
+                <div className="col-12">
+                  <Link href="about-you">
+                    <button
+                      type="submit"
+                      className="create-account-btn"
+                      disabled={!isFormValid}
+                    >
+                      {TEXTS.createAccountBtn}
+                    </button>
+                  </Link>
+                </div>
+              </div>
             </form>
           </div>
         </div>

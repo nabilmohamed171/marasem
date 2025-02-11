@@ -1,0 +1,66 @@
+.section-orders .order {
+  background-color: #141414;
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.section-orders .order .order-info h3 {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.section-orders .order .order-info p {
+  color: #777;
+  font-size: 14px;
+}
+
+.section-orders .order .order-info span {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.section-orders .order span {
+  display: block;
+}
+
+.section-orders .order .pending {
+  font-size: 17px;
+  font-weight: 700;
+  color: #f1ad56;
+  margin-bottom: 35px;
+}
+
+.section-orders .order .canceled {
+  font-size: 17px;
+  font-weight: 700;
+  color: #565656;
+  margin-bottom: 35px;
+  text-transform: uppercase;
+}
+
+.section-orders .order .details {
+  font-size: 15px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.section-orders .order .delivered {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 35px;
+}
+
+.section-orders .order .rejected {
+  font-size: 17px;
+  font-weight: 700;
+  color: rgb(255, 84, 84);
+  margin-bottom: 35px;
+}
+
+.section-orders .order .view-next-icon {
+  display: inline-block;
+  margin-left: 10px;
+}

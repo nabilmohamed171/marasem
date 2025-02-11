@@ -2,12 +2,13 @@
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
+import Link from "next/link";
 import "./share-artwork.css";
 
 const FinalTouches = () => {
   const [tags, setTags] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
-  const [isPublishActive, setIsPublishActive] = useState(false);
+  const [isPublishActive, setIsPublishActive] = useState(true);
   const [isCollectionVisible, setIsCollectionVisible] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(true);
   const [isCollectionsSelectedVisible, setIsCollectionsSelectedVisible] =
@@ -29,7 +30,7 @@ const FinalTouches = () => {
 
   const removeTag = (index) => {
     setTags(tags.filter((_, i) => i !== index));
-    setIsPublishActive(tags.length > 1);
+    setIsPublishActive(tags.length > 0);
   };
 
   const closePopup = () => {
@@ -132,71 +133,18 @@ const FinalTouches = () => {
               </div>
             </div>
             <hr />
-            <div className="switch-container">
-              <div className="row">
-                <div className="col-md-8">
-                  <div className="form-check form-switch">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      role="switch"
-                      id="flexSwitchCheckDefault"
-                      onChange={handleCustomizableChange}
-                    />
-                    <label
-                      className={`form-check-label ${
-                        isCustomizable ? "text-white" : ""
-                      }`}
-                      htmlFor="flexSwitchCheckChecked"
-                    >
-                      This Artwork Is Not Customizable
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  {isCustomizable && (
-                    <div className="dropdown-list-switch">
-                      <div className="dropdown">
-                        <button
-                          className="btn dropdown-toggle"
-                          type="button"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          5 Days
-                        </button>
-                        <ul className="dropdown-menu">
-                          <li>
-                            <a className="dropdown-item" href="#">
-                              10 Days
-                            </a>
-                          </li>
-                          <li>
-                            <a className="dropdown-item" href="#">
-                              20 Days
-                            </a>
-                          </li>
-                          <li>
-                            <a className="dropdown-item" href="#">
-                              30 Days
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-            <hr />
             <div className="row buttons-save-pub">
               <div className="col-6 buttons-save">
-                <button className="btn">Save as draft</button>
+                <Link href="/request-successfully">
+                  <button className="btn">Save as draft</button>
+                </Link>
               </div>
               <div className="col-6 buttons-pub">
-                <button className="btn" disabled={!isPublishActive}>
-                  Publish
-                </button>
+                <Link href="/request-successfully">
+                  <button className="btn" disabled={!isPublishActive}>
+                    Publish
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

@@ -1,0 +1,106 @@
+.section-draft .box-draft {
+  background-color: #1a1a1a;
+  color: #fff;
+  position: relative;
+}
+
+.section-draft .draft-image {
+  position: relative;
+}
+
+.section-draft .draft-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.section-draft .draft-info {
+  padding: 20px 10px 10px;
+}
+
+.section-draft .draft-button {
+  position: absolute;
+  top: 25%;
+  left: 28%;
+}
+
+.section-draft .draft-button button {
+  border: 1px solid #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  display: block;
+  width: 135px;
+}
+
+.section-draft .draft-button button.edite-artwork {
+  margin-bottom: 10px;
+  background-color: #f1ad56;
+  border: 1px solid #f1ad56;
+  color: #222;
+}
+
+.section-draft .draft-button button.delete-artwork {
+  background-color: #ff3030;
+  border: 1px solid #ff3030;
+  color: #fff;
+}
+
+.section-draft .pars-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 0px 10px;
+  background: #777777ad;
+  border-radius: 20px;
+  font-size: 29px;
+  line-height: 26px;
+  display: inline-block;
+  height: 27px;
+  color: #343434;
+  cursor: pointer;
+}
+
+.section-draft .draft-info h2 {
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.section-draft .draft-info p {
+  color: #777;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.section-draft .draft-button p {
+  margin-top: 10px;
+  font-size: 14px;
+  position: relative;
+  left: -20px;
+}
+
+@media (max-width: 575.98px) {
+  .section-draft .box-draft {
+    margin-bottom: 20px;
+  }
+
+  .section-draft .draft-button {
+    position: absolute;
+    top: 45px;
+    left: 42px;
+  }
+
+  .section-draft .draft-button p {
+    margin-top: 10px;
+    font-size: 13px;
+    position: relative;
+    left: -13px;
+  }
+
+  .draft-info p {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

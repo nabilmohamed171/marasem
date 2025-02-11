@@ -73,7 +73,7 @@ function CategoriesPage() {
             />
           </div>
         </div>
-        <div className="col">
+        <div className="col-md-5 col-12">
           <div className="categories-form">
             <div className="website-logo scale-hover">
               <Image
@@ -99,7 +99,7 @@ function CategoriesPage() {
               <div className="cate-section">
                 <div className="row">
                   {categories.map((category, index) => (
-                    <div key={index} className="col-md-12">
+                    <div key={index} className="col-12">
                       <h3>{category.title}</h3>
                       <ul className="list-unstyled">
                         {category.items.map((item, itemIndex) => (

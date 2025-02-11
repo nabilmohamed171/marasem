@@ -1,40 +1,33 @@
 "use client";
-import { useState, useEffect } from "react";
-import { IoIosSearch } from "react-icons/io";
-import { CiShoppingCart } from "react-icons/ci";
-import { IoMdNotificationsOutline } from "react-icons/io";
-import { HiOutlineBars3BottomRight } from "react-icons/hi2";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { CiShoppingCart } from "react-icons/ci";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { IoIosSearch } from "react-icons/io";
+import { HiOutlineBars3BottomRight } from "react-icons/hi2";
+import { IoIosArrowForward } from "react-icons/io";
+import { LiaMapMarkedAltSolid } from "react-icons/lia";
+import { CgNotes } from "react-icons/cg";
+import { TbCreditCard } from "react-icons/tb";
+import { LuMapPin } from "react-icons/lu";
+import { FaRegHeart } from "react-icons/fa";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import { IoIosArrowDown } from "react-icons/io";
+import PopupSearch from "@/components/popupSearch/PopupSearch";
 import "./navbar.css";
+import "./navbar-artist.css";
 
-const Navbar_Home = () => {
-  const [isStickyNavbar, setIsStickyNavbar] = useState(false);
+export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isPopupSearchOpen, setIsPopupSearchOpen] = useState(false);
 
-  const handleScroll = () => {
-    const navbar = document.querySelector(".navbar");
-    const currentScrollPosition = window.scrollY;
-
-    if (currentScrollPosition > navbar.offsetTop) {
-      setIsStickyNavbar(true);
-    } else {
-      setIsStickyNavbar(false);
-    }
+  const handleSearchClick = () => {
+    setIsPopupSearchOpen((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
-    <nav
-      className={`navbar navbar-expand-lg ${
-        isStickyNavbar ? "sticky-navbar" : ""
-      }`}
-    >
+    <nav className="navbar navbar-expand-lg">
       <div className="container">
         <Link className="navbar-brand logo-pc" href="/">
           <img
@@ -57,24 +50,24 @@ const Navbar_Home = () => {
         <button
           className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-controls="navbarSupportedContent"
-          aria-expanded="false"
+          aria-expanded={isMenuOpen ? "true" : "false"}
           aria-label="Toggle navigation"
         >
           <span className="btn-mobile">
             <HiOutlineBars3BottomRight />
           </span>
         </button>
-
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <div
+          className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}
+          id="navbarSupportedContent"
+        >
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link
                 className="nav-link active shop-art-menu"
-                href="/product-list"
-                aria-current="page"
+                href="product-list"
               >
                 SHOP ART
               </Link>
@@ -287,11 +280,7 @@ const Navbar_Home = () => {
                 </div>
               </div>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" href="/collections">
-                COLLECTIONS
-              </Link>
-            </li>
+
             <li className="nav-item">
               <Link className="nav-link" href="/shop-artist">
                 ARTISTS
@@ -304,19 +293,80 @@ const Navbar_Home = () => {
             </li>
           </ul>
 
-          <div className="nav-search">
+          <div className="nav-search" onClick={handleSearchClick}>
             <IoIosSearch />
           </div>
           <div className="nav-login">
-            <Link className="art" href="/share-artwork">
+            <Link className="art" href="/sell-your-artwork">
               Sell Your Artwork
             </Link>
-            <Link className="login" href="/login">
-              Login
-            </Link>
           </div>
-
-          <div className="nav-notification notification-home">
+          <div className="nav-hr"></div>
+          <div className="nav-artist">
+            <div className="row">
+              <div className="col">
+                <div className="photo-artist">
+                  <Image
+                    className="photo-artist-img"
+                    src="/images/avatar2.png"
+                    alt="photo"
+                    width={40}
+                    height={40}
+                    quality={100}
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div className="col">
+                <span>Hello Omar</span>
+                <div class="dropdown">
+                  <button
+                    class="btn dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Your Account
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        My Profile
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Favorites
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Addresses
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Orders
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Marasem Credit
+                      </a>
+                    </li>
+                    <li>
+                      <button type="button">Logout</button>
+                    </li>
+                  </ul>
+                  <span className="arrow-down-icon">
+                    <IoIosArrowDown />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="nav-hr"></div>
+          <div className="nav-notification notification-artists">
             <div className="notification-icon-react">
               <IoMdNotificationsOutline />
             </div>
@@ -324,7 +374,7 @@ const Navbar_Home = () => {
               <span>0</span>
             </div>
           </div>
-
+          <div className="nav-hr"></div>
           <div className="nav-cart">
             <div className="cart-icon-react">
               <CiShoppingCart />
@@ -333,10 +383,172 @@ const Navbar_Home = () => {
               <span>0</span>
             </div>
           </div>
+
+          <div className="artist-menu-mobile">
+            <div className="container">
+              <div className="box-menu">
+                <div className="box-search">
+                  <form className="form-search">
+                    <span className="search-icon-mobile">
+                      <IoIosSearch />
+                    </span>
+                    <input placeholder="Search by"></input>
+                  </form>
+                </div>
+                <div className="box-profile">
+                  <div className="profile">
+                    <div className="row">
+                      <div className="col-2">
+                        <div className="profile-image">
+                          <Image
+                            className="photo-profile-img"
+                            src="/images/avatar2.png"
+                            alt="photo"
+                            width={60}
+                            height={60}
+                            quality={100}
+                            loading="lazy"
+                            objectFit="cover"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-7">
+                        <div className="profile-name">
+                          <h3>Omer Mohsen</h3>
+                          <span>
+                            <span className="map-icon">
+                              <LuMapPin />
+                            </span>{" "}
+                            Cairo, Egypt
+                          </span>
+                        </div>
+                      </div>
+                      <div className="col-3">
+                        <span className="arrow-icon">
+                          <IoIosArrowForward />
+                        </span>
+                      </div>
+                    </div>
+                    <div className="box-list-profile">
+                      <ul className="list-unstyled">
+                        <li className="cart-mobile">
+                          <Link href="">
+                            My Cart
+                            <div className="cart-icon-mobile">
+                              <CiShoppingCart />
+                              <div className="cart-number-mobile">
+                                <span>0</span>
+                              </div>
+                            </div>
+                          </Link>
+                        </li>
+                        <li className="favorites-mobile">
+                          <Link href="">
+                            Favorites
+                            <div className="favorites-icon-mobile">
+                              <FaRegHeart />
+                              <div className="favorites-number-mobile">
+                                <span>0</span>
+                              </div>
+                            </div>
+                          </Link>
+                        </li>
+                        <li className="notification-mobile">
+                          <Link href="">
+                            Notification
+                            <div className="notification-icon-mobile">
+                              <IoMdNotificationsOutline />
+                              <div className="notification-number-mobile">
+                                <span>0</span>
+                              </div>
+                            </div>
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="box-button-profile">
+                      <Link className="" href="">
+                        Sell Your Artwork
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <div className="box-collection">
+                  <div className="box-list-collection">
+                    <ul className="list-unstyled">
+                      <li>
+                        <Link href="">
+                          Shop Art
+                          <span className="arrow-icon-1">
+                            <IoIosArrowForward />
+                          </span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="">
+                          Collections
+                          <span className="arrow-icon-2">
+                            <IoIosArrowForward />
+                          </span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="">
+                          Artists
+                          <span className="arrow-icon-3">
+                            <IoIosArrowForward />
+                          </span>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="box-orders">
+                  <div className="box-list-orders">
+                    <ul className="list-unstyled">
+                      <li>
+                        <Link href="">
+                          Addresses
+                          <span className="addresses-icon">
+                            <LiaMapMarkedAltSolid />
+                          </span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="">
+                          Orders
+                          <span className="order-icon">
+                            <CgNotes />
+                          </span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="">
+                          Mrasem Credit
+                          <span className="credit-icon">
+                            <TbCreditCard />
+                          </span>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="box-button-logout">
+                  <Link className="" href="">
+                    <span className="logout-icon">
+                      <RiLogoutCircleRLine />
+                    </span>
+                    Logout
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      {isPopupSearchOpen && (
+        <PopupSearch setIsPopupSearchOpen={setIsPopupSearchOpen} />
+      )}
     </nav>
   );
-};
-
-export default Navbar_Home;
+}

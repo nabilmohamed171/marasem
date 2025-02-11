@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 import Link from "next/link";
 import "./paginations.css";
 
@@ -34,7 +35,7 @@ const Pagination = () => {
       <div className="container">
         <div className="number">
           <span
-            className="first"
+            className="first-arrow-icon"
             onClick={() => handlePageChange(currentPage - 1)}
           >
             <IoIosArrowBack />
@@ -51,7 +52,7 @@ const Pagination = () => {
           ))}
 
           <span
-            className="last"
+            className="last-arrow-icon"
             onClick={() => handlePageChange(currentPage + 1)}
           >
             <IoIosArrowForward />
@@ -81,6 +82,9 @@ const Pagination = () => {
                   </li>
                 ))}
               </ul>
+              <span className="arrow-down-icon">
+                <IoIosArrowDown />
+              </span>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 import "@/app/_css/login.css";
 
 const PickupLocation = () => {
@@ -44,52 +45,62 @@ const PickupLocation = () => {
                 <div className="row">
                   <h2>Pickup Location</h2>
                   <p>Allow Marasem to Access your Location</p>
-                  <div className="col-md-6 col-12 city">
-                    <label htmlFor="city" className="form-label">
-                      City
-                    </label>
-                    <select
-                      id="city"
-                      className="form-select"
-                      required
-                      value={city}
-                      onChange={handleCityChange}
-                    >
-                      <option value="" disabled>
-                        Select your city
-                      </option>
-                      <option value="Cairo">Cairo</option>
-                      <option value="Alexandria">Alexandria</option>
-                      <option value="Giza">Giza</option>
-                      <option value="Sharm El Sheikh">Sharm El Sheikh</option>
-                    </select>
+                  <div className="col-6">
+                    <div className="city">
+                      <label htmlFor="city" className="form-label">
+                        <span className="req">*</span>City
+                      </label>
+                      <select
+                        id="city"
+                        className="form-select"
+                        required
+                        value={city}
+                        onChange={handleCityChange}
+                      >
+                        <option value="" disabled>
+                          Select your city
+                        </option>
+                        <option value="Cairo">Cairo</option>
+                        <option value="Alexandria">Alexandria</option>
+                        <option value="Giza">Giza</option>
+                        <option value="Sharm El Sheikh">Sharm El Sheikh</option>
+                      </select>
+                      <span className="arrow-down-icon">
+                        <IoIosArrowDown />
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="col-md-6 col-12 zone">
-                    <label htmlFor="zone" className="form-label">
-                      Zone
-                    </label>
-                    <select
-                      id="zone"
-                      className="form-select"
-                      required
-                      value={zone}
-                      onChange={handleZoneChange}
-                    >
-                      <option value="" disabled>
-                        Select your zone
-                      </option>
-                      <option value="Downtown">Downtown</option>
-                      <option value="Zamalek">Zamalek</option>
-                      <option value="Maadi">Maadi</option>
-                      <option value="Haram">Haram</option>
-                    </select>
+                  <div className="col-6">
+                    <div className="zone">
+                      <label htmlFor="zone" className="form-label">
+                        <span className="req">*</span>Zone
+                      </label>
+                      <select
+                        id="zone"
+                        className="form-select"
+                        required
+                        value={zone}
+                        onChange={handleZoneChange}
+                      >
+                        <option value="" disabled>
+                          Select your zone
+                        </option>
+                        <option value="Downtown">Downtown</option>
+                        <option value="Zamalek">Zamalek</option>
+                        <option value="Maadi">Maadi</option>
+                        <option value="Haram">Haram</option>
+                      </select>
+                      <span className="arrow-down-icon">
+                        <IoIosArrowDown />
+                      </span>
+                    </div>
                   </div>
 
                   <div className="col-12">
                     <div className="address-details">
                       <label htmlFor="address" className="form-label">
-                        Address Details
+                        <span className="req">*</span>Address Details
                       </label>
                       <textarea
                         id="address"

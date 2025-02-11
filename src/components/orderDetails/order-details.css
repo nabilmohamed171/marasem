@@ -1,5 +1,5 @@
-.order-details .color-f {
-  color: #fff;
+.order-details .pending {
+  color: #f1ad56;
 }
 .order-details .color-m {
   color: #c57999;
@@ -75,6 +75,7 @@
 .order-details .order-summary p {
   padding: 0 10px;
   font-size: 14px;
+  color: #fff;
 }
 
 .order-details .order-summary .subtotal,
@@ -115,9 +116,10 @@
 }
 
 .order-details .order-number-items .pending {
-  color: #fff;
   text-align: right;
-  font-weight: 600;
+  font-weight: 400;
+  font-size: 16px;
+  color: #f1ad56;
 }
 
 .order-details .order-number-items .item-number {
@@ -301,7 +303,7 @@
 
 .delevired {
   float: right;
-  color: #f1ad56;
+  color: #fff;
   font-size: 18px;
 }
 
@@ -366,6 +368,11 @@
 
   .order-summary-mobile {
     border-radius: 20px;
+    padding: 20px;
+  }
+
+  .order-summary-mobile hr {
+    border-color: #ababab;
   }
 }
 

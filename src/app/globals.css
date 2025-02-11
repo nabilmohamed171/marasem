@@ -17,6 +17,13 @@
   padding: 30px 0;
 }
 
+.wrap-text-240 {
+  width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 body,
 html {
   box-sizing: border-box;
@@ -145,6 +152,12 @@ textarea:focus {
 .form-check-input {
   --bs-form-check-bg: #ffffff00 !important;
   border: var(--bs-border-width) solid #f1ad56 !important;
+}
+
+input:focus,
+input:focus-visible {
+  border: none !important;
+  outline: none !important;
 }
 
 @media (min-width: 0) {

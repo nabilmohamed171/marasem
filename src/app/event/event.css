@@ -6,21 +6,21 @@
 .event-page h4 {
   color: #7ed321;
   font-size: 15px;
-  padding: 10px 0;
+  padding: 10px 0 0 0;
   font-weight: 600;
 }
 
 .event-page h3 {
   color: #f1ad56;
   font-size: 20px;
-  padding: 10px 0;
-  font-weight: 600;
+  padding: 0;
+  font-weight: 400;
 }
 
 .event-page h2 {
   color: #fff;
   font-size: 80px;
-  padding: 10px 0;
+  padding: 0;
   font-weight: 700;
 }
 
@@ -79,4 +79,19 @@
 .thr-event,
 .four-event {
   margin-top: 80px;
+}
+
+.more-text {
+  display: none !important;
+}
+
+.more-text.show {
+  display: block;
+}
+
+@media (max-width: 575.98px) {
+  .event-page .event-info a {
+    margin-bottom: 30px !important;
+    display: inline-block;
+  }
 }

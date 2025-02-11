@@ -1,10 +1,11 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import Image from "next/image";
-import Link from "next/link";
+import { IoIosArrowDown } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
+import Image from "next/image";
+import Link from "next/link";
 import "./shop-artist.css";
 
 const Artists = () => {
@@ -239,11 +240,14 @@ const Artists = () => {
                     </Link>
                   </li>
                 </ul>
+                <span className="arrow-down-icon">
+                  <IoIosArrowDown />
+                </span>
               </div>
             </div>
             <div className="col-10 position-relative">
               <div className="container">
-                <div className="slider-wrapper ">
+                <div className="slider-wrapper artists-filter">
                   <ul
                     ref={sliderContentRef}
                     className="list-unstyled slider-content"

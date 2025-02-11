@@ -112,7 +112,7 @@ const OrderDetails = () => {
                       <span className="shipment-number">Shipment 2</span>
                     </div>
                     <div className="col-6">
-                      <span className="delevired color-f">PENDING</span>
+                      <span className="delevired pending">PENDING</span>
                     </div>
                   </div>
                   <div className="row">

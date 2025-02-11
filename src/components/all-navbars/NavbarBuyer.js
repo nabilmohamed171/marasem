@@ -1,25 +1,103 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { IoIosSearch } from "react-icons/io";
 import { CiShoppingCart } from "react-icons/ci";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { IoIosSearch } from "react-icons/io";
 import { HiOutlineBars3BottomRight } from "react-icons/hi2";
+import { LuMapPin } from "react-icons/lu";
 import { IoIosArrowForward } from "react-icons/io";
+import { FaRegHeart } from "react-icons/fa";
 import { LiaMapMarkedAltSolid } from "react-icons/lia";
 import { CgNotes } from "react-icons/cg";
 import { TbCreditCard } from "react-icons/tb";
-import { LuMapPin } from "react-icons/lu";
-import { FaRegHeart } from "react-icons/fa";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import { IoIosArrowDown } from "react-icons/io";
+import PopupSearch from "@/components/popupSearch/PopupSearch";
+import Image from "next/image";
+import Link from "next/link";
 import "./navbar.css";
-import "./navbar-artist.css";
+import "./navbar-puyer.css";
 
-export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const shopArtLinks = [
+  { name: "Paintings", href: "/product-list" },
+  { name: "Drawings", href: "/product-list" },
+  { name: "Sculptures", href: "/product-list" },
+  { name: "Mosaic", href: "/product-list" },
+  { name: "Collage Art", href: "/product-list" },
+  { name: "Glass Art", href: "/product-list" },
+  { name: "Ceramics", href: "/product-list" },
+];
+
+const handCraftLinks = [
+  { name: "Wood Craft", href: "/product-list" },
+  { name: "Leather Craft", href: "/product-list" },
+  { name: "Pottery Craft", href: "/product-list" },
+  { name: "Macrame", href: "/product-list" },
+  { name: "Home Decor", href: "/product-list" },
+  { name: "Jewelry & Accessories", href: "/product-list" },
+  { name: "Fashion Art", href: "/product-list" },
+  { name: "Furniture", href: "/product-list" },
+];
+
+const digitalPrintsLinks = [
+  { name: "Paintings & Illustrations", href: "/product-list" },
+  { name: "3D Prints", href: "/product-list" },
+  { name: "Designs", href: "/product-list" },
+  { name: "Photography", href: "/product-list" },
+  { name: "Illustration Books", href: "/product-list" },
+  { name: "Printed Products", href: "/product-list" },
+];
+
+const forYouLinks = [
+  { name: "Egyptians", href: "/product-list" },
+  { name: "Vintage", href: "/product-list" },
+  { name: "Modern", href: "/product-list" },
+  { name: "Abstract", href: "/product-list" },
+  { name: "Minimalist", href: "/product-list" },
+  { name: "Pop Art", href: "/product-list" },
+  { name: "Bohemian", href: "/product-list" },
+  { name: "Gifts", href: "/product-list" },
+];
+
+const forYourBudgetLinks = [
+  { name: "EGP 500 & Under", href: "#" },
+  { name: "EGP 1,000 to 5,000", href: "#" },
+  { name: "EGP 5,000 to 10,000", href: "#" },
+  { name: "EGP 10,000 & Over", href: "#" },
+];
+
+const Navbar_Buyer = () => {
+  const [isStickyNavbar, setIsStickyNavbar] = useState(false);
+  const [isPopupSearchOpen, setIsPopupSearchOpen] = useState(false);
+
+  const handleSearchClick = () => {
+    setIsPopupSearchOpen((prevState) => !prevState);
+  };
+
+  const handleScroll = () => {
+    const navbar = document.querySelector(".navbar");
+    const currentScrollPosition = window.scrollY;
+
+    if (currentScrollPosition > navbar.offsetTop) {
+      setIsStickyNavbar(true);
+    } else {
+      setIsStickyNavbar(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <nav className="navbar navbar-expand-lg">
+    <nav
+      className={`navbar navbar-expand-lg ${
+        isStickyNavbar ? "sticky-navbar" : ""
+      }`}
+    >
       <div className="container">
         <Link className="navbar-brand logo-pc" href="/">
           <img
@@ -42,24 +120,24 @@ export default function Navbar() {
         <button
           className="navbar-toggler"
           type="button"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
-          aria-expanded={isMenuOpen ? "true" : "false"}
+          aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="btn-mobile">
             <HiOutlineBars3BottomRight />
           </span>
         </button>
-        <div
-          className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}
-          id="navbarSupportedContent"
-        >
+
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link
                 className="nav-link active shop-art-menu"
-                href="product-list"
+                href="/product-list"
+                aria-current="page"
               >
                 SHOP ART
               </Link>
@@ -71,41 +149,13 @@ export default function Navbar() {
                         <div className="section-one">
                           <h4>Fine Art</h4>
                           <ul className="list-unstyled">
-                            <li>
-                              <Link className="link-style" href="#">
-                                Paintings
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Drawings
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Sculptures
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Mosaic
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Collage Art
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Glass Art
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Ceramics
-                              </Link>
-                            </li>
+                            {shopArtLinks.map((link, index) => (
+                              <li key={index}>
+                                <Link className="link-style" href={link.href}>
+                                  {link.name}
+                                </Link>
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       </div>
@@ -113,46 +163,13 @@ export default function Navbar() {
                         <div className="section-two">
                           <h4>Hand Crafts</h4>
                           <ul className="list-unstyled">
-                            <li>
-                              <Link className="link-style" href="#">
-                                Wood Craft
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Leather Craft
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Pottery Craft
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Macrame
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Home Decor
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Jewelry & Accessories
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Fashion Art
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Furniture
-                              </Link>
-                            </li>
+                            {handCraftLinks.map((link, index) => (
+                              <li key={index}>
+                                <Link className="link-style" href={link.href}>
+                                  {link.name}
+                                </Link>
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       </div>
@@ -160,36 +177,13 @@ export default function Navbar() {
                         <div className="section-three">
                           <h4>Digital Prints</h4>
                           <ul className="list-unstyled">
-                            <li>
-                              <Link className="link-style" href="#">
-                                Paintings & Illustrations
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                3D Prints
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Designs
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Photography
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Illustration Books
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Printed Products
-                              </Link>
-                            </li>
+                            {digitalPrintsLinks.map((link, index) => (
+                              <li key={index}>
+                                <Link className="link-style" href={link.href}>
+                                  {link.name}
+                                </Link>
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       </div>
@@ -197,46 +191,13 @@ export default function Navbar() {
                         <div className="section-four">
                           <h4>For You</h4>
                           <ul className="list-unstyled">
-                            <li>
-                              <Link className="link-style" href="#">
-                                Egyptians
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Vintage
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Modern
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Abstract
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Minimalist
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Pop Art
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Bohemian
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Gifts
-                              </Link>
-                            </li>
+                            {forYouLinks.map((link, index) => (
+                              <li key={index}>
+                                <Link className="link-style" href={link.href}>
+                                  {link.name}
+                                </Link>
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       </div>
@@ -244,26 +205,13 @@ export default function Navbar() {
                         <div className="section-five">
                           <h4>For Your Budget</h4>
                           <ul className="list-unstyled">
-                            <li>
-                              <Link className="link-style" href="#">
-                                EGP 500 & Under
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                EGP 1,000 to 5,000
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                EGP 5,000 to 10,000
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style nav-color" href="#">
-                                EGP 10,000 & Over
-                              </Link>
-                            </li>
+                            {forYourBudgetLinks.map((link, index) => (
+                              <li key={index}>
+                                <Link className="link-style" href={link.href}>
+                                  {link.name}
+                                </Link>
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       </div>
@@ -272,11 +220,7 @@ export default function Navbar() {
                 </div>
               </div>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" href="/collections">
-                COLLECTIONS
-              </Link>
-            </li>
+
             <li className="nav-item">
               <Link className="nav-link" href="/shop-artist">
                 ARTISTS
@@ -289,47 +233,64 @@ export default function Navbar() {
             </li>
           </ul>
 
-          <div className="nav-search">
+          <div className="nav-search" onClick={handleSearchClick}>
             <IoIosSearch />
           </div>
-          <div className="nav-login">
-            <Link className="art" href="">
-              Sell Your Artwork
-            </Link>
-          </div>
           <div className="nav-hr"></div>
-          <div className="nav-artist">
+          <div className="nav-buyer">
             <div className="row">
               <div className="col">
-                <div className="photo-artist">
-                  <Image
-                    className="photo-artist-img"
-                    src="/images/avatar2.png"
-                    alt="photo"
-                    width={40}
-                    height={40}
-                    quality={100}
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-              <div className="col">
-                <span>Hello Omar</span>
-                <div className="dropdown">
-                  <button
-                    className="btn dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Your Account
-                  </button>
+                <div className="your-name-account">
+                  <span className="hello-name">Hello Omar</span>
+                  <div class="dropdown">
+                    <button
+                      class="btn dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Your Account
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          My Profile
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Favorites
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Addresses
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Orders
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Marasem Credit
+                        </a>
+                      </li>
+                      <li>
+                        <button type="button">Logout</button>
+                      </li>
+                    </ul>
+                    <span className="arrow-down-icon">
+                      <IoIosArrowDown />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="nav-hr"></div>
-          <div className="nav-notification notification-artists">
+          <div className="nav-notification notification-buyer">
             <div className="notification-icon-react">
               <IoMdNotificationsOutline />
             </div>
@@ -346,8 +307,7 @@ export default function Navbar() {
               <span>0</span>
             </div>
           </div>
-
-          <div className="artist-menu-mobile">
+          <div className="puyer-menu-mobile">
             <div className="container">
               <div className="box-menu">
                 <div className="box-search">
@@ -429,11 +389,6 @@ export default function Navbar() {
                         </li>
                       </ul>
                     </div>
-                    <div className="box-button-profile">
-                      <Link className="" href="">
-                        Sell Your Artwork
-                      </Link>
-                    </div>
                   </div>
                 </div>
                 <div className="box-collection">
@@ -493,19 +448,26 @@ export default function Navbar() {
                           </span>
                         </Link>
                       </li>
+                      <li>
+                        <Link href="">
+                          Log out
+                          <span className="logout-icon">
+                            <RiLogoutCircleRLine />
+                          </span>
+                        </Link>
+                      </li>
                     </ul>
                   </div>
-                </div>
-                <div className="box-button-logout">
-                  <Link className="" href="">
-                    Logout
-                  </Link>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {isPopupSearchOpen && <PopupSearch />}
     </nav>
   );
-}
+};
+
+export default Navbar_Buyer;

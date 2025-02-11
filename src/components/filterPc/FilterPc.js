@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { IoIosArrowDown } from "react-icons/io";
 import "./filter.css";
 
 const FilterPc = () => {
@@ -42,6 +43,12 @@ const FilterPc = () => {
     };
   }, []);
 
+  const categories = ["Action", "Another action", "Something else here"];
+  const locations = ["Action", "Another action", "Something else here"];
+  const prices = ["Action", "Another action", "Something else here"];
+  const forYouOptions = ["Action", "Another action", "Something else here"];
+  const bestSellers = ["Action", "Another action", "Something else here"];
+
   return (
     <div
       className={`dropdown-filter ${isStickyFilter ? "sticky-filter" : ""}`}
@@ -52,6 +59,7 @@ const FilterPc = () => {
           <div className="col-md-1">
             <h2>Find</h2>
           </div>
+
           <div className="col-md-2">
             <div className="dropdown">
               <button
@@ -63,36 +71,24 @@ const FilterPc = () => {
                 {category || "Category"}
               </button>
               <ul className="dropdown-menu">
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setCategory("Action")}
-                  >
-                    Action
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setCategory("Another action")}
-                  >
-                    Another action
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setCategory("Something else here")}
-                  >
-                    Something else here
-                  </Link>
-                </li>
+                {categories.map((item, index) => (
+                  <li key={index}>
+                    <Link
+                      className="dropdown-item"
+                      href="#"
+                      onClick={() => setCategory(item)}
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
               </ul>
+              <span className="arrow-down-icon">
+                <IoIosArrowDown />
+              </span>
             </div>
           </div>
+
           <div className="col-md-2">
             <div className="dropdown">
               <button
@@ -104,36 +100,24 @@ const FilterPc = () => {
                 {location || "Location"}
               </button>
               <ul className="dropdown-menu">
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setLocation("Action")}
-                  >
-                    Action
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setLocation("Another action")}
-                  >
-                    Another action
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setLocation("Something else here")}
-                  >
-                    Something else here
-                  </Link>
-                </li>
+                {locations.map((item, index) => (
+                  <li key={index}>
+                    <Link
+                      className="dropdown-item"
+                      href="#"
+                      onClick={() => setLocation(item)}
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
               </ul>
+              <span className="arrow-down-icon">
+                <IoIosArrowDown />
+              </span>
             </div>
           </div>
+
           <div className="col-md-2">
             <div className="dropdown">
               <button
@@ -145,36 +129,24 @@ const FilterPc = () => {
                 {price || "Price"}
               </button>
               <ul className="dropdown-menu">
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setPrice("Action")}
-                  >
-                    Action
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setPrice("Another action")}
-                  >
-                    Another action
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setPrice("Something else here")}
-                  >
-                    Something else here
-                  </Link>
-                </li>
+                {prices.map((item, index) => (
+                  <li key={index}>
+                    <Link
+                      className="dropdown-item"
+                      href="#"
+                      onClick={() => setPrice(item)}
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
               </ul>
+              <span className="arrow-down-icon">
+                <IoIosArrowDown />
+              </span>
             </div>
           </div>
+
           <div className="col-md-2">
             <div className="dropdown">
               <button
@@ -186,36 +158,24 @@ const FilterPc = () => {
                 {forYou || "For you"}
               </button>
               <ul className="dropdown-menu">
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setForYou("Action")}
-                  >
-                    Action
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setForYou("Another action")}
-                  >
-                    Another action
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setForYou("Something else here")}
-                  >
-                    Something else here
-                  </Link>
-                </li>
+                {forYouOptions.map((item, index) => (
+                  <li key={index}>
+                    <Link
+                      className="dropdown-item"
+                      href="#"
+                      onClick={() => setForYou(item)}
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
               </ul>
+              <span className="arrow-down-icon">
+                <IoIosArrowDown />
+              </span>
             </div>
           </div>
+
           <div className="col-md-1">
             <button
               className="clear-all"
@@ -225,10 +185,11 @@ const FilterPc = () => {
               Clear all
             </button>
           </div>
+
           <div className="col-md-2">
             <div className="dropdown">
               <button
-                className="btn best-seller btn-secondary dropdown-toggle"
+                className="btn dropdown-toggle"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
@@ -236,34 +197,21 @@ const FilterPc = () => {
                 {bestSeller || "Best Seller"}
               </button>
               <ul className="dropdown-menu">
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setBestSeller("Action")}
-                  >
-                    Action
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setBestSeller("Another action")}
-                  >
-                    Another action
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    href="#"
-                    onClick={() => setBestSeller("Something else here")}
-                  >
-                    Something else here
-                  </Link>
-                </li>
+                {bestSellers.map((item, index) => (
+                  <li key={index}>
+                    <Link
+                      className="dropdown-item"
+                      href="#"
+                      onClick={() => setBestSeller(item)}
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
               </ul>
+              <span className="arrow-down-icon">
+                <IoIosArrowDown />
+              </span>
             </div>
           </div>
         </div>

@@ -6,7 +6,13 @@
 
 .slider-tags span {
   color: var(--text-color);
-  font-size: 13px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.slider-tags span {
+  color: var(--text-color);
+  font-size: 16px;
   font-weight: 500;
 }
 
@@ -60,7 +66,8 @@
   width: 30px;
   line-height: 30px;
   border-radius: 30px;
-  font-size: 12px !important;
+  font-size: 18px !important;
+  font-weight: 500;
 }
 
 .tags.active .icon-x-tags {
@@ -125,18 +132,20 @@
 
 .images-items-collections h2 {
   color: #fff;
-  padding: 10px 0 5px;
+  padding: 15px 0 0;
   font-size: 16px;
+  font-weight: 400;
 }
 
 .images-items-collections p {
-  color: #ebebf599;
+  color: #777;
   font-size: 14px;
   width: 240px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0 0 10px 0;
+  margin: 0 0 6px 0;
+  font-weight: 300;
 }
 
 .images-items-collections h3 {
@@ -225,7 +234,7 @@
 @media (max-width: 575.98px) {
   .images-items-collections .items-collections-image,
   .images-items-collections .items-collections-image.magic {
-    height: 280px !important;
+    height: 250px !important;
   }
 
   .slider-tags span {
@@ -236,6 +245,10 @@
 
   .images-items-collections p {
     width: 180px;
+  }
+
+  .slider-tags {
+    padding: 35px 0 20px;
   }
 }
 

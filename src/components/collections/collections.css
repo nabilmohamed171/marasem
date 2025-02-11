@@ -229,12 +229,20 @@
   .sec-collections .sec .sec-image span,
   .three-collections .first .sec-image span,
   .three-collections .sec .sec-image span {
-    top: -56px;
-    left: 25px;
+    top: -50px;
+    left: 23px;
+    font-weight: 400;
+    font-size: 20px;
   }
 
   .three-collections {
     padding: 50px 0 0px;
+  }
+
+  .first-collections,
+  .sec-collections,
+  .three-collections {
+    padding: 50px 0 10px;
   }
 }
 

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import NavbarArtists from "@/components/navbar/NavbarArtists";
+import NavbarArtists from "@/components/all-navbars/NavbarArtists";
 import { SliderCategory } from "@/components/slider/Slider";
 import AllCards from "@/components/view/AllCards";
 import Footer from "@/components/footer/Footer";

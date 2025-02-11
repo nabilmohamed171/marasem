@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import NavbarBuyer from "@/components/navbar/NavbarArtists";
-import Upper from "@/components/navbar/Upper";
+import NavbarBuyer from "@/components/all-navbars/NavbarBuyer";
+import Upper from "@/components/all-navbars/NavbarUpper";
 import Footer from "@/components/footer/Footer";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 import CollectionsPage from "@/components/collections/CollectionsPage";
@@ -34,7 +34,9 @@ const Collections = () => {
           </div>
         </div>
       </div>
-      <CollectionsPage />
+      <div className="collections-filter-image">
+        <CollectionsPage />
+      </div>
       <Footer />
       <FooterAccordion />
     </>

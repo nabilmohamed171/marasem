@@ -1,7 +1,8 @@
 import Footer from "@/components/footer/Footer";
-import Navbar_Buyer from "@/components/navbar/NavbarArtists";
+import Navbar_Buyer from "@/components/all-navbars/NavbarArtists";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 import SectionOrderDetails from "@/components/orderDetails/SectionOrderDetails";
+import "./order-details.css";
 
 const OrderDetails = () => {
   return (

@@ -4,6 +4,7 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { FaBehance } from "react-icons/fa";
 import { GoEye } from "react-icons/go";
+import { FaRegEyeSlash } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import "@/app/_css/login.css";
@@ -34,6 +35,18 @@ const Login = () => {
     handleInputChange();
   }, [emailOrPhone, password]);
 
+  const LOGIN_HEADER = "Login";
+  const CREATE_ACCOUNT_TEXT = "Don’t have an account? ";
+  const CREATE_ACCOUNT_LINK_TEXT = "Create an account";
+  const EMAIL_OR_PHONE_LABEL = "Email or Phone";
+  const PASSWORD_LABEL = "Password";
+  const FORGOT_PASSWORD_TEXT = "Forget Password?";
+  const SOCIAL_LOGIN_TEXT = "Or Login with social";
+  const LOGIN_BTN_TEXT = "Login";
+
+  const EMAIL_PLACEHOLDER = "Enter your email or phone";
+  const PASSWORD_PLACEHOLDER = "Password";
+
   return (
     <div className="login-page">
       <div className="row">
@@ -56,24 +69,25 @@ const Login = () => {
               <img src="/images/main-logo.png" alt="Marasem Logo" />
             </div>
             <form method="POST" onSubmit={handleSubmit}>
-              <h2>Login</h2>
+              <h2>{LOGIN_HEADER}</h2>
               <h4>
-                Don’t have an account?{" "}
+                {CREATE_ACCOUNT_TEXT}{" "}
                 <span>
-                  <a href="/register">Create an account</a>
+                  <a href="/register">{CREATE_ACCOUNT_LINK_TEXT}</a>
                 </span>
               </h4>
 
               <div className="enter-email" id="email-field">
                 <label className="email-or-phone" htmlFor="emailOrPhone">
-                  <span className="req">*</span>Email or Phone
+                  <span className="req">*</span>
+                  {EMAIL_OR_PHONE_LABEL}
                 </label>
                 <input
                   type="text"
                   id="emailOrPhone"
                   name="emailOrPhone"
                   required
-                  placeholder="Enter your email or phone"
+                  placeholder={EMAIL_PLACEHOLDER}
                   className="form-control"
                   value={emailOrPhone}
                   onChange={(e) => setEmailOrPhone(e.target.value)}
@@ -86,23 +100,31 @@ const Login = () => {
                     type="button"
                     onClick={togglePasswordVisibility}
                     aria-label="Toggle Password Visibility"
+                    style={{ color: "red" }}
                   >
-                    <GoEye
-                      className={`fa-regular ${
-                        isPasswordVisible ? "eye-open" : "eye-closed"
-                      }`}
-                    />
+                    {isPasswordVisible ? (
+                      <GoEye
+                        className="eye-icon"
+                        style={{ color: "#F3AE4D" }}
+                      />
+                    ) : (
+                      <FaRegEyeSlash
+                        className="eye-icon"
+                        style={{ color: "#F3AE4D" }}
+                      />
+                    )}
                   </button>
                 </span>
                 <label className="password" htmlFor="password">
-                  <span className="req">*</span>Password
+                  <span className="req">*</span>
+                  {PASSWORD_LABEL}
                 </label>
                 <input
                   type={isPasswordVisible ? "text" : "password"}
                   id="password"
                   name="password"
                   required
-                  placeholder="Password"
+                  placeholder={PASSWORD_PLACEHOLDER}
                   className="form-control"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -110,8 +132,8 @@ const Login = () => {
               </div>
 
               <span className="forget-password">
-                <Link href="forget-password">
-                  <button type="button">Forget Password?</button>
+                <Link href="/forget-password">
+                  <button type="button">{FORGOT_PASSWORD_TEXT}</button>
                 </Link>
               </span>
 
@@ -120,11 +142,11 @@ const Login = () => {
                 className="login-btn"
                 disabled={!isFormValid}
               >
-                Login
+                {LOGIN_BTN_TEXT}
               </button>
 
               <div className="social-login">
-                <span>Or Login with social</span>
+                <span>{SOCIAL_LOGIN_TEXT}</span>
                 <Link className="google" href="#">
                   <FaGoogle />
                 </Link>

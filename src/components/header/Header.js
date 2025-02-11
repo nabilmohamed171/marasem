@@ -1,10 +1,10 @@
 "use client";
-import Upper from "../navbar/Upper";
+import Upper from "@/components/all-navbars/NavbarUpper";
+import Navbar_Home from "@/components/all-navbars/NavbarHome";
 import MainCover from "@/components/header/MainCover";
-import FindMobile from "../filterMobile/FindMobile";
-import MobileCover from "./MobileCover";
-import Navbar_Home from "../navbar/Navbar_Home";
-import FilterPc from "../filterPc/FilterPc";
+import MobileCover from "@/components/header/MobileCover";
+import FindMobile from "@/components/filterMobile/FindMobile";
+import FilterPc from "@/components/filterPc/FilterPc";
 
 const HeaderHome = () => {
   return (
@@ -12,8 +12,8 @@ const HeaderHome = () => {
       <Upper />
       <Navbar_Home />
       <MainCover />
-      <FilterPc />
       <MobileCover />
+      <FilterPc />
       <FindMobile />
     </>
   );

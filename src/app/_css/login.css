@@ -2,10 +2,6 @@
   display: none;
 }
 
-input:focus {
-  outline: none;
-}
-
 .req {
   color: var(--main-color);
   text-decoration: none;
@@ -34,6 +30,10 @@ input:focus {
   color: var(--background-color) !important;
 }
 
+.border-red {
+  border: 2px solid rgb(255, 58, 58);
+}
+
 input,
 textarea {
   font-size: 12px;
@@ -41,7 +41,7 @@ textarea {
 
 .error {
   font-size: 12px;
-  color: red;
+  color: #ff3939;
   display: block;
   position: relative;
   margin-top: 5px;
@@ -51,99 +51,14 @@ textarea {
   margin-left: 17px;
 }
 
+input:active,
 input:focus {
-  background-color: transparent !important;
-  border-color: #007bff;
+  border: 1px solid #1a1a1a;
   outline: none;
-}
-
-input:active {
-  background-color: transparent !important;
-  border-color: #007bff;
 }
 
 .dropdown-toggle::after {
   display: none;
-}
-
-.dropdown-country .dropdown-flags-login .dropdown-toggle,
-.dropdown-country .dropdown-flags-forgetpassword {
-  color: #222;
-  width: 103px;
-  border-radius: 10px;
-  position: absolute;
-  left: 3px;
-  cursor: pointer;
-}
-
-.dropdown-country .dropdown-flags-create-account .dropdown-toggle {
-  width: 93px;
-}
-
-.dropdown-country .flag-icon {
-  width: 20px;
-  margin-right: 5px;
-}
-
-.dropdown-country .dropdown-list {
-  padding: 0;
-  border-radius: 10px;
-  position: absolute;
-  width: 43%;
-  background-color: #fff;
-  z-index: 10;
-  left: 3px;
-  top: 63px;
-  overflow-y: auto;
-}
-
-.dropdown-country .dropdown-flags-forgetpassword .dropdown-list {
-  top: 37px;
-  width: 95%;
-}
-
-.dropdown-country .dropdown-item {
-  padding: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #ddd;
-}
-
-.dropdown-country .dropdown-toggle::after {
-  display: none;
-}
-
-.dropdown-country .dropdown-item:hover {
-  background-color: #f0f0f0;
-}
-
-/*  End
-    This section is general and applies to all pages of the website.
-    It includes styles, scripts, and functions that are used site-wide.
-    Any changes here will affect everything across the entire site.
-*/
-
-/*  Start
-    This section contains the common code for the login page, create account page,
-    section creation, about us, and other shared styles and functions between them.
-    Any changes here will affect all screens and pages related to these sections.
-*/
-
-.login-page .row,
-.login-page .col,
-.login-page .col-md-7,
-.create-account-page .row,
-.create-account-page .col,
-.create-account-page .col-md-7,
-.categories-page .row,
-.categories-page .col,
-.categories-page .col-md-7,
-.about-you-page .row,
-.about-you-page .col,
-.about-you-page .col-md-7 {
-  margin: 0;
-  padding: 0;
 }
 
 .login-page .login-header-image img,
@@ -211,7 +126,7 @@ input:active {
 .lover,
 .create-account-page,
 .create-account-page {
-  border: 2px solid transparent; /* border transparent as default */
+  border: 2px solid transparent;
   transition: border-color 0.3s;
 }
 
@@ -219,6 +134,7 @@ input:active {
 .create-account-page .create-account-form form label {
   margin-bottom: 5px;
   font-size: 12px;
+  margin-top: 15px;
 }
 
 .login-page .login-form form input,
@@ -250,10 +166,10 @@ input:active {
   position: absolute;
   right: 0;
   text-decoration: none;
-  color: #585858;
-  top: 20px;
+  color: #f1ad45;
+  top: 35px;
   line-height: 40px;
-  right: 10px;
+  right: 15px;
   z-index: 9999;
   font-size: 15px;
   border: none;
@@ -268,7 +184,7 @@ input:active {
 .reset-passowrd .reset form input:focus {
   background-color: var(--background-input) !important;
   border-color: var(--background-input);
-  outline: none;
+  outline: none !important;
   color: var(--text-color);
 }
 
@@ -280,17 +196,6 @@ input:active {
 .login-page .login-form form .login-btn {
   margin-bottom: 30px;
 }
-
-/*  End
-    This section contains the common code for the login page, create account page,
-    section creation, about us, and other shared styles and functions between them.
-    Any changes here will affect all screens and pages related to these sections.
-*/
-
-/*
-    This code is specific to the create user and art user page.
-    It includes styles, scripts, and functions tailored for user registration and artist accounts.
-*/
 
 .create-account-page .create-account-form form h2 {
   margin-top: 20px;
@@ -328,36 +233,6 @@ input:active {
   line-height: 1.7;
 }
 
-.create-account-page .create-account-form form .select-type .artist,
-.create-account-page .create-account-form .section-firstname input {
-  width: 95%;
-  margin-right: 5%;
-}
-
-.create-account-page .create-account-form form .select-type .lover,
-.create-account-page .create-account-form .section-lastname input {
-  width: 95%;
-  margin-left: 5%;
-}
-
-.create-account-page .create-account-form form label.lastname {
-  margin-left: 15px;
-}
-
-.create-account-page .create-account-form form input {
-  margin-bottom: 16px;
-}
-
-/*
-    This code is specific to the create user and art user page.
-    It includes styles, scripts, and functions tailored for user registration and artist accounts.
-*/
-
-/*
-    This code is specific to the login page. 
-    It includes styles, scripts, and functions tailored for user authentication.
-*/
-
 .login-page .login-form {
   padding: 70px 150px;
 }
@@ -372,7 +247,7 @@ input:active {
 }
 
 .login-page .login-form form input {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .login-page .login-form form span.user-phone button,
@@ -437,17 +312,6 @@ input:active {
   background-color: #fff;
 }
 
-/*
-    This code is specific to the login page. 
-    It includes styles, scripts, and functions tailored for user authentication.
-*/
-
-/*
-    This code is specific to the category selection section. 
-    It includes event listeners and functions to handle user interactions with category options,
-    allowing users to select and manage their preferred categories for their profile.
-*/
-
 .categories-page .categories-form {
   padding: 70px 100px;
   color: var(--text-color);
@@ -488,7 +352,7 @@ input:active {
 
 .categories-page .categories-form .cate-section ul li {
   display: inline-block;
-  padding: 7px 15px;
+  padding: 10px 20px;
   background-color: var(--background-input);
   color: var(--text-color);
   margin: 5px 3px;
@@ -506,12 +370,6 @@ input:active {
   margin: 0;
   padding: 0;
 }
-
-/*
-    This code is specific to the category selection section. 
-    It includes event listeners and functions to handle user interactions with category options,
-    allowing users to select and manage their preferred categories for their profile.
-*/
 
 .about-you-page .about-you-form {
   padding: 70px 100px;
@@ -550,12 +408,6 @@ input:active {
   text-indent: 10px;
 }
 
-.about-you-page .about-you-form form .enter-media-link .entry-socail-media,
-.about-you-page .about-you-form form .enter-media-link .entry-website-url {
-  width: 95%;
-  margin-right: 5%;
-}
-
 .about-you-page .about-you-form .about-you-btn {
   width: 100%;
   background: var(--main-color);
@@ -568,11 +420,6 @@ input:active {
   transform: 0.3s ease-in-out;
   margin-top: 20px;
 }
-
-/*
-    This code is specific to the forget password page. 
-    It includes event listeners and functions to toggle input fields and password visibility.
-*/
 
 .reset-passowrd,
 .forget-password,
@@ -652,17 +499,6 @@ input:active {
   line-height: 20px;
 }
 
-/*
-    This code is specific to the forget password page. 
-    It includes event listeners and functions to toggle input fields and password visibility.
-*/
-
-/*
-    This code is specific to the location and address selection section. 
-    It includes event listeners and functions to handle user interactions with location dropdowns (city and zone),
-    as well as the input for entering detailed address information.
-*/
-
 .pickup-location .location {
   width: 600px;
 }
@@ -688,17 +524,6 @@ input:active {
   font-size: 12px;
   margin-bottom: 20px;
 }
-
-/*
-    This code is specific to the location and address selection section. 
-    It includes event listeners and functions to handle user interactions with location dropdowns (city and zone),
-    as well as the input for entering detailed address information.
-*/
-
-/*
-    This code is specific to the reset password page. 
-    It includes event listeners and functions to handle input validation and password recovery.
-*/
 
 .forget-password .forget h2 {
   font-size: 25px;
@@ -734,16 +559,6 @@ input:active {
   text-indent: 120px;
 }
 
-/*
-    This code is specific to the reset password page. 
-    It includes event listeners and functions to handle input validation and password recovery.
-*/
-
-/*
-    This code is specific to the verify phone number page. 
-    It includes event listeners and functions to validate phone number inputs and manage verification.
-*/
-
 .verify-phone-number .verify h2 {
   font-size: 25px;
   margin: 0 0 15px;
@@ -773,19 +588,6 @@ input:active {
   border: 2px solid #f1ad56;
 }
 
-/*
-    This code is specific to the verify phone number page. 
-    It includes event listeners and functions to validate phone number inputs and manage verification.
-*/
-
-/*
-    This code is grouped for handling four distinct pages:
-    1. **Reset Password**: Includes functionality for resetting the user's password.
-    2. **Verify Phone**: Handles the process of verifying the user's phone number.
-    3. **Backup Location**: Manages the backup location features, including saving and managing user locations.
-    4. **Forgot Password**: Deals with the process of initiating password recovery when the user forgets their password.
-*/
-
 .login-page .login-form form .login-btn,
 .create-account-page .create-account-form form .create-account-btn,
 .categories-page .categories-form .cate-section .create-cate-btn,
@@ -804,6 +606,11 @@ input:active {
   margin-top: 20px;
 }
 
+.pickup-location .location form .location-btn {
+  background-color: #fff;
+  border: 1px solid #fff;
+}
+
 .login-btn:disabled,
 .create-account-btn:disabled,
 .forget-password .forget form .forget-passowrd-btn:disabled,
@@ -816,13 +623,18 @@ input:active {
   opacity: 0.3;
 }
 
-/*
-    This code is grouped for handling four distinct pages:
-    1. **Reset Password**: Includes functionality for resetting the user's password.
-    2. **Verify Phone**: Handles the process of verifying the user's phone number.
-    3. **Backup Location**: Manages the backup location features, including saving and managing user locations.
-    4. **Forgot Password**: Deals with the process of initiating password recovery when the user forgets their password.
-*/
+.add-user-location .zone,
+.add-user-location .city {
+  position: relative;
+}
+
+.zone .arrow-down-icon,
+.city .arrow-down-icon {
+  position: absolute;
+  top: 28px;
+  right: 9px;
+  font-size: 18px;
+}
 
 @media (min-width: 10px) {
   .login-page .login-header-image img,
@@ -832,7 +644,6 @@ input:active {
   }
 
   .login-page .login-form,
-  .create-account-page .create-account-form,
   .about-you-page .about-you-form {
     width: 100vw;
     height: 100%;
@@ -847,11 +658,11 @@ input:active {
   }
 
   .create-account-page .create-account-form {
-    padding: 30px 70px;
+    padding: 30px;
   }
 
   .about-you-page .about-you-form {
-    padding: 50px;
+    padding: 50px 50px 50px 35px;
   }
 
   .create-account-page .create-account-form form .select-type .artist h4,

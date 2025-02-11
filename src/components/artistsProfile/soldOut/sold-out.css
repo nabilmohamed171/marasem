@@ -42,4 +42,7 @@
   font-size: 15px;
 }
 
-
+.sold-to .current-owner {
+  color: #777;
+  display: block;
+}

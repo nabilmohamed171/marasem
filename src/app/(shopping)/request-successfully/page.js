@@ -1,5 +1,5 @@
 import React from "react";
-import NavbarBuyer from "@/components/navbar/NavbarArtists";
+import NavbarBuyer from "@/components/all-navbars/NavbarBuyer";
 import { FaRegCheckCircle } from "react-icons/fa";
 import "./request.css";
 

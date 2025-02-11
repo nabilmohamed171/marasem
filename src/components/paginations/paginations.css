@@ -19,11 +19,11 @@
   color: #000;
 }
 
-.number-pages .number span.first {
+.number-pages .number span.first-arrow-icon {
   margin-right: 10px;
 }
 
-.number-pages .number span.last {
+.number-pages .number span.last-arrow-icon {
   margin-left: 10px;
 }
 
@@ -35,5 +35,21 @@
 
 .number-pages .dropdown-number-pages .dropdown .btn {
   background: transparent;
-  padding: 7px 15px;
+  padding: 7px 48px;
+}
+
+.number-pages .dropdown-menu.show {
+  background-color: #404040;
+}
+
+.number-pages .dropdown-number-pages .dropdown {
+  position: relative;
+}
+
+.number-pages .dropdown-number-pages .dropdown .arrow-down-icon {
+  position: absolute;
+  top: 4px;
+  right: 9px;
+  font-size: 17px;
+  color: #fff;
 }

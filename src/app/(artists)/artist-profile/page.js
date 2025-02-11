@@ -1,14 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
-import NavbarArtists from "@/components/navbar/NavbarArtists";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import Link from "next/link";
-import Image from "next/image";
+import { IoIosArrowDown } from "react-icons/io";
 import Footer from "@/components/footer/Footer";
+import NavbarArtists from "@/components/all-navbars/NavbarArtists";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 import SectionFavorites from "@/components/artistsProfile/favorites/Favorites";
 import SectionSoldOut from "@/components/artistsProfile/soldOut/SoldOut";
 import SectionGallery from "@/components/artistsProfile/gallery/Gallary";
+import Link from "next/link";
+import Image from "next/image";
 
 import "./artist-profile.css";
 
@@ -130,6 +131,9 @@ const ArtistProfile = () => {
                           </Link>
                         </li>
                       </ul>
+                      <span className="arrow-down-icon">
+                        <IoIosArrowDown />
+                      </span>
                     </div>
                   </div>
                 </div>

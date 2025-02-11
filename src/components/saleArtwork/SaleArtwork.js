@@ -12,15 +12,16 @@ const ShareArtwork = () => {
   const [images, setImages] = useState([]);
   const [mainImage, setMainImage] = useState(null);
   const [showOverlayImage, setShowOverlayImage] = useState(false);
-
   const [artworkName, setArtworkName] = useState("");
   const [artworkType, setArtworkType] = useState("");
   const [artworkStatus, setArtworkStatus] = useState("");
   const [sizes, setSizes] = useState([{ size: "", price: "" }]);
-
   const [showFinalTouches, setShowFinalTouches] = useState(false);
-
   const [isFormValid, setIsFormValid] = useState(false);
+  const [subCategory, setSubCategory] = useState("");
+
+  // إضافة حالة لرفعية الصورة
+  const [imageUploaded, setImageUploaded] = useState(false);
 
   const addSize = () => {
     setSizes([...sizes, { size: "", price: "", showDelete: true }]);
@@ -45,6 +46,7 @@ const ShareArtwork = () => {
 
     setMainImage(imagesArray[0]);
     setShowOverlayImage(true);
+    setImageUploaded(true); // عند رفع الصورة قم بتحديث الحالة
   };
 
   const handleSizeChange = (index, field, value) => {
@@ -63,13 +65,15 @@ const ShareArtwork = () => {
       artworkType &&
       artworkStatus &&
       sizes.every((size) => size.size && size.price) &&
-      mainImage;
+      mainImage &&
+      subCategory;
+
     setIsFormValid(isFormComplete);
   };
 
   useEffect(() => {
     validateForm();
-  }, [artworkName, artworkType, artworkStatus, sizes, mainImage]);
+  }, [artworkName, artworkType, artworkStatus, sizes, mainImage, subCategory]);
 
   const handleNumberInput = (e) => {
     const regex = /^[0-9]*$/;
@@ -78,12 +82,18 @@ const ShareArtwork = () => {
     }
   };
 
+  const subCategories = {
+    "Fine Art": ["Painting", "Drawing", "Sculptures", "Mosaic", "Glass Art"],
+    "Hand Crafts": ["Pottery", "Weaving", "Woodworking", "Metalwork"],
+    "Digital Prints": ["Photography", "Digital Illustration", "3D Art"],
+  };
+
   return (
     <>
       <div className="container">
         <div className="share-artwork">
           <div className="row">
-            <div className="col">
+            <div className="col-12">
               <div className="buttons">
                 <button className="save-as" type="button">
                   Save as draft
@@ -92,10 +102,9 @@ const ShareArtwork = () => {
                   className="continue"
                   type="button"
                   onClick={handleContinueClick}
-                  disabled={!isFormValid}
                   style={{
-                    opacity: isFormValid ? 1 : 0.5,
-                    pointerEvents: isFormValid ? "auto" : "none",
+                    opacity: isFormValid ? 1 : 1,
+                    pointerEvents: "auto",
                     transition: "opacity 0.3s ease",
                   }}
                 >
@@ -113,7 +122,7 @@ const ShareArtwork = () => {
         <div className="share-artwork-upload-images">
           <div className="container-share-artwork">
             <div className="row">
-              <div className="col-12 col-md-2 order-2 order-md-1">
+              <div className="col-md-2 col-12 order-2 order-md-1">
                 <div className="upload-inputs">
                   {Array.from({ length: 6 }).map((_, index) => (
                     <div key={index} className="upload-container">
@@ -137,7 +146,7 @@ const ShareArtwork = () => {
                   ))}
                 </div>
               </div>
-              <div className="col-12 col-md-6 order-1 order-md-2">
+              <div className="col-md-6 col-12 order-1 order-md-2">
                 <div className="multi-upload">
                   <div className="multi-upload-center">
                     <div className="main-image-container">
@@ -163,6 +172,17 @@ const ShareArtwork = () => {
                       </div>
                     )}
 
+                    <h3>Upload Your Artwork</h3>
+                    <p>This is also used as the photo in feeds.</p>
+                    <span className="point-icon">
+                      <TbPointFilled />
+                    </span>
+
+                    {/* هذه هي الفقرة التي سيتم إضافة الكلاس hidden عليها عند رفع الصورة */}
+                    <p className={`title ${imageUploaded ? "hidden" : ""}`}>
+                      Title Lorem Ipsum, Title Lorem Ipsum
+                    </p>
+
                     <input
                       className="form-control"
                       type="file"
@@ -171,16 +191,10 @@ const ShareArtwork = () => {
                       onChange={handleImageUpload}
                       required
                     />
-                    <h3>Upload Your Artwork</h3>
-                    <p>This is also used as the photo in feeds.</p>
-                    <span className="TbPointFilled">
-                      <TbPointFilled />
-                    </span>
-                    <p>Title Lorem Ipsum, Title Lorem Ipsum</p>
                   </div>
                 </div>
               </div>
-              <div className="col-12 col-md-4 order-3 order-md-3">
+              <div className="col-md-4 col-12 order-3 order-md-3">
                 <div className="form-group">
                   <label htmlFor="artworkName">
                     <span className="main-color">*</span>Artwork Name
@@ -203,16 +217,41 @@ const ShareArtwork = () => {
                   <select
                     id="artworkType"
                     value={artworkType}
-                    onChange={(e) => setArtworkType(e.target.value)}
+                    onChange={(e) => {
+                      setArtworkType(e.target.value);
+                      setSubCategory("");
+                    }}
                     className="form-control"
                     required
                   >
                     <option value="">Select Type</option>
-                    <option value="painting">Painting</option>
-                    <option value="sculpture">Sculpture</option>
-                    <option value="digital">Digital</option>
+                    <option value="Fine Art">Fine Art</option>
+                    <option value="Hand Crafts">Hand Crafts</option>
+                    <option value="Digital Prints">Digital Prints</option>
                   </select>
                 </div>
+
+                {artworkType && (
+                  <div className="form-group">
+                    <label htmlFor="subCategory">
+                      <span className="main-color">*</span>Sub Category
+                    </label>
+                    <select
+                      id="subCategory"
+                      value={subCategory}
+                      onChange={(e) => setSubCategory(e.target.value)}
+                      className="form-control"
+                      required
+                    >
+                      <option value="">Select Sub Category</option>
+                      {subCategories[artworkType]?.map((sub, index) => (
+                        <option key={index} value={sub}>
+                          {sub}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
                 <div className="form-group">
                   <label htmlFor="artworkStatus">
@@ -228,8 +267,29 @@ const ShareArtwork = () => {
                     <option value="">Select Artwork Status</option>
                     <option value="available">Ready to Ship</option>
                     <option value="sold">Customize Only</option>
+                    <option value="both">
+                      Both (Ready to ship & able to Customize)
+                    </option>
                   </select>
                 </div>
+
+                {(artworkStatus === "sold" || artworkStatus === "both") && (
+                  <div className="form-group">
+                    <label htmlFor="customizeTime">
+                      <span className="main-color">*</span>Customize Time
+                    </label>
+                    <select
+                      id="customizeTime"
+                      className="form-control"
+                      required
+                    >
+                      <option value="">Select Customize Time</option>
+                      <option value="5">5 Working Days</option>
+                      <option value="15">15 Working Days</option>
+                      <option value="20">20 Working Days</option>
+                    </select>
+                  </div>
+                )}
 
                 <div className="form-group">
                   {sizes.map((size, index) => (

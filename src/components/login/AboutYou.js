@@ -40,88 +40,101 @@ const AboutYou = () => {
         </div>
         <div className="col">
           <div className="about-you-form">
-            <div className="website-logo scale-hover">
-              <Image
-                src="/images/main-logo.png"
-                alt="marasem"
-                width={130}
-                height={39}
-              />
-              <span></span>
-            </div>
-            <div className="about-you-info">
-              <h2>About You</h2>
-              <h4>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Ducimus minima, explicabo voluptatem ratione dolor
-              </h4>
+            <div className="row">
+              <div className="col-12">
+                <div className="website-logo scale-hover">
+                  <Image
+                    src="/images/main-logo.png"
+                    alt="marasem"
+                    width={130}
+                    height={39}
+                  />
+                </div>
+                <div className="about-you-info">
+                  <h2>About You</h2>
+                  <h4>
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Ducimus minima, explicabo voluptatem ratione dolor
+                  </h4>
+                </div>
+              </div>
             </div>
             <form onSubmit={handleSubmit}>
               <div className="enter-media-link">
                 <div className="row">
-                  <div className="col entry-socail-media">
-                    <label htmlFor="socialMediaLink" className="form-label">
-                      <span className="req">*</span>Social Media Link
-                    </label>
-                    <input
-                      type="url"
-                      className="form-control"
-                      id="socialMediaLink"
-                      value={socialMediaLink}
-                      onChange={(e) => setSocialMediaLink(e.target.value)}
-                      placeholder="Enter your social media link"
-                      required
-                    />
+                  <div className="col-md-6 col-12 ">
+                    <div className="entry-socail-media">
+                      <label htmlFor="socialMediaLink" className="form-label">
+                        <span className="req">*</span>Social Media Link
+                      </label>
+                      <input
+                        type="url"
+                        className="form-control"
+                        id="socialMediaLink"
+                        value={socialMediaLink}
+                        onChange={(e) => setSocialMediaLink(e.target.value)}
+                        placeholder="Enter your social media link"
+                        required
+                      />
+                    </div>
                   </div>
-                  <div className="col entry-portfolio">
-                    <label htmlFor="portfolio" className="form-label">
-                      Portfolio
-                    </label>
-                    <input
-                      type="url"
-                      className="form-control"
-                      id="portfolio"
-                      value={portfolioLink}
-                      onChange={(e) => setPortfolioLink(e.target.value)}
-                      placeholder="Enter your portfolio link"
-                    />
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col entry-website-url">
-                    <label htmlFor="websiteLink" className="form-label">
-                      Website Link
-                    </label>
-                    <input
-                      type="url"
-                      className="form-control"
-                      id="websiteLink"
-                      value={websiteLink}
-                      onChange={(e) => setWebsiteLink(e.target.value)}
-                      placeholder="Enter your website link"
-                    />
-                  </div>
-                  <div className="col entry-meida">
-                    <label
-                      htmlFor="otherSocialMediaLink"
-                      className="form-label"
-                    >
-                      Other Social Media Link
-                    </label>
-                    <input
-                      type="url"
-                      className="form-control"
-                      id="otherSocialMediaLink"
-                      value={otherSocialMediaLink}
-                      onChange={(e) => setOtherSocialMediaLink(e.target.value)}
-                      placeholder="Enter another social media link"
-                    />
+                  <div className="col-md-6 col-12">
+                    <div className=" entry-portfolio">
+                      <label htmlFor="portfolio" className="form-label">
+                        <span className="req">*</span>Portfolio
+                      </label>
+                      <input
+                        type="url"
+                        className="form-control"
+                        id="portfolio"
+                        value={portfolioLink}
+                        onChange={(e) => setPortfolioLink(e.target.value)}
+                        placeholder="Enter your portfolio link"
+                      />
+                    </div>
                   </div>
                 </div>
 
                 <div className="row">
-                  <div className="col">
+                  <div className="col-md-6 col-12">
+                    <div className=" entry-website-url">
+                      <label htmlFor="websiteLink" className="form-label">
+                        Website Link
+                      </label>
+                      <input
+                        type="url"
+                        className="form-control"
+                        id="websiteLink"
+                        value={websiteLink}
+                        onChange={(e) => setWebsiteLink(e.target.value)}
+                        placeholder="Enter your website link"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6 col-12 ">
+                    <div className="entry-meida">
+                      <label
+                        htmlFor="otherSocialMediaLink"
+                        className="form-label"
+                      >
+                        Other Social Media Link
+                      </label>
+                      <input
+                        type="url"
+                        className="form-control"
+                        id="otherSocialMediaLink"
+                        value={otherSocialMediaLink}
+                        onChange={(e) =>
+                          setOtherSocialMediaLink(e.target.value)
+                        }
+                        placeholder="Enter another social media link"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-12">
                     <label htmlFor="summary" className="form-label">
                       Summary
                     </label>
@@ -134,13 +147,13 @@ const AboutYou = () => {
                       placeholder="Write a brief summary about yourself"
                     />
                   </div>
+                  <Link href="my-wishes">
+                    <button type="submit" className="about-you-btn">
+                      Next
+                    </button>
+                  </Link>
                 </div>
               </div>
-              <Link href="my-wishes">
-                <button type="submit" className="about-you-btn">
-                  Next
-                </button>
-              </Link>
             </form>
           </div>
         </div>

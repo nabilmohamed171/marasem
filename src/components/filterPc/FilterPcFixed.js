@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { IoIosArrowDown } from "react-icons/io";
 import "./filter.css";
 
 const FilterPcFixed = () => {
@@ -37,6 +38,9 @@ const FilterPcFixed = () => {
                   </Link>
                 </li>
               </ul>
+              <span className="arrow-down-icon">
+                <IoIosArrowDown />
+              </span>
             </div>
           </div>
           <div className="col-md-2">
@@ -66,6 +70,9 @@ const FilterPcFixed = () => {
                   </Link>
                 </li>
               </ul>
+              <span className="arrow-down-icon">
+                <IoIosArrowDown />
+              </span>
             </div>
           </div>
           <div className="col-md-2">
@@ -95,6 +102,9 @@ const FilterPcFixed = () => {
                   </Link>
                 </li>
               </ul>
+              <span className="arrow-down-icon">
+                <IoIosArrowDown />
+              </span>
             </div>
           </div>
           <div className="col-md-2">
@@ -124,6 +134,9 @@ const FilterPcFixed = () => {
                   </Link>
                 </li>
               </ul>
+              <span className="arrow-down-icon">
+                <IoIosArrowDown />
+              </span>
             </div>
           </div>
           <div className="col-md-1">
@@ -158,6 +171,9 @@ const FilterPcFixed = () => {
                   </Link>
                 </li>
               </ul>
+              <span className="arrow-down-icon">
+                <IoIosArrowDown />
+              </span>
             </div>
           </div>
         </div>

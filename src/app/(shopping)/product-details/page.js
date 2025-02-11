@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import NavbarArtists from "@/components/navbar/NavbarArtists";
-import FilterPcFixed from "@/components/filterPc/FilterPcFixed";
-import Footer from "@/components/footer/Footer";
-import FooterAccordion from "@/components/footer/FooterAccordion";
 import { FaRegHeart } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import CardsAllartworks from "@/components/cardsAllArtworks/CardsAllartworks";
 import { IoIosArrowBack } from "react-icons/io";
+import NavbarArtists from "@/components/all-navbars/NavbarArtists";
+import FilterPcFixed from "@/components/filterPc/FilterPcFixed";
+import Footer from "@/components/footer/Footer";
+import FooterAccordion from "@/components/footer/FooterAccordion";
 import CustomizeArtwork from "@/components/customizeArtwork/CustomizeArtwork";
 import FindMobile from "@/components/filterMobile/FindMobile";
 import Image from "next/image";
@@ -195,7 +195,7 @@ const AllArtworks = () => {
                           </button>
 
                           <button disabled>
-                            <Link href="/"></Link>Own It
+                            <Link href="/cart"></Link>Own It
                           </button>
                         </div>
                       </div>

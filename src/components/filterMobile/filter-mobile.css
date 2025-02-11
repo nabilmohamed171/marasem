@@ -10,7 +10,7 @@
 }
 
 .filter-mobile {
-  padding: 50px 30px;
+  padding: 50px 10px;
   position: fixed;
   background-color: #000;
   margin-top: 100px;
@@ -28,7 +28,7 @@
 
 .filter-mobile .find .xmark {
   position: absolute;
-  right: 40px;
+  right: 30px;
   top: 50px;
   color: var(--text-color);
   font-size: 20px;
@@ -45,7 +45,7 @@
 .filter-mobile .find-links li {
   display: inline-block;
   margin-right: 3px;
-  padding: 10px;
+  padding: 8px 10px;
   color: var(--text-color);
   font-size: 16px;
   cursor: pointer;
@@ -92,31 +92,30 @@
   margin-top: 30px;
   font-size: 16px;
   position: absolute;
-  width: 85%;
   bottom: 115px;
+  width: 93%;
 }
 
-.filter-mobile .buttons button:first-child {
-  background-color: var(--sec-main-color);
-  color: var(--text-color);
+.filter-mobile .buttons button {
   border-radius: 10px;
-  padding: 10px 15px;
-  border: 1px solid var(--sec-main-color);
-  margin-right: 4%;
-  width: 40%;
+  padding: 15px;
+  width: 100%;
+}
+
+.filter-mobile .buttons button.clear {
+  background-color: #161616;
+  border: 1px solid #161616;
+  color: #fff;
 }
 
 .filter-mobile .accordion-button:not(.collapsed) {
   box-shadow: none;
 }
 
-.filter-mobile .buttons button:last-child {
-  background-color: var(--main-color);
-  color: var(--sec-main-color);
-  border-radius: 10px;
-  padding: 10px 15px;
-  border: 1px solid var(--border-color);
-  width: 55%;
+.filter-mobile .buttons button.apply {
+  background-color: #f1ad56;
+  border: 1px solid #f1ad56;
+  color: #222;
 }
 
 .find-photo {
@@ -136,11 +135,20 @@
   background-color: transparent;
   color: #fff;
   font-size: 14px;
-  float: right;
-  top: 7px;
+  margin-left: 20px;
+  top: 5px;
   border: none;
   position: relative;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.find-photo .best-seller .arrow-down-icon {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  font-size: 18px;
 }
 
 .filter-mobile .accordion-body {
@@ -189,4 +197,22 @@
   color: var(--main-color);
   margin-left: 10px;
   display: inline-block;
+}
+
+@media (max-width: 575.98px) {
+  .find-photo {
+    padding: 25px 0 0px 0;
+  }
+}
+
+@media (max-width: 767.98px) {
+}
+
+@media (max-width: 991.98px) {
+}
+
+@media (max-width: 1199.98px) {
+}
+
+@media (max-width: 1399.98px) {
 }

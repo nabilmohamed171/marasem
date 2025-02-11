@@ -10,23 +10,108 @@ import "./slider-cate.css";
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
 
 const sliderItems = [
-  { src: "/images/slider 1.png", alt: "Leather Craft", title: "Leather Craft" },
-  { src: "/images/slider 2.png", alt: "Ceramics", title: "Ceramics" },
-  { src: "/images/slider 3.png", alt: "Fashion Art", title: "Fashion Art" },
-  { src: "/images/slider 4.png", alt: "Paintings", title: "Paintings" },
-  { src: "/images/slider 5.png", alt: "Egyptians", title: "Egyptians" },
-  { src: "/images/slider 6.png", alt: "Calligraphy", title: "Calligraphy" },
-  { src: "/images/slider 7.png", alt: "Illustration", title: "Illustration" },
-  { src: "/images/slider 8.png", alt: "Furniture", title: "Furniture" },
-  { src: "/images/slider 9.png", alt: "Sculptures", title: "Sculptures" },
-  { src: "/images/slider 1.png", alt: "Leather Craft", title: "Leather Craft" },
-  { src: "/images/slider 2.png", alt: "Ceramics", title: "Ceramics" },
-  { src: "/images/slider 3.png", alt: "Fashion Art", title: "Fashion Art" },
-  { src: "/images/slider 4.png", alt: "Paintings", title: "Paintings" },
-  { src: "/images/slider 5.png", alt: "Egyptians", title: "Egyptians" },
-  { src: "/images/slider 6.png", alt: "Calligraphy", title: "Calligraphy" },
-  { src: "/images/slider 7.png", alt: "Illustration", title: "Illustration" },
-  { src: "/images/slider 8.png", alt: "Furniture", title: "Furniture" },
+  {
+    src: "/images/slider 1.png",
+    alt: "Leather Craft",
+    title: "Leather Craft",
+    link: "/category/leather-craft",
+  },
+  {
+    src: "/images/slider 2.png",
+    alt: "Ceramics",
+    title: "Ceramics",
+    link: "/category/ceramics",
+  },
+  {
+    src: "/images/slider 3.png",
+    alt: "Fashion Art",
+    title: "Fashion Art",
+    link: "/category/fashion-art",
+  },
+  {
+    src: "/images/slider 4.png",
+    alt: "Paintings",
+    title: "Paintings",
+    link: "/category/paintings",
+  },
+  {
+    src: "/images/slider 5.png",
+    alt: "Egyptians",
+    title: "Egyptians",
+    link: "/category/egyptians",
+  },
+  {
+    src: "/images/slider 6.png",
+    alt: "Calligraphy",
+    title: "Calligraphy",
+    link: "/category/calligraphy",
+  },
+  {
+    src: "/images/slider 7.png",
+    alt: "Illustration",
+    title: "Illustration",
+    link: "/category/illustration",
+  },
+  {
+    src: "/images/slider 8.png",
+    alt: "Furniture",
+    title: "Furniture",
+    link: "/category/furniture",
+  },
+  {
+    src: "/images/slider 9.png",
+    alt: "Sculptures",
+    title: "Sculptures",
+    link: "/category/sculptures",
+  },
+  {
+    src: "/images/slider 1.png",
+    alt: "Leather Craft",
+    title: "Leather Craft",
+    link: "/category/leather-craft",
+  },
+  {
+    src: "/images/slider 2.png",
+    alt: "Ceramics",
+    title: "Ceramics",
+    link: "/category/ceramics",
+  },
+  {
+    src: "/images/slider 3.png",
+    alt: "Fashion Art",
+    title: "Fashion Art",
+    link: "/category/fashion-art",
+  },
+  {
+    src: "/images/slider 4.png",
+    alt: "Paintings",
+    title: "Paintings",
+    link: "/category/paintings",
+  },
+  {
+    src: "/images/slider 5.png",
+    alt: "Egyptians",
+    title: "Egyptians",
+    link: "/category/egyptians",
+  },
+  {
+    src: "/images/slider 6.png",
+    alt: "Calligraphy",
+    title: "Calligraphy",
+    link: "/category/calligraphy",
+  },
+  {
+    src: "/images/slider 7.png",
+    alt: "Illustration",
+    title: "Illustration",
+    link: "/category/illustration",
+  },
+  {
+    src: "/images/slider 8.png",
+    alt: "Furniture",
+    title: "Furniture",
+    link: "/category/furniture",
+  },
 ];
 
 export const SliderCategory = () => {
@@ -64,7 +149,7 @@ export const SliderCategory = () => {
         >
           {sliderItems.map((item, index) => (
             <SwiperSlide key={index}>
-              <Link className="reser-link" href="#">
+              <Link className="reser-link" href={item.link}>
                 <Image
                   src={item.src}
                   alt={item.alt}

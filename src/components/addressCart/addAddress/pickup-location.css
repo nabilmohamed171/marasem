@@ -110,7 +110,7 @@ textarea:focus {
 @media (max-width: 575.98px) {
   .add-first-address .first-address {
     width: 100% !important;
-    bottom: -85px !important;
+    bottom: -110px !important;
     border-radius: 50px 50px 0 0;
     padding: 70px 20px 50px;
   }

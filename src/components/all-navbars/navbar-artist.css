@@ -1,5 +1,6 @@
 .navbar .nav-artist {
-  margin: 0 10px;
+  margin-left: 10px;
+  margin-right: 30px;
   display: inline-block;
   position: relative;
 }
@@ -8,6 +9,16 @@
   width: 45px;
   height: 45px;
   display: inline-block;
+}
+
+.navbar .nav-artist .dropdown-menu {
+  display: block;
+  background: #1a1a1a;
+  width: 223px;
+  top: 39px;
+  border-radius: 0 0 10px 10px;
+  left: -83px;
+  border: none;
 }
 
 .navbar .nav-artist .photo-artist-img {
@@ -89,7 +100,7 @@
   .artist-menu-mobile .box-menu .box-profile {
     background: #141414;
     padding: 30px 30px 30px;
-    margin-bottom: 45px;
+    margin-bottom: 30px;
     border-radius: 20px;
     color: #fff;
     position: relative;
@@ -99,7 +110,7 @@
   .artist-menu-mobile .box-menu .box-orders {
     background: #141414;
     padding: 10px 30px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     border-radius: 20px;
     color: #fff;
     position: relative;
@@ -252,6 +263,11 @@
     color: #fff;
     text-decoration: none;
     font-size: 16px;
+  }
+
+  .artist-menu-mobile .box-menu .box-button-logout span.logout-icon {
+    font-size: 18px;
+    margin-right: 10px;
   }
 
   .artist-menu-mobile .box-menu .profile-name {

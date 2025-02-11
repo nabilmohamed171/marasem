@@ -3,6 +3,10 @@
   border-color: #32cd30 !important;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .main-color {
   color: #f1ad56;
 }
@@ -28,8 +32,8 @@
   border: 1px solid #333;
   color: #fff;
   font-size: 15px;
-  padding: 5px 13px;
-  border-radius: 10px;
+  padding: 8px 15px;
+  border-radius: 5px;
 }
 
 .share-artwork button.save-as {
@@ -130,7 +134,7 @@
   margin-bottom: 20px;
 }
 
-.multi-upload .multi-upload-center p:last-child {
+.multi-upload .multi-upload-center p.title {
   color: #757575;
   font-size: 12px;
   position: relative;
@@ -138,7 +142,7 @@
   display: inline;
 }
 
-.multi-upload .multi-upload-center .TbPointFilled {
+.multi-upload .multi-upload-center .point-icon {
   color: #4c4c4c;
   margin-right: 5px;
   font-size: 20px;
@@ -149,10 +153,12 @@
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
-  height: 100%;
+  height: 470px;
   opacity: 0;
-  z-index: 9999;
+  z-index: 99999;
 }
 
 label {
@@ -241,11 +247,10 @@ hr {
 }
 
 .final-touches {
-  background-color: #111111;
-  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.6);
   width: 100%;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 99999 !important;
@@ -336,6 +341,11 @@ hr {
   padding: 0.5em 0.75em;
 }
 
+.tag-item .text {
+  position: relative;
+  top: -2px;
+}
+
 .remove-tag {
   margin-left: 5px;
   font-weight: bold;
@@ -356,13 +366,13 @@ hr {
 }
 
 .buttons-add-collections button,
-.buttons-save-pub .buttons-pub button,
 .buttons-save-pub .buttons-save button {
-  padding: 10px 20px;
+  padding: 15px;
   color: #fff;
   border-radius: 5px;
-  width: 100%;
+  display: block;
   text-align: center;
+  width: 100%;
 }
 
 .buttons-add-collections button {
@@ -381,15 +391,27 @@ hr {
 .buttons-save-pub .buttons-pub button {
   background-color: #f1ad56;
   border: 1px solid #f1ad56;
-  color: #333;
-  width: 99%;
-  margin-left: 1%;
+  color: #222;
+  display: block;
+  font-size: 14px;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  width: 100%;
+}
+
+.buttons-save-pub .buttons-pub a,
+.buttons-save-pub .buttons-save a {
+  text-decoration: none;
 }
 
 .buttons-save-pub .buttons-save button {
   background-color: #1a1a1a;
   border: 1px solid #1a1a1a;
-  width: 99%;
+  width: 100%;
+  font-size: 14px;
+  padding: 15px;
+  border-radius: 5px;
 }
 
 .tag-item .close {
@@ -480,6 +502,12 @@ hr {
   margin-right: 10px;
 }
 
+select option {
+  background: #1a1a1a;
+  color: #f1ad56;
+  border: 1px solid #1a1a1a;
+}
+
 @media (min-width: 0) {
   .container-share-artwork {
     width: auto;
@@ -488,7 +516,7 @@ hr {
 
   .final {
     width: 100% !important;
-    bottom: 10px !important;
+    bottom: 0 !important;
     background-color: #000 !important;
     border-radius: 20px 20px 0 0 !important;
   }
@@ -510,7 +538,7 @@ hr {
 
   .final {
     width: 100% !important;
-    bottom: -85px !important;
+    bottom: 0 !important;
     background-color: #000 !important;
     border-radius: 20px 20px 0 0 !important;
   }
@@ -575,7 +603,7 @@ hr {
 
   .final {
     width: 100% !important;
-    bottom: -85px !important;
+    bottom: 0 !important;
     background-color: #000 !important;
     border-radius: 20px 20px 0 0 !important;
   }

@@ -125,18 +125,20 @@
 
 .images-items-collections h2 {
   color: #fff;
-  padding: 10px 0;
+  padding: 15px 0 0;
   font-size: 16px;
+  font-weight: 400;
 }
 
 .images-items-collections p {
-  color: #ebebf599;
+  color: #777;
   font-size: 14px;
   width: 240px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0 0 10px 0;
+  font-weight: 300;
 }
 
 .images-items-collections h3 {
@@ -225,7 +227,7 @@
 @media (max-width: 575.98px) {
   .images-items-collections .items-collections-image,
   .images-items-collections .items-collections-image.magic {
-    height: 280px !important;
+    height: 250px !important;
   }
 }
 
