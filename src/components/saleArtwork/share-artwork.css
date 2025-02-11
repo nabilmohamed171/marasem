@@ -20,7 +20,7 @@
 }
 
 .share-artwork {
-  padding: 30px 0 50px;
+  padding: 30px 0 35px;
 }
 
 .share-artwork .buttons {
@@ -32,8 +32,8 @@
   border: 1px solid #333;
   color: #fff;
   font-size: 15px;
-  padding: 8px 15px;
-  border-radius: 5px;
+  padding: 8px 20px;
+  border-radius: 30px;
 }
 
 .share-artwork button.save-as {
@@ -528,6 +528,10 @@ select option {
   .collections-selected .selected {
     margin-top: 20px;
   }
+
+  .share-artwork .buttons {
+    margin-right: 20px;
+  }
 }
 
 @media (max-width: 576px) {
@@ -557,6 +561,10 @@ select option {
 
   .buttons-add-collections button {
     margin-top: 30px;
+  }
+
+  .share-artwork .buttons {
+    margin-right: 20px;
   }
 }
 
@@ -615,6 +623,10 @@ select option {
   .collections-selected .selected {
     margin-top: 20px;
   }
+
+  .share-artwork .buttons {
+    margin-right: 0;
+  }
 }
 
 @media (min-width: 992px) {
@@ -635,6 +647,10 @@ select option {
 
   .collections-selected .selected {
     margin-top: 0;
+  }
+
+  .share-artwork .buttons {
+    margin-right: 0;
   }
 }
 
@@ -657,6 +673,10 @@ select option {
   .collections-selected .selected {
     margin-top: 0;
   }
+
+  .share-artwork .buttons {
+    margin-right: 0;
+  }
 }
 
 @media (min-width: 1400px) {
@@ -677,5 +697,9 @@ select option {
 
   .collections-selected .selected {
     margin-top: 0;
+  }
+
+  .share-artwork .buttons {
+    margin-right: 0;
   }
 }

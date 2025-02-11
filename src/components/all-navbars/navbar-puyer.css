@@ -22,6 +22,11 @@
   display: none;
 }
 
+.your-name-account {
+  margin-left: 20px;
+  margin-right: 35px;
+}
+
 @media (max-width: 576px) {
   .nav-buyer,
   .navbar-nav,
@@ -37,7 +42,14 @@
 
   .puyer-menu-mobile {
     display: block;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 52px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
   }
 
   .puyer-menu-mobile .box-menu .box-search .form-search {
@@ -66,7 +78,7 @@
 
   .puyer-menu-mobile .box-menu .box-profile {
     background: #141414;
-    padding: 30px 30px 30px;
+    padding: 30px 30px 5px;
     margin-bottom: 15px;
     border-radius: 20px;
     color: #fff;

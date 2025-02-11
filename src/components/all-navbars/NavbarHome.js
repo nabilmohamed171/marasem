@@ -5,6 +5,7 @@ import { CiShoppingCart } from "react-icons/ci";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { HiOutlineBars3BottomRight } from "react-icons/hi2";
 import { LuMapPin } from "react-icons/lu";
+import { IoClose } from "react-icons/io5";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 import { LiaMapMarkedAltSolid } from "react-icons/lia";
@@ -20,6 +21,11 @@ import "./navbar-home.css";
 const Navbar_Home = () => {
   const [isStickyNavbar, setIsStickyNavbar] = useState(false);
   const [isPopupSearchOpen, setIsPopupSearchOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleSearchClick = () => {
     setIsPopupSearchOpen((prevState) => !prevState);
@@ -122,11 +128,12 @@ const Navbar_Home = () => {
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
-          aria-expanded="false"
+          aria-expanded={isOpen ? "true" : "false"}
           aria-label="Toggle navigation"
+          onClick={toggleNavbar}
         >
           <span className="btn-mobile">
-            <HiOutlineBars3BottomRight />
+            {isOpen ? <IoClose /> : <HiOutlineBars3BottomRight />}
           </span>
         </button>
 
@@ -135,7 +142,7 @@ const Navbar_Home = () => {
             <li className="nav-item">
               <Link
                 className="nav-link active shop-art-menu"
-                href="/product-list"
+                href="/shop-art"
                 aria-current="page"
               >
                 SHOP ART
@@ -274,35 +281,15 @@ const Navbar_Home = () => {
                 <div className="box-profile">
                   <div className="profile">
                     <div className="row">
-                      <div className="col-2">
-                        <div className="profile-image">
-                          <Image
-                            className="photo-profile-img"
-                            src="/images/avatar2.png"
-                            alt="photo"
-                            width={60}
-                            height={60}
-                            quality={100}
-                            loading="lazy"
-                            objectFit="cover"
-                          />
-                        </div>
-                      </div>
                       <div className="col-7">
-                        <div className="profile-name">
-                          <h3>Omer Mohsen</h3>
-                          <span>
-                            <span className="map-icon">
-                              <LuMapPin />
-                            </span>{" "}
-                            Cairo, Egypt
-                          </span>
-                        </div>
+                        <Link className="art" href="/sell-your-artwork">
+                          Sell Your Artwork
+                        </Link>
                       </div>
-                      <div className="col-3">
-                        <span className="arrow-icon">
-                          <IoIosArrowForward />
-                        </span>
+                      <div className="col-5">
+                        <Link className="login" href="/login">
+                          Login
+                        </Link>
                       </div>
                     </div>
                     <div className="box-list-profile">

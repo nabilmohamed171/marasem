@@ -12,7 +12,6 @@
 }
 
 .navbar .nav-artist .dropdown-menu {
-  display: block;
   background: #1a1a1a;
   width: 223px;
   top: 39px;
@@ -70,7 +69,14 @@
 
   .artist-menu-mobile {
     display: block;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 55px;
+    bottom: 0;
+    background: #000;
   }
 
   .artist-menu-mobile .box-menu .box-search .form-search {

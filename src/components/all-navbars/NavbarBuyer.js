@@ -9,6 +9,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 import { LiaMapMarkedAltSolid } from "react-icons/lia";
 import { CgNotes } from "react-icons/cg";
+import { IoClose } from "react-icons/io5";
 import { TbCreditCard } from "react-icons/tb";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
@@ -69,6 +70,11 @@ const forYourBudgetLinks = [
 const Navbar_Buyer = () => {
   const [isStickyNavbar, setIsStickyNavbar] = useState(false);
   const [isPopupSearchOpen, setIsPopupSearchOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleSearchClick = () => {
     setIsPopupSearchOpen((prevState) => !prevState);
@@ -123,11 +129,12 @@ const Navbar_Buyer = () => {
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
-          aria-expanded="false"
+          aria-expanded={isOpen ? "true" : "false"}
           aria-label="Toggle navigation"
+          onClick={toggleNavbar}
         >
           <span className="btn-mobile">
-            <HiOutlineBars3BottomRight />
+            {isOpen ? <IoClose /> : <HiOutlineBars3BottomRight />}
           </span>
         </button>
 
@@ -448,16 +455,16 @@ const Navbar_Buyer = () => {
                           </span>
                         </Link>
                       </li>
-                      <li>
-                        <Link href="">
-                          Log out
-                          <span className="logout-icon">
-                            <RiLogoutCircleRLine />
-                          </span>
-                        </Link>
-                      </li>
                     </ul>
                   </div>
+                </div>
+                <div className="box-button-logout">
+                  <Link className="" href="">
+                    <span className="logout-icon">
+                      <RiLogoutCircleRLine />
+                    </span>
+                    Logout
+                  </Link>
                 </div>
               </div>
             </div>

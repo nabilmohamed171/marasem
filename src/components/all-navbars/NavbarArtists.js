@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CiShoppingCart } from "react-icons/ci";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
@@ -9,6 +9,7 @@ import { HiOutlineBars3BottomRight } from "react-icons/hi2";
 import { IoIosArrowForward } from "react-icons/io";
 import { LiaMapMarkedAltSolid } from "react-icons/lia";
 import { CgNotes } from "react-icons/cg";
+import { IoClose } from "react-icons/io5";
 import { TbCreditCard } from "react-icons/tb";
 import { LuMapPin } from "react-icons/lu";
 import { FaRegHeart } from "react-icons/fa";
@@ -20,14 +21,42 @@ import "./navbar-artist.css";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isStickyNavbar, setIsStickyNavbar] = useState(false);
   const [isPopupSearchOpen, setIsPopupSearchOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleSearchClick = () => {
     setIsPopupSearchOpen((prevState) => !prevState);
   };
 
+  const handleScroll = () => {
+    const navbar = document.querySelector(".navbar");
+    const currentScrollPosition = window.scrollY;
+
+    if (currentScrollPosition > navbar.offsetTop) {
+      setIsStickyNavbar(true);
+    } else {
+      setIsStickyNavbar(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <nav className="navbar navbar-expand-lg">
+    <nav
+      className={`navbar navbar-expand-lg ${
+        isStickyNavbar ? "sticky-navbar" : ""
+      }`}
+    >
       <div className="container">
         <Link className="navbar-brand logo-pc" href="/">
           <img
@@ -50,25 +79,25 @@ export default function Navbar() {
         <button
           className="navbar-toggler"
           type="button"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
-          aria-expanded={isMenuOpen ? "true" : "false"}
+          aria-expanded={isOpen ? "true" : "false"}
           aria-label="Toggle navigation"
+          onClick={toggleNavbar}
         >
           <span className="btn-mobile">
-            <HiOutlineBars3BottomRight />
+            {isOpen ? <IoClose /> : <HiOutlineBars3BottomRight />}
           </span>
         </button>
+
         <div
           className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link
-                className="nav-link active shop-art-menu"
-                href="product-list"
-              >
+              <Link className="nav-link active shop-art-menu" href="shop-art">
                 SHOP ART
               </Link>
               <div className="main-dropmenu-navbar">
