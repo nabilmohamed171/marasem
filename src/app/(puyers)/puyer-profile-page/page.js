@@ -1,9 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import NavbarBuyer from "@/components/navbar/NavbarBuyer";
-import Link from "next/link";
-import Image from "next/image";
-import Footer from "@/components/footer/Footer";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { LiaMapMarkedAltSolid } from "react-icons/lia";
@@ -19,8 +15,11 @@ import SectionAddresses from "@/components/puyerProfile/addresses/Addresses";
 import SectionOrders from "@/components/puyerProfile/orders/Orders";
 import SectionCredit from "@/components/puyerProfile/credit/Credit";
 import SectionCollections from "@/components/puyerProfile/collections/Collections";
-import SectionEditProfile from "@/components/puyerProfile/editProfile/EditProfile"; // Import SectionEditProfile
-
+import SectionEditProfile from "@/components/puyerProfile/editProfile/EditProfile";
+import NavbarBuyer from "@/components/all-navbars/NavbarBuyer";
+import Footer from "@/components/footer/Footer";
+import Link from "next/link";
+import Image from "next/image";
 import "./profile.css";
 
 const puyerProfilePage = () => {
@@ -29,6 +28,7 @@ const puyerProfilePage = () => {
   const [editProfileVisible, setEditProfileVisible] = useState(true);
   const [editPhotoProfileVisible, setEditPhotoProfileVisible] = useState(false);
   const [overlayVisible, setOverlayVisible] = useState(false);
+  const [showLinks, setShowLinks] = useState(false);
 
   const [avatar, setAvatar] = useState("/images/avatar2.png");
 
@@ -51,6 +51,11 @@ const puyerProfilePage = () => {
 
   const handleMenuClick = (section) => {
     setActiveSection(section);
+    if (section === "following") {
+      setShowLinks(true);
+    } else {
+      setShowLinks(false);
+    }
   };
 
   const handleMoreInfoClick = () => {
@@ -130,7 +135,7 @@ const puyerProfilePage = () => {
 
               <div className="puyer-name text-center">
                 <div className="row">
-                  <div className="col-md-12 col-8">
+                  <div className="col-md-12 col-6">
                     {editProfileVisible && (
                       <button
                         type="button"
@@ -145,7 +150,7 @@ const puyerProfilePage = () => {
                       </button>
                     )}
                   </div>
-                  <div className="col-md-12 col-4">
+                  <div className="col-md-12 col-6">
                     <div className="d-block d-md-none">
                       <button
                         className={`button-more-info ${
@@ -273,7 +278,7 @@ const puyerProfilePage = () => {
             <div className="custom-mobile">
               <div className="links-profile">
                 <div className="nav-scroll">
-                  <ul className="nav none-nav d-none">
+                  <ul className="nav none-nav d-lg-none d-md-none d-xl-none d-sm-block">
                     <li className="nav-item">
                       <Link
                         href="#"
@@ -318,44 +323,43 @@ const puyerProfilePage = () => {
                         Orders
                       </Link>
                     </li>
-                    <li className="nav-item">
-                      <Link
-                        href="#"
-                        className={`nav-link ${
-                          activeSection === "credit" ? "active-sub-menu" : ""
-                        }`}
-                        onClick={() => handleMenuClick("credit")}
-                      >
-                        Mrasem Credit
-                      </Link>
-                    </li>
                   </ul>
                 </div>
                 <ul className="nav">
-                  <li className="nav-item">
-                    <Link
-                      href="#"
-                      className={`nav-link ${
-                        activeSection === "collections" ? "active-sub-menu" : ""
-                      }`}
-                      onClick={() => handleMenuClick("collections")}
-                    >
-                      Collections{" "}
-                      <span class="item-count">({itemsCount.collections})</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      href="#"
-                      className={`nav-link ${
-                        activeSection === "artists" ? "active-sub-menu" : ""
-                      }`}
-                      onClick={() => handleMenuClick("following")}
-                    >
-                      Artists{" "}
-                      <span class="item-count">({itemsCount.artists})</span>
-                    </Link>
-                  </li>
+                  {showLinks && (
+                    <>
+                      <li className="nav-item">
+                        <Link
+                          href="#"
+                          className={`nav-link nav-collections-artists-sm ${
+                            activeSection === "collections"
+                              ? "active-sub-menu"
+                              : ""
+                          }`}
+                          onClick={() => handleMenuClick("collections")}
+                        >
+                          Collections{" "}
+                          <span className="item-count">
+                            ({itemsCount.collections})
+                          </span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          href="#"
+                          className={`nav-link nav-collections-artists-sm ${
+                            activeSection === "artists" ? "active-sub-menu" : ""
+                          }`}
+                          onClick={() => handleMenuClick("following")}
+                        >
+                          Artists{" "}
+                          <span className="item-count">
+                            ({itemsCount.artists})
+                          </span>
+                        </Link>
+                      </li>
+                    </>
+                  )}
                 </ul>
               </div>
               {activeSection === "favorites" && <SectionFavorites />}

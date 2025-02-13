@@ -75,7 +75,7 @@ const Gallary = () => {
   return (
     <div className="row">
       {items.map((item, index) => (
-        <div key={index} className="col-md-4 col-6">
+        <div key={index} className="collections-puyer col-md-4 col-6">
           <div className="item-image">
             <div className="overley"></div>
             <div className="photo">

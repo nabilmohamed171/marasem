@@ -43,7 +43,7 @@
     margin-top: 20px;
     width: 100%;
     padding: 13px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border-radius: 30px;
     border: 1px solid #141414;
     background: #141414;
@@ -53,8 +53,8 @@
 
   .home-menu-mobile .box-menu .box-profile {
     background: #141414;
-    padding: 30px 30px 5px;
-    margin-bottom: 15px;
+    padding: 20px 30px 5px;
+    margin-bottom: 10px;
     border-radius: 20px;
     color: #fff;
     position: relative;
@@ -64,7 +64,7 @@
   .home-menu-mobile .box-menu .box-orders {
     background: #141414;
     padding: 10px 30px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border-radius: 20px;
     color: #fff;
     position: relative;
@@ -188,7 +188,7 @@
   }
 
   .home-menu-mobile .box-menu .box-button-logout a {
-    padding: 12px;
+    padding: 8px;
     width: 100%;
     text-align: center;
     display: block;

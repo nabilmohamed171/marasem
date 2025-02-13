@@ -4,7 +4,7 @@ import Image from "next/image";
 const Insights = () => {
   return (
     <>
-      <div className="insights">
+      <div className="insights d-sm-none d-md-block d-xl-block d-lg-block">
         <div className="box-insights">
           <div className="row">
             <div className="col-md-3">
@@ -198,7 +198,7 @@ const Insights = () => {
         </div>
       </div>
 
-      <div className="insights-mobile text-center">
+      <div className="insights-mobile text-center d-lg-none d-md-none d-xl-none d-sm-block">
         <div className="box-total-sales-mobile">
           <div className="row">
             <div className="col-7">

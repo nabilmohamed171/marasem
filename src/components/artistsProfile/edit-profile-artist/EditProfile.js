@@ -20,9 +20,21 @@ const EditProfile = () => {
     <div className="section-edit-profile">
       <form className="form-edit-profile">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-4">
+            <h2>General Info</h2>
+          </div>
+          <div className="col-8">
+            <div className="button-reset-update">
+              <button type="button" className="reset">
+                Reset
+              </button>
+              <button type="button" className="update">
+                Save Update
+              </button>
+            </div>
+          </div>
+          <div className="col-md-6 col-12">
             <div className="general-info">
-              <h2>General Info</h2>
               <div className="first-name">
                 <label htmlFor="firstName" className="form-label">
                   First name
@@ -44,15 +56,7 @@ const EditProfile = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-6">
-            <div className="button-reset-update">
-              <button type="button" className="reset">
-                Reset
-              </button>
-              <button type="button" className="update">
-                Save Update
-              </button>
-            </div>
+          <div className="col-md-6 col-12">
             <div className="last-name">
               <label htmlFor="lastName" className="form-label">
                 Last name
@@ -84,10 +88,10 @@ const EditProfile = () => {
       <form className="form-edit-about-me">
         <div className="about-me">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-4">
               <h2>About Me</h2>
             </div>
-            <div className="col-md-6">
+            <div className="col-8">
               <div className="button-reset-update">
                 <button type="button" className="reset">
                   Reset
@@ -112,7 +116,7 @@ const EditProfile = () => {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-6 col-12">
               <div className="social-media">
                 <label htmlFor="socialMedia" className="form-label">
                   Social media Link
@@ -136,7 +140,7 @@ const EditProfile = () => {
                 />
               </div>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6 col-12">
               <div className="portofolio">
                 <label htmlFor="portofolio" className="form-label">
                   Portofolio
@@ -166,10 +170,10 @@ const EditProfile = () => {
       <form className="form-pickup-location">
         <div className="pickup-location">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-4">
               <h2>Pickup Location</h2>
             </div>
-            <div className="col-md-6">
+            <div className="col-8">
               <div className="button-reset-update">
                 <button type="button" className="reset">
                   Reset
@@ -181,7 +185,7 @@ const EditProfile = () => {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-6 col-6">
               <div className="dropdown-selected">
                 <label>City</label>
                 <select
@@ -198,7 +202,7 @@ const EditProfile = () => {
                 </span>
               </div>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6 col-6">
               <div className="dropdown-selected">
                 <label>Zone</label>
                 <select
@@ -234,11 +238,10 @@ const EditProfile = () => {
       <form className="form-focus">
         <div className="focus">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-4">
               <h2>Focus</h2>
-              <p>Paintings, Wood Craft, Digital Painting, Photography</p>
             </div>
-            <div className="col-md-6">
+            <div className="col-8">
               <div className="button-reset-update">
                 <button type="button" className="reset">
                   Reset
@@ -252,6 +255,7 @@ const EditProfile = () => {
           <div className="row">
             <div className="col-md-12">
               <div className="fine-art">
+                <p>Paintings, Wood Craft, Digital Painting, Photography</p>
                 <h3>Fine Art</h3>
                 <ul>
                   <li

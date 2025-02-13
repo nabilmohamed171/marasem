@@ -60,13 +60,15 @@
 }
 
 .section-credit .end-table button.button-export {
-  padding: 10px 20px;
+  padding: 7px 15px;
   background-color: #f1ad56;
   border: 1px solid #f1ad56;
   color: #222;
   border-radius: 5px;
   width: 200px;
   font-size: 15px;
+  margin-bottom: 10px;
+  margin-left: 20px;
 }
 
 .section-credit .end-table .button-export .export-icon {
@@ -87,11 +89,14 @@
 }
 
 .section-credit .table-number-dropdown .dropdown button {
-  background: #1a1a1a;
-  border: 1px solid #1a1a1a;
+  background: transparent;
+  border: 1px solid #fff;
   display: inline-block;
-  padding: 6px 10px;
+  padding: 6px 30px;
   font-size: 15px;
+  margin-right: 10px;
+  position: relative;
+  top: -1px;
 }
 
 .section-credit .table-number {
@@ -114,6 +119,11 @@
   border-radius: 5px;
 }
 
+.section-credit .table-number span.number-page {
+  top: 1px;
+  position: relative;
+}
+
 .section-credit .table-number span.arrow-back-icon,
 .section-credit .table-number span.arrow-next-icon {
   font-size: 20px;
@@ -130,4 +140,45 @@
 
 .section-credit .section-credit .dropdown-menu {
   width: 50px !important;
+}
+
+.marasem-cridt-mobile {
+  display: none;
+}
+
+.section-credit .tabel-all-info {
+  border: 5px solid #1a1a1a;
+  border-radius: 10px;
+}
+
+.section-credit .table-checkbox-all {
+  margin-left: 10px;
+  position: relative;
+  top: -2px;
+}
+
+.select-table-row-black {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+@media (max-width: 575.98px) {
+  .section-credit .credit-button,
+  .section-credit .tabel-all-info {
+    display: none;
+  }
+
+  .section-credit .marasem-cridt-mobile {
+    display: block;
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  .section-credit .marasem-cridt-mobile .credit-icon {
+    color: #f1ad56;
+    margin-right: 5px;
+    font-size: 22px;
+    display: inline-block;
+  }
 }

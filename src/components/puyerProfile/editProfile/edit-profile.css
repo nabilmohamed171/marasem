@@ -79,12 +79,12 @@
 }
 
 .section-edit-profile .form-edit-profile .button-reset-update button {
-  padding: 10px 20px;
+  padding: 8px 15px;
   border-radius: 30px;
   font-size: 14px;
   border: 1px solid #fff;
   margin-right: 10px;
-  width: 150px;
+
   background: transparent;
   color: #fff;
 }
@@ -153,4 +153,20 @@
   width: 100%;
   padding: 10px 15px;
   font-size: 14px;
+}
+
+@media (max-width: 575.98px) {
+  .form-edit-profile h2 {
+    margin-top: 10px;
+    font-size: 18px;
+    margin-bottom: 35px;
+  }
+
+  .section-edit-profile-pc {
+    display: none;
+  }
+
+  .creat-artist-account-sm {
+    margin-top: 20px;
+  }
 }

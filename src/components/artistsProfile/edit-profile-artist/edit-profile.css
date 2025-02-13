@@ -73,6 +73,8 @@
 .section-edit-profile .form-pickup-location .pickup-location h2,
 .section-edit-profile .form-focus .focus p {
   margin-bottom: 30px;
+  margin-top: 10px;
+  font-size: 17px;
 }
 
 .section-edit-profile .form-focus .focus h2 {
@@ -96,12 +98,11 @@
 .section-edit-profile .form-edit-about-me .button-reset-update button,
 .section-edit-profile .form-pickup-location .button-reset-update button,
 .section-edit-profile .form-focus .focus .button-reset-update button {
-  padding: 10px 20px;
+  padding: 8px 15px;
   border-radius: 30px;
   font-size: 14px;
   border: 1px solid #fff;
   margin-right: 10px;
-  width: 150px;
   background: transparent;
   color: #fff;
 }
@@ -110,8 +111,9 @@
 .section-edit-profile .form-edit-about-me .button-reset-update button.update,
 .section-edit-profile .form-pickup-location .button-reset-update button.update,
 .section-edit-profile .form-focus .focus .button-reset-update button.update {
-  border: 1px solid #0a0a0a;
-  background: #0a0a0a;
+  border: 1px solid #fff;
+  background: #fff;
+  color: #222;
 }
 
 .section-edit-profile .form-edit-profile button.change-password {
@@ -126,25 +128,26 @@
 
 .section-edit-profile .form-focus .focus h3 {
   color: #f1ad56;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-weight: 400;
 }
 
 .section-edit-profile .form-focus .focus ul {
   list-style: none;
   padding: 0;
+  margin-bottom: 5px;
 }
 
 .section-edit-profile .form-focus .focus ul li {
   display: inline-block;
   margin-right: 10px;
-  padding: 10px 15px;
+  padding: 8px 12px;
   background-color: #0a0a0a;
   border: 1px solid #0a0a0a;
   border-radius: 10px;
   color: #fff;
   text-transform: capitalize;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   cursor: pointer;
 }
 
@@ -156,4 +159,19 @@
 .section-edit-profile .form-focus .focus ul li.active {
   background-color: #fff;
   color: #222;
+}
+
+@media (max-width: 575.98px) {
+  .section-edit-profile .form-edit-profile .general-info h2,
+  .section-edit-profile .form-edit-about-me h2,
+  .section-edit-profile .form-pickup-location .pickup-location h2,
+  .form-edit-profile h2,
+  .form-focus h2 {
+    font-size: 13px;
+  }
+
+  .form-edit-profile h2,
+  .form-focus h2 {
+    margin-top: 15px;
+  }
 }

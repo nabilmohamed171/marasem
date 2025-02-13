@@ -98,3 +98,104 @@
   color: #fff;
   font-size: 15px;
 }
+
+.section-todo-mobile .box-customiz,
+.section-todo-mobile .box-order {
+  margin-bottom: 20px;
+  background: #1a1a1a;
+  border-radius: 10px;
+}
+
+.section-todo-mobile .box-customiz,
+.section-order-mobile .box-order {
+  padding-bottom: 20px;
+}
+
+.section-todo-mobile .customiz {
+  margin-bottom: 30px;
+}
+
+.section-todo-mobile .customiz h2,
+.section-todo-mobile h2 {
+  margin-bottom: 30px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.section-todo-mobile .customiz .box-customiz .todo-image img,
+.section-order-mobile .todo-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.section-todo-mobile .todo-info h3,
+.section-order-mobile .todo-info h3 {
+  color: #fff;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.7;
+  padding-top: 10px;
+}
+
+.section-todo-mobile .todo-info p,
+.section-order-mobile .todo-info p {
+  color: #777;
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 5px;
+}
+
+.section-todo-mobile .todo-info span,
+.section-order-mobile .todo-info span {
+  color: #fff;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.section-todo-mobile .todo-buttons {
+  text-align: center;
+}
+
+.section-todo-mobile .todo-buttons button {
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+.section-todo-mobile .todo-buttons .button-request {
+  background-color: #f1ad56;
+  border: 1px solid #f1ad56;
+  color: #222;
+  margin-top: 20px;
+  margin-left: 10%;
+  width: 95%;
+}
+
+.section-todo-mobile .todo-more {
+  margin-top: 30px;
+  text-align: right;
+}
+
+.section-todo-mobile .todo-more a {
+  font-size: 14px;
+  font-weight: 400;
+  color: #f1ad56;
+  text-decoration: none;
+}
+
+.section-order-mobile .todo-time-delivery {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+@media (max-width: 767.98px) {
+  .section-todo,
+  .section-order {
+    display: none;
+  }
+
+  .section-todo-mobile,
+  .section-order-mobile {
+    display: block;
+  }
+}

@@ -21,10 +21,8 @@ const Draft = () => {
               />
             </div>
             <div className="draft-info">
-              <h2 className="wrap-text-240">Lorem ipsum,</h2>
-              <p className="wrap-text-240">
-                Lorem ipsum, Lorem ipsum, Lorem ipsum,
-              </p>
+              <h2 className="">Lorem ipsum,</h2>
+              <p className="">Lorem ipsum, Lorem ipsum, Lorem ipsum,</p>
             </div>
             <div className="pars-icon">
               <span>
@@ -53,10 +51,8 @@ const Draft = () => {
               />
             </div>
             <div className="draft-info">
-              <h2 className="wrap-text-240">Lorem ipsum,</h2>
-              <p className="wrap-text-240">
-                Lorem ipsum, Lorem ipsum, Lorem ipsum,
-              </p>
+              <h2 className="">Lorem ipsum,</h2>
+              <p className="">Lorem ipsum, Lorem ipsum, Lorem ipsum,</p>
             </div>
             <div className="pars-icon">
               <span>
@@ -85,10 +81,8 @@ const Draft = () => {
               />
             </div>
             <div className="draft-info">
-              <h2 className="wrap-text-240">Lorem ipsum,</h2>
-              <p className="wrap-text-240">
-                Lorem ipsum, Lorem ipsum, Lorem ipsum,
-              </p>
+              <h2 className="">Lorem ipsum,</h2>
+              <p className="">Lorem ipsum, Lorem ipsum, Lorem ipsum,</p>
             </div>
             <div className="pars-icon">
               <span>
@@ -98,6 +92,36 @@ const Draft = () => {
             <div className="draft-button">
               <button className="edite-artwork">Edite Artwork</button>
               <button className="delete-artwork">Delete Artwork</button>
+              <p>Last Modified 2 Years Ago</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-4 col-6">
+          <div className="box-draft">
+            <div className="draft-image">
+              <div className="overley"></div>
+              <Image
+                src="/images/7.png"
+                alt="iamge"
+                width={500}
+                height={500}
+                loading="lazy"
+                quality={100}
+                objectFit="cover"
+              />
+            </div>
+            <div className="draft-info">
+              <h2 className="">Lorem ipsum,</h2>
+              <p className="">Lorem ipsum, Lorem ipsum, Lorem ipsum,</p>
+            </div>
+            <div className="pars-icon">
+              <span>
+                <HiDotsHorizontal />
+              </span>
+            </div>
+            <div className="draft-button">
               <p>Last Modified 2 Years Ago</p>
             </div>
           </div>

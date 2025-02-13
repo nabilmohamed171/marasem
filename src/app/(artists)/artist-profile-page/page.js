@@ -1,9 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import NavbarArtists from "@/components/navbar/NavbarArtists";
-import Link from "next/link";
-import Image from "next/image";
-import Footer from "@/components/footer/Footer";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { LiaMapMarkedAltSolid } from "react-icons/lia";
@@ -23,6 +19,10 @@ import SectionOrders from "@/components/artistsProfile/orders/Orders";
 import SectionCredit from "@/components/artistsProfile/credit/Credit";
 import SectionCollections from "@/components/artistsProfile/collections/Collections";
 import SectionAddresses from "@/components/artistsProfile/addresses/Addresses";
+import NavbarArtists from "@/components/all-navbars/NavbarArtists";
+import Footer from "@/components/footer/Footer";
+import Link from "next/link";
+import Image from "next/image";
 import "./profile.css";
 
 const MyProfilePage = () => {
@@ -130,7 +130,7 @@ const MyProfilePage = () => {
         </div>
       </div>
 
-      <div className="container">
+      <div className="container artists-profiles">
         <div className="row">
           <div className="col-md-3 col-12">
             <div className="artist-profile-info">
@@ -181,7 +181,7 @@ const MyProfilePage = () => {
 
               <div className="artist-name text-center">
                 <div className="row">
-                  <div className="col-md-12 col-8">
+                  <div className="col-md-12 col-6">
                     {editProfileVisible && (
                       <button
                         type="button"
@@ -196,7 +196,7 @@ const MyProfilePage = () => {
                       </button>
                     )}
                   </div>
-                  <div className="col-md-12 col-4">
+                  <div className="col-md-12 col-6">
                     <div className="d-block d-md-none">
                       <button
                         className={`button-more-info ${
@@ -249,7 +249,9 @@ const MyProfilePage = () => {
               >
                 <div className="box-list-orders">
                   <ul className="list-unstyled">
-                    <li>
+                    <li
+                      className={activeSection === "addresses" ? "active" : ""}
+                    >
                       <Link
                         href="#"
                         onClick={() => handleMenuClick("addresses")}
@@ -260,7 +262,7 @@ const MyProfilePage = () => {
                         Addresses
                       </Link>
                     </li>
-                    <li>
+                    <li className={activeSection === "orders" ? "active" : ""}>
                       <Link href="#" onClick={() => handleMenuClick("orders")}>
                         <span className="order-icon">
                           <CgNotes />
@@ -268,7 +270,7 @@ const MyProfilePage = () => {
                         Orders
                       </Link>
                     </li>
-                    <li>
+                    <li className={activeSection === "credit" ? "active" : ""}>
                       <Link href="#" onClick={() => handleMenuClick("credit")}>
                         <span className="credit-icon">
                           <TbCreditCard />
@@ -305,16 +307,18 @@ const MyProfilePage = () => {
               <div className={`buttons ${moreInfoActive ? "d-block" : ""}`}>
                 <div className="row">
                   <div className="col-md-12 text-center">
-                    <button
-                      className="logout"
-                      type="button"
-                      aria-label="Logout"
-                    >
-                      <span className="logout-icon">
-                        <RiLogoutCircleRLine />
-                      </span>
-                      Logout
-                    </button>
+                    <div className="button-logout">
+                      <button
+                        className="logout"
+                        type="button"
+                        aria-label="Logout"
+                      >
+                        <span className="logout-icon">
+                          <RiLogoutCircleRLine />
+                        </span>
+                        Logout
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -358,7 +362,7 @@ const MyProfilePage = () => {
                         }`}
                         onClick={() => handleMenuClick("toDo")}
                       >
-                        To Do
+                        To Do <span className="todo-count-number">(23)</span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -370,6 +374,7 @@ const MyProfilePage = () => {
                         onClick={() => handleMenuClick("favorites")}
                       >
                         Favorites
+                        <span className="favorites-count-number"> (30)</span>
                       </Link>
                     </li>
                     <li className="nav-item">

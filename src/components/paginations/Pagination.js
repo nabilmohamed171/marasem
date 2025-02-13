@@ -8,7 +8,7 @@ import "./paginations.css";
 
 const Pagination = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(15);
+  const [itemsPerPage] = useState(20);
 
   const totalItems = 100;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -23,8 +23,12 @@ const Pagination = () => {
   };
 
   const getPageNumbers = () => {
-    let pages = [];
-    for (let i = 1; i <= totalPages; i++) {
+    const pages = [];
+    const maxPagesToShow = 5;
+    const startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+    for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }
     return pages;

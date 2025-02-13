@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import NavbarArtists from "@/components/navbar/NavbarArtists";
-import Footer from "@/components/footer/Footer";
-import FooterAccordion from "@/components/footer/FooterAccordion";
 import { FaRegHeart } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
+import NavbarArtists from "@/components/all-navbars/NavbarArtists";
+import Footer from "@/components/footer/Footer";
+import FooterAccordion from "@/components/footer/FooterAccordion";
 import Image from "next/image";
 import Link from "next/link";
 import "./artist-edit-product.css";
@@ -108,16 +108,18 @@ const ArtistEditProduct = () => {
                         <IoIosArrowForward />
                       </button>
                     </div>
-                    <Image
-                      src={mainImage}
-                      alt="Main artwork"
-                      width={500}
-                      height={500}
-                      quality={100}
-                      className="flex-r-image"
-                      objectFit="cover"
-                      loading="lazy"
-                    />
+                    <div className="image">
+                      <Image
+                        src={mainImage}
+                        alt="Main artwork"
+                        width={500}
+                        height={500}
+                        quality={100}
+                        className="flex-r-image"
+                        objectFit="cover"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -162,6 +164,7 @@ const ArtistEditProduct = () => {
                   <div className="image-heading">
                     <h2>Balzi Rossi Oil Painting</h2>
                     <p>20 x 29 x 3.5 cm , 2024 , 48/58 Lnk On Paper</p>
+                    <p className="custom">This artwork Customizable</p>
                   </div>
                   <div className="price-custom">
                     <div className="row">

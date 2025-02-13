@@ -56,6 +56,7 @@
 
 .puyer-profile-info .puyer-name {
   margin: 20px 0;
+  padding: 0 20px;
 }
 
 .puyer-profile-info .puyer-name h2 {
@@ -262,7 +263,7 @@
 .photo-info h2 {
   font-size: 16px;
   padding: 0;
-  margin: 10px 0;
+  margin: 10px 0 5px;
   line-height: 1.5;
   width: 240px;
   white-space: nowrap;
@@ -273,7 +274,7 @@
 .photo-info p {
   font-size: 14px;
   padding: 0;
-  margin: 0 0 10px;
+  margin: 0 0 5px;
   color: #777;
   line-height: 1.5;
   width: 240px;
@@ -453,7 +454,7 @@
   }
 
   .links-profile {
-    margin: 20px 0 35px !important;
+    margin: 90px 0 35px !important;
   }
 
   .puyer-profile-info .puyer-name button {
@@ -470,6 +471,24 @@
 
   .photo-info p {
     width: 185px !important;
+  }
+
+  .puyer-profile-info {
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+
+  .puyer-profile-info .puyer-photo,
+  .art-name {
+    margin-left: 20px;
+  }
+
+  .nav-collections-artists-sm {
+    margin-top: 30px;
+  }
+
+  .collections-artist .photo {
+    height: 280px;
   }
 }
 
@@ -488,7 +507,7 @@
   }
 
   .links-profile {
-    margin: 20px 0 35px !important;
+    margin: 90px 0 35px !important;
   }
 
   .puyer-profile-info .puyer-name button {

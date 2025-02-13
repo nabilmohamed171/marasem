@@ -25,42 +25,85 @@
   display: block;
 }
 
-.section-orders .order .pending {
+.section-orders .order .pending,
+.section-orders .order .canceled,
+.section-orders .order .details,
+.section-orders .order .rejected,
+.section-orders .order .delivered {
   font-size: 17px;
-  font-weight: 700;
-  color: #f1ad56;
+  font-weight: 300;
   margin-bottom: 35px;
+  text-align: right;
+}
+
+.section-orders .order .pending {
+  color: #f1ad56;
 }
 
 .section-orders .order .canceled {
-  font-size: 17px;
-  font-weight: 700;
   color: #565656;
-  margin-bottom: 35px;
   text-transform: uppercase;
 }
 
 .section-orders .order .details {
-  font-size: 15px;
   color: #fff;
   text-decoration: none;
 }
 
 .section-orders .order .delivered {
-  font-size: 17px;
-  font-weight: 700;
   color: #fff;
-  margin-bottom: 35px;
 }
 
 .section-orders .order .rejected {
-  font-size: 17px;
-  font-weight: 700;
   color: rgb(255, 84, 84);
-  margin-bottom: 35px;
 }
 
 .section-orders .order .view-next-icon {
   display: inline-block;
   margin-left: 10px;
+}
+
+@media (max-width: 575.98px) {
+  .section-orders .order {
+    position: relative;
+    padding: 60px 20px 30px 20px;
+  }
+
+  .section-orders .order .pending,
+  .section-orders .order .canceled,
+  .section-orders .order .delivered,
+  .section-orders .order .rejected {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    padding-bottom: 0;
+  }
+
+  .section-orders .order .delivered {
+    font-size: 20px;
+  }
+
+  .section-orders .order .details {
+    position: absolute;
+    bottom: 35px;
+    right: 15px;
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+
+  .section-orders .order .order-info h3 {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .section-orders .order .order-info p {
+    color: #777;
+    font-size: 13px;
+  }
+
+  .section-orders .order .order-info span {
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+  }
 }

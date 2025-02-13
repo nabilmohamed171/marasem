@@ -1,7 +1,7 @@
 .header-artist-profile {
+  position: relative;
   width: 100%;
   height: 200px;
-  position: relative;
   z-index: 1;
 }
 
@@ -30,28 +30,25 @@
   left: 0;
   z-index: 1;
   background-color: #1a1a1a;
-  padding: 30px 20px;
   border-radius: 20px;
 }
 
 .header-artist-profile .edit-cover-profile {
   position: absolute;
-  top: 0;
-  left: 0;
-  color: #fff;
-  z-index: 999;
-  width: 100%;
-  height: 100%;
-  display: flex !important;
-  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
   align-items: center;
+  justify-content: center;
+  color: white;
   cursor: pointer;
-  display: none !important;
+  z-index: 3;
 }
 
 .header-artist-profile .edit-cover-profile .pen-icon {
   font-size: 20px;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 .header-artist-profile .edit-cover-profile .edit-cover {
@@ -68,6 +65,7 @@
   height: 92px;
   margin: 0 auto;
   position: relative;
+  margin-top: 30px;
 }
 
 .artist-profile-info .artist-photo .edit-photo-profile {
@@ -99,7 +97,7 @@
 }
 
 .artist-profile-info .artist-photo span.pen-icon {
-  margin-right: 5px;
+  margin-right: 8px;
   font-size: 20px;
 }
 
@@ -129,7 +127,11 @@
 
 .artist-profile-info .box-orders-profile-page .box-list-orders ul li {
   border-bottom: 1px solid #5a5a5a;
-  padding: 10px 0;
+  padding: 10px 20px;
+}
+
+.artist-profile-info .box-orders-profile-page .box-list-orders ul li.active {
+  background-color: #000;
 }
 
 .artist-profile-info .box-orders-profile-page .box-list-orders ul li a {
@@ -198,6 +200,10 @@
   font-size: 14px;
 }
 
+.artist-profile-info .artist-public-info {
+  padding: 20px 20px 0;
+}
+
 .artist-profile-info .artist-public-info .number p {
   text-align: right;
   display: block;
@@ -206,6 +212,7 @@
 .artist-profile-info .about-me,
 .tags {
   margin-bottom: 20px;
+  padding: 0 20px;
 }
 
 .artist-profile-info .about-me {
@@ -319,7 +326,7 @@
 .photo-info h2 {
   font-size: 16px;
   padding: 0;
-  margin: 10px 0;
+  margin: 10px 0 3px;
   line-height: 1.5;
   width: 240px;
   white-space: nowrap;
@@ -330,7 +337,7 @@
 .photo-info p {
   font-size: 14px;
   padding: 0;
-  margin: 0 0 10px;
+  margin: 0 0 3px;
   color: #777;
   line-height: 1.5;
   width: 240px;
@@ -490,13 +497,23 @@
   color: #fff !important;
 }
 
+.todo-count-number,
+.favorites-count-number {
+  color: #f1ad56;
+}
+
+.button-logout {
+  padding: 0 30px 30px;
+  margin-top: 20px;
+}
+
 @media (max-width: 575.98px) {
   .artist-public-info,
   .box-orders-profile-page,
-  .about-me,
-  .tags,
-  .member,
-  .buttons {
+  .artist-profile-info .about-me,
+  .artist-profile-info .tags,
+  .artist-profile-info .member,
+  .artist-profile-info .buttons {
     display: none;
   }
 
@@ -515,6 +532,7 @@
 
   .art-name {
     text-align: left !important;
+    margin-left: 30px;
   }
 
   .collections-artist .photo {
@@ -524,18 +542,23 @@
   .photo-info p {
     width: 185px !important;
   }
+
+  .header-artist-profile .edit-cover-profile {
+    top: 25%;
+  }
 }
 
 @media (max-width: 767.98px) {
   .artist-public-info,
-  .about-me,
-  .tags,
-  .member,
-  .buttons {
+  .box-orders-profile-page,
+  .artist-profile-info .about-me,
+  .artist-profile-info .tags,
+  .artist-profile-info .member,
+  .artist-profile-info .buttons {
     display: none;
   }
 
-  .custom-mobile {
+  .artists-profiles .custom-mobile {
     position: relative !important;
     top: -85px !important;
   }
@@ -548,8 +571,18 @@
     width: 100% !important;
   }
 
+  .artist-profile-info {
+    padding: 30px 20px 15px;
+  }
+
   .art-name {
     text-align: left !important;
+    margin-left: 25px;
+  }
+
+  .edit-cover-profile {
+    font-size: 14px;
+    padding: 8px 16px;
   }
 }
 

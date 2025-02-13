@@ -2,6 +2,7 @@
   background-color: #1a1a1a;
   color: #fff;
   position: relative;
+  margin-bottom: 20px;
 }
 
 .section-draft .draft-image {
@@ -20,8 +21,15 @@
 
 .section-draft .draft-button {
   position: absolute;
-  top: 25%;
-  left: 28%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
 }
 
 .section-draft .draft-button button {
@@ -69,36 +77,28 @@
 .section-draft .draft-info p {
   color: #777;
   line-height: 1.7;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .section-draft .draft-button p {
   margin-top: 10px;
   font-size: 14px;
   position: relative;
-  left: -20px;
 }
 
 @media (max-width: 575.98px) {
-  .section-draft .box-draft {
-    margin-bottom: 20px;
-  }
-
   .section-draft .draft-button {
-    position: absolute;
-    top: 45px;
-    left: 42px;
+    top: 40%;
   }
 
-  .section-draft .draft-button p {
-    margin-top: 10px;
-    font-size: 13px;
-    position: relative;
-    left: -13px;
+  .section-draft .draft-button button {
+    padding: 7px 20px;
   }
 
-  .draft-info p {
-    width: 200px;
+  .section-draft .draft-button p,
+  .section-draft .draft-info p {
+    font-size: 12px;
+    width: 140px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

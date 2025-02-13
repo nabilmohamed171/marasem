@@ -1,20 +1,10 @@
-.border-left {
-  width: 1px;
-  height: 76px;
-  background-color: #4c4c4c;
-  margin: 0 10px;
-  border: 1px solid #4c4c4c;
-  display: inline-block;
-  position: relative;
-  top: 25px;
-}
-
 .section-addresses .addresses {
   background-color: #141414;
   padding: 0 20px 20px;
   border-radius: 10px;
   color: #fff;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .section-addresses .addresses .map-icon {
@@ -63,18 +53,11 @@
   margin-left: 10px;
 }
 
-.section-addresses .addresses .addresses-button-default,
-.section-addresses .addresses .addresses-button-edit,
-.section-addresses .addresses .addresses-button-delete {
-  float: right;
-}
-
 .section-addresses .addresses .addresses-button-default button {
   background: #f1ad56;
   color: #222;
   border-radius: 30px;
   border: 1px solid #f1ad56;
-  margin-top: 60px;
   padding: 7px 25px;
   font-size: 16px;
   font-weight: 400;
@@ -84,7 +67,6 @@
   background: transparent;
   color: #fff;
   border: 1px solid transparent;
-  margin-top: 60px;
   padding: 0 20px;
   font-size: 18px;
   font-weight: 400;
@@ -99,7 +81,6 @@
   background: transparent;
   color: rgb(255, 58, 58);
   border: 1px solid transparent;
-  margin-top: 62px;
   padding: 0 20px;
   font-size: 18px;
   font-weight: 400;
@@ -123,4 +104,93 @@
 .section-addresses .button-add-new-address .plus-icon {
   font-size: 14px;
   margin-right: 10px;
+}
+
+.section-addresses .addresses .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-addresses .addresses-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.section-addresses .addresses-button-default,
+.section-addresses .addresses-button-edit,
+.section-addresses .addresses-button-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-addresses .addresses-button-default button,
+.section-addresses .addresses-button-edit button,
+.section-addresses .addresses-button-delete button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.section-addresses .addresses .col-md-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-addresses .number-phone {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 575.98px) {
+  .addresses-button-default button {
+    position: absolute;
+    top: -17px;
+    right: 17px;
+    padding: 5px 20px !important;
+  }
+
+  .section-addresses .addresses .addresses-info {
+    margin-bottom: 25px;
+  }
+
+  .section-addresses .addresses .addresses-info h3 {
+    font-weight: 400;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .section-addresses .addresses .addresses-info p {
+    font-size: 13px;
+  }
+
+  .section-addresses .addresses .addresses-info span.number-phone {
+    font-size: 14px;
+  }
+
+  .section-addresses .addresses .addresses-info span.correct-icon {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+  }
+
+  .section-addresses .addresses .addresses-button-edit button,
+  .section-addresses .addresses .addresses-button-delete button {
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .section-addresses .addresses .addresses-button-edit .edit-icon,
+  .section-addresses .addresses .addresses-button-delete .delete-icon {
+    font-size: 17px;
+    margin-right: 5px;
+  }
 }
