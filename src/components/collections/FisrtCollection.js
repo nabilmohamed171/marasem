@@ -32,9 +32,9 @@ const FirstCollections = () => {
                         <Image
                           src="/images/7.png"
                           alt="image"
-                          width={500}
-                          height={170}
-                          quality={100}
+                          width={177}
+                          height={177}
+                          quality={70}
                           loading="lazy"
                         />
                       </Link>
@@ -45,9 +45,9 @@ const FirstCollections = () => {
                       <Image
                         src="/images/6.png"
                         alt="image"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={85}
+                        height={85}
+                        quality={70}
                         loading="lazy"
                       />
 
@@ -57,9 +57,9 @@ const FirstCollections = () => {
                         <Image
                           src="/images/2.png"
                           alt="image"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={85}
+                          height={85}
+                          quality={70}
                           loading="lazy"
                         />
                       </div>
@@ -91,9 +91,9 @@ const FirstCollections = () => {
                         <Image
                           src="/images/3.png"
                           alt="image"
-                          width={500}
-                          height={170}
-                          quality={100}
+                          width={177}
+                          height={177}
+                          quality={70}
                           loading="lazy"
                         />
                       </Link>
@@ -104,9 +104,9 @@ const FirstCollections = () => {
                       <Image
                         src="/images/4.png"
                         alt="image"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={85}
+                        height={85}
+                        quality={70}
                         loading="lazy"
                       />
 
@@ -115,9 +115,9 @@ const FirstCollections = () => {
                         <Image
                           src="/images/5.png"
                           alt="image"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={85}
+                          height={85}
+                          quality={70}
                           loading="lazy"
                         />
                       </div>

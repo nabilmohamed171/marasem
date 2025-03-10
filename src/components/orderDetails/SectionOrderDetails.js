@@ -80,19 +80,19 @@ const OrderDetails = () => {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-2 col-3">
+                    <div className="col-md-2 col-4">
                       <div className="image-item">
                         <Image
                           src="/images/55.png"
                           alt="Artwork Image"
-                          width={150}
-                          height={150}
+                          width={105}
+                          height={95}
                           loading="lazy"
-                          quality={100}
+                          quality={70}
                         />
                       </div>
                     </div>
-                    <div className="col-md-10 col-9">
+                    <div className="col-md-10 col-8">
                       <div className="info-item">
                         <h2>Art Work Name,Type,Calligraphy</h2>
                         <p>
@@ -116,19 +116,20 @@ const OrderDetails = () => {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-2 col-3">
+                    <div className="col-md-2 col-4">
                       <div className="image-item">
                         <Image
                           src="/images/22.png"
                           alt="Artwork Image"
-                          width={150}
-                          height={150}
+                          width={105}
+                          height={95}
                           loading="lazy"
-                          quality={100}
+                          quality={70}
+                          objectFit="cover"
                         />
                       </div>
                     </div>
-                    <div className="col-md-10 col-9">
+                    <div className="col-md-10 col-8">
                       <div className="info-item">
                         <h2>Art Work Name,Type, Calligraphy</h2>
                         <p>

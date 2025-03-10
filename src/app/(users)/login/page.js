@@ -1,10 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FaFacebookF } from "react-icons/fa";
-import { FaGoogle } from "react-icons/fa";
-import { FaBehance } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaGoogle,
+  FaBehance,
+  FaRegEyeSlash,
+} from "react-icons/fa";
 import { GoEye } from "react-icons/go";
-import { FaRegEyeSlash } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import "@/app/_css/login.css";
@@ -53,11 +55,10 @@ const Login = () => {
         <div className="col-md-7">
           <div className="login-header-image">
             <Image
-              width={2000}
-              height={2000}
-              quality={100}
-              loading="lazy"
-              objectFit="cover"
+              width={1500}
+              height={1500}
+              quality={70}
+              priority
               src="/images/Login.jpg"
               alt="marasem"
             />
@@ -66,7 +67,14 @@ const Login = () => {
         <div className="col">
           <div className="login-form">
             <div className="website-logo scale-hover">
-              <img src="/images/main-logo.png" alt="Marasem Logo" />
+              <Image
+                src="/images/main-logo.png"
+                alt="Marasem Logo"
+                width={180}
+                height={35}
+                quality={70}
+                priority
+              />
             </div>
             <form method="POST" onSubmit={handleSubmit}>
               <h2>{LOGIN_HEADER}</h2>

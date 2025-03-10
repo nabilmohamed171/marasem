@@ -18,9 +18,9 @@ const ToDo = () => {
                       <Image
                         src="/images/55.png"
                         alt="iamge"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={147}
+                        height={147}
+                        quality={70}
                         loading="lazy"
                         objectFit="cover"
                       />
@@ -62,9 +62,9 @@ const ToDo = () => {
                       <Image
                         src="/images/55.png"
                         alt="iamge"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={147}
+                        height={147}
+                        quality={70}
                         loading="lazy"
                         objectFit="cover"
                       />
@@ -113,9 +113,9 @@ const ToDo = () => {
                       <Image
                         src="/images/55.png"
                         alt="iamge"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={147}
+                        height={147}
+                        quality={70}
                         loading="lazy"
                         objectFit="cover"
                       />
@@ -157,9 +157,9 @@ const ToDo = () => {
                       <Image
                         src="/images/55.png"
                         alt="iamge"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={147}
+                        height={147}
+                        quality={70}
                         loading="lazy"
                         objectFit="cover"
                       />
@@ -258,9 +258,9 @@ const ToDo = () => {
                       <Image
                         src="/images/55.png"
                         alt="iamge"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={147}
+                        height={147}
+                        quality={70}
                         loading="lazy"
                         objectFit="cover"
                       />
@@ -305,9 +305,9 @@ const ToDo = () => {
                       <Image
                         src="/images/55.png"
                         alt="iamge"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={147}
+                        height={147}
+                        quality={70}
                         loading="lazy"
                         objectFit="cover"
                       />
@@ -361,9 +361,9 @@ const ToDo = () => {
                         <Image
                           src="/images/55.png"
                           alt="iamge"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={147}
+                          height={147}
+                          quality={70}
                           loading="lazy"
                           objectFit="cover"
                         />
@@ -413,9 +413,9 @@ const ToDo = () => {
                         <Image
                           src="/images/55.png"
                           alt="iamge"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={147}
+                          height={147}
+                          quality={70}
                           loading="lazy"
                           objectFit="cover"
                         />
@@ -465,9 +465,9 @@ const ToDo = () => {
                         <Image
                           src="/images/55.png"
                           alt="iamge"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={147}
+                          height={147}
+                          quality={70}
                           loading="lazy"
                           objectFit="cover"
                         />

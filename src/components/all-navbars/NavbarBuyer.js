@@ -143,7 +143,7 @@ const Navbar_Buyer = () => {
             <li className="nav-item">
               <Link
                 className="nav-link active shop-art-menu"
-                href="/product-list"
+                href="/shop-art"
                 aria-current="page"
               >
                 SHOP ART
@@ -336,7 +336,7 @@ const Navbar_Buyer = () => {
                             alt="photo"
                             width={60}
                             height={60}
-                            quality={100}
+                            quality={70}
                             loading="lazy"
                             objectFit="cover"
                           />

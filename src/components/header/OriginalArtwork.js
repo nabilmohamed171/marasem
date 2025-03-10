@@ -11,9 +11,9 @@ const OriginalArtwork = () => {
             <Image
               src="/images/artworks.png"
               alt="Modern Art"
-              width={500}
-              height={500}
-              quality={100}
+              width={1920}
+              height={200}
+              quality={70}
               layout="responsive"
               loading="lazy"
             />

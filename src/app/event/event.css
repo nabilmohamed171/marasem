@@ -94,4 +94,20 @@
     margin-bottom: 30px !important;
     display: inline-block;
   }
+
+  .event-page h2 {
+    font-size: 60px;
+  }
+
+  .event-page .event-info p {
+    padding: 10px 10px 0 0;
+  }
+
+  .event-page span.icon-map {
+    margin-bottom: 20px;
+  }
+
+  .event-page h3 {
+    font-size: 16px;
+  }
 }

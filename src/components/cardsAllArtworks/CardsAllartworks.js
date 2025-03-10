@@ -3,6 +3,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
 import { HiDotsHorizontal } from "react-icons/hi";
+import Image from "next/image";
 import "./cards-allartworks.css";
 
 const CardsAllartworks = () => {
@@ -110,7 +111,14 @@ const CardsAllartworks = () => {
                 <div key={artwork.id} className="col-md-4 col-6">
                   <div className="card-image">
                     <div className="overley"></div>
-                    <img src={artwork.image} alt="" />
+                    <Image
+                      src={artwork.image}
+                      alt={artwork.title}
+                      width={312}
+                      height={390}
+                      quality={70}
+                      loading="lazy"
+                    />
                     <div className="overley-info">
                       <div className="add-cart">
                         <span className="cart-shopping main-color">
@@ -125,7 +133,14 @@ const CardsAllartworks = () => {
                       </span>
                       <div className="user-art">
                         <div className="user-image">
-                          <img src={artwork.avatar} alt="" />
+                          <Image
+                            src={artwork.avatar}
+                            alt={artwork.artist}
+                            width={50}
+                            height={50}
+                            quality={70}
+                            loading="lazy"
+                          />
                         </div>
                         <span>{artwork.artist}</span>
                       </div>
@@ -143,7 +158,14 @@ const CardsAllartworks = () => {
           <div className="col-md-3 col-12">
             <div className="fixed-card d-md-block d-sm-none">
               <div className="main-image">
-                <img src="/images/view 3.png" alt="image" />
+                <Image
+                  src="/images/view 3.png"
+                  alt="Artwork"
+                  width={312}
+                  height={390}
+                  quality={70}
+                  loading="lazy"
+                />
                 <div className="info-card">
                   <h2>Artwork Name, Sub Category</h2>
                   <span>Acrylic On Paper</span>

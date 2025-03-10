@@ -39,3 +39,15 @@
   width: 200px;
   font-size: 15px;
 }
+
+@media (max-width: 575.98px) {
+  .empty-cart p {
+    width: 350px;
+    margin: auto;
+  }
+
+  .prev-cart span {
+    font-size: 22px;
+    margin-left: 5px;
+  }
+}

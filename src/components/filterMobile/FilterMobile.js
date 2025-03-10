@@ -274,7 +274,6 @@ const FilterMobile = () => {
                 </div>
               </div>
 
-              {/** Location Section **/}
               <div
                 className="accordion-section"
                 id="location-accordion"

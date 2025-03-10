@@ -20,7 +20,6 @@ const ShareArtwork = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [subCategory, setSubCategory] = useState("");
 
-  // إضافة حالة لرفعية الصورة
   const [imageUploaded, setImageUploaded] = useState(false);
 
   const addSize = () => {
@@ -46,7 +45,7 @@ const ShareArtwork = () => {
 
     setMainImage(imagesArray[0]);
     setShowOverlayImage(true);
-    setImageUploaded(true); // عند رفع الصورة قم بتحديث الحالة
+    setImageUploaded(true);
   };
 
   const handleSizeChange = (index, field, value) => {
@@ -131,9 +130,9 @@ const ShareArtwork = () => {
                           <Image
                             src={images[index + 1]}
                             alt={`Uploaded preview ${index}`}
-                            quality={100}
-                            width={500}
-                            height={500}
+                            width={145}
+                            height={70}
+                            quality={70}
                             className="side-image flex-r-image"
                           />
                         ) : (
@@ -154,8 +153,9 @@ const ShareArtwork = () => {
                         src="/images/share-artwork.svg"
                         alt="Main Artwork"
                         className="main-image"
-                        width={500}
-                        height={500}
+                        width={480}
+                        height={480}
+                        quality={70}
                       />
                     </div>
 
@@ -165,9 +165,9 @@ const ShareArtwork = () => {
                           src={mainImage || "/images/overlay-image.svg"}
                           alt="Overlay Image"
                           className="overlay-image flex-r-image"
-                          quality={100}
-                          width={500}
-                          height={500}
+                          width={480}
+                          height={480}
+                          quality={70}
                         />
                       </div>
                     )}
@@ -178,7 +178,6 @@ const ShareArtwork = () => {
                       <TbPointFilled />
                     </span>
 
-                    {/* هذه هي الفقرة التي سيتم إضافة الكلاس hidden عليها عند رفع الصورة */}
                     <p className={`title ${imageUploaded ? "hidden" : ""}`}>
                       Title Lorem Ipsum, Title Lorem Ipsum
                     </p>

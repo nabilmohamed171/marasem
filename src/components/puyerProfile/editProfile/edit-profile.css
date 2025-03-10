@@ -158,7 +158,7 @@
 @media (max-width: 575.98px) {
   .form-edit-profile h2 {
     margin-top: 10px;
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 35px;
   }
 
@@ -168,5 +168,9 @@
 
   .creat-artist-account-sm {
     margin-top: 20px;
+  }
+
+  .section-edit-profile .creat-artist-account p {
+    font-size: 16px;
   }
 }

@@ -26,7 +26,7 @@
 
 .cards-allartworks .card-info h2 {
   margin: 0;
-  padding: 10px 0;
+  padding: 10px 0 5px 0;
   color: #fff;
   font-size: 16px;
   width: 240px;
@@ -39,7 +39,7 @@
   color: #ebebf599;
   font-size: 14px;
   margin: 0;
-  padding: 0 0 10px 0;
+  padding: 0 0 5px 0;
   width: 240px;
   white-space: nowrap;
   overflow: hidden;
@@ -267,16 +267,4 @@
   .cards-allartworks .card-info p {
     width: 180px;
   }
-}
-
-@media (max-width: 767.98px) {
-}
-
-@media (max-width: 991.98px) {
-}
-
-@media (max-width: 1199.98px) {
-}
-
-@media (max-width: 1399.98px) {
 }

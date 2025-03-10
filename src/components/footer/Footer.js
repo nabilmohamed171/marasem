@@ -22,7 +22,7 @@ const Footer = () => {
                     alt="Marasem Logo"
                     width={122}
                     height={35}
-                    quality={100}
+                    quality={70}
                   />
                 </div>
                 <p>Art Finds a Home & Hearts Connect</p>

@@ -106,19 +106,19 @@ const Cart = () => {
               {cartItems.map((item) => (
                 <div key={item.id} className="item">
                   <div className="row">
-                    <div className="col-md-2 col-3">
+                    <div className="col-md-2 col-4">
                       <div className="image-item">
                         <Image
                           src={item.image}
                           alt="Artwork Image"
-                          width={150}
-                          height={150}
-                          objectFit="cover"
-                          quality={100}
+                          width={105}
+                          height={105}
+                          quality={70}
+                          loading="lazy"
                         />
                       </div>
                     </div>
-                    <div className="col-md-7 col-9">
+                    <div className="col-md-7 col-8">
                       <div className="info-item">
                         <h2>{item.title}</h2>
                         <p>{item.description}</p>

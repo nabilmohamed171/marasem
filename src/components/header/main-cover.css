@@ -7,10 +7,6 @@
   overflow: hidden;
 }
 
-.cover-header .image-header.full {
-  height: calc(100vh -100px);
-}
-
 .cover-header .image-header.small {
   height: calc(55vh);
   position: relative;

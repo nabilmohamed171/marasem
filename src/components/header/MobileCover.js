@@ -13,10 +13,10 @@ const MobileCover = () => {
                 src="/images/1.png"
                 alt="Image Cover"
                 className="img-fluid"
-                width={495}
-                height={200}
+                width={206}
+                height={495}
                 loading="lazy"
-                quality={100}
+                quality={70}
               />
             </Link>
             <div className="full-info">
@@ -28,7 +28,7 @@ const MobileCover = () => {
                     alt="Logo"
                     width={45}
                     height={45}
-                    quality={100}
+                    quality={70}
                     loading="lazy"
                   />
                 </Link>
@@ -61,9 +61,9 @@ const MobileCover = () => {
                     src="/images/2.png"
                     alt="Image Cover"
                     className="img-fluid"
-                    width={275}
-                    height={273.5}
-                    quality={100}
+                    width={225}
+                    height={285}
+                    quality={70}
                     loading="lazy"
                   />
                 </Link>
@@ -76,9 +76,9 @@ const MobileCover = () => {
                     src="/images/3.png"
                     alt="Image Cover"
                     className="img-fluid"
-                    width={275}
-                    height={273.5}
-                    quality={100}
+                    width={225}
+                    height={285}
+                    quality={70}
                     loading="lazy"
                   />
                 </Link>
@@ -104,9 +104,9 @@ const MobileCover = () => {
                 src="/images/4.png"
                 alt="Image Cover"
                 className="img-fluid"
-                width={200}
-                height={177}
-                quality={100}
+                width={144}
+                height={150}
+                quality={70}
                 loading="lazy"
               />
             </Link>
@@ -127,9 +127,9 @@ const MobileCover = () => {
                 src="/images/5.png"
                 alt="Image Cover"
                 className="img-fluid"
-                width={200}
+                width={144}
                 height={150}
-                quality={100}
+                quality={70}
                 loading="lazy"
               />
             </Link>
@@ -150,9 +150,9 @@ const MobileCover = () => {
                 src="/images/6.png"
                 alt="Image Cover"
                 className="img-fluid"
-                width={200}
+                width={144}
                 height={150}
-                quality={100}
+                quality={70}
                 loading="lazy"
               />
             </Link>

@@ -173,13 +173,11 @@ textarea:focus {
 @media (max-width: 575.98px) {
   .artwork {
     width: 100%;
-    margin: 50px auto;
     border-radius: 45px 45px 0 0;
-    padding: 50px 20px 20px !important;
   }
 
   .user-info h2 {
-    margin-top: 10px;
+    margin-top: 15px;
     margin-bottom: 10px;
     font-size: 16px;
   }
@@ -218,7 +216,7 @@ textarea:focus {
   }
 
   .customize-artwork span.close {
-    top: 22px !important;
+    top: 15px !important;
     right: 25px !important;
   }
 }

@@ -24,9 +24,6 @@ const PickupLocation = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("City:", city);
-    console.log("Zone:", zone);
-    console.log("Address:", address);
   };
 
   return (

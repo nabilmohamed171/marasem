@@ -1,4 +1,4 @@
-import AboutYou from "@/components/login/Categories";
+import AboutYou from "@/components/login/AboutYou";
 
 const About_You = () => {
   return (

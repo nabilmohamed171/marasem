@@ -5,9 +5,8 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { LiaMapMarkedAltSolid } from "react-icons/lia";
 import { CgNotes } from "react-icons/cg";
 import { TbCreditCard } from "react-icons/tb";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { GoPencil } from "react-icons/go";
-import { IoIosArrowForward } from "react-icons/io";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 import SectionFavorites from "@/components/puyerProfile/favorites/Favorites";
 import SectionFollowing from "@/components/puyerProfile/following/Following";
@@ -22,7 +21,7 @@ import Link from "next/link";
 import Image from "next/image";
 import "./profile.css";
 
-const puyerProfilePage = () => {
+const PuyerProfilePage = () => {
   const [activeSection, setActiveSection] = useState("favorites");
   const [moreInfoActive, setMoreInfoActive] = useState(false);
   const [editProfileVisible, setEditProfileVisible] = useState(true);
@@ -98,10 +97,10 @@ const puyerProfilePage = () => {
                     <Image
                       src={avatar}
                       alt="Artist Avatar"
-                      width={150}
-                      height={150}
+                      width={92}
+                      height={92}
+                      quality={70}
                       loading="lazy"
-                      quality={100}
                     />
                     <div
                       className={`edit-photo-profile ${
@@ -380,4 +379,4 @@ const puyerProfilePage = () => {
   );
 };
 
-export default puyerProfilePage;
+export default PuyerProfilePage;

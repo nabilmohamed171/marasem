@@ -6,8 +6,8 @@
 
 .number-pages .number > span {
   background: #404040;
-  padding: 10px 15px;
-  border-radius: 10px;
+  padding: 10px;
+  border-radius: 7px;
   color: #fff;
   margin: 0 2px;
   cursor: pointer;
@@ -20,22 +20,23 @@
 }
 
 .number-pages .number span.first-arrow-icon {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .number-pages .number span.last-arrow-icon {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .number-pages .dropdown-number-pages {
   display: inline-block;
   padding: 0;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .number-pages .dropdown-number-pages .dropdown .btn {
   background: transparent;
-  padding: 7px 48px;
+  padding: 7px 0;
+  width: 95px !important;
 }
 
 .number-pages .dropdown-menu.show {
@@ -48,8 +49,8 @@
 
 .number-pages .dropdown-number-pages .dropdown .arrow-down-icon {
   position: absolute;
-  top: 4px;
-  right: 9px;
+  top: 5px;
+  right: 4px;
   font-size: 17px;
   color: #fff;
 }

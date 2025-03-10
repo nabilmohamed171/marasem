@@ -1,9 +1,7 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { IoIosArrowDown } from "react-icons/io";
-import { IoMdClose } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowForward, IoMdClose } from "react-icons/io";
 import Image from "next/image";
 import Link from "next/link";
 import "./shop-artist.css";
@@ -70,110 +68,133 @@ const Artists = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
 
-  const getRandomArtists = (num) => {
-    const shuffledArtists = [...artists].sort(() => 0.5 - Math.random());
-    return shuffledArtists.slice(0, num);
-  };
+  const getRandomArtists = useCallback(
+    (num) => {
+      const shuffledArtists = [...artists].sort(() => 0.5 - Math.random());
+      return shuffledArtists.slice(0, num);
+    },
+    [artists]
+  );
 
   useEffect(() => {
     const randomArtists = getRandomArtists(20);
     setArtistTags(randomArtists);
-  }, [artists]);
+  }, [artists, getRandomArtists]);
 
-  const handleTagSelection = (tag) => {
-    const isTagSelected = selectedTags.includes(tag);
-    const newSelectedTags = isTagSelected
-      ? selectedTags.filter((t) => t !== tag)
-      : [...selectedTags, tag];
-    setSelectedTags(newSelectedTags);
+  const handleTagSelection = useCallback(
+    (tag) => {
+      setSelectedTags((prevSelectedTags) => {
+        const isTagSelected = prevSelectedTags.includes(tag);
+        const newSelectedTags = isTagSelected
+          ? prevSelectedTags.filter((t) => t !== tag)
+          : [...prevSelectedTags, tag];
 
-    const filteredArtists = artists.filter((artist) =>
-      artist.tags.some((artistTag) => newSelectedTags.includes(artistTag))
-    );
-    setArtistTags(filteredArtists);
-  };
+        const filteredArtists = artists.filter((artist) =>
+          artist.tags.some((artistTag) => newSelectedTags.includes(artistTag))
+        );
+        setArtistTags(filteredArtists);
 
-  const handleRemoveTag = (tagId) => {
-    setSelectedTags((prevSelectedTags) =>
-      prevSelectedTags.filter((id) => id !== tagId)
-    );
+        return newSelectedTags;
+      });
+    },
+    [artists]
+  );
 
-    const filteredArtists = artists.filter((artist) =>
-      artist.tags.some((tag) => tag !== tagId)
-    );
-    setArtistTags(filteredArtists);
-  };
+  const handleRemoveTag = useCallback(
+    (tagId) => {
+      setSelectedTags((prevSelectedTags) =>
+        prevSelectedTags.filter((id) => id !== tagId)
+      );
 
-  const toggleFollow = (artistId) => {
-    const newFollowedArtists = new Set(followedArtists);
-    if (newFollowedArtists.has(artistId)) {
-      newFollowedArtists.delete(artistId);
-    } else {
-      newFollowedArtists.add(artistId);
-    }
-    setFollowedArtists(newFollowedArtists);
-  };
+      const filteredArtists = artists.filter((artist) =>
+        artist.tags.some((tag) => tag !== tagId)
+      );
+      setArtistTags(filteredArtists);
+    },
+    [artists]
+  );
 
-  const handleWheel = (e) => {
-    if (sliderContentRef.current) {
-      const maxScroll =
-        sliderContentRef.current.scrollWidth -
-        sliderContentRef.current.clientWidth;
-      if (e.deltaY > 0) {
-        setScrollAmount((prev) => Math.min(prev + scrollStep, maxScroll));
-      } else if (e.deltaY < 0) {
-        setScrollAmount((prev) => Math.max(prev - scrollStep, 0));
+  const toggleFollow = useCallback((artistId) => {
+    setFollowedArtists((prevFollowedArtists) => {
+      const newFollowedArtists = new Set(prevFollowedArtists);
+      if (newFollowedArtists.has(artistId)) {
+        newFollowedArtists.delete(artistId);
+      } else {
+        newFollowedArtists.add(artistId);
       }
-    }
-  };
+      return newFollowedArtists;
+    });
+  }, []);
 
-  const handleMouseDown = (e) => {
+  const handleWheel = useCallback(
+    (e) => {
+      if (sliderContentRef.current) {
+        const maxScroll =
+          sliderContentRef.current.scrollWidth -
+          sliderContentRef.current.clientWidth;
+        if (e.deltaY > 0) {
+          setScrollAmount((prev) => Math.min(prev + scrollStep, maxScroll));
+        } else if (e.deltaY < 0) {
+          setScrollAmount((prev) => Math.max(prev - scrollStep, 0));
+        }
+      }
+    },
+    [scrollStep]
+  );
+
+  const handleMouseDown = useCallback((e) => {
     setIsDragging(true);
     setStartX(e.clientX);
-  };
+  }, []);
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = useCallback((e) => {
     setIsDragging(true);
     setStartX(e.touches[0].clientX);
-  };
+  }, []);
 
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    const moveX = e.clientX - startX;
-    const newScrollAmount = Math.max(
-      0,
-      Math.min(
-        scrollAmount - moveX,
-        sliderContentRef.current.scrollWidth -
-          sliderContentRef.current.clientWidth
-      )
-    );
-    setScrollAmount(newScrollAmount);
-    setStartX(e.clientX);
-  };
+  const handleMouseMove = useCallback(
+    (e) => {
+      if (!isDragging) return;
+      const moveX = e.clientX - startX;
+      const newScrollAmount = Math.max(
+        0,
+        Math.min(
+          scrollAmount - moveX,
+          sliderContentRef.current.scrollWidth -
+            sliderContentRef.current.clientWidth
+        )
+      );
+      setScrollAmount(newScrollAmount);
+      setStartX(e.clientX);
+    },
+    [isDragging, scrollAmount, startX]
+  );
 
-  const handleTouchMove = (e) => {
-    if (!isDragging) return;
-    const moveX = e.touches[0].clientX - startX;
-    const newScrollAmount = Math.max(
-      0,
-      Math.min(
-        scrollAmount - moveX,
-        sliderContentRef.current.scrollWidth -
-          sliderContentRef.current.clientWidth
-      )
-    );
-    setScrollAmount(newScrollAmount);
-    setStartX(e.touches[0].clientX);
-  };
+  const handleTouchMove = useCallback(
+    (e) => {
+      if (!isDragging) return;
+      const moveX = e.touches[0].clientX - startX;
+      const newScrollAmount = Math.max(
+        0,
+        Math.min(
+          scrollAmount - moveX,
+          sliderContentRef.current.scrollWidth -
+            sliderContentRef.current.clientWidth
+        )
+      );
+      setScrollAmount(newScrollAmount);
+      setStartX(e.touches[0].clientX);
+    },
+    [isDragging, scrollAmount, startX]
+  );
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-  };
+  }, []);
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
-  };
+  }, []);
 
   useEffect(() => {
     const nextButton = nextButtonRef.current;
@@ -195,7 +216,7 @@ const Artists = () => {
     return () => {
       nextButton.removeEventListener("click", handleNextClick);
     };
-  }, [scrollAmount]);
+  }, [scrollAmount, scrollStep]);
 
   useEffect(() => {
     if (sliderContentRef.current) {
@@ -327,9 +348,9 @@ const Artists = () => {
                           className="image-one"
                           src={artist.projectImages[0]}
                           alt="Artist Image 1"
-                          width={300}
-                          height={200}
-                          quality={100}
+                          width={130}
+                          height={105}
+                          quality={70}
                           loading="lazy"
                         />
                       </div>
@@ -339,9 +360,9 @@ const Artists = () => {
                         <Image
                           src={artist.projectImages[1]}
                           alt="Artist Image 2"
-                          width={300}
-                          height={200}
-                          quality={100}
+                          width={130}
+                          height={105}
+                          quality={70}
                           loading="lazy"
                         />
                       </div>
@@ -352,9 +373,9 @@ const Artists = () => {
                           className="image-sec"
                           src={artist.projectImages[2]}
                           alt="Artist Image 3"
-                          width={300}
-                          height={200}
-                          quality={100}
+                          width={130}
+                          height={105}
+                          quality={70}
                           loading="lazy"
                         />
                       </div>
@@ -368,7 +389,7 @@ const Artists = () => {
                           alt="User Avatar"
                           width={80}
                           height={80}
-                          quality={100}
+                          quality={70}
                           loading="lazy"
                         />
                       </Link>

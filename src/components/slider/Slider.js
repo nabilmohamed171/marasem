@@ -155,7 +155,7 @@ export const SliderCategory = () => {
                   alt={item.alt}
                   width={156}
                   height={156}
-                  quality={100}
+                  quality={70}
                   loading="lazy"
                 />
                 <h3>{item.title}</h3>

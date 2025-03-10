@@ -16,9 +16,9 @@ const MainCover = () => {
                 className="full-image"
                 src="/images/1.png"
                 alt="Image 1"
-                width={515.66}
-                height={578.89}
-                quality={100}
+                width={515}
+                height={578}
+                quality={70}
                 loading="lazy"
               />
             </Link>
@@ -32,7 +32,7 @@ const MainCover = () => {
                       alt="Logo"
                       width={45}
                       height={45}
-                      quality={100}
+                      quality={50}
                       loading="lazy"
                     />
                   </Link>
@@ -69,7 +69,7 @@ const MainCover = () => {
                     alt="Small Image"
                     width={500}
                     height={338}
-                    quality={100}
+                    quality={70}
                     loading="lazy"
                   />
                 </Link>
@@ -103,7 +103,7 @@ const MainCover = () => {
                           alt="User Avatar"
                           width={40}
                           height={40}
-                          quality={100}
+                          quality={70}
                           loading="lazy"
                         />
                       </Link>
@@ -122,7 +122,7 @@ const MainCover = () => {
                     alt="Large Image"
                     width={700}
                     height={338}
-                    quality={100}
+                    quality={70}
                     loading="lazy"
                   />
                 </Link>
@@ -143,9 +143,9 @@ const MainCover = () => {
                     className="x-small-imge"
                     src="/images/4.png"
                     alt="X Small Image 1"
-                    width={337.77}
-                    height={220.88}
-                    quality={100}
+                    width={337}
+                    height={220}
+                    quality={50}
                     loading="lazy"
                   />
                 </Link>
@@ -164,9 +164,9 @@ const MainCover = () => {
                     className="x-small-imge"
                     src="/images/5.png"
                     alt="X Small Image 2"
-                    width={337.77}
-                    height={220.88}
-                    quality={100}
+                    width={337}
+                    height={220}
+                    quality={50}
                     loading="lazy"
                   />
                 </Link>
@@ -185,9 +185,9 @@ const MainCover = () => {
                     className="x-small-imge"
                     src="/images/6.png"
                     alt="X Small Image 3"
-                    width={337.77}
-                    height={220.88}
-                    quality={100}
+                    width={337}
+                    height={220}
+                    quality={50}
                     loading="lazy"
                   />
                 </Link>

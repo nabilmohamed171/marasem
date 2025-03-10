@@ -97,7 +97,7 @@ export default function Navbar() {
         >
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link active shop-art-menu" href="shop-art">
+              <Link className="nav-link active shop-art-menu" href="/shop-art">
                 SHOP ART
               </Link>
               <div className="main-dropmenu-navbar">

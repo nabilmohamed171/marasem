@@ -342,9 +342,9 @@ const SliderTags = () => {
                           <Image
                             src={image.src}
                             alt={image.alt}
-                            width={500}
-                            height={500}
-                            quality={100}
+                            width={312}
+                            height={390}
+                            quality={70}
                             className="flex-r-image"
                             loading="lazy"
                           />
@@ -373,9 +373,9 @@ const SliderTags = () => {
                             <Image
                               src="/images/avatar2.png"
                               alt="avatar"
-                              width={500}
-                              height={500}
-                              quality={100}
+                              width={50}
+                              height={50}
+                              quality={70}
                               className="flex-r-image"
                               loading="lazy"
                             />

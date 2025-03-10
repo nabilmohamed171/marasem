@@ -27,9 +27,9 @@ const ThreeCollections = () => {
                         <Image
                           src="/images/6.png"
                           alt="Modern Art"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={177}
+                          height={177}
+                          quality={70}
                           loading="lazy"
                         />
                       </Link>
@@ -40,9 +40,9 @@ const ThreeCollections = () => {
                       <Image
                         src="/images/2.png"
                         alt="Second Image of Modern Art"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={85}
+                        height={85}
+                        quality={70}
                         loading="lazy"
                       />
                       <div className="dark-theme">
@@ -50,9 +50,9 @@ const ThreeCollections = () => {
                         <Image
                           src="/images/6.png"
                           alt="Overlay Image for Modern Art"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={85}
+                          height={85}
+                          quality={70}
                           loading="lazy"
                         />
                       </div>
@@ -84,9 +84,9 @@ const ThreeCollections = () => {
                         <Image
                           src="/images/4.png"
                           alt="Pop Art"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={177}
+                          height={177}
+                          quality={70}
                           loading="lazy"
                         />
                       </Link>
@@ -97,9 +97,9 @@ const ThreeCollections = () => {
                       <Image
                         src="/images/5.png"
                         alt="Second Image of Pop Art"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={85}
+                        height={85}
+                        quality={70}
                         loading="lazy"
                       />
                       <div className="dark-theme">
@@ -107,9 +107,9 @@ const ThreeCollections = () => {
                         <Image
                           src="/images/6.png"
                           alt="Overlay Image for Pop Art"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={85}
+                          height={85}
+                          quality={70}
                           loading="lazy"
                         />
                       </div>

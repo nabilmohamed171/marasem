@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import Footer from "@/components/footer/Footer";
@@ -34,17 +34,13 @@ const ArtistProfile = () => {
     memberSince: "DECEMBER 2, 2014",
   };
 
-  useEffect(() => {
-    setActiveSection("gallery");
+  const handleMenuClick = useCallback((section) => {
+    setActiveSection(section);
   }, []);
 
-  const handleMenuClick = (section) => {
-    setActiveSection(section);
-  };
-
-  const toggleFollow = () => {
-    setIsFollowing(!isFollowing);
-  };
+  const toggleFollow = useCallback(() => {
+    setIsFollowing((prev) => !prev);
+  }, []);
 
   return (
     <>
@@ -56,8 +52,8 @@ const ArtistProfile = () => {
           src={artistData.headerImage}
           alt="Artist Header"
           width={1920}
-          height={600}
-          quality={100}
+          height={200}
+          quality={70}
           loading="lazy"
         />
       </div>
@@ -72,10 +68,10 @@ const ArtistProfile = () => {
                     <Image
                       src={artistData.avatar}
                       alt="Artist Avatar"
-                      width={150}
-                      height={150}
+                      width={92}
+                      height={92}
+                      quality={70}
                       loading="lazy"
-                      quality={100}
                     />
                   </div>
                 </div>

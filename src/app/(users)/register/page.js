@@ -131,20 +131,26 @@ function CreateAccount() {
         <div className="col-md-7">
           <div className="create-account-header-image">
             <Image
-              width={2000}
-              height={2000}
+              width={1500}
+              height={1500}
               src="/images/Registration.jpg"
               alt="marasem"
-              objectFit="cover"
-              quality={100}
-              loading="lazy"
+              quality={70}
+              priority
             />
           </div>
         </div>
         <div className="col-md-5">
           <div className="create-account-form">
             <div className="website-logo scale-hover">
-              <img src="/images/main-logo.png" alt="marasem" />
+              <Image
+                src="/images/main-logo.png"
+                alt="marasem"
+                width={180}
+                height={35}
+                quality={70}
+                priority
+              />
             </div>
 
             <form method="POST" onSubmit={handleSubmit}>

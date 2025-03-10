@@ -79,9 +79,9 @@ const EventPage = () => {
                 <Image
                   src="/images/1.png"
                   alt="Image 1"
-                  width={700}
-                  height={700}
-                  quality={100}
+                  width={640}
+                  height={845}
+                  quality={60}
                   loading="lazy"
                 />
               </div>
@@ -125,9 +125,9 @@ const EventPage = () => {
                 <Image
                   src="/images/2.png"
                   alt="Image 1"
-                  width={700}
-                  height={700}
-                  quality={100}
+                  width={642}
+                  height={642}
+                  quality={60}
                   loading="lazy"
                 />
               </div>
@@ -171,9 +171,9 @@ const EventPage = () => {
                 <Image
                   src="/images/3.png"
                   alt="Image 1"
-                  width={700}
-                  height={700}
-                  quality={100}
+                  width={642}
+                  height={642}
+                  quality={60}
                   loading="lazy"
                 />
               </div>
@@ -217,9 +217,9 @@ const EventPage = () => {
                 <Image
                   src="/images/4.png"
                   alt="Image 1"
-                  width={700}
-                  height={700}
-                  quality={100}
+                  width={642}
+                  height={642}
+                  quality={60}
                   loading="lazy"
                 />
               </div>

@@ -44,8 +44,8 @@
 
 @media (max-width: 575.98px) {
   .collections-page .collections-all .follow-collection {
-    margin-left: 0;
-    top: -50px !important;
+    top: -82px !important;
+    right: -150px !important;
     position: relative;
   }
 
@@ -53,16 +53,4 @@
   .images-items-collections h2 {
     width: 180px;
   }
-}
-
-@media (max-width: 767.98px) {
-}
-
-@media (max-width: 991.98px) {
-}
-
-@media (max-width: 1199.98px) {
-}
-
-@media (max-width: 1399.98px) {
 }

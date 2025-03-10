@@ -69,9 +69,9 @@ const CustomizeArtwork = () => {
                     src="/images/share-artwork.svg"
                     alt="Main Artwork"
                     className="main-image flex-r-image"
-                    width={600}
-                    height={600}
-                    quality={100}
+                    width={118}
+                    height={110}
+                    quality={70}
                     loading="lazy"
                   />
                 </div>
@@ -80,9 +80,9 @@ const CustomizeArtwork = () => {
                     <Image
                       src={images.main}
                       alt="Main Artwork"
-                      width={500}
-                      height={500}
-                      quality={100}
+                      width={413}
+                      height={390}
+                      quality={70}
                       className="flex-r-image"
                       loading="lazy"
                     />
@@ -109,9 +109,9 @@ const CustomizeArtwork = () => {
                         <Image
                           src={images.secondary[index]}
                           alt={`Secondary ${index + 1}`}
-                          width={100}
-                          height={100}
-                          quality={100}
+                          width={126}
+                          height={60}
+                          quality={70}
                           className="flex-r-image"
                           loading="lazy"
                         />
@@ -135,7 +135,7 @@ const CustomizeArtwork = () => {
                     className="img-fluid flex-r-image"
                     width={50}
                     height={50}
-                    quality={100}
+                    quality={70}
                     loading="lazy"
                   />
                 </div>
@@ -183,8 +183,7 @@ const CustomizeArtwork = () => {
                 </div>
                 <div className="col-12">
                   <div className="button-send-request">
-                    {"/request-successfully"}
-                    <Link href="">
+                    <Link href="/request-successfully">
                       <button
                         type="button"
                         className="btn"

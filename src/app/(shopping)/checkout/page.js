@@ -15,7 +15,7 @@ import "./checkout.css";
 const CheckOut = () => {
   const [showShippingAddress, setShowShippingAddress] = useState(false);
   const [showAddAddress, setShowAddAddress] = useState(true);
-  const [isChecked, setIsChecked] = useState(false); // State for checkbox
+  const [isChecked, setIsChecked] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 
   const handleChangeAddress = () => {
@@ -31,7 +31,7 @@ const CheckOut = () => {
   };
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked); // Toggle checkbox state
+    setIsChecked(!isChecked);
   };
 
   return (
@@ -96,23 +96,25 @@ const CheckOut = () => {
                           type="checkbox"
                           value=""
                           id="flexCheckDefault"
-                          onChange={handleCheckboxChange} // Handle checkbox change
+                          onChange={handleCheckboxChange}
                         />
                         <label
                           className={`form-check-label ${
                             isChecked ? "text-white" : ""
-                          }`} // Change label color based on checkbox state
+                          }`}
                           htmlFor="flexCheckDefault"
                         >
                           Pay with Etmana Credit
                         </label>
                       </div>
                     </div>
-                    <div className="col-md-6 col-6 balance">
-                      <span className="your-balance">
-                        Your Balance
-                        <span className="your-balance-number"> EGP 350</span>
-                      </span>
+                    <div className="col-md-6 col-6">
+                      <div className="balance">
+                        <span className="your-balance">
+                          Balance
+                          <span className="your-balance-number"> EGP 350</span>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -122,7 +124,7 @@ const CheckOut = () => {
                 <div className="payment">
                   <div className="card">
                     <div className="row">
-                      <div className="col-md-6 col-6">
+                      <div className="col-md-6 col-7">
                         <div className="form-check">
                           <input
                             className="form-check-input"
@@ -143,23 +145,25 @@ const CheckOut = () => {
                           </label>
                         </div>
                       </div>
-                      <div className="col-md-6 col-6">
+                      <div className="col-md-6 col-5">
                         <span className="payment-right">
                           <Image
                             src="/images/visa.png"
                             alt="Visa logo"
-                            width={70}
-                            height={40}
-                            quality={100}
+                            width={45}
+                            height={30}
+                            quality={70}
+                            loading="lazy"
                           />
                         </span>
                         <span className="payment-right">
                           <Image
                             src="/images/card.png"
                             alt="Card logo"
-                            width={50}
-                            height={35}
-                            quality={100}
+                            width={45}
+                            height={30}
+                            quality={70}
+                            loading="lazy"
                           />
                         </span>
                       </div>
@@ -168,7 +172,7 @@ const CheckOut = () => {
 
                   <div className="valu">
                     <div className="row">
-                      <div className="col-md-6 col-6">
+                      <div className="col-md-6 col-7">
                         <div className="form-check">
                           <input
                             className="form-check-input"
@@ -190,14 +194,15 @@ const CheckOut = () => {
                           </label>
                         </div>
                       </div>
-                      <div className="col-md-6 col-6">
+                      <div className="col-md-6 col-5">
                         <span className="payment-right">
                           <Image
                             src="/images/valu.png"
                             alt="ValU logo"
-                            width={90}
-                            height={40}
-                            quality={100}
+                            width={45}
+                            height={30}
+                            quality={70}
+                            loading="lazy"
                           />
                         </span>
                       </div>
@@ -206,7 +211,7 @@ const CheckOut = () => {
 
                   <div className="cash">
                     <div className="row">
-                      <div className="col-md-6 col-6">
+                      <div className="col-md-6 col-7">
                         <div className="form-check">
                           <input
                             className="form-check-input"
@@ -227,7 +232,7 @@ const CheckOut = () => {
                           </label>
                         </div>
                       </div>
-                      <div className="col-md-6 col-6"></div>
+                      <div className="col-md-6 col-5"></div>
                     </div>
                   </div>
                 </div>

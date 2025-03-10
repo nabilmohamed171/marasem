@@ -27,9 +27,9 @@ const SecCollections = () => {
                         <Image
                           src="/images/6.png"
                           alt="Vintage Image"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={177}
+                          height={177}
+                          quality={70}
                           loading="lazy"
                         />
                       </Link>
@@ -40,9 +40,9 @@ const SecCollections = () => {
                       <Image
                         src="/images/2.png"
                         alt="Second Image"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={85}
+                        height={85}
+                        quality={70}
                         loading="lazy"
                       />
                       <div className="dark-theme">
@@ -50,9 +50,9 @@ const SecCollections = () => {
                         <Image
                           src="/images/6.png"
                           alt="Overlay Image"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={85}
+                          height={85}
+                          quality={70}
                           loading="lazy"
                         />
                       </div>
@@ -83,9 +83,9 @@ const SecCollections = () => {
                         <Image
                           src="/images/4.png"
                           alt="Bohemian Image"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={177}
+                          height={177}
+                          quality={70}
                           loading="lazy"
                         />
                       </Link>
@@ -96,9 +96,9 @@ const SecCollections = () => {
                       <Image
                         src="/images/5.png"
                         alt="Second Image Bohemian"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={85}
+                        height={85}
+                        quality={70}
                         loading="lazy"
                       />
                       <div className="dark-theme">
@@ -106,9 +106,9 @@ const SecCollections = () => {
                         <Image
                           src="/images/6.png"
                           alt="Overlay Image"
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={85}
+                          height={85}
+                          quality={70}
                           loading="lazy"
                         />
                       </div>

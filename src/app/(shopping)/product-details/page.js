@@ -1,12 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { FaRegHeart } from "react-icons/fa6";
-import { FaHeart } from "react-icons/fa6";
-import { IoIosArrowForward } from "react-icons/io";
-import CardsAllartworks from "@/components/cardsAllArtworks/CardsAllartworks";
-import { IoIosArrowBack } from "react-icons/io";
+import { FaRegHeart, FaHeart } from "react-icons/fa6";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import NavbarArtists from "@/components/all-navbars/NavbarArtists";
 import FilterPcFixed from "@/components/filterPc/FilterPcFixed";
+import CardsAllartworks from "@/components/cardsAllArtworks/CardsAllartworks";
 import Footer from "@/components/footer/Footer";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 import CustomizeArtwork from "@/components/customizeArtwork/CustomizeArtwork";
@@ -100,11 +98,10 @@ const AllArtworks = () => {
                         <Image
                           src={src}
                           alt={`Artwork view ${index + 1}`}
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={150}
+                          height={108}
+                          quality={70}
                           className="flex-r-image"
-                          objectFit="cover"
                           loading="lazy"
                         />
                       </div>
@@ -125,11 +122,10 @@ const AllArtworks = () => {
                     <Image
                       src={mainImage}
                       alt="Main artwork"
-                      width={500}
-                      height={500}
-                      quality={100}
+                      width={395}
+                      height={475}
+                      quality={70}
                       className="flex-r-image"
-                      objectFit="cover"
                       loading="lazy"
                     />
                   </div>
@@ -145,9 +141,8 @@ const AllArtworks = () => {
                             alt="Avatar"
                             width={50}
                             height={50}
-                            quality={100}
+                            quality={70}
                             className="flex-r-image"
-                            objectFit="cover"
                             loading="lazy"
                           />
                         </div>

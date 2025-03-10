@@ -13,13 +13,6 @@ const AboutYou = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({
-      socialMediaLink,
-      portfolioLink,
-      websiteLink,
-      otherSocialMediaLink,
-      summary,
-    });
   };
 
   return (
@@ -38,7 +31,7 @@ const AboutYou = () => {
             />
           </div>
         </div>
-        <div className="col">
+        <div className="col-md-5 col">
           <div className="about-you-form">
             <div className="row">
               <div className="col-12">

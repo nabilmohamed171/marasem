@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { LiaMapMarkedAltSolid } from "react-icons/lia";
@@ -57,22 +57,22 @@ const MyProfilePage = () => {
     setActiveSection("gallery");
   }, []);
 
-  const handleMenuClick = (section) => {
+  const handleMenuClick = useCallback((section) => {
     setActiveSection(section);
-  };
+  }, []);
 
-  const handleMoreInfoClick = () => {
-    setMoreInfoActive(!moreInfoActive);
-  };
+  const handleMoreInfoClick = useCallback(() => {
+    setMoreInfoActive((prev) => !prev);
+  }, []);
 
-  const handleEditProfileClick = () => {
+  const handleEditProfileClick = useCallback(() => {
     setEditProfileVisible(false);
     setEditCoverProfileVisible(true);
     setEditPhotoProfileVisible(true);
     setOverlayVisible(true);
-  };
+  }, []);
 
-  const handleCoverImageChange = (e) => {
+  const handleCoverImageChange = useCallback((e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -81,9 +81,9 @@ const MyProfilePage = () => {
       };
       reader.readAsDataURL(file);
     }
-  };
+  }, []);
 
-  const handleAvatarImageChange = (e) => {
+  const handleAvatarImageChange = useCallback((e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -92,7 +92,7 @@ const MyProfilePage = () => {
       };
       reader.readAsDataURL(file);
     }
-  };
+  }, []);
 
   return (
     <>
@@ -104,8 +104,8 @@ const MyProfilePage = () => {
           src={headerImage}
           alt="Artist Header"
           width={1920}
-          height={600}
-          quality={100}
+          height={200}
+          quality={70}
           loading="lazy"
         />
         <form className="upload-cover-profile">
@@ -144,10 +144,10 @@ const MyProfilePage = () => {
                     <Image
                       src={avatar}
                       alt="Artist Avatar"
-                      width={150}
-                      height={150}
+                      width={92}
+                      height={92}
+                      quality={70}
                       loading="lazy"
-                      quality={100}
                     />
                     <div
                       className={`edit-photo-profile ${

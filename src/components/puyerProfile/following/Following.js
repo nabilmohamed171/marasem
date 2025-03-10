@@ -82,9 +82,9 @@ const Following = () => {
                         className="image-one"
                         src={artist.projectImages[0]}
                         alt="Artist Image 1"
-                        width={300}
-                        height={200}
-                        quality={100}
+                        width={130}
+                        height={105}
+                        quality={70}
                         loading="lazy"
                       />
                     </div>
@@ -94,9 +94,9 @@ const Following = () => {
                       <Image
                         src={artist.projectImages[1]}
                         alt="Artist Image 2"
-                        width={300}
-                        height={200}
-                        quality={100}
+                        width={130}
+                        height={105}
+                        quality={70}
                         loading="lazy"
                       />
                     </div>
@@ -107,9 +107,9 @@ const Following = () => {
                         className="image-sec"
                         src={artist.projectImages[2]}
                         alt="Artist Image 3"
-                        width={300}
-                        height={200}
-                        quality={100}
+                        width={130}
+                        height={105}
+                        quality={70}
                         loading="lazy"
                       />
                     </div>
@@ -123,7 +123,7 @@ const Following = () => {
                         alt="User Avatar"
                         width={80}
                         height={80}
-                        quality={100}
+                        quality={70}
                         loading="lazy"
                       />
                     </Link>

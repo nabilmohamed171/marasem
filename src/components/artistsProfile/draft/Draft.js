@@ -6,18 +6,18 @@ const Draft = () => {
   return (
     <div className="section-draft">
       <div className="row">
-        <div className="col-md-4 col-6">
+        <div className="col-md-4 col-12">
           <div className="box-draft">
             <div className="draft-image">
               <div className="overley"></div>
               <Image
                 src="/images/7.png"
                 alt="iamge"
-                width={500}
-                height={500}
-                loading="lazy"
-                quality={100}
+                width={312}
+                height={300}
+                quality={70}
                 objectFit="cover"
+                loading="lazy"
               />
             </div>
             <div className="draft-info">
@@ -36,18 +36,18 @@ const Draft = () => {
             </div>
           </div>
         </div>
-        <div className="col-md-4 col-6">
+        <div className="col-md-4 col-12">
           <div className="box-draft">
             <div className="draft-image">
               <div className="overley"></div>
               <Image
                 src="/images/7.png"
                 alt="iamge"
-                width={500}
-                height={500}
-                loading="lazy"
-                quality={100}
+                width={312}
+                height={300}
+                quality={70}
                 objectFit="cover"
+                loading="lazy"
               />
             </div>
             <div className="draft-info">
@@ -66,18 +66,18 @@ const Draft = () => {
             </div>
           </div>
         </div>
-        <div className="col-md-4 col-6">
+        <div className="col-md-4 col-12">
           <div className="box-draft">
             <div className="draft-image">
               <div className="overley"></div>
               <Image
                 src="/images/7.png"
                 alt="iamge"
-                width={500}
-                height={500}
-                loading="lazy"
-                quality={100}
+                width={312}
+                height={300}
+                quality={70}
                 objectFit="cover"
+                loading="lazy"
               />
             </div>
             <div className="draft-info">
@@ -98,18 +98,18 @@ const Draft = () => {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-4 col-6">
+        <div className="col-md-4 col-12">
           <div className="box-draft">
             <div className="draft-image">
               <div className="overley"></div>
               <Image
                 src="/images/7.png"
                 alt="iamge"
-                width={500}
-                height={500}
-                loading="lazy"
-                quality={100}
+                width={312}
+                height={300}
+                quality={70}
                 objectFit="cover"
+                loading="lazy"
               />
             </div>
             <div className="draft-info">

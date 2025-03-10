@@ -81,9 +81,9 @@ const CollectionsArtist = () => {
               <Image
                 src={item.imageSrc}
                 alt={`Artwork ${index + 1}`}
-                width={500}
-                height={500}
-                quality={100}
+                width={312}
+                height={390}
+                quality={70}
                 loading="lazy"
               />
             </div>
@@ -114,9 +114,9 @@ const CollectionsArtist = () => {
                   <Image
                     src={item.artistImage}
                     alt="avatar"
-                    width={500}
-                    height={500}
-                    quality={100}
+                    width={50}
+                    height={50}
+                    quality={70}
                     loading="lazy"
                   />
                 </div>

@@ -69,9 +69,9 @@ const SoldOut = () => {
                 <Image
                   src={item.imageSrc}
                   alt={`Artwork ${index + 1}`}
-                  width={500}
-                  height={500}
-                  quality={100}
+                  width={312}
+                  height={390}
+                  quality={70}
                 />
               </div>
               <div className="overley-info-sold-out">

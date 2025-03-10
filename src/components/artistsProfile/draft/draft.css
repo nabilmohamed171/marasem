@@ -21,7 +21,7 @@
 
 .section-draft .draft-button {
   position: absolute;
-  top: 50%;
+  top: 43%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -82,7 +82,7 @@
 
 .section-draft .draft-button p {
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 12px !important;
   position: relative;
 }
 
@@ -97,7 +97,6 @@
 
   .section-draft .draft-button p,
   .section-draft .draft-info p {
-    font-size: 12px;
     width: 140px;
     white-space: nowrap;
     overflow: hidden;

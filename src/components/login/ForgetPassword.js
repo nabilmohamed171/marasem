@@ -11,7 +11,7 @@ function ForgetPassword() {
     email: "",
     phone: "",
   });
-  const [countryCode, setCountryCode] = useState("");
+
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const toggleEmailPhone = () => {
@@ -24,10 +24,6 @@ function ForgetPassword() {
       ...formData,
       [name]: value,
     });
-  };
-
-  const handlePhoneChange = (country) => {
-    setCountryCode(country.value);
   };
 
   const handlePhoneNumberInput = (value) => {

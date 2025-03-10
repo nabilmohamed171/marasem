@@ -79,7 +79,6 @@ const Insights = () => {
               </div>
             </div>
 
-            {/* Row for the first artwork */}
             <div className="row table-row">
               <div className="col-md-2">
                 <div className="performance-image">
@@ -87,10 +86,10 @@ const Insights = () => {
                   <Image
                     src="/images/55.png"
                     alt="image"
-                    width={500}
-                    height={500}
+                    width={140}
+                    height={140}
                     objectFit="cover"
-                    quality={100}
+                    quality={70}
                     loading="lazy"
                   />
                 </div>
@@ -118,17 +117,16 @@ const Insights = () => {
               </div>
             </div>
 
-            {/* Row for the second artwork */}
             <div className="row table-row">
               <div className="col-md-2">
                 <div className="performance-image">
                   <Image
                     src="/images/55.png"
                     alt="image"
-                    width={500}
-                    height={500}
+                    width={140}
+                    height={140}
                     objectFit="cover"
-                    quality={100}
+                    quality={70}
                     loading="lazy"
                   />
                 </div>
@@ -156,7 +154,6 @@ const Insights = () => {
               </div>
             </div>
 
-            {/* Row for the third artwork */}
             <div className="row table-row">
               <div className="col-md-2">
                 <div className="performance-image">
@@ -164,10 +161,10 @@ const Insights = () => {
                   <Image
                     src="/images/55.png"
                     alt="image"
-                    width={500}
-                    height={500}
+                    width={140}
+                    height={140}
                     objectFit="cover"
-                    quality={100}
+                    quality={70}
                     loading="lazy"
                   />
                 </div>

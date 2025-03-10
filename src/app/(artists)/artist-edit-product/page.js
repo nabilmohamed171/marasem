@@ -1,9 +1,7 @@
 "use client";
-import React, { useState } from "react";
-import { FaRegHeart } from "react-icons/fa6";
-import { FaHeart } from "react-icons/fa6";
-import { IoIosArrowForward } from "react-icons/io";
-import { IoIosArrowBack } from "react-icons/io";
+import React, { useState, useCallback } from "react";
+import { FaRegHeart, FaHeart } from "react-icons/fa6";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import NavbarArtists from "@/components/all-navbars/NavbarArtists";
 import Footer from "@/components/footer/Footer";
 import FooterAccordion from "@/components/footer/FooterAccordion";
@@ -17,13 +15,13 @@ const ArtistEditProduct = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHeartFilled, setIsHeartFilled] = useState(false);
 
-  const handleTabClick = (tab) => {
+  const handleTabClick = useCallback((tab) => {
     setActiveTab(tab);
-  };
+  }, []);
 
-  const handleImageClick = (imageSrc) => {
+  const handleImageClick = useCallback((imageSrc) => {
     setMainImage(imageSrc);
-  };
+  }, []);
 
   const thumbnails = [
     "/images/88.jpeg",
@@ -32,21 +30,21 @@ const ArtistEditProduct = () => {
     "/images/view 3.png",
   ];
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     const newIndex = (currentIndex + 1) % thumbnails.length;
     setCurrentIndex(newIndex);
     setMainImage(thumbnails[newIndex]);
-  };
+  }, [currentIndex, thumbnails]);
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     const newIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
     setCurrentIndex(newIndex);
     setMainImage(thumbnails[newIndex]);
-  };
+  }, [currentIndex, thumbnails]);
 
-  const handleHeartClick = () => {
-    setIsHeartFilled(!isHeartFilled);
-  };
+  const handleHeartClick = useCallback(() => {
+    setIsHeartFilled((prev) => !prev);
+  }, []);
 
   return (
     <>
@@ -70,7 +68,7 @@ const ArtistEditProduct = () => {
                   Omer Mohsen
                 </Link>
                 <IoIosArrowForward />
-                <span className="main-color"> Balzi Rossi</span>
+                <span className="main-color">Balzi Rossi</span>
               </p>
             </div>
             <div className="all-artworks">
@@ -86,12 +84,12 @@ const ArtistEditProduct = () => {
                         <Image
                           src={src}
                           alt={`Artwork view ${index + 1}`}
-                          width={500}
-                          height={500}
-                          quality={100}
+                          width={150}
+                          height={108}
+                          quality={70}
                           className="flex-r-image"
-                          objectFit="cover"
-                          loading="lazy"
+                          priority={index === 0}
+                          loading={index === 0 ? "eager" : "lazy"}
                         />
                       </div>
                     ))}
@@ -112,11 +110,10 @@ const ArtistEditProduct = () => {
                       <Image
                         src={mainImage}
                         alt="Main artwork"
-                        width={500}
-                        height={500}
-                        quality={100}
+                        width={475}
+                        height={475}
+                        quality={70}
                         className="flex-r-image"
-                        objectFit="cover"
                         loading="lazy"
                       />
                     </div>
@@ -133,9 +130,8 @@ const ArtistEditProduct = () => {
                             alt="Avatar"
                             width={50}
                             height={50}
-                            quality={100}
+                            quality={70}
                             className="flex-r-image"
-                            objectFit="cover"
                             loading="lazy"
                           />
                         </div>

@@ -77,7 +77,7 @@
 .slider-scroll {
   position: absolute;
   top: 50%;
-  right: -100px;
+  right: -100px !important;
   transform: translateY(-50%);
   background-color: var(--text-color);
   color: var(--background-input);

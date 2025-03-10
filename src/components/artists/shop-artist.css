@@ -98,6 +98,7 @@
 
 .artist .item-image {
   height: 105px;
+  width: 100%;
   background-color: #323232;
   border-radius: 3px;
 }
@@ -138,7 +139,7 @@
   border-radius: 50%;
   height: 100%;
   object-fit: cover;
-  left: 116px;
+  left: 117px;
 }
 
 .artist-info h2 {
@@ -206,7 +207,7 @@
 
 @media (max-width: 575.98px) {
   .artist .user-image img {
-    left: 41% !important;
+    left: 40% !important;
   }
 
   .number-items,

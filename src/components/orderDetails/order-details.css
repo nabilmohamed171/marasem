@@ -245,7 +245,7 @@
   border: none;
 }
 
-.shipment {
+.order-details .shipment {
   margin: 20px 0;
   background-color: #1a1a1a;
   border: 1px solid #1a1a1a;
@@ -253,22 +253,27 @@
   padding: 20px;
 }
 
-.item {
+.order-details .item {
   margin-bottom: 20px;
 }
 
-.image-item {
+.order-details .image-item {
   height: 105px;
+  width: 121px;
 }
 
-.image-item img {
+.order-details .image-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
 }
 
-.info-item h2 {
+.order-details .info-item {
+  overflow: hidden;
+}
+
+.order-details .info-item h2 {
   font-size: 16px;
   margin: 0;
   padding: 10px 0;
@@ -279,7 +284,7 @@
   color: #e5e5e5;
 }
 
-.info-item p {
+.order-details .info-item p {
   font-size: 14px;
   line-height: 1.5;
   width: 80%;
@@ -290,24 +295,24 @@
   text-overflow: ellipsis;
 }
 
-.info-item span {
+.order-details .info-item span {
   color: #fff;
   font-size: 16px;
   display: block;
 }
 
-.shipment-number {
+.order-details .shipment-number {
   color: #777;
   font-size: 18px;
 }
 
-.delevired {
+.order-details .delevired {
   float: right;
   color: #fff;
   font-size: 18px;
 }
 
-.shipment-upper {
+.order-details .shipment-upper {
   margin-bottom: 20px;
 }
 
@@ -339,7 +344,7 @@
     margin-left: 10px;
   }
 
-  .map-home {
+  .order-details .map-home {
     background-color: #000;
     padding: 5px;
     margin-right: 10px;
@@ -350,40 +355,38 @@
     background-color: #1a1a1a;
   }
 
-  .shipment {
+  .order-details .shipment {
     border-radius: 0;
     margin: 5px 0;
   }
 
-  .first-shipment {
+  .order-details .first-shipment {
     border-radius: 30px 30px 0 0;
   }
 
-  .last-shipment {
+  .order-details .last-shipment {
     border-radius: 0 0 30px 30px;
   }
+
   .order-details .order-summary {
     margin-top: 30px;
   }
 
-  .order-summary-mobile {
+  .order-details .order-summary-mobile {
     border-radius: 20px;
     padding: 20px;
   }
 
-  .order-summary-mobile hr {
+  .order-details .order-summary-mobile hr {
     border-color: #ababab;
   }
-}
 
-@media (max-width: 767.98px) {
-}
+  .order-details .image-item {
+    height: 105px;
+    width: 95px;
+  }
 
-@media (max-width: 991.98px) {
-}
-
-@media (max-width: 1199.98px) {
-}
-
-@media (max-width: 1399.98px) {
+  .order-details .order-number-items .order-number {
+    font-size: 16px;
+  }
 }

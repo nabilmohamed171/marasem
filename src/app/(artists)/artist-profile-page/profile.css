@@ -508,6 +508,14 @@
 }
 
 @media (max-width: 575.98px) {
+  .links-profile ul .nav-link {
+    padding: 7px 10px;
+  }
+
+  .artist-profile-info .artist-photo {
+    margin-top: 0;
+  }
+
   .artist-public-info,
   .box-orders-profile-page,
   .artist-profile-info .about-me,
