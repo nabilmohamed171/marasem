@@ -52,7 +52,7 @@
 }
 
 .all-artworks-user .all-artworks .main-image {
-  width: 395px;
+  width: 100%;
   height: 475px;
   position: relative;
 }
@@ -103,7 +103,7 @@
 }
 
 .art-user span {
-  font-size: 18px;
+  font-size: 16px;
   margin-left: 5px;
   color: #fff;
   text-transform: capitalize;
@@ -270,7 +270,7 @@
   }
 
   .art-user span {
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .all-artworks-user .path,
