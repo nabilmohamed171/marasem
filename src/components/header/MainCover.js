@@ -1,11 +1,50 @@
+"use client";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
 import { FaRegHeart } from "react-icons/fa";
 import "./main-cover.css";
+import axios from "axios";
 
 const MainCover = () => {
+  const [headerData, setHeaderData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch header data from the backend
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/headers")
+      .then((response) => {
+        setHeaderData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching header data", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading || !headerData) {
+    return <div>Loading...</div>;
+  }
+
+  // Destructure the header data
+  const {
+    cover_img,
+    most_recent_artwork,
+    featured_subcategories,
+    featured_categories,
+  } = headerData;
+
+  // Use the first artwork from most_recent_artwork if available
+  const recentArtwork = most_recent_artwork;
+
+  const firstThreeCategories = featured_categories
+    ? featured_categories.slice(0, 3)
+    : [];
+
   return (
     <div className="cover-header">
       <div className="row">
@@ -14,7 +53,7 @@ const MainCover = () => {
             <Link href="#">
               <Image
                 className="full-image"
-                src="/images/1.png"
+                src={cover_img} // Dynamic cover image from backend
                 alt="Image 1"
                 width={515}
                 height={578}
@@ -25,30 +64,20 @@ const MainCover = () => {
             <div className="full-info">
               <div className="container">
                 <ul className="list-unstyled">
-                  <Link href="#">
-                    <Image
-                      className="logo-info"
-                      src="/images/logo 2.png"
-                      alt="Logo"
-                      width={45}
-                      height={45}
-                      quality={50}
-                      loading="lazy"
-                    />
-                  </Link>
+                  {featured_subcategories &&
+                    featured_subcategories.slice(0, 3).map((subcat) => (
+                      <li key={subcat.id} className="full-link">
+                        <Link
+                          className="reser-link"
+                          href={`/product-list?subcategory=${subcat.id}`}
+                        >
+                          {subcat.name}
+                        </Link>
+                      </li>
+                    ))}
                   <li className="full-link">
                     <Link className="reser-link" href="#">
-                      Paintings
-                    </Link>
-                  </li>
-                  <li className="full-link">
-                    <Link className="reser-link" href="#">
-                      Hand Made
-                    </Link>
-                  </li>
-                  <li className="full-link">
-                    <Link className="reser-link" href="#">
-                      Illustrations <br /> & More
+                      & More
                     </Link>
                   </li>
                 </ul>
@@ -63,15 +92,27 @@ const MainCover = () => {
               <div className="image-header small">
                 <div className="overley"></div>
                 <Link href="#">
-                  <Image
-                    className="small-image"
-                    src="/images/22.jpeg"
-                    alt="Small Image"
-                    width={500}
-                    height={338}
-                    quality={70}
-                    loading="lazy"
-                  />
+                  {recentArtwork ? (
+                    <Image
+                      className="small-image"
+                      src={recentArtwork.photos.length > 0 ? recentArtwork.photos[0] : "/images/22.jpeg"}
+                      alt={recentArtwork.name}
+                      width={500}
+                      height={338}
+                      quality={100}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <Image
+                      className="small-image"
+                      src="/images/22.jpeg"
+                      alt="Small Image"
+                      width={500}
+                      height={338}
+                      quality={100}
+                      loading="lazy"
+                    />
+                  )}
                 </Link>
                 <div className="addons">
                   <div className="add-heart">
@@ -89,26 +130,33 @@ const MainCover = () => {
                   </div>
                 </div>
                 <div className="small-info">
-                  <h4>Balzi Rossi</h4>
+                  <h4>{recentArtwork ? recentArtwork.name : "Artwork Title"}</h4>
                   <p>
-                    35 x 25 x 0.3cm - Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,
-                    Lorem Ipsum
+                    {recentArtwork
+                      ? `${Object.keys(recentArtwork.sizes_prices)[0]} - ${recentArtwork.description}`
+                      : "Description here"}
                   </p>
-                  <span>EGP 2,500</span>
+                  <span>
+                    {recentArtwork ? `EGP ${Object.values(recentArtwork.sizes_prices)[0]}` : ""}
+                  </span>
                   <div className="user">
                     <div className="user-image">
                       <Link href="#">
                         <Image
-                          src="/images/avatar.avif"
+                          src={recentArtwork.artist ? recentArtwork.artist.profile_picture : "/images/avatar.avif"}
                           alt="User Avatar"
                           width={40}
                           height={40}
-                          quality={70}
+                          quality={100}
                           loading="lazy"
                         />
                       </Link>
                     </div>
-                    <span>Omar Mohsen</span>
+                    <span>
+                      {recentArtwork && recentArtwork.artist
+                        ? `${recentArtwork.artist.first_name} ${recentArtwork.artist.last_name}`
+                        : "N/A"}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -135,69 +183,32 @@ const MainCover = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-4">
-              <div className="image-header x-small">
-                <div className="overley-o-b"></div>
-                <Link href="#">
-                  <Image
-                    className="x-small-imge"
-                    src="/images/4.png"
-                    alt="X Small Image 1"
-                    width={337}
-                    height={220}
-                    quality={50}
-                    loading="lazy"
-                  />
-                </Link>
-                <div className="x-small-info">
-                  <h2>
-                    <Link href="#">Fine Art</Link>
-                  </h2>
+            {firstThreeCategories.map((category) => (
+              <div key={category.id} className="col-md-4">
+                <div className="image-header x-small">
+                  <div className="overley-o-b"></div>
+                  <Link href={`/product-list?category=${category.id}`}>
+                    <Image
+                      className="x-small-imge"
+                      // Use a category image if available; otherwise use a default image.
+                      src={category.cover_img ? category.cover_img : "/images/6.png"}
+                      alt={category.name}
+                      width={337}
+                      height={220}
+                      quality={50}
+                      loading="lazy"
+                    />
+                  </Link>
+                  <div className="x-small-info">
+                    <h2>
+                      <Link href={`/product-list?category=${category.id}`}>
+                        {category.name}
+                      </Link>
+                    </h2>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="col-md-4">
-              <div className="image-header x-small">
-                <div className="overley-o-b"></div>
-                <Link href="#">
-                  <Image
-                    className="x-small-imge"
-                    src="/images/5.png"
-                    alt="X Small Image 2"
-                    width={337}
-                    height={220}
-                    quality={50}
-                    loading="lazy"
-                  />
-                </Link>
-                <div className="x-small-info">
-                  <h2>
-                    <Link href="#">Hand Craft</Link>
-                  </h2>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="image-header x-small">
-                <div className="overley-o-b"></div>
-                <Link href="#">
-                  <Image
-                    className="x-small-imge"
-                    src="/images/6.png"
-                    alt="X Small Image 3"
-                    width={337}
-                    height={220}
-                    quality={50}
-                    loading="lazy"
-                  />
-                </Link>
-                <div className="x-small-info">
-                  <h2>
-                    <Link href="#">Digital Art</Link>
-                  </h2>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

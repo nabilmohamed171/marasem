@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 import "./filter-mobile.css";
+import axios from "axios";
 
 const FilterMobile = () => {
   const [activeSection, setActiveSection] = useState("category-accordion");
@@ -23,6 +24,50 @@ const FilterMobile = () => {
     { id: "foryou-accordion", label: "For you" },
   ];
 
+  // Dynamic data from backend:
+  const [categories, setCategories] = useState([]); // featured_categories with subcategories
+  // locations is expected as an object: { "Egypt": [{ city: "Cairo", country: "Egypt" }, ...], ... }
+  const [locations, setLocations] = useState({});
+  const [forYouOptions, setForYouOptions] = useState([]); // collections
+
+  // Static options for Price remain unchanged.
+  const [prices] = useState([
+    "EGP 500 & Under",
+    "EGP 1,000 to 5,000",
+    "EGP 5,000 to 10,000",
+    "EGP 10,000 & Over",
+  ]);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/filters/get")
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        // Use featured_categories for "Category" options.
+        setCategories(data.featured_categories || []);
+        // Use dynamic locations (grouped by country).
+        setLocations(data.locations || {});
+        // Use all collections (returned as featured_collections) for "For you" options.
+        setForYouOptions(data.featured_collections || []);
+      })
+      .catch((error) => {
+        console.error("Error fetching nav filters", error);
+      });
+  }, []);
+
+  const handleClearAll = () => {
+    setActiveSection("category-accordion");
+    setActiveLink(0);
+    setCollapsed({});
+    setActiveItems({
+      "category-accordion": [],
+      "location-accordion": [],
+      "price-accordion": [],
+      "foryou-accordion": [],
+    });
+  };
+
   const toggleAccordion = (id) => {
     setCollapsed((prev) => {
       const updatedState = { ...prev };
@@ -33,18 +78,6 @@ const FilterMobile = () => {
       });
       updatedState[id] = !updatedState[id];
       return updatedState;
-    });
-  };
-
-  const clearFilters = () => {
-    setActiveSection("category-accordion");
-    setActiveLink(0);
-    setCollapsed({});
-    setActiveItems({
-      "category-accordion": [],
-      "location-accordion": [],
-      "price-accordion": [],
-      "foryou-accordion": [],
     });
   };
 
@@ -79,11 +112,7 @@ const FilterMobile = () => {
             <div className="col-md-12">
               <div className="find">
                 <h3>Find</h3>
-                <button
-                  type="button"
-                  className="xmark"
-                  onClick={handleCloseFilter}
-                >
+                <button type="button" className="xmark" onClick={handleCloseFilter}>
                   <FaTimes />
                 </button>
               </div>
@@ -104,291 +133,130 @@ const FilterMobile = () => {
                 </ul>
               </div>
 
-              <div
-                className="accordion-section"
-                id="category-accordion"
-                style={{
-                  display:
-                    activeSection === "category-accordion" ? "block" : "none",
-                }}
-              >
-                <div className="accordion accordion-flush" id="accordionFlush">
-                  <div className="accordion-item">
-                    <h2 className="accordion-header">
-                      <button
-                        className={`accordion-button ${
-                          collapsed["category-collapseOne"] ? "active" : ""
-                        }`}
-                        type="button"
-                        onClick={() => toggleAccordion("category-collapseOne")}
-                      >
-                        Fine Art{" "}
-                        <span className="selected-count-items"> ( 3 )</span>
-                        <span
-                          className={`fa ${
-                            collapsed["category-collapseOne"]
-                              ? "fa-chevron-up"
-                              : "fa-chevron-down"
-                          } rotate`}
-                        ></span>
-                      </button>
-                    </h2>
-                    <div
-                      className={`accordion-collapse collapse ${
-                        collapsed["category-collapseOne"] ? "show" : ""
-                      }`}
-                    >
-                      <div className="accordion-body">
-                        <ul className="list-unstyled">
-                          {[
-                            "Painting",
-                            "Sculpture",
-                            "Drawing & Illustration",
-                            "Digital Visual Arts",
-                            "Photography",
-                            "Applied Arts",
-                          ].map((item) => (
-                            <li
-                              key={item}
-                              className={
-                                activeItems["category-accordion"].includes(item)
-                                  ? "active"
-                                  : ""
-                              }
-                              onClick={() =>
-                                toggleActiveItem("category-accordion", item)
-                              }
-                            >
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="accordion-item">
-                    <h2 className="accordion-header">
-                      <button
-                        className={`accordion-button ${
-                          collapsed["category-collapseTwo"] ? "active" : ""
-                        }`}
-                        type="button"
-                        onClick={() => toggleAccordion("category-collapseTwo")}
-                      >
-                        Hand Craft{" "}
-                        <span className="selected-count-items"> ( 3 )</span>
-                        <span
-                          className={`fa ${
-                            collapsed["category-collapseTwo"]
-                              ? "fa-chevron-up"
-                              : "fa-chevron-down"
-                          } rotate`}
-                        ></span>
-                      </button>
-                    </h2>
-                    <div
-                      className={`accordion-collapse collapse ${
-                        collapsed["category-collapseTwo"] ? "show" : ""
-                      }`}
-                    >
-                      <div className="accordion-body">
-                        <ul className="list-unstyled">
-                          {[
-                            "Pottery",
-                            "Woodworking",
-                            "Weaving",
-                            "Leathercraft",
-                            "Metalworking",
-                            "Glassblowing",
-                          ].map((item) => (
-                            <li
-                              key={item}
-                              className={
-                                activeItems["category-accordion"].includes(item)
-                                  ? "active"
-                                  : ""
-                              }
-                              onClick={() =>
-                                toggleActiveItem("category-accordion", item)
-                              }
-                            >
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="accordion-item">
-                    <h2 className="accordion-header">
-                      <button
-                        className={`accordion-button ${
-                          collapsed["category-collapseThree"] ? "active" : ""
-                        }`}
-                        type="button"
-                        onClick={() =>
-                          toggleAccordion("category-collapseThree")
-                        }
-                      >
-                        Digital Art{" "}
-                        <span className="selected-count-items"> ( 3 )</span>
-                        <span
-                          className={`fa ${
-                            collapsed["category-collapseThree"]
-                              ? "fa-chevron-up"
-                              : "fa-chevron-down"
-                          } rotate`}
-                        ></span>
-                      </button>
-                    </h2>
-                    <div
-                      className={`accordion-collapse collapse ${
-                        collapsed["category-collapseThree"] ? "show" : ""
-                      }`}
-                    >
-                      <div className="accordion-body">
-                        <ul className="list-unstyled">
-                          {["Category #1", "Category #2", "Category #3"].map(
-                            (item) => (
-                              <li
-                                key={item}
-                                className={
-                                  activeItems["category-accordion"].includes(
-                                    item
-                                  )
-                                    ? "active"
-                                    : ""
-                                }
-                                onClick={() =>
-                                  toggleActiveItem("category-accordion", item)
-                                }
+              {/* Category Accordion Section */}
+              {activeSection === "category-accordion" && (
+                <div className="accordion-section" id="category-accordion">
+                  <div className="accordion accordion-flush" id="accordionFlush">
+                    {categories.map((cat) => {
+                      const collapseId = "category-collapse-" + cat.id;
+                      if(cat.subcategories && cat.subcategories.length) {
+                        return (
+                          <div key={cat.id} className="accordion-item">
+                            <h2 className="accordion-header">
+                              <button
+                                className={`accordion-button ${collapsed[collapseId] ? "active" : ""}`}
+                                type="button"
+                                onClick={() => toggleAccordion(collapseId)}
                               >
-                                {item}
-                              </li>
-                            )
-                          )}
-                        </ul>
-                      </div>
-                    </div>
+                                {cat.name}{" "}
+                                <span className="selected-count-items">
+                                  ( {cat.subcategories ? cat.subcategories.length : 0} )
+                                </span>
+                                <span
+                                  className={`fa ${collapsed[collapseId] ? "fa-chevron-up" : "fa-chevron-down"
+                                    } rotate`}
+                                ></span>
+                              </button>
+                            </h2>
+                            <div
+                              className={`accordion-collapse collapse ${collapsed[collapseId] ? "show" : ""}`}
+                            >
+                              <div className="accordion-body">
+                                <ul className="list-unstyled">
+                                  {cat.subcategories &&
+                                    cat.subcategories.map((subcat) => (
+                                      <li
+                                        key={subcat.id}
+                                        className={
+                                          activeItems["category-accordion"].includes(subcat.name)
+                                            ? "active"
+                                            : ""
+                                        }
+                                        onClick={() => toggleActiveItem("category-accordion", subcat.name)}
+                                      >
+                                        {subcat.name}
+                                      </li>
+                                    ))}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
+                    })}
                   </div>
                 </div>
-              </div>
+              )}
 
-              <div
-                className="accordion-section"
-                id="location-accordion"
-                style={{
-                  display:
-                    activeSection === "location-accordion" ? "block" : "none",
-                }}
-              >
-                <div className="accordion accordion-flush">
-                  <div className="accordion-item">
-                    <h2 className="accordion-header">
-                      <button
-                        className={`accordion-button ${
-                          collapsed["location-collapseOne"] ? "active" : ""
-                        }`}
-                        type="button"
-                        onClick={() => toggleAccordion("location-collapseOne")}
-                      >
-                        Egypt
-                        <span
-                          className={`fa ${
-                            collapsed["location-collapseOne"]
-                              ? "fa-chevron-up"
-                              : "fa-chevron-down"
-                          } rotate`}
-                        ></span>
-                      </button>
-                    </h2>
-                    <div
-                      className={`accordion-collapse collapse ${
-                        collapsed["location-collapseOne"] ? "show" : ""
-                      }`}
-                    >
-                      <div className="accordion-body">
-                        <ul className="list-unstyled">
-                          {[
-                            "Cairo",
-                            "Alexandria",
-                            "Giza",
-                            "Aswan",
-                            "Luxor",
-                            "Ismailia",
-                            "Port Said",
-                            "Suez",
-                            "Fayoum",
-                            "Mansoura",
-                          ].map((city) => (
-                            <li
-                              key={city}
-                              className={
-                                activeItems["location-accordion"].includes(city)
-                                  ? "active"
-                                  : ""
-                              }
-                              onClick={() =>
-                                toggleActiveItem("location-accordion", city)
-                              }
+              {/* Location Accordion Section */}
+              {activeSection === "location-accordion" && (
+                <div className="accordion-section" id="location-accordion" style={{ display: "block" }}>
+                  <div className="accordion accordion-flush">
+                    {Object.entries(locations).map(([country, cities], index) => {
+                      const collapseId = "location-collapse-" + index;
+                      if (country) {
+                        return (
+                          <div key={country} className="accordion-item">
+                            <h2 className="accordion-header">
+                              <button
+                                className={`accordion-button ${collapsed[collapseId] ? "active" : ""}`}
+                                type="button"
+                                onClick={() => toggleAccordion(collapseId)}
+                              >
+                                {country}
+                                <span
+                                  className={`fa ${collapsed[collapseId] ? "fa-chevron-up" : "fa-chevron-down"} rotate`}
+                                ></span>
+                              </button>
+                            </h2>
+                            <div
+                              className={`accordion-collapse collapse ${collapsed[collapseId] ? "show" : ""}`}
                             >
-                              {city}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
+                              <div className="accordion-body">
+                                <ul className="list-unstyled">
+                                  {cities.map((loc) => (
+                                    <li
+                                      key={loc.city}
+                                      className={
+                                        activeItems["location-accordion"].includes(loc.city)
+                                          ? "active"
+                                          : ""
+                                      }
+                                      onClick={() => toggleActiveItem("location-accordion", loc.city)}
+                                    >
+                                      {loc.city}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
+                    })}
                   </div>
-                  <div className="accordion-item">
-                    <h2 className="accordion-header">
-                      <button
-                        className={`accordion-button ${
-                          collapsed["location-collapseTwo"] ? "active" : ""
-                        }`}
-                        type="button"
-                        onClick={() => toggleAccordion("location-collapseTwo")}
-                      >
-                        Saudi Arabia
-                        <span
-                          className={`fa ${
-                            collapsed["location-collapseTwo"]
-                              ? "fa-chevron-up"
-                              : "fa-chevron-down"
-                          } rotate`}
-                        ></span>
-                      </button>
-                    </h2>
-                    <div
-                      className={`accordion-collapse collapse ${
-                        collapsed["location-collapseTwo"] ? "show" : ""
-                      }`}
-                    >
+                </div>
+              )}
+
+              {/* Price Accordion Section (Static) */}
+              {activeSection === "price-accordion" && (
+                <div className="accordion-section" id="price-accordion">
+                  <div className="accordion accordion-flush">
+                    <div className="accordion-item">
+                      <h2 className="accordion-header">
+                        <button className="accordion-button active" type="button">
+                          Price (EGP)
+                        </button>
+                      </h2>
                       <div className="accordion-body">
                         <ul className="list-unstyled">
-                          {[
-                            "Riyadh",
-                            "Jeddah",
-                            "Mecca",
-                            "Medina",
-                            "Eastern Province",
-                            "Tabuk",
-                            "Abha",
-                            "Hail",
-                            "Najran",
-                            "Qassim",
-                          ].map((city) => (
+                          {prices.map((item, index) => (
                             <li
-                              key={city}
-                              className={
-                                activeItems["location-accordion"].includes(city)
-                                  ? "active"
-                                  : ""
-                              }
-                              onClick={() =>
-                                toggleActiveItem("location-accordion", city)
-                              }
+                              key={index}
+                              className={activeItems["price-accordion"].includes(item) ? "active" : ""}
+                              onClick={() => toggleActiveItem("price-accordion", item)}
                             >
-                              {city}
+                              {item}
                             </li>
                           ))}
                         </ul>
@@ -396,12 +264,44 @@ const FilterMobile = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
+
+              {/* For You Accordion Section (Dynamic Collections) */}
+              {activeSection === "foryou-accordion" && (
+                <div className="accordion-section" id="foryou-accordion">
+                  <div className="accordion accordion-flush">
+                    <div className="accordion-item">
+                      <h2 className="accordion-header">
+                        <button className="accordion-button active" type="button">
+                          For you
+                        </button>
+                      </h2>
+                      <div className="accordion-body">
+                        <ul className="list-unstyled">
+                          {forYouOptions.map((item) => (
+                            <li
+                              key={item.id}
+                              className={
+                                activeItems["foryou-accordion"].includes(item.title)
+                                  ? "active"
+                                  : ""
+                              }
+                              onClick={() => toggleActiveItem("foryou-accordion", item.title)}
+                            >
+                              {item.title}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="buttons">
                 <div className="row">
                   <div className="col-6">
-                    <button className="clear" onClick={clearFilters}>
+                    <button className="clear" onClick={handleClearAll}>
                       Clear all
                     </button>
                   </div>

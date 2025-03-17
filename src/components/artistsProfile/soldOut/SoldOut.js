@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import Link from "next/link";

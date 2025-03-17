@@ -1,3 +1,4 @@
+"use client";
 import DropFlag from "@/components/dropFlags/DropFlags";
 import { IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";

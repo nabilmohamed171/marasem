@@ -2,15 +2,31 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { IoIosArrowDown } from "react-icons/io";
+import axios from "axios";
 import "./filter.css";
 
 const FilterPc = () => {
   const [isStickyFilter, setIsStickyFilter] = useState(false);
+
+  // Selected filter values (for display)
   const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState("");
   const [forYou, setForYou] = useState("");
-  const [bestSeller, setBestSeller] = useState("");
+  const [bestSellerOption, setBestSellerOption] = useState("");
+
+  // Dynamic dropdown options fetched from backend
+  const [categories, setCategories] = useState([]);
+  // locations is now expected to be an object with country keys and array of city objects as values.
+  const [locations, setLocations] = useState({});
+  const [prices, setPrices] = useState([
+    "EGP 500 & Under",
+    "EGP 1,000 to 5,000",
+    "EGP 5,000 to 10,000",
+    "EGP 10,000 & Over"
+  ]);
+  const [forYouOptions, setForYouOptions] = useState([]);
+  const [bestSellers, setBestSellers] = useState(["Best Seller", "Most Viewed", "Most Liked"]);
 
   const filterRef = useRef(null);
 
@@ -18,12 +34,7 @@ const FilterPc = () => {
     if (filterRef.current) {
       const filter = filterRef.current;
       const currentScrollPosition = window.scrollY;
-
-      if (currentScrollPosition > filter.offsetTop - 20) {
-        setIsStickyFilter(true);
-      } else {
-        setIsStickyFilter(false);
-      }
+      setIsStickyFilter(currentScrollPosition > filter.offsetTop - 20);
     }
   };
 
@@ -32,22 +43,33 @@ const FilterPc = () => {
     setLocation("");
     setPrice("");
     setForYou("");
-    setBestSeller("");
+    setBestSellerOption("");
   };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  const categories = ["Action", "Another action", "Something else here"];
-  const locations = ["Action", "Another action", "Something else here"];
-  const prices = ["Action", "Another action", "Something else here"];
-  const forYouOptions = ["Action", "Another action", "Something else here"];
-  const bestSellers = ["Action", "Another action", "Something else here"];
+  // Fetch dynamic nav filters from the backend
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/filters/get")
+      .then((response) => {
+        const data = response.data;
+        // Use featured_categories for the "Category" dropdown.
+        setCategories(data.featured_categories || []);
+        // Unique locations, now grouped by country.
+        setLocations(data.locations || {});
+        // Use featured_collections for the "For you" dropdown.
+        setForYouOptions(data.featured_collections || []);
+      })
+      .catch((error) => {
+        console.error("Error fetching filters", error);
+      });
+  }, []);
 
   return (
     <div
@@ -60,6 +82,7 @@ const FilterPc = () => {
             <h2>Find</h2>
           </div>
 
+          {/* Category Dropdown */}
           <div className="col-md-2">
             <div className="dropdown">
               <button
@@ -71,14 +94,14 @@ const FilterPc = () => {
                 {category || "Category"}
               </button>
               <ul className="dropdown-menu">
-                {categories.map((item, index) => (
-                  <li key={index}>
+                {categories.map((item) => (
+                  <li key={item.id}>
                     <Link
                       className="dropdown-item"
                       href="#"
-                      onClick={() => setCategory(item)}
+                      onClick={() => setCategory(item.name)}
                     >
-                      {item}
+                      {item.name}
                     </Link>
                   </li>
                 ))}
@@ -89,6 +112,7 @@ const FilterPc = () => {
             </div>
           </div>
 
+          {/* Location Dropdown */}
           <div className="col-md-2">
             <div className="dropdown">
               <button
@@ -100,17 +124,21 @@ const FilterPc = () => {
                 {location || "Location"}
               </button>
               <ul className="dropdown-menu">
-                {locations.map((item, index) => (
-                  <li key={index}>
-                    <Link
-                      className="dropdown-item"
-                      href="#"
-                      onClick={() => setLocation(item)}
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                ))}
+                {Object.entries(locations).flatMap(([country, cities]) => {
+                  if (country) {
+                    cities.map((loc, idx) => (
+                      <li key={`${loc.city}-${idx}`}>
+                        <Link
+                          className="dropdown-item"
+                          href="#"
+                          onClick={() => setLocation(loc.city)}
+                        >
+                          {loc.city}
+                        </Link>
+                      </li>
+                    ))
+                  }
+                })}
               </ul>
               <span className="arrow-down-icon">
                 <IoIosArrowDown />
@@ -118,6 +146,7 @@ const FilterPc = () => {
             </div>
           </div>
 
+          {/* Price Dropdown */}
           <div className="col-md-2">
             <div className="dropdown">
               <button
@@ -147,6 +176,7 @@ const FilterPc = () => {
             </div>
           </div>
 
+          {/* For You Dropdown: Now using dynamic collections */}
           <div className="col-md-2">
             <div className="dropdown">
               <button
@@ -158,14 +188,14 @@ const FilterPc = () => {
                 {forYou || "For you"}
               </button>
               <ul className="dropdown-menu">
-                {forYouOptions.map((item, index) => (
-                  <li key={index}>
+                {forYouOptions.map((item) => (
+                  <li key={item.id}>
                     <Link
                       className="dropdown-item"
                       href="#"
-                      onClick={() => setForYou(item)}
+                      onClick={() => setForYou(item.title)}
                     >
-                      {item}
+                      {item.title}
                     </Link>
                   </li>
                 ))}
@@ -177,15 +207,12 @@ const FilterPc = () => {
           </div>
 
           <div className="col-md-1">
-            <button
-              className="clear-all"
-              type="button"
-              onClick={handleClearAll}
-            >
+            <button className="clear-all" type="button" onClick={handleClearAll}>
               Clear all
             </button>
           </div>
 
+          {/* Best Seller Dropdown (static) */}
           <div className="col-md-2">
             <div className="dropdown">
               <button
@@ -194,7 +221,7 @@ const FilterPc = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                {bestSeller || "Best Seller"}
+                {bestSellerOption || "Best Seller"}
               </button>
               <ul className="dropdown-menu">
                 {bestSellers.map((item, index) => (
@@ -202,7 +229,7 @@ const FilterPc = () => {
                     <Link
                       className="dropdown-item"
                       href="#"
-                      onClick={() => setBestSeller(item)}
+                      onClick={() => setBestSellerOption(item)}
                     >
                       {item}
                     </Link>

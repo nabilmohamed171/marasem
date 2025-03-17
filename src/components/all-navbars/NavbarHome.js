@@ -17,8 +17,14 @@ import Image from "next/image";
 import Link from "next/link";
 import "./navbar.css";
 import "./navbar-home.css";
+import axios from "axios";
 
 const Navbar_Home = () => {
+  const [user, setUser] = useState(null);
+  const [featuredCategories, setFeaturedCategories] = useState([]);
+  const [featuredCollections, setFeaturedCollections] = useState([]);
+  const [locations, setLocations] = useState([]);
+
   const [isStickyNavbar, setIsStickyNavbar] = useState(false);
   const [isPopupSearchOpen, setIsPopupSearchOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -43,52 +49,41 @@ const Navbar_Home = () => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("marasem_login_token");
+    if (token) {
+      axios
+        .get("http://127.0.0.1:8000/api/user/account", {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        .then(response => {
+          console.log(response);
+          setUser(response.data.user);
+        })
+        .catch(err => {
+          console.error("Failed to fetch user info:", err.response || err);
+          localStorage.removeItem("marasem_login_token");
+        });
+    }
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  const shopArtLinks = [
-    { name: "Paintings", href: "/product-list" },
-    { name: "Drawings", href: "/product-list" },
-    { name: "Sculptures", href: "/product-list" },
-    { name: "Mosaic", href: "/product-list" },
-    { name: "Collage Art", href: "/product-list" },
-    { name: "Glass Art", href: "/product-list" },
-    { name: "Ceramics", href: "/product-list" },
-  ];
-
-  const handCraftLinks = [
-    { name: "Wood Craft", href: "/product-list" },
-    { name: "Leather Craft", href: "/product-list" },
-    { name: "Pottery Craft", href: "/product-list" },
-    { name: "Macrame", href: "/product-list" },
-    { name: "Home Decor", href: "/product-list" },
-    { name: "Jewelry & Accessories", href: "/product-list" },
-    { name: "Fashion Art", href: "/product-list" },
-    { name: "Furniture", href: "/product-list" },
-  ];
-
-  const digitalPrintsLinks = [
-    { name: "Paintings & Illustrations", href: "/product-list" },
-    { name: "3D Prints", href: "/product-list" },
-    { name: "Designs", href: "/product-list" },
-    { name: "Photography", href: "/product-list" },
-    { name: "Illustration Books", href: "/product-list" },
-    { name: "Printed Products", href: "/product-list" },
-  ];
-
-  const forYouLinks = [
-    { name: "Egyptians", href: "/product-list" },
-    { name: "Vintage", href: "/product-list" },
-    { name: "Modern", href: "/product-list" },
-    { name: "Abstract", href: "/product-list" },
-    { name: "Minimalist", href: "/product-list" },
-    { name: "Pop Art", href: "/product-list" },
-    { name: "Bohemian", href: "/product-list" },
-    { name: "Gifts", href: "/product-list" },
-  ];
+  // Fetch filters (dynamic navigation data)
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/filters")
+      .then((response) => {
+        const data = response.data;
+        setFeaturedCategories(data.featured_categories);
+        setFeaturedCollections(data.featured_collections);
+        setLocations(data.locations);
+      })
+      .catch((err) => {
+        console.error("Error fetching filters:", err.response || err);
+      });
+  }, []);
 
   const forYourBudgetLinks = [
     { name: "EGP 500 & Under", href: "#" },
@@ -99,9 +94,7 @@ const Navbar_Home = () => {
 
   return (
     <nav
-      className={`navbar navbar-expand-lg ${
-        isStickyNavbar ? "sticky-navbar" : ""
-      }`}
+      className={`navbar navbar-expand-lg ${isStickyNavbar ? "sticky-navbar" : ""}`}
     >
       <div className="container">
         <Link className="navbar-brand logo-pc" href="/">
@@ -151,59 +144,50 @@ const Navbar_Home = () => {
                 <div className="dropmenu-navbar-blur">
                   <div className="container">
                     <div className="row">
-                      <div className="col">
-                        <div className="section-one">
-                          <h4>Fine Art</h4>
-                          <ul className="list-unstyled">
-                            {shopArtLinks.map((link) => (
-                              <li key={link.name}>
-                                <Link className="link-style" href={link.href}>
-                                  {link.name}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
+                      {featuredCategories.length > 0 ? (
+                        featuredCategories.map((category) => (
+                          <div key={category.id} className="col">
+                            <div className="section-featured-category">
+                              <h4>{category.name}</h4>
+                              <ul className="list-unstyled">
+                                {category.subcategories &&
+                                  category.subcategories.map((subcat) => (
+                                    <li key={subcat.id}>
+                                      <Link
+                                        className="link-style"
+                                        href={`/product-list?subcategory=${subcat.id}`}
+                                      >
+                                        {subcat.name}
+                                      </Link>
+                                    </li>
+                                  ))}
+                              </ul>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        // Optionally, render a fallback if dynamic data isn't available.
+                        <div className="col">
+                          <div className="section-featured-category">
+                            <h4>Loading...</h4>
+                          </div>
                         </div>
-                      </div>
+                      )}
                       <div className="col">
-                        <div className="section-two">
-                          <h4>Hand Crafts</h4>
-                          <ul className="list-unstyled">
-                            {handCraftLinks.map((link) => (
-                              <li key={link.name}>
-                                <Link className="link-style" href={link.href}>
-                                  {link.name}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="section-three">
-                          <h4>Digital Prints</h4>
-                          <ul className="list-unstyled">
-                            {digitalPrintsLinks.map((link) => (
-                              <li key={link.name}>
-                                <Link className="link-style" href={link.href}>
-                                  {link.name}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="section-four">
+                        <div className="section-featured-collections">
                           <h4>For You</h4>
                           <ul className="list-unstyled">
-                            {forYouLinks.map((link) => (
-                              <li key={link.name}>
-                                <Link className="link-style" href={link.href}>
-                                  {link.name}
-                                </Link>
-                              </li>
-                            ))}
+                            {featuredCollections &&
+                              featuredCollections.map((collection) => (
+                                <li key={collection.id}>
+                                  <Link
+                                    className="link-style"
+                                    href={`/product-list?collection=${collection.id}`}
+                                  >
+                                    {collection.title}
+                                  </Link>
+                                </li>
+                              ))}
                           </ul>
                         </div>
                       </div>

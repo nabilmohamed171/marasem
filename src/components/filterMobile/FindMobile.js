@@ -1,14 +1,20 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import FilterMobile from "@/components/filterMobile/FilterMobile";
+import axios from "axios";
 
 const FindMobile = () => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-
   const toggleFilter = () => {
     setIsFilterVisible(!isFilterVisible);
   };
+  const [selectedBestSeller, setSelectedBestSeller] = useState("");
+  const [bestSellers, setBestSellers] = useState([
+    "Best Seller",
+    "Most Viewed",
+    "Most Liked",
+  ]);
 
   return (
     <>
@@ -32,29 +38,23 @@ const FindMobile = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Best Seller
+                  {selectedBestSeller || "Best Seller"}
                 </button>
                 <ul className="dropdown-menu">
-                  <li>
-                    <a className="dropdown-item" href="/product1">
-                      Best Seller
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="/product2">
-                      Highest Ratings
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="/product3">
-                      Most Sold
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="/all-products">
-                      Most Popular
-                    </a>
-                  </li>
+                  {bestSellers.map((item, index) => (
+                    <li key={index}>
+                      <a
+                        className="dropdown-item"
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setSelectedBestSeller(item);
+                        }}
+                      >
+                        {item}
+                      </a>
+                    </li>
+                  ))}
                 </ul>
                 <span className="arrow-down-icon">
                   <IoIosArrowDown />
