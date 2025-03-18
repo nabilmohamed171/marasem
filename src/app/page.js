@@ -1,4 +1,3 @@
-// "use client";
 import FirstCollections from "@/components/collections/FisrtCollection";
 import SecCollections from "@/components/collections/SecondCollection";
 import ThreeCollections from "@/components/collections/ThreeCollection";
@@ -11,7 +10,6 @@ import AllCards from "@/components/view/AllCards";
 import Pagination from "@/components/paginations/Pagination";
 import Footer from "@/components/footer/Footer";
 import FooterAccordion from "@/components/footer/FooterAccordion";
-// import { useState } from "react";
 
 const Home = () => {
   return (

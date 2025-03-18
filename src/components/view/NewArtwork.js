@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
@@ -7,76 +8,30 @@ import { GoPlus } from "react-icons/go";
 import Link from "next/link";
 import Image from "next/image";
 import "swiper/css";
+import "./most-views.css";
+import axios from "axios";
 
 const NewArtwork = () => {
-  const artworks = [
-    {
-      id: 1,
-      image: "/images/22.jpeg",
-      artistImage: "/images/avatar2.png",
-      artistName: "Omar Mohsen",
-      title: "Lorem Ipsum Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,",
-      price: "EGP 2,500",
-      productLink: "/product-details",
-      artistLink: "/artist-profile",
-    },
-    {
-      id: 2,
-      image: "/images/33.jpeg",
-      artistImage: "/images/avatar2.png",
-      artistName: "Omar Mohsen",
-      title: "Lorem Ipsum Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,",
-      price: "EGP 2,500",
-      productLink: "/product-details",
-      artistLink: "/artist-profile",
-    },
-    {
-      id: 3,
-      image: "/images/44.jpeg",
-      artistImage: "/images/avatar2.png",
-      artistName: "Omar Mohsen",
-      title: "Lorem Ipsum Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,",
-      price: "EGP 2,500",
-      productLink: "/product-details",
-      artistLink: "/artist-profile",
-    },
-    {
-      id: 4,
-      image: "/images/77.jpeg",
-      artistImage: "/images/avatar2.png",
-      artistName: "Omar Mohsen",
-      title: "Lorem Ipsum Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,",
-      price: "EGP 2,500",
-      productLink: "/product-details",
-      artistLink: "/artist-profile",
-    },
-    {
-      id: 5,
-      image: "/images/66.jpeg",
-      artistImage: "/images/avatar2.png",
-      artistName: "Omar Mohsen",
-      title: "Lorem Ipsum Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,",
-      price: "EGP 2,500",
-      productLink: "/product-details",
-      artistLink: "/artist-profile",
-    },
-    {
-      id: 6,
-      image: "/images/88.jpeg",
-      artistImage: "/images/avatar2.png",
-      artistName: "Omar Mohsen",
-      title: "Lorem Ipsum Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,",
-      price: "EGP 2,500",
-      productLink: "/product-details",
-      artistLink: "/artist-profile",
-    },
-  ];
+  const [artworks, setArtworks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/latest-artworks?limit=6")
+      .then((response) => {
+        setArtworks(response.data);
+        console.log(response.data)
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching latest artworks", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading artworks...</div>;
+  }
 
   return (
     <div className="new-artwork">
@@ -105,8 +60,8 @@ const NewArtwork = () => {
                       <div className="overley"></div>
                       <div className="new-artwork-image">
                         <Image
-                          src={artwork.image}
-                          alt="image"
+                          src={artwork.photos[0]}
+                          alt={artwork.title}
                           width={312}
                           height={390}
                           quality={70}
@@ -153,7 +108,14 @@ const NewArtwork = () => {
                   </div>
                   <h2>{artwork.title}</h2>
                   <p>{artwork.description}</p>
-                  <h3>{artwork.price}</h3>
+                  {Object.values(artwork.sizes_prices)[0] ? (
+                    <h3>
+                      {"EGP " +
+                        Number(Object.values(artwork.sizes_prices)[0]).toLocaleString("en-US")}
+                    </h3>
+                  ) : (
+                    <h3>N/A</h3>
+                  )}
                 </div>
               </SwiperSlide>
             ))}

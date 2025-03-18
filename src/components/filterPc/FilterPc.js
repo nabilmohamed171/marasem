@@ -126,17 +126,19 @@ const FilterPc = () => {
               <ul className="dropdown-menu">
                 {Object.entries(locations).flatMap(([country, cities]) => {
                   if (country) {
-                    cities.map((loc, idx) => (
-                      <li key={`${loc.city}-${idx}`}>
+                    return cities.map((cityObj, index) => (
+                      <li key={`${country}-${index}`}>
                         <Link
                           className="dropdown-item"
                           href="#"
-                          onClick={() => setLocation(loc.city)}
+                          onClick={() => setLocation(cityObj.city)}
                         >
-                          {loc.city}
+                          {cityObj.city}
                         </Link>
                       </li>
-                    ))
+                    ));
+                  } else {
+                    return [];
                   }
                 })}
               </ul>

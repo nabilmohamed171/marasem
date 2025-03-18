@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
@@ -7,71 +8,32 @@ import { GoPlus } from "react-icons/go";
 import Link from "next/link";
 import Image from "next/image";
 import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 import "./most-views.css";
+import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
+import axios from "axios";
 
 const MostReview = () => {
-  const products = [
-    {
-      image: "/images/view 1.png",
-      title: "Lorem Ipsum Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,",
-      price: "EGP 2,500",
-      artist: "Omar Mohsen",
-      artistImage: "/images/avatar2.png",
-      productLink: "/product-details",
-      artistLink: "/artist-profile",
-    },
-    {
-      image: "/images/view 2.png",
-      title: "Lorem Ipsum Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,",
-      price: "EGP 2,500",
-      artist: "Omar Mohsen",
-      artistImage: "/images/avatar2.png",
-      productLink: "/product-details",
-      artistLink: "/artist-profile",
-    },
-    {
-      image: "/images/4.png",
-      title: "Lorem Ipsum Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,",
-      price: "EGP 2,500",
-      artist: "Omar Mohsen",
-      artistImage: "/images/avatar2.png",
-      productLink: "/product-details",
-      artistLink: "/artist-profile",
-    },
-    {
-      image: "/images/view 1.png",
-      title: "Lorem Ipsum Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,",
-      price: "EGP 2,500",
-      artist: "Omar Mohsen",
-      artistImage: "/images/avatar2.png",
-      productLink: "/product-details",
-      artistLink: "/artist-profile",
-    },
-    {
-      image: "/images/view 2.png",
-      title: "Lorem Ipsum Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,",
-      price: "EGP 2,500",
-      artist: "Omar Mohsen",
-      artistImage: "/images/avatar2.png",
-      productLink: "/product-details",
-      artistLink: "/artist-profile",
-    },
-    {
-      image: "/images/4.png",
-      title: "Lorem Ipsum Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,",
-      price: "EGP 2,500",
-      artist: "Omar Mohsen",
-      artistImage: "/images/avatar2.png",
-      productLink: "/product-details",
-      artistLink: "/artist-profile",
-    },
-  ];
+  const [artworks, setArtworks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/most-viewed-artworks?limit=6")
+      .then((response) => {
+        setArtworks(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching most viewed artworks", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading artworks...</div>;
+  }
 
   return (
     <div className="most-views">
@@ -84,36 +46,32 @@ const MostReview = () => {
         </div>
         <div className="most-views">
           <Swiper
-            breakpoints={{
-              0: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-              },
-              640: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
-              1024: {
-                slidesPerView: 4,
-                spaceBetween: 20,
-              },
+            navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
             }}
+            pagination={true}
+            mousewheel={true}
+            keyboard={true}
+            modules={[Navigation, Pagination, Mousewheel, Keyboard]}
             className="mySwiper"
+            breakpoints={{
+              0: { slidesPerView: 2, spaceBetween: 10 },
+              640: { slidesPerView: 2, spaceBetween: 10 },
+              768: { slidesPerView: 3, spaceBetween: 20 },
+              1024: { slidesPerView: 4, spaceBetween: 20 },
+            }}
           >
-            {products.map((product, index) => (
-              <SwiperSlide key={index}>
+            {artworks.map((artwork) => (
+              <SwiperSlide key={artwork.id}>
                 <div className="most-views-info">
                   <div className="image-card">
-                    <Link href={product.productLink} className="reser-link">
+                    <Link href={artwork.productLink} className="reser-link">
                       <div className="overley"></div>
                       <div className="most-views-image">
                         <Image
-                          src={product.image}
-                          alt="image"
+                          src={artwork.photos[0]}
+                          alt={artwork.title}
                           width={312}
                           height={390}
                           quality={70}
@@ -141,9 +99,9 @@ const MostReview = () => {
                       </span>
                       <div className="user-art">
                         <div className="user-image">
-                          <Link href={product.artistLink}>
+                          <Link href={artwork.artistLink}>
                             <Image
-                              src={product.artistImage}
+                              src={artwork.artistImage}
                               alt="avatar"
                               width={50}
                               height={50}
@@ -152,19 +110,29 @@ const MostReview = () => {
                             />
                           </Link>
                         </div>
-                        <Link href={product.artistLink} className="reser-link">
-                          <span>{product.artist}</span>
+                        <Link href={artwork.artistLink} className="reser-link">
+                          <span>{artwork.artist ? artwork.artist.first_name + " " + artwork.artist.last_name : "Artist"}</span>
                         </Link>
                       </div>
                     </div>
                   </div>
-                  <h2>{product.title}</h2>
-                  <p>{product.description}</p>
-                  <h3>{product.price}</h3>
+                  <h2>{artwork.title}</h2>
+                  <p>{artwork.description}</p>
+                  {Object.values(artwork.sizes_prices)[0] ? (
+                    <h3>
+                      {"EGP " +
+                        Number(Object.values(artwork.sizes_prices)[0]).toLocaleString("en-US")}
+                    </h3>
+                  ) : (
+                    <h3>N/A</h3>
+                  )}
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
+
+          <div className="swiper-button-next"></div>
+          <div className="swiper-button-prev"></div>
         </div>
       </div>
     </div>
