@@ -20,7 +20,6 @@ const NewArtwork = () => {
       .get("http://127.0.0.1:8000/api/latest-artworks?limit=6")
       .then((response) => {
         setArtworks(response.data);
-        console.log(response.data)
         setLoading(false);
       })
       .catch((error) => {

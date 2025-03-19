@@ -7,7 +7,6 @@ import MostReview from "@/components/view/Mostview";
 import NewArtwork from "@/components/view/NewArtwork";
 import { SliderCategory } from "@/components/slider/Slider";
 import AllCards from "@/components/view/AllCards";
-import Pagination from "@/components/paginations/Pagination";
 import Footer from "@/components/footer/Footer";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 
@@ -23,7 +22,6 @@ const Home = () => {
       <ThreeCollections />
       <OriginalArtwork />
       <AllCards />
-      <Pagination />
       <Footer />
       <FooterAccordion />
     </>

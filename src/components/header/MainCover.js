@@ -191,7 +191,7 @@ const MainCover = () => {
                     <Image
                       className="x-small-imge"
                       // Use a category image if available; otherwise use a default image.
-                      src={category.cover_img ? category.cover_img : "/images/6.png"}
+                      src={category.picture ? category.picture : "/images/6.png"}
                       alt={category.name}
                       width={337}
                       height={220}

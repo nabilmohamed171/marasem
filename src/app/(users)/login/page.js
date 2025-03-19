@@ -9,6 +9,8 @@ import {
 import { GoEye } from "react-icons/go";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import "@/app/_css/login.css";
 
 const Login = () => {
@@ -16,38 +18,44 @@ const Login = () => {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const router = useRouter();
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  const handleInputChange = () => {
-    if (emailOrPhone !== "" && password !== "") {
-      setIsFormValid(true);
-    } else {
-      setIsFormValid(false);
-    }
-  };
-
   useEffect(() => {
-    handleInputChange();
+    setIsFormValid(emailOrPhone !== "" && password !== "");
   }, [emailOrPhone, password]);
 
-  const LOGIN_HEADER = "Login";
-  const CREATE_ACCOUNT_TEXT = "Don’t have an account? ";
-  const CREATE_ACCOUNT_LINK_TEXT = "Create an account";
-  const EMAIL_OR_PHONE_LABEL = "Email or Phone";
-  const PASSWORD_LABEL = "Password";
-  const FORGOT_PASSWORD_TEXT = "Forget Password?";
-  const SOCIAL_LOGIN_TEXT = "Or Login with social";
-  const LOGIN_BTN_TEXT = "Login";
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage(""); // Clear previous errors
 
-  const EMAIL_PLACEHOLDER = "Enter your email or phone";
-  const PASSWORD_PLACEHOLDER = "Password";
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/login", {
+        email: emailOrPhone,
+        password: password,
+      });
+
+      if (response.status === 200) {
+        // Save token and user info
+        localStorage.setItem("authToken", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+
+        console.log("Login successful:", response.data);
+
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      setErrorMessage(
+        error.response?.data?.message || "Invalid credentials. Please try again."
+      );
+    }
+  };
 
   return (
     <div className="login-page">
@@ -77,25 +85,26 @@ const Login = () => {
               />
             </div>
             <form method="POST" onSubmit={handleSubmit}>
-              <h2>{LOGIN_HEADER}</h2>
+              <h2>Login</h2>
               <h4>
-                {CREATE_ACCOUNT_TEXT}{" "}
+                Don’t have an account?{" "}
                 <span>
-                  <a href="/register">{CREATE_ACCOUNT_LINK_TEXT}</a>
+                  <Link href="/register">Create an account</Link>
                 </span>
               </h4>
 
-              <div className="enter-email" id="email-field">
-                <label className="email-or-phone" htmlFor="emailOrPhone">
-                  <span className="req">*</span>
-                  {EMAIL_OR_PHONE_LABEL}
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+              <div className="enter-email">
+                <label htmlFor="emailOrPhone">
+                  <span className="req">*</span> Email or Phone
                 </label>
                 <input
                   type="text"
                   id="emailOrPhone"
                   name="emailOrPhone"
                   required
-                  placeholder={EMAIL_PLACEHOLDER}
+                  placeholder="Enter your email or phone"
                   className="form-control"
                   value={emailOrPhone}
                   onChange={(e) => setEmailOrPhone(e.target.value)}
@@ -111,10 +120,7 @@ const Login = () => {
                     style={{ color: "red" }}
                   >
                     {isPasswordVisible ? (
-                      <GoEye
-                        className="eye-icon"
-                        style={{ color: "#F3AE4D" }}
-                      />
+                      <GoEye className="eye-icon" style={{ color: "#F3AE4D" }} />
                     ) : (
                       <FaRegEyeSlash
                         className="eye-icon"
@@ -123,16 +129,15 @@ const Login = () => {
                     )}
                   </button>
                 </span>
-                <label className="password" htmlFor="password">
-                  <span className="req">*</span>
-                  {PASSWORD_LABEL}
+                <label htmlFor="password">
+                  <span className="req">*</span> Password
                 </label>
                 <input
                   type={isPasswordVisible ? "text" : "password"}
                   id="password"
                   name="password"
                   required
-                  placeholder={PASSWORD_PLACEHOLDER}
+                  placeholder="Password"
                   className="form-control"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -141,20 +146,16 @@ const Login = () => {
 
               <span className="forget-password">
                 <Link href="/forget-password">
-                  <button type="button">{FORGOT_PASSWORD_TEXT}</button>
+                  <button type="button">Forget Password?</button>
                 </Link>
               </span>
 
-              <button
-                type="submit"
-                className="login-btn"
-                disabled={!isFormValid}
-              >
-                {LOGIN_BTN_TEXT}
+              <button type="submit" className="login-btn" disabled={!isFormValid}>
+                Login
               </button>
 
               <div className="social-login">
-                <span>{SOCIAL_LOGIN_TEXT}</span>
+                <span>Or Login with social</span>
                 <Link className="google" href="#">
                   <FaGoogle />
                 </Link>

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation"; // To get query params
 import { IoIosArrowForward } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
@@ -7,9 +8,14 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
 import "./collections-page.css";
 
 const SliderTags = () => {
+  const searchParams = useSearchParams();
+  const collectionId = searchParams.get("id"); // Get collection ID from URL
+  const [collection, setCollection] = useState(null);
+  const [loading, setLoading] = useState(true);
   const sliderContentRef = useRef(null);
   const nextButtonRef = useRef(null);
 
@@ -17,74 +23,20 @@ const SliderTags = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const scrollStep = 200;
 
-  const images = [
-    {
-      id: 1,
-      tagId: 1,
-      src: "/images/view 1.png",
-      alt: "Image 1",
-      title: "Lorem Ipsum",
-      price: "EGP 2,500",
-      artist: {
-        name: "Omar Mohsen",
-        avatar: "/images/avatar2.png",
-      },
-    },
-    {
-      id: 2,
-      tagId: 1,
-      src: "/images/view 2.png",
-      alt: "Image 2",
-      title: "Lorem Ipsum",
-      price: "EGP 2,500",
-      artist: {
-        name: "Sara Ahmed",
-        avatar: "/images/avatar2.png",
-      },
-    },
-    {
-      id: 3,
-      tagId: 2,
-      src: "/images/view 3.png",
-      alt: "Image 3",
-      title: "Lorem Ipsum",
-      price: "EGP 2,500",
-      artist: {
-        name: "Ahmed Ali",
-        avatar: "/images/avatar2.png",
-      },
-    },
-    {
-      id: 4,
-      tagId: 2,
-      src: "/images/view 4.png",
-      alt: "Image 4",
-      title: "Lorem Ipsum",
-      price: "EGP 2,500",
-      artist: {
-        name: "Lina Khaled",
-        avatar: "/images/avatar2.png",
-      },
-    },
-  ];
-
-  const tags = [
-    { id: 1, label: "Men's" },
-    { id: 2, label: "Women's Fashion" },
-    { id: 3, label: "Electronics" },
-    { id: 4, label: "ArtWork" },
-    { id: 5, label: "Fashion" },
-    { id: 6, label: "Women's" },
-    { id: 7, label: "Vintage" },
-    { id: 8, label: "Modern" },
-    { id: 9, label: "Abstract" },
-    { id: 10, label: "Minimalist" },
-    { id: 11, label: "Pop Art" },
-    { id: 12, label: "Bohemian" },
-    { id: 13, label: "Decor" },
-    { id: 14, label: "Contemporary" },
-    { id: 15, label: "Digital" },
-  ];
+  useEffect(() => {
+    if (!collectionId) return;
+    const fetchCollection = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/collections/${collectionId}`);
+        setCollection(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching collection data:", error);
+        setLoading(false);
+      }
+    };
+    fetchCollection();
+  }, [collectionId]);
 
   const handleTagClick = (tagId) => {
     setSelectedTags((prev) => {
@@ -134,7 +86,7 @@ const SliderTags = () => {
       Math.min(
         scrollAmount - moveX,
         sliderContentRef.current.scrollWidth -
-          sliderContentRef.current.clientWidth
+        sliderContentRef.current.clientWidth
       )
     );
     setScrollAmount(newScrollAmount);
@@ -149,7 +101,7 @@ const SliderTags = () => {
       Math.min(
         scrollAmount - moveX,
         sliderContentRef.current.scrollWidth -
-          sliderContentRef.current.clientWidth
+        sliderContentRef.current.clientWidth
       )
     );
     setScrollAmount(newScrollAmount);
@@ -192,6 +144,10 @@ const SliderTags = () => {
     }
   }, [scrollAmount]);
 
+  if (loading) {
+    return <div>Loading collection data...</div>;
+  }
+
   return (
     <div>
       <div className="slider-tags">
@@ -210,15 +166,13 @@ const SliderTags = () => {
                   onTouchMove={handleTouchMove}
                   onTouchEnd={handleTouchEnd}
                 >
-                  {tags.map((tag) => (
+                  {collection?.tags.map((tag) => (
                     <div
-                      className={`tags ${
-                        selectedTags.includes(tag.id) ? "active" : ""
-                      }`}
+                      className={`tags ${selectedTags.includes(tag.id) ? "active" : ""}`}
                       key={tag.id}
                     >
                       <li onClick={() => handleTagClick(tag.id)}>
-                        {tag.label}
+                        {tag.name}
                       </li>
                       {selectedTags.includes(tag.id) && (
                         <span
@@ -250,23 +204,23 @@ const SliderTags = () => {
       <div className="images-items-collections">
         <div className="container">
           <div className="row">
-            {images
+            {collection?.artworks
               .filter(
-                (image) =>
+                (artwork) =>
                   selectedTags.length === 0 ||
-                  selectedTags.includes(image.tagId)
+                  artwork.tagIds.some(tagId => selectedTags.includes(tagId)) // ✅ Check if any tag matches
               )
               .slice(0, 28)
-              .map((image) => (
-                <div key={image.id} className={`col-lg-3 col-md-4 col-6`}>
+              .map((artwork) => (
+                <div key={artwork.id} className={`col-lg-3 col-md-4 col-6`}>
                   <div className="items-collections-info">
                     <div className="image-card">
                       <div className="overley"></div>
                       <Link href="/product-details" className="reser-link">
                         <div className="items-collections-image">
                           <Image
-                            src={image.src}
-                            alt={image.alt}
+                            src={artwork.images[0]}
+                            alt={artwork.name}
                             width={312}
                             height={390}
                             quality={70}
@@ -296,7 +250,7 @@ const SliderTags = () => {
                           <div className="user-image">
                             <Link href="/artist-profile" className="reser-link">
                               <Image
-                                src={image.artist.avatar}
+                                src={artwork.artist.profile_picture}
                                 alt="avatar"
                                 width={50}
                                 height={50}
@@ -306,16 +260,14 @@ const SliderTags = () => {
                             </Link>
                           </div>
                           <Link href="/artist-profile" className="reser-link">
-                            <span>{image.artist.name}</span>
+                            <span>{artwork.artist.name}</span>
                           </Link>
                         </div>
                       </div>
                     </div>
-                    <h2>{image.title}</h2>
-                    <p>
-                      {image.title}, {image.title}, {image.title}
-                    </p>
-                    <h3>{image.price}</h3>
+                    <h2>{artwork.name}</h2>
+                    <p>{artwork.desc}</p>
+                    <h3>EGP {Number(Object.values(artwork.sizes_prices)[0]).toLocaleString("en-US")}</h3>
                   </div>
                 </div>
               ))}

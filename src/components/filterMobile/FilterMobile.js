@@ -43,7 +43,6 @@ const FilterMobile = () => {
       .get("http://127.0.0.1:8000/api/filters/get")
       .then((response) => {
         const data = response.data;
-        console.log(data);
         // Use featured_categories for "Category" options.
         setCategories(data.featured_categories || []);
         // Use dynamic locations (grouped by country).

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import PhoneInput from "@/components/dropFlags/DropFlags";
@@ -7,6 +8,15 @@ import { GoEye } from "react-icons/go";
 import "@/app/_css/login.css";
 
 function CreateAccount() {
+  const searchParams = useSearchParams(); // Get query params
+  const isArtistParam = searchParams.get("artist"); // Read 'artist' from URL
+  const [isArtist, setIsArtist] = useState("lover");
+  useEffect(() => {
+    if (isArtistParam === "true") {
+      setIsArtist("artist");
+    }
+  }, [isArtistParam]);
+
   const TEXTS = {
     createAccountHeader: "Create an account",
     alreadyHaveAccount: "Already have an account? ",
@@ -24,7 +34,6 @@ function CreateAccount() {
     createAccountBtn: "Create Account",
   };
 
-  const [isArtist, setIsArtist] = useState("lover");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [formData, setFormData] = useState({
     firstname: "",
@@ -170,9 +179,8 @@ function CreateAccount() {
                 <div className="row">
                   <div className="col-6">
                     <div
-                      className={`lover ${
-                        isArtist === "lover" ? "active" : ""
-                      }`}
+                      className={`lover ${isArtist === "lover" ? "active" : ""
+                        }`}
                       onClick={() => handleSelectType("lover")}
                     >
                       <h4>{TEXTS.artLoverHeader}</h4>
@@ -181,9 +189,8 @@ function CreateAccount() {
                   </div>
                   <div className="col-6">
                     <div
-                      className={`artist ${
-                        isArtist === "artist" ? "active" : ""
-                      }`}
+                      className={`artist ${isArtist === "artist" ? "active" : ""
+                        }`}
                       onClick={() => handleSelectType("artist")}
                     >
                       <h4>{TEXTS.artistHeader}</h4>
@@ -206,11 +213,10 @@ function CreateAccount() {
                       </label>
                       <input
                         type="text"
-                        className={`form-control ${
-                          errors.firstname && touchedFields.firstname
+                        className={`form-control ${errors.firstname && touchedFields.firstname
                             ? "border-red"
                             : ""
-                        }`}
+                          }`}
                         id="firstname"
                         name="firstname"
                         placeholder="First Name"
@@ -232,11 +238,10 @@ function CreateAccount() {
                       </label>
                       <input
                         type="text"
-                        className={`form-control ${
-                          errors.lastname && touchedFields.lastname
+                        className={`form-control ${errors.lastname && touchedFields.lastname
                             ? "border-red"
                             : ""
-                        }`}
+                          }`}
                         id="lastname"
                         name="lastname"
                         placeholder="Last Name"
@@ -285,9 +290,8 @@ function CreateAccount() {
                       name="email"
                       required
                       placeholder="email@gmail.com"
-                      className={`form-control ${
-                        errors.email && touchedFields.email ? "border-red" : ""
-                      }`}
+                      className={`form-control ${errors.email && touchedFields.email ? "border-red" : ""
+                        }`}
                       value={formData.email}
                       onChange={handleChange}
                     />
@@ -310,9 +314,8 @@ function CreateAccount() {
                         aria-label="Toggle Password Visibility"
                       >
                         <GoEye
-                          className={`fa-regular ${
-                            passwordVisible ? "eye-open" : "eye-closed"
-                          }`}
+                          className={`fa-regular ${passwordVisible ? "eye-open" : "eye-closed"
+                            }`}
                         />
                       </button>
                     </span>
@@ -326,11 +329,10 @@ function CreateAccount() {
                       name="password"
                       required
                       placeholder={TEXTS.passwordPlaceholder}
-                      className={`form-control ${
-                        errors.password && touchedFields.password
+                      className={`form-control ${errors.password && touchedFields.password
                           ? "border-red"
                           : ""
-                      }`}
+                        }`}
                       value={formData.password}
                       onChange={handleChange}
                     />

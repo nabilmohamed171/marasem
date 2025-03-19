@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // For navigation after logout
 import { useState, useEffect } from "react";
 import { CiShoppingCart } from "react-icons/ci";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -18,12 +19,40 @@ import { IoIosArrowDown } from "react-icons/io";
 import PopupSearch from "@/components/popupSearch/PopupSearch";
 import "./navbar.css";
 import "./navbar-artist.css";
+import axios from "axios";
 
 export default function Navbar() {
+  const router = useRouter();
+  const [user, setUser] = useState({}); // Store user data
+  const [notificationsCount, setNotificationsCount] = useState(0);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [featuredCategories, setFeaturedCategories] = useState([]);
+  const [featuredCollections, setFeaturedCollections] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isStickyNavbar, setIsStickyNavbar] = useState(false);
   const [isPopupSearchOpen, setIsPopupSearchOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const userData = response.data;
+        setUser(userData.user);
+        setNotificationsCount(userData.notifications_count || 0);
+        setCartItemsCount(userData.cart_items_count || 0);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -50,6 +79,50 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/filters")
+      .then((response) => {
+        const data = response.data;
+        setFeaturedCategories(data.featured_categories);
+        setFeaturedCollections(data.featured_collections);
+      })
+      .catch((err) => {
+        console.error("Error fetching filters:", err.response || err);
+      });
+  }, []);
+  const forYourBudgetLinks = [
+    { name: "EGP 500 & Under", href: "#" },
+    { name: "EGP 1,000 to 5,000", href: "#" },
+    { name: "EGP 5,000 to 10,000", href: "#" },
+    { name: "EGP 10,000 & Over", href: "#" },
+  ];
+
+  const handleLogout = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) return;
+
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/logout",
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      localStorage.removeItem("authToken"); // ✅ Remove token from localStorage
+      setUser({}); // Clear user state
+      if (window.location.pathname === "/") {
+        window.location.reload(); // ✅ Refresh if already on homepage
+      } else {
+        router.push("/"); // ✅ Redirect if not on homepage
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   return (
     <nav
@@ -104,176 +177,50 @@ export default function Navbar() {
                 <div className="dropmenu-navbar-blur">
                   <div className="container">
                     <div className="row">
-                      <div className="col">
-                        <div className="section-one">
-                          <h4>Fine Art</h4>
-                          <ul className="list-unstyled">
-                            <li>
-                              <Link className="link-style" href="#">
-                                Paintings
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Drawings
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Sculptures
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Mosaic
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Collage Art
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Glass Art
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Ceramics
-                              </Link>
-                            </li>
-                          </ul>
+                      {featuredCategories.length > 0 ? (
+                        featuredCategories.map((category) => (
+                          <div key={category.id} className="col">
+                            <div className="section-featured-category">
+                              <h4>{category.name}</h4>
+                              <ul className="list-unstyled">
+                                {category.subcategories &&
+                                  category.subcategories.map((subcat) => (
+                                    <li key={subcat.id}>
+                                      <Link
+                                        className="link-style"
+                                        href={`/product-list?subcategory=${subcat.id}`}
+                                      >
+                                        {subcat.name}
+                                      </Link>
+                                    </li>
+                                  ))}
+                              </ul>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        // Optionally, render a fallback if dynamic data isn't available.
+                        <div className="col">
+                          <div className="section-featured-category">
+                            <h4>Loading...</h4>
+                          </div>
                         </div>
-                      </div>
+                      )}
                       <div className="col">
-                        <div className="section-two">
-                          <h4>Hand Crafts</h4>
-                          <ul className="list-unstyled">
-                            <li>
-                              <Link className="link-style" href="#">
-                                Wood Craft
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Leather Craft
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Pottery Craft
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Macrame
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Home Decor
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Jewelry & Accessories
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Fashion Art
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Furniture
-                              </Link>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="section-three">
-                          <h4>Digital Prints</h4>
-                          <ul className="list-unstyled">
-                            <li>
-                              <Link className="link-style" href="#">
-                                Paintings & Illustrations
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                3D Prints
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Designs
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Photography
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Illustration Books
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Printed Products
-                              </Link>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="section-four">
+                        <div className="section-featured-collections">
                           <h4>For You</h4>
                           <ul className="list-unstyled">
-                            <li>
-                              <Link className="link-style" href="#">
-                                Egyptians
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Vintage
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Modern
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Abstract
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Minimalist
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Pop Art
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Bohemian
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                Gifts
-                              </Link>
-                            </li>
+                            {featuredCollections &&
+                              featuredCollections.map((collection) => (
+                                <li key={collection.id}>
+                                  <Link
+                                    className="link-style"
+                                    href={`/collections?id=${collection.id}`}
+                                  >
+                                    {collection.title}
+                                  </Link>
+                                </li>
+                              ))}
                           </ul>
                         </div>
                       </div>
@@ -281,26 +228,13 @@ export default function Navbar() {
                         <div className="section-five">
                           <h4>For Your Budget</h4>
                           <ul className="list-unstyled">
-                            <li>
-                              <Link className="link-style" href="#">
-                                EGP 500 & Under
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                EGP 1,000 to 5,000
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style" href="#">
-                                EGP 5,000 to 10,000
-                              </Link>
-                            </li>
-                            <li>
-                              <Link className="link-style nav-color" href="#">
-                                EGP 10,000 & Over
-                              </Link>
-                            </li>
+                            {forYourBudgetLinks.map((link) => (
+                              <li key={link.name}>
+                                <Link className="link-style" href={link.href}>
+                                  {link.name}
+                                </Link>
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       </div>
@@ -337,8 +271,8 @@ export default function Navbar() {
                 <div className="photo-artist">
                   <Image
                     className="photo-artist-img"
-                    src="/images/avatar2.png"
-                    alt="photo"
+                    src={user.profile_picture ?? "/images/avatar2.png"}
+                    alt="profile_picture"
                     width={40}
                     height={40}
                     quality={100}
@@ -347,44 +281,46 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="col">
-                <span>Hello Omar</span>
-                <div class="dropdown">
+                <span>Hello {user.first_name}</span>
+                <div className="dropdown">
                   <button
-                    class="btn dropdown-toggle"
+                    className="btn dropdown-toggle"
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
                     Your Account
                   </button>
-                  <ul class="dropdown-menu">
+                  <ul className="dropdown-menu">
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         My Profile
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Favorites
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Addresses
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Orders
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a className="dropdown-item" href="#">
                         Marasem Credit
                       </a>
                     </li>
                     <li>
-                      <button type="button">Logout</button>
+                      <button type="button" className="logout-btn" onClick={handleLogout}>
+                        <RiLogoutCircleRLine /> Logout
+                      </button>
                     </li>
                   </ul>
                   <span className="arrow-down-icon">
@@ -400,7 +336,7 @@ export default function Navbar() {
               <IoMdNotificationsOutline />
             </div>
             <div className="notification-number">
-              <span>0</span>
+              <span>{notificationsCount}</span>
             </div>
           </div>
           <div className="nav-hr"></div>
@@ -409,7 +345,7 @@ export default function Navbar() {
               <CiShoppingCart />
             </div>
             <div className="cart-number">
-              <span>0</span>
+              <span>{cartItemsCount}</span>
             </div>
           </div>
 
@@ -563,7 +499,7 @@ export default function Navbar() {
                   </div>
                 </div>
                 <div className="box-button-logout">
-                  <Link className="" href="">
+                  <Link className="" href="" onClick={handleLogout}>
                     <span className="logout-icon">
                       <RiLogoutCircleRLine />
                     </span>

@@ -23,7 +23,7 @@ const Accordion = () => {
                 <div className="logo-image">
                   <Image
                     className="marasem-logo"
-                    src="/images/Group 3364.png"
+                    src="/images/main-logo.png"
                     alt="Marasem Logo"
                     width={122}
                     height={35}

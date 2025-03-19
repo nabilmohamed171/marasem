@@ -20,10 +20,8 @@ import "./navbar-home.css";
 import axios from "axios";
 
 const Navbar_Home = () => {
-  const [user, setUser] = useState(null);
   const [featuredCategories, setFeaturedCategories] = useState([]);
   const [featuredCollections, setFeaturedCollections] = useState([]);
-  const [locations, setLocations] = useState([]);
 
   const [isStickyNavbar, setIsStickyNavbar] = useState(false);
   const [isPopupSearchOpen, setIsPopupSearchOpen] = useState(false);
@@ -49,21 +47,6 @@ const Navbar_Home = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("marasem_login_token");
-    if (token) {
-      axios
-        .get("http://127.0.0.1:8000/api/user/account", {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-        .then(response => {
-          console.log(response);
-          setUser(response.data.user);
-        })
-        .catch(err => {
-          console.error("Failed to fetch user info:", err.response || err);
-          localStorage.removeItem("marasem_login_token");
-        });
-    }
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -78,7 +61,6 @@ const Navbar_Home = () => {
         const data = response.data;
         setFeaturedCategories(data.featured_categories);
         setFeaturedCollections(data.featured_collections);
-        setLocations(data.locations);
       })
       .catch((err) => {
         console.error("Error fetching filters:", err.response || err);
@@ -182,7 +164,7 @@ const Navbar_Home = () => {
                                 <li key={collection.id}>
                                   <Link
                                     className="link-style"
-                                    href={`/product-list?collection=${collection.id}`}
+                                    href={`/collections?id=${collection.id}`}
                                   >
                                     {collection.title}
                                   </Link>
@@ -226,7 +208,7 @@ const Navbar_Home = () => {
             <IoIosSearch />
           </div>
           <div className="nav-login">
-            <Link className="art" href="/sell-your-artwork">
+            <Link className="art" href="/register?artist=true">
               Sell Your Artwork
             </Link>
             <Link className="login" href="/login">
@@ -266,7 +248,7 @@ const Navbar_Home = () => {
                   <div className="profile">
                     <div className="row">
                       <div className="col-7">
-                        <Link className="art" href="/sell-your-artwork">
+                        <Link className="art" href="/register">
                           Sell Your Artwork
                         </Link>
                       </div>
