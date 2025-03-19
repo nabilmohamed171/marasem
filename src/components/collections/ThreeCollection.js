@@ -43,14 +43,14 @@ const ThreeCollections = () => {
                       {collection.description ||
                         "is simply dummy text of the printing and typesetting industry."}
                     </p>
-                    <Link href={`/collections/${collection.id}`}>Find</Link>
+                    <Link href={`/collections?id=${collection.id}`}>Find</Link>
                   </div>
                 </div>
                 <div className="col-md-6 col-7">
                   <div className="row">
                     <div className="col-md-8 col-7">
                       <div className="first-image">
-                        <Link href={`/collections/${collection.id}`}>
+                        <Link href={`/collections?id=${collection.id}`}>
                           <Image
                             src={
                               collection.latest_artworks[0]?.cover_img ||

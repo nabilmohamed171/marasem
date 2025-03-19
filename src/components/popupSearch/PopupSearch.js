@@ -1,11 +1,27 @@
 "use client";
-import { useState } from "react";
-import { IoSearchOutline } from "react-icons/io5";
-import { IoClose } from "react-icons/io5";
+import { useState, useEffect } from "react";
+import { IoSearchOutline, IoClose } from "react-icons/io5";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 import "./search.css";
 
 const PopupSearch = () => {
   const [isVisible, setIsVisible] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [tags, setTags] = useState([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/tags/all");
+        setTags(response.data.slice(0, 4)); // Show only the first 4 tags
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+      }
+    };
+    fetchTags();
+  }, []);
 
   const handleClose = () => {
     setIsVisible(false);
@@ -17,9 +33,18 @@ const PopupSearch = () => {
     }
   };
 
-  if (!isVisible) return null;
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/shop-art?q=${encodeURIComponent(searchQuery)}`);
+    }
+  };
 
-  const tags = ["Fashion Art", "Macrame", "Wood Craft", "Leather Craft"];
+  const handleTagClick = (tag) => {
+    router.push(`/shop-art?q=${encodeURIComponent(tag)}`);
+  };
+
+  if (!isVisible) return null;
 
   return (
     <div className="popup-search" onClick={handleClickOutside}>
@@ -31,16 +56,28 @@ const PopupSearch = () => {
       <div className="container">
         <div className="w-search">
           <h2>Search for your favorite arts</h2>
-          <div className="search">
-            <span className="search-icon">
-              <IoSearchOutline />
-            </span>
-            <input type="text" placeholder="Search here..." />
-          </div>
+          <form onSubmit={handleSearchSubmit}>
+            <div className="search">
+              <span className="search-icon">
+                <IoSearchOutline />
+              </span>
+              <input
+                type="text"
+                placeholder="Search here..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </form>
           <div className="tags">
             {tags.map((tag, index) => (
-              <span key={index} className="tag">
-                {tag}
+              <span
+                key={index}
+                className="tag"
+                onClick={() => handleTagClick(tag.name)}
+                style={{ cursor: "pointer" }}
+              >
+                {tag.name}
               </span>
             ))}
           </div>

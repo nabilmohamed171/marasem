@@ -24,9 +24,9 @@ const SliderTags = () => {
 
   // Pagination state.
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const itemsPerPage = 20;
 
-  // Fetch artworks whenever currentPage, itemsPerPage, or selectedTags change.
+  // Fetch artworks from backend when currentPage or selectedTags change.
   useEffect(() => {
     const fetchArtworks = async () => {
       try {
@@ -37,7 +37,9 @@ const SliderTags = () => {
         if (selectedTags.length > 0) {
           params.tags = selectedTags.join(",");
         }
-        const response = await axios.get("http://127.0.0.1:8000/api/artworks", { params });
+        const response = await axios.get("http://127.0.0.1:8000/api/artworks", {
+          params,
+        });
         setArtworksData(response.data.artworks);
         setTotalArtworks(response.data.total);
       } catch (error) {
@@ -45,7 +47,7 @@ const SliderTags = () => {
       }
     };
     fetchArtworks();
-  }, [currentPage, itemsPerPage, selectedTags]);
+  }, [currentPage, selectedTags]);
 
   // Fetch all tags sorted by admin.
   useEffect(() => {
@@ -62,7 +64,8 @@ const SliderTags = () => {
   // Scrolling and dragging handlers for the tags slider.
   const handleWheel = (e) => {
     if (sliderContentRef.current) {
-      const maxScroll = sliderContentRef.current.scrollWidth - sliderContentRef.current.clientWidth;
+      const maxScroll =
+        sliderContentRef.current.scrollWidth - sliderContentRef.current.clientWidth;
       if (e.deltaY > 0) {
         setScrollAmount((prev) => Math.min(prev + scrollStep, maxScroll));
       } else if (e.deltaY < 0) {
@@ -122,7 +125,7 @@ const SliderTags = () => {
   }, [scrollAmount]);
 
   const handleTagClick = (tagId) => {
-    // Update selected tags and reset page to 1.
+    // When a tag is clicked, update selected tags and reset page to 1.
     setSelectedTags((prev) => {
       if (prev.includes(tagId)) {
         return prev.filter((id) => id !== tagId);
@@ -170,7 +173,11 @@ const SliderTags = () => {
                         <span
                           onClick={() => handleRemoveTag(tag.id)}
                           className="icon-x-tags"
-                          style={{ display: "inline-block", cursor: "pointer", marginLeft: "10px" }}
+                          style={{
+                            display: "inline-block",
+                            cursor: "pointer",
+                            marginLeft: "10px",
+                          }}
                         >
                           <IoMdClose />
                         </span>
@@ -197,7 +204,7 @@ const SliderTags = () => {
               <div key={artwork.id} className="col-lg-3 col-md-4 col-6">
                 <div className="items-collections-info">
                   <div className="image-card">
-                    <Link href={`/product-details/${artwork.id}`} className="reser-link">
+                    <Link href={'/product-details/' + artwork.id} className="reser-link">
                       <div className="overley"></div>
                       <div className="items-collections-image">
                         <Image
@@ -241,10 +248,8 @@ const SliderTags = () => {
                             loading="lazy"
                           />
                         </div>
-                        <Link href={`/artists/${artwork.artist.id}`} className="reser-link">
-                          <span>
-                            {artwork.artist.first_name} {artwork.artist.last_name}
-                          </span>
+                        <Link href={"/artist-profile/" + artwork.artist.id} className="reser-link">
+                          <span>{artwork.artist.first_name} {artwork.artist.last_name}</span>
                         </Link>
                       </div>
                     </div>
@@ -268,10 +273,6 @@ const SliderTags = () => {
         itemsPerPage={itemsPerPage}
         totalItems={totalArtworks}
         onPageChange={(page) => setCurrentPage(page)}
-        onItemsPerPageChange={(newLimit) => {
-          setItemsPerPage(newLimit);
-          setCurrentPage(1); // Reset to first page when limit changes.
-        }}
       />
     </div>
   );

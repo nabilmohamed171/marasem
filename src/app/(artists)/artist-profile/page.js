@@ -1,9 +1,12 @@
 "use client";
-import { useState, useCallback } from "react";
+import axios from "axios";
+import { useState, useCallback, useEffect } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import Footer from "@/components/footer/Footer";
-import NavbarArtists from "@/components/all-navbars/NavbarArtists";
+import Navbar_Home from "@/components/all-navbars/NavbarHome";
+import Navbar_Buyer from "@/components/all-navbars/NavbarBuyer";
+import Navbar from "@/components/all-navbars/NavbarArtists";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 import SectionFavorites from "@/components/artistsProfile/favorites/Favorites";
 import SectionSoldOut from "@/components/artistsProfile/soldOut/SoldOut";
@@ -14,6 +17,29 @@ import Image from "next/image";
 import "./artist-profile.css";
 
 const ArtistProfile = () => {
+  const [userType, setUserType] = useState("guest");
+
+  useEffect(() => {
+    const fetchUserType = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+          withCredentials: true,
+        });
+        setUserType(response.data.user_type);
+      } catch (error) {
+        console.error("Error fetching user type:", error);
+      }
+    };
+
+    fetchUserType();
+  }, []);
   const [activeSection, setActiveSection] = useState("gallery");
   const [isFollowing, setIsFollowing] = useState(false);
 
@@ -44,7 +70,13 @@ const ArtistProfile = () => {
 
   return (
     <>
-      <NavbarArtists />
+      {userType === "artist" ? (
+        <Navbar />
+      ) : userType === "buyer" ? (
+        <Navbar_Buyer />
+      ) : (
+        <Navbar_Home />
+      )}
 
       <div className="header-artist-profile">
         <div className="overley"></div>
@@ -196,9 +228,8 @@ const ArtistProfile = () => {
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "gallery" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "gallery" ? "active-sub-menu" : ""
+                          }`}
                         onClick={() => handleMenuClick("gallery")}
                       >
                         Gallery
@@ -207,11 +238,10 @@ const ArtistProfile = () => {
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "collections"
-                            ? "active-sub-menu"
-                            : ""
-                        }`}
+                        className={`nav-link ${activeSection === "collections"
+                          ? "active-sub-menu"
+                          : ""
+                          }`}
                         onClick={() => handleMenuClick("collections")}
                       >
                         Collections
@@ -220,9 +250,8 @@ const ArtistProfile = () => {
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "favorites" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "favorites" ? "active-sub-menu" : ""
+                          }`}
                         onClick={() => handleMenuClick("favorites")}
                       >
                         Favorites
@@ -231,9 +260,8 @@ const ArtistProfile = () => {
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "soldOut" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "soldOut" ? "active-sub-menu" : ""
+                          }`}
                         onClick={() => handleMenuClick("soldOut")}
                       >
                         Sold Out

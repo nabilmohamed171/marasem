@@ -1,8 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import FilterMobile from "@/components/filterMobile/FilterMobile";
-import axios from "axios";
 
 const FindMobile = () => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);

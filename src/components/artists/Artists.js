@@ -1,66 +1,19 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowForward, IoMdClose } from "react-icons/io";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
 import "./shop-artist.css";
 
 const Artists = () => {
   const [selectedTags, setSelectedTags] = useState([]);
-  const [artists, setArtists] = useState([
-    {
-      id: 1,
-      name: "Omar Mohsen",
-      location: "Cairo, Egypt",
-      tags: ["Portrait", "Urban"],
-      userImage: "/images/avatar2.png",
-      projectImages: [
-        "/images/view 1.png",
-        "/images/view 2.png",
-        "/images/view 3.png",
-      ],
-      projectViews: 5900,
-      appreciations: 20300,
-    },
-    {
-      id: 2,
-      name: "Ahmed Ali",
-      location: "Alexandria, Egypt",
-      tags: ["Nature", "Landscape"],
-      userImage: "/images/avatar.png",
-      projectImages: [
-        "/images/view 5.png",
-        "/images/view 4.png",
-        "/images/1.png",
-      ],
-      projectViews: 8000,
-      appreciations: 15400,
-    },
-    {
-      id: 3,
-      name: "Sara Hassan",
-      location: "Dubai, UAE",
-      tags: ["Fashion", "Street"],
-      userImage: "/images/avatar2.png",
-      projectImages: ["/images/2.png", "/images/3.png", "/images/4.png"],
-      projectViews: 15000,
-      appreciations: 25000,
-    },
-    {
-      id: 4,
-      name: "Mona Samir",
-      location: "London, UK",
-      tags: ["Architectural", "Product"],
-      userImage: "/images/avatar.png",
-      projectImages: ["/images/2.png", "/images/3.png", "/images/4.png"],
-      projectViews: 10000,
-      appreciations: 18000,
-    },
-  ]);
-
-  const [artistTags, setArtistTags] = useState([]);
+  const [artists, setArtists] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [followedArtists, setFollowedArtists] = useState(new Set());
+  const [tags, setTags] = useState([]);
+
   const sliderContentRef = useRef(null);
   const nextButtonRef = useRef(null);
   const scrollStep = 150;
@@ -68,155 +21,80 @@ const Artists = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
 
-  const getRandomArtists = useCallback(
-    (num) => {
-      const shuffledArtists = [...artists].sort(() => 0.5 - Math.random());
-      return shuffledArtists.slice(0, num);
-    },
-    [artists]
-  );
-
   useEffect(() => {
-    const randomArtists = getRandomArtists(20);
-    setArtistTags(randomArtists);
-  }, [artists, getRandomArtists]);
+    const fetchArtists = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/artists");
+        setArtists(response.data.artists);
+        setTags(response.data.tags);
 
-  const handleTagSelection = useCallback(
-    (tag) => {
-      setSelectedTags((prevSelectedTags) => {
-        const isTagSelected = prevSelectedTags.includes(tag);
-        const newSelectedTags = isTagSelected
-          ? prevSelectedTags.filter((t) => t !== tag)
-          : [...prevSelectedTags, tag];
-
-        const filteredArtists = artists.filter((artist) =>
-          artist.tags.some((artistTag) => newSelectedTags.includes(artistTag))
+        // Extract followed artists based on API response
+        const followed = new Set(
+          response.data.artists
+            .filter((artist) => artist.is_followed) // Ensure the backend provides `is_followed`
+            .map((artist) => artist.id)
         );
-        setArtistTags(filteredArtists);
+        setFollowedArtists(followed);
 
-        return newSelectedTags;
-      });
-    },
-    [artists]
-  );
-
-  const handleRemoveTag = useCallback(
-    (tagId) => {
-      setSelectedTags((prevSelectedTags) =>
-        prevSelectedTags.filter((id) => id !== tagId)
-      );
-
-      const filteredArtists = artists.filter((artist) =>
-        artist.tags.some((tag) => tag !== tagId)
-      );
-      setArtistTags(filteredArtists);
-    },
-    [artists]
-  );
-
-  const toggleFollow = useCallback((artistId) => {
-    setFollowedArtists((prevFollowedArtists) => {
-      const newFollowedArtists = new Set(prevFollowedArtists);
-      if (newFollowedArtists.has(artistId)) {
-        newFollowedArtists.delete(artistId);
-      } else {
-        newFollowedArtists.add(artistId);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching artists:", error);
+        setLoading(false);
       }
-      return newFollowedArtists;
+    };
+
+    fetchArtists();
+  }, []);
+
+  const toggleFollow = async (artistId) => {
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      console.log("You must be logged in to follow/unfollow artists.");
+      return;
+    }
+
+    try {
+      if (followedArtists.has(artistId)) {
+        // Unfollow request
+        await axios.post(
+          `http://127.0.0.1:8000/api/artists/${artistId}/unfollow`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setFollowedArtists((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(artistId);
+          return newSet;
+        });
+      } else {
+        // Follow request
+        await axios.post(
+          `http://127.0.0.1:8000/api/artists/${artistId}/follow`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setFollowedArtists((prev) => new Set(prev).add(artistId));
+      }
+    } catch (error) {
+      console.error("Error following/unfollowing artist:", error);
+    }
+  };
+
+  const handleTagSelection = (tagId) => {
+    setSelectedTags((prevSelectedTags) => {
+      const isTagSelected = prevSelectedTags.includes(tagId);
+      return isTagSelected
+        ? prevSelectedTags.filter((t) => t !== tagId)
+        : [...prevSelectedTags, tagId];
     });
-  }, []);
+  };
 
-  const handleWheel = useCallback(
-    (e) => {
-      if (sliderContentRef.current) {
-        const maxScroll =
-          sliderContentRef.current.scrollWidth -
-          sliderContentRef.current.clientWidth;
-        if (e.deltaY > 0) {
-          setScrollAmount((prev) => Math.min(prev + scrollStep, maxScroll));
-        } else if (e.deltaY < 0) {
-          setScrollAmount((prev) => Math.max(prev - scrollStep, 0));
-        }
-      }
-    },
-    [scrollStep]
-  );
-
-  const handleMouseDown = useCallback((e) => {
-    setIsDragging(true);
-    setStartX(e.clientX);
-  }, []);
-
-  const handleTouchStart = useCallback((e) => {
-    setIsDragging(true);
-    setStartX(e.touches[0].clientX);
-  }, []);
-
-  const handleMouseMove = useCallback(
-    (e) => {
-      if (!isDragging) return;
-      const moveX = e.clientX - startX;
-      const newScrollAmount = Math.max(
-        0,
-        Math.min(
-          scrollAmount - moveX,
-          sliderContentRef.current.scrollWidth -
-            sliderContentRef.current.clientWidth
-        )
-      );
-      setScrollAmount(newScrollAmount);
-      setStartX(e.clientX);
-    },
-    [isDragging, scrollAmount, startX]
-  );
-
-  const handleTouchMove = useCallback(
-    (e) => {
-      if (!isDragging) return;
-      const moveX = e.touches[0].clientX - startX;
-      const newScrollAmount = Math.max(
-        0,
-        Math.min(
-          scrollAmount - moveX,
-          sliderContentRef.current.scrollWidth -
-            sliderContentRef.current.clientWidth
-        )
-      );
-      setScrollAmount(newScrollAmount);
-      setStartX(e.touches[0].clientX);
-    },
-    [isDragging, scrollAmount, startX]
-  );
-
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
-  const handleTouchEnd = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
-  useEffect(() => {
-    const nextButton = nextButtonRef.current;
-    const sliderContent = sliderContentRef.current;
-
-    if (!nextButton || !sliderContent) return;
-
-    const handleNextClick = () => {
-      const maxScroll = sliderContent.scrollWidth - sliderContent.clientWidth;
-      if (scrollAmount + scrollStep > maxScroll) {
-        setScrollAmount(0);
-      } else {
-        setScrollAmount((prev) => prev + scrollStep);
-      }
-    };
-
-    nextButton.addEventListener("click", handleNextClick);
-
-    return () => {
-      nextButton.removeEventListener("click", handleNextClick);
-    };
-  }, [scrollAmount, scrollStep]);
+  const handleRemoveTag = (tag) => {
+    setSelectedTags((prevSelectedTags) =>
+      prevSelectedTags.filter((t) => t !== tag)
+    );
+  };
 
   useEffect(() => {
     if (sliderContentRef.current) {
@@ -224,95 +102,31 @@ const Artists = () => {
     }
   }, [scrollAmount]);
 
+  if (loading) {
+    return <div>Loading artists...</div>;
+  }
+
   return (
     <>
+      {/* Tags Filter Section */}
       <div className="slider-tags">
         <div className="container">
           <div className="row align-items-center">
-            <div className="col-1 d-none d-md-block count-number-items">
-              <span>745 Items</span>
-            </div>
-            <div className="col-1 d-none d-md-block">
-              <div className="dropdown dropdown-sort-by-artist">
-                <Link
-                  className="btn btn-secondary dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Sort By
-                </Link>
-
-                <ul className="dropdown-menu">
-                  <li>
-                    <Link className="dropdown-item" href="#">
-                      Action
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" href="#">
-                      Another action
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" href="#">
-                      Something else here
-                    </Link>
-                  </li>
-                </ul>
-                <span className="arrow-down-icon">
-                  <IoIosArrowDown />
-                </span>
-              </div>
-            </div>
             <div className="col-10 position-relative">
               <div className="container">
                 <div className="slider-wrapper artists-filter">
-                  <ul
-                    ref={sliderContentRef}
-                    className="list-unstyled slider-content"
-                    onWheel={handleWheel}
-                    onMouseDown={handleMouseDown}
-                    onMouseMove={handleMouseMove}
-                    onMouseUp={handleMouseUp}
-                    onTouchStart={handleTouchStart}
-                    onTouchMove={handleTouchMove}
-                    onTouchEnd={handleTouchEnd}
-                  >
-                    {[
-                      "Portrait",
-                      "Landscape",
-                      "Urban",
-                      "Minimalist",
-                      "Fashion",
-                      "Street",
-                      "Product",
-                      "Food",
-                      "Nature",
-                      "Black and White",
-                      "Aerial",
-                      "Macro",
-                      "Event",
-                      "Architectural",
-                      "Abstract",
-                    ].map((tag, index) => (
+                  <ul ref={sliderContentRef} className="list-unstyled slider-content">
+                    {tags.map((tag) => (
                       <div
-                        className={`tags ${
-                          selectedTags.includes(tag) ? "active" : ""
-                        }`}
-                        key={index}
+                        className={`tags ${selectedTags.includes(tag.id) ? "active" : ""}`}
+                        key={tag.id}
                       >
-                        <li onClick={() => handleTagSelection(tag)}>{tag}</li>
-                        {selectedTags.includes(tag) && (
+                        <li onClick={() => handleTagSelection(tag.id)}>{tag.name}</li>
+                        {selectedTags.includes(tag.id) && (
                           <span
-                            onClick={() => handleRemoveTag(tag)}
+                            onClick={() => handleRemoveTag(tag.id)}
                             className="icon-x-tags"
-                            style={{
-                              display: "inline-block",
-                              cursor: "pointer",
-                              marginLeft: "10px",
-                            }}
+                            style={{ display: "inline-block", cursor: "pointer", marginLeft: "10px" }}
                           >
                             <IoMdClose />
                           </span>
@@ -322,10 +136,7 @@ const Artists = () => {
                   </ul>
                 </div>
                 <div className="col-md-1">
-                  <div
-                    ref={nextButtonRef}
-                    className="slider-scroll slider-next"
-                  >
+                  <div ref={nextButtonRef} className="slider-scroll slider-next">
                     <IoIosArrowForward />
                   </div>
                 </div>
@@ -335,103 +146,79 @@ const Artists = () => {
         </div>
       </div>
 
+      {/* Artists List */}
       <div className="container">
         <div className="artists">
           <div className="row">
-            {artistTags.map((artist) => (
-              <div className="col-lg-3 col-md-6 col-12" key={artist.id}>
-                <div className="artist">
-                  <div className="row">
-                    <div className="col-4 p-r-0">
-                      <div className="item-image">
-                        <Image
-                          className="image-one"
-                          src={artist.projectImages[0]}
-                          alt="Artist Image 1"
-                          width={130}
-                          height={105}
-                          quality={70}
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-4 p-r-l-5">
-                      <div className="item-image">
-                        <Image
-                          src={artist.projectImages[1]}
-                          alt="Artist Image 2"
-                          width={130}
-                          height={105}
-                          quality={70}
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-4 p-l-0">
-                      <div className="item-image">
-                        <Image
-                          className="image-sec"
-                          src={artist.projectImages[2]}
-                          alt="Artist Image 3"
-                          width={130}
-                          height={105}
-                          quality={70}
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="artist-info text-center">
-                    <div className="user-image">
-                      <Link className="reser-link" href="/artist-profile">
-                        <Image
-                          src={artist.userImage}
-                          alt="User Avatar"
-                          width={80}
-                          height={80}
-                          quality={70}
-                          loading="lazy"
-                        />
-                      </Link>
-                    </div>
-                    <h2 className="artist-name">
-                      <Link className="reser-link" href="/artist-profile">
-                        {artist.name}
-                      </Link>
-                    </h2>
-                    <span className="address">
-                      <FaMapMarkerAlt /> {artist.location}
-                    </span>
-                  </div>
-                  <div className="extra-artist-info text-center">
+            {artists
+              .filter((artist) =>
+                selectedTags.length === 0 || artist.tags.some(tag => selectedTags.includes(tag.id))
+              )
+              .map((artist) => (
+                <div className="col-lg-3 col-md-6 col-12" key={artist.id}>
+                  <div className="artist">
                     <div className="row">
-                      <div className="col-4">
-                        <h4>{artist.projectViews}</h4>
-                        <span>Project Views</span>
+                      {artist.most_recent_artworks.map((img, index) => (
+                        <div className="col-4" key={index}>
+                          <Image
+                            src={img !== "" ? img : null}
+                            alt={`Artwork ${index}`}
+                            width={130}
+                            height={105}
+                            loading="lazy"
+                            className="reser-link"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <div className="artist-info text-center">
+                      <div className="user-image">
+                        <Link href={`/artist-profile?id=${artist.id}`}>
+                          <Image
+                            src={artist.profile_picture}
+                            alt="User Avatar"
+                            width={80}
+                            height={80}
+                            loading="lazy"
+                          />
+                        </Link>
                       </div>
-                      <div className="col-4">
-                        <button
-                          onClick={() => toggleFollow(artist.id)}
-                          className={
-                            followedArtists.has(artist.id)
-                              ? "follow-unfollow-active"
-                              : ""
-                          }
-                        >
-                          {followedArtists.has(artist.id)
-                            ? "Unfollow"
-                            : "Follow"}
-                        </button>
-                      </div>
-                      <div className="col-4">
-                        <h4>{artist.appreciations}</h4>
-                        <span>Appreciations</span>
+                      <h2 className="artist-name">
+                        <Link className="reser-link" href={`/artist-profile?id=${artist.id}`}>
+                          {artist.first_name} {artist.last_name}
+                        </Link>
+                      </h2>
+                      <span className="address">
+                        <FaMapMarkerAlt /> {artist.city ?? "N/A"}, {artist.zone ?? "N/A"}
+                      </span>
+                    </div>
+                    <div className="extra-artist-info text-center">
+                      <div className="row">
+                        <div className="col-4">
+                          <h4>{artist.project_views}</h4>
+                          <span>Project Views</span>
+                        </div>
+                        <div className="col-4">
+                          <button
+                            onClick={() => toggleFollow(artist.id)}
+                            className={
+                              followedArtists.has(artist.id)
+                                ? "follow-unfollow-active"
+                                : ""
+                            }
+                          >
+                            {followedArtists.has(artist.id) ? "Unfollow" : "Follow"}
+                          </button>
+                        </div>
+                        <div className="col-4">
+                          <h4>{artist.artworks_count}</h4>
+                          <span>Artworks</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>

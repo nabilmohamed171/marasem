@@ -1,8 +1,11 @@
 "use client";
 import React, { useState, useCallback } from "react";
+import axios from "axios";
 import { FaRegHeart, FaHeart } from "react-icons/fa6";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import NavbarArtists from "@/components/all-navbars/NavbarArtists";
+import Navbar_Home from "@/components/all-navbars/NavbarHome";
+import Navbar_Buyer from "@/components/all-navbars/NavbarBuyer";
+import Navbar from "@/components/all-navbars/NavbarArtists";
 import Footer from "@/components/footer/Footer";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 import Image from "next/image";
@@ -10,6 +13,29 @@ import Link from "next/link";
 import "./artist-edit-product.css";
 
 const ArtistEditProduct = () => {
+  const [userType, setUserType] = useState("guest");
+
+  useEffect(() => {
+    const fetchUserType = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+          withCredentials: true,
+        });
+        setUserType(response.data.user_type);
+      } catch (error) {
+        console.error("Error fetching user type:", error);
+      }
+    };
+
+    fetchUserType();
+  }, []);
   const [activeTab, setActiveTab] = useState("story");
   const [mainImage, setMainImage] = useState("/images/88.jpeg");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -48,7 +74,13 @@ const ArtistEditProduct = () => {
 
   return (
     <>
-      <NavbarArtists />
+      {userType === "artist" ? (
+        <Navbar />
+      ) : userType === "buyer" ? (
+        <Navbar_Buyer />
+      ) : (
+        <Navbar_Home />
+      )}
 
       <div className="container">
         <div className="all-artworks-user">
@@ -144,9 +176,8 @@ const ArtistEditProduct = () => {
                       <div className="col-md-6 col-6">
                         <div className="buttons-follow">
                           <span
-                            className={`icon-heart ${
-                              isHeartFilled ? "filled" : ""
-                            }`}
+                            className={`icon-heart ${isHeartFilled ? "filled" : ""
+                              }`}
                             onClick={handleHeartClick}
                           >
                             {isHeartFilled ? <FaHeart /> : <FaRegHeart />}
@@ -173,26 +204,23 @@ const ArtistEditProduct = () => {
                   <div className="image-story-tap">
                     <div className="tabs">
                       <button
-                        className={`tab-link ${
-                          activeTab === "story" ? "active" : ""
-                        }`}
+                        className={`tab-link ${activeTab === "story" ? "active" : ""
+                          }`}
                         onClick={() => handleTabClick("story")}
                       >
                         Story
                       </button>
                       <button
-                        className={`tab-link ${
-                          activeTab === "specifications" ? "active" : ""
-                        }`}
+                        className={`tab-link ${activeTab === "specifications" ? "active" : ""
+                          }`}
                         onClick={() => handleTabClick("specifications")}
                       >
                         Specifications
                       </button>
                     </div>
                     <div
-                      className={`tab-content ${
-                        activeTab === "story" ? "active" : ""
-                      }`}
+                      className={`tab-content ${activeTab === "story" ? "active" : ""
+                        }`}
                       id="story-content"
                       style={{
                         display: activeTab === "story" ? "block" : "none",
@@ -210,9 +238,8 @@ const ArtistEditProduct = () => {
                     </div>
 
                     <div
-                      className={`tab-content ${
-                        activeTab === "specifications" ? "active" : ""
-                      }`}
+                      className={`tab-content ${activeTab === "specifications" ? "active" : ""
+                        }`}
                       id="specifications-content"
                       style={{
                         display:

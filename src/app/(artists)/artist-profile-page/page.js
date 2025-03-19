@@ -19,13 +19,39 @@ import SectionOrders from "@/components/artistsProfile/orders/Orders";
 import SectionCredit from "@/components/artistsProfile/credit/Credit";
 import SectionCollections from "@/components/artistsProfile/collections/Collections";
 import SectionAddresses from "@/components/artistsProfile/addresses/Addresses";
-import NavbarArtists from "@/components/all-navbars/NavbarArtists";
+import Navbar_Home from "@/components/all-navbars/NavbarHome";
+import Navbar_Buyer from "@/components/all-navbars/NavbarBuyer";
+import Navbar from "@/components/all-navbars/NavbarArtists";
 import Footer from "@/components/footer/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import "./profile.css";
+import axios from "axios";
 
 const MyProfilePage = () => {
+  const [userType, setUserType] = useState("guest");
+
+  useEffect(() => {
+    const fetchUserType = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+          withCredentials: true,
+        });
+        setUserType(response.data.user_type);
+      } catch (error) {
+        console.error("Error fetching user type:", error);
+      }
+    };
+
+    fetchUserType();
+  }, []);
   const [activeSection, setActiveSection] = useState("gallery");
   const [moreInfoActive, setMoreInfoActive] = useState(false);
   const [editProfileVisible, setEditProfileVisible] = useState(true);
@@ -96,7 +122,13 @@ const MyProfilePage = () => {
 
   return (
     <>
-      <NavbarArtists />
+      {userType === "artist" ? (
+        <Navbar />
+      ) : userType === "buyer" ? (
+        <Navbar_Buyer />
+      ) : (
+        <Navbar_Home />
+      )}
 
       <div className="header-artist-profile">
         <div className="overley"></div>

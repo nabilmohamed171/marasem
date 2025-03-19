@@ -1,9 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { FaRegHeart, FaHeart } from "react-icons/fa6";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import NavbarArtists from "@/components/all-navbars/NavbarArtists";
-import FilterPcFixed from "@/components/filterPc/FilterPcFixed";
+import Navbar_Home from "@/components/all-navbars/NavbarHome";
+import Navbar_Buyer from "@/components/all-navbars/NavbarBuyer";
+import Navbar from "@/components/all-navbars/NavbarArtists";
+import FilterPc from "@/components/filterPc/FilterPc";
 import CardsAllartworks from "@/components/cardsAllArtworks/CardsAllartworks";
 import Footer from "@/components/footer/Footer";
 import FooterAccordion from "@/components/footer/FooterAccordion";
@@ -14,6 +17,29 @@ import Link from "next/link";
 import "./product-details.css";
 
 const AllArtworks = () => {
+  const [userType, setUserType] = useState("guest");
+
+  useEffect(() => {
+    const fetchUserType = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+          withCredentials: true,
+        });
+        setUserType(response.data.user_type);
+      } catch (error) {
+        console.error("Error fetching user type:", error);
+      }
+    };
+
+    fetchUserType();
+  }, []);
   const [activeTab, setActiveTab] = useState("story");
   const [isCustomizeVisible, setIsCustomizeVisible] = useState(false);
   const [mainImage, setMainImage] = useState("/images/88.jpeg");
@@ -62,7 +88,13 @@ const AllArtworks = () => {
 
   return (
     <>
-      <NavbarArtists />
+      {userType === "artist" ? (
+        <Navbar />
+      ) : userType === "buyer" ? (
+        <Navbar_Buyer />
+      ) : (
+        <Navbar_Home />
+      )}
 
       <div className="container">
         <div className="all-artworks-user">
@@ -155,9 +187,8 @@ const AllArtworks = () => {
                       <div className="col-md-6 col-6">
                         <div className="buttons-follow">
                           <span
-                            className={`icon-heart ${
-                              isHeartFilled ? "filled" : ""
-                            }`}
+                            className={`icon-heart ${isHeartFilled ? "filled" : ""
+                              }`}
                             onClick={handleHeartClick}
                           >
                             {isHeartFilled ? <FaHeart /> : <FaRegHeart />}
@@ -199,26 +230,23 @@ const AllArtworks = () => {
                   <div className="image-story-tap">
                     <div className="tabs">
                       <button
-                        className={`tab-link ${
-                          activeTab === "story" ? "active" : ""
-                        }`}
+                        className={`tab-link ${activeTab === "story" ? "active" : ""
+                          }`}
                         onClick={() => handleTabClick("story")}
                       >
                         Story
                       </button>
                       <button
-                        className={`tab-link ${
-                          activeTab === "specifications" ? "active" : ""
-                        }`}
+                        className={`tab-link ${activeTab === "specifications" ? "active" : ""
+                          }`}
                         onClick={() => handleTabClick("specifications")}
                       >
                         Specifications
                       </button>
                     </div>
                     <div
-                      className={`tab-content ${
-                        activeTab === "story" ? "active" : ""
-                      }`}
+                      className={`tab-content ${activeTab === "story" ? "active" : ""
+                        }`}
                       id="story-content"
                       style={{
                         display: activeTab === "story" ? "block" : "none",
@@ -236,9 +264,8 @@ const AllArtworks = () => {
                     </div>
 
                     <div
-                      className={`tab-content ${
-                        activeTab === "specifications" ? "active" : ""
-                      }`}
+                      className={`tab-content ${activeTab === "specifications" ? "active" : ""
+                        }`}
                       id="specifications-content"
                       style={{
                         display:
@@ -267,7 +294,7 @@ const AllArtworks = () => {
         </div>
       </div>
 
-      <FilterPcFixed />
+      <FilterPc />
 
       <CardsAllartworks />
 
