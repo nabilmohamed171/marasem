@@ -18,8 +18,10 @@ import Link from "next/link";
 import "./navbar.css";
 import "./navbar-home.css";
 import axios from "axios";
+import { useCart } from "@/context/CartContext";
 
 const Navbar_Home = () => {
+  const { cartCount } = useCart();
   const [featuredCategories, setFeaturedCategories] = useState([]);
   const [featuredCollections, setFeaturedCollections] = useState([]);
 
@@ -243,14 +245,16 @@ const Navbar_Home = () => {
             </div>
           </div>
 
-          <div className="nav-cart">
-            <div className="cart-icon-react">
-              <CiShoppingCart />
+          <Link href="/cart">
+            <div className="nav-cart">
+              <div className="cart-icon-react">
+                <CiShoppingCart />
+              </div>
+              <div className="cart-number">
+                <span>{cartCount}</span>
+              </div>
             </div>
-            <div className="cart-number">
-              <span>0</span>
-            </div>
-          </div>
+          </Link>
           <div className="home-menu-mobile">
             <div className="container">
               <div className="box-menu">

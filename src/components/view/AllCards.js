@@ -10,8 +10,10 @@ import Link from "next/link";
 import axios from "axios";
 import "./all-cards.css";
 import Pagination from "@/components/paginations/Pagination";
+import { useCart } from "@/context/CartContext"; // Import cart context
 
 const SliderTags = () => {
+  const { setCartCount } = useCart();
   const sliderContentRef = useRef(null);
   const nextButtonRef = useRef(null);
   const [scrollAmount, setScrollAmount] = useState(0);
@@ -31,10 +33,37 @@ const SliderTags = () => {
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("term") || "";
 
+  const addToCart = async (artworkId, size) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("User not authenticated");
+      return;
+    }
+
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/cart",
+        { artwork_id: artworkId, size: size, quantity: 1 },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Fetch new cart count after adding item
+      const response = await axios.get("http://127.0.0.1:8000/api/cart",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCartCount(response.data.items_count);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
+
   // Fetch artworks from backend when currentPage or selectedTags change.
   useEffect(() => {
     const fetchArtworks = async () => {
+      console.log("Fetching with params:", searchParams.toString());
+
       try {
+        // Prepare request parameters
         const params = {
           limit: itemsPerPage,
           offset: (currentPage - 1) * itemsPerPage,
@@ -42,23 +71,38 @@ const SliderTags = () => {
 
         let endpoint = "http://127.0.0.1:8000/api/artworks";
 
-        if (searchTerm) {
+        // Get all search parameters
+        const term = searchParams.get("term");
+        const category = searchParams.get("category");
+        const location = searchParams.get("location");
+        const price = searchParams.get("price");
+        const forYou = searchParams.get("forYou");
+        const sort = searchParams.get("sort");
+
+        if (term) {
+          // If a term exists, perform a full-text search
           endpoint = "http://127.0.0.1:8000/api/search";
-          params.q = searchTerm;
+          params.q = term;
+        } else {
+          // If no term, apply filters
+          if (category) params.category = category;
+          if (location) params.location = location;
+          if (price) params.price = price;
+          if (forYou) params.forYou = forYou;
+          if (sort) params.sort = sort;
         }
 
         const response = await axios.get(endpoint, { params });
         setArtworksData(response.data.artworks);
         setTotalArtworks(response.data.total);
         setAllTags(response.data.tags);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching artworks", error);
       }
     };
 
     fetchArtworks();
-  }, [currentPage, selectedTags, searchTerm]);
+  }, [currentPage, selectedTags, searchParams.toString()]);
 
   useEffect(() => {
     const fetchLikedArtworks = async () => {
@@ -268,18 +312,25 @@ const SliderTags = () => {
                         </div>
                       </Link>
                       <div className="overley-info">
-                        <div className="add-cart">
-                          <span className="cart-shopping main-color">
-                            <Link href="#" className="reser-link">
-                              <HiOutlineShoppingBag />
-                            </Link>
-                          </span>
-                          <span className="plus">
-                            <Link href="#" className="reser-link">
-                              <GoPlus />
-                            </Link>
-                          </span>
-                        </div>
+                      <div className="add-cart"
+                        style={{ cursor: "pointer" }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addToCart(artwork.id, Object.keys(artwork.sizes_prices)[0]);
+                        }}>
+                        <span className="cart-shopping">
+                          <i
+                            className="reser-link"
+                          >
+                            <HiOutlineShoppingBag />
+                          </i>
+                        </span>
+                        <span className="plus">
+                          <i className="reser-link">
+                            <GoPlus />
+                          </i>
+                        </span>
+                      </div>
                         <span className="heart">
                           <Link
                             href="#"

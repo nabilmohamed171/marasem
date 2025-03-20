@@ -20,12 +20,13 @@ import PopupSearch from "@/components/popupSearch/PopupSearch";
 import "./navbar.css";
 import "./navbar-artist.css";
 import axios from "axios";
+import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
   const router = useRouter();
+  const { cartCount } = useCart();
   const [user, setUser] = useState({}); // Store user data
   const [notificationsCount, setNotificationsCount] = useState(0);
-  const [cartItemsCount, setCartItemsCount] = useState(0);
   const [featuredCategories, setFeaturedCategories] = useState([]);
   const [featuredCollections, setFeaturedCollections] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -46,7 +47,6 @@ export default function Navbar() {
         const userData = response.data;
         setUser(userData.user);
         setNotificationsCount(userData.notifications_count || 0);
-        setCartItemsCount(userData.cart_items_count || 0);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -358,14 +358,16 @@ export default function Navbar() {
             </div>
           </div>
           <div className="nav-hr"></div>
-          <div className="nav-cart">
-            <div className="cart-icon-react">
-              <CiShoppingCart />
+          <Link href="/cart">
+            <div className="nav-cart">
+              <div className="cart-icon-react">
+                <CiShoppingCart />
+              </div>
+              <div className="cart-number">
+                <span>{cartCount}</span>
+              </div>
             </div>
-            <div className="cart-number">
-              <span>{cartItemsCount}</span>
-            </div>
-          </div>
+          </Link>
 
           <div className="artist-menu-mobile">
             <div className="container">
@@ -529,9 +531,11 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-      {isPopupSearchOpen && (
-        <PopupSearch setIsPopupSearchOpen={setIsPopupSearchOpen} />
-      )}
-    </nav>
+      {
+        isPopupSearchOpen && (
+          <PopupSearch setIsPopupSearchOpen={setIsPopupSearchOpen} />
+        )
+      }
+    </nav >
   );
 }

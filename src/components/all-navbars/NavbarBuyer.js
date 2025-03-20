@@ -20,12 +20,13 @@ import "./navbar.css";
 import "./navbar-puyer.css";
 import axios from "axios";
 import { useRouter } from "next/navigation"; // For navigation after logout
+import { useCart } from "@/context/CartContext";
 
 const Navbar_Buyer = () => {
   const router = useRouter();
   const [user, setUser] = useState({}); // Store user data
+  const { cartCount } = useCart();
   const [notificationsCount, setNotificationsCount] = useState(0);
-  const [cartItemsCount, setCartItemsCount] = useState(0);
   const [featuredCategories, setFeaturedCategories] = useState([]);
   const [featuredCollections, setFeaturedCollections] = useState([]);
   const [isStickyNavbar, setIsStickyNavbar] = useState(false);
@@ -72,7 +73,6 @@ const Navbar_Buyer = () => {
         const userData = response.data;
         setUser(userData.user);
         setNotificationsCount(userData.notifications_count || 0);
-        setCartItemsCount(userData.cart_items_count || 0);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -341,14 +341,16 @@ const Navbar_Buyer = () => {
             </div>
           </div>
           <div className="nav-hr"></div>
-          <div className="nav-cart">
-            <div className="cart-icon-react">
-              <CiShoppingCart />
+          <Link href="/cart">
+            <div className="nav-cart">
+              <div className="cart-icon-react">
+                <CiShoppingCart />
+              </div>
+              <div className="cart-number">
+                <span>{cartCount}</span>
+              </div>
             </div>
-            <div className="cart-number">
-              <span>0</span>
-            </div>
-          </div>
+          </Link>
           <div className="puyer-menu-mobile">
             <div className="container">
               <div className="box-menu">

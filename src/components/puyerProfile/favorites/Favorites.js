@@ -5,6 +5,7 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
 import Link from "next/link";
 import Image from "next/image";
+import { useCart } from "@/context/CartContext"; // Import cart context
 
 const items = [
   {
@@ -64,14 +65,39 @@ const items = [
 ];
 
 const Favorites = ({ items }) => {
+  const { setCartCount } = useCart();
   const [favorites, setFavorites] = useState(items);
   const [likedArtworks, setLikedArtworks] = useState(new Set());
-  
+
+  const addToCart = async (artworkId, size) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("User not authenticated");
+      return;
+    }
+
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/cart",
+        { artwork_id: artworkId, size: size, quantity: 1 },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Fetch new cart count after adding item
+      const response = await axios.get("http://127.0.0.1:8000/api/cart",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCartCount(response.data.items_count);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchLikedArtworks = async () => {
       const token = localStorage.getItem("authToken");
       if (!token) return;
-  
+
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
           headers: { Authorization: `Bearer ${token}` },
@@ -83,17 +109,17 @@ const Favorites = ({ items }) => {
     };
     fetchLikedArtworks();
   }, []);
-  
+
   const toggleLike = async (artworkId) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
       console.log("You must be logged in to like artworks.");
       return;
     }
-  
+
     const isLiked = likedArtworks.has(artworkId);
     const url = `http://127.0.0.1:8000/api/artworks/${artworkId}/like`;
-  
+
     try {
       if (isLiked) {
         await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
@@ -129,16 +155,23 @@ const Favorites = ({ items }) => {
                 />
               </div>
               <div className="overley-info">
-                <div className="add-cart">
+                <div className="add-cart"
+                  style={{ cursor: "pointer" }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    addToCart(artwork.id, Object.keys(artwork.sizes_prices)[0]);
+                  }}>
                   <span className="cart-shopping">
-                    <Link href="#" className="reser-link">
+                    <i
+                      className="reser-link"
+                    >
                       <HiOutlineShoppingBag />
-                    </Link>
+                    </i>
                   </span>
                   <span className="plus">
-                    <Link href="#" className="reser-link">
+                    <i className="reser-link">
                       <GoPlus />
-                    </Link>
+                    </i>
                   </span>
                 </div>
                 <span className="heart">

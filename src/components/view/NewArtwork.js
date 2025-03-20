@@ -10,8 +10,10 @@ import Image from "next/image";
 import "swiper/css";
 import "./most-views.css";
 import axios from "axios";
+import { useCart } from "@/context/CartContext"; // Import cart context
 
 const NewArtwork = () => {
+  const { setCartCount } = useCart();
   const [artworks, setArtworks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [likedArtworks, setLikedArtworks] = useState(new Set());
@@ -73,6 +75,30 @@ const NewArtwork = () => {
     }
   };
 
+  const addToCart = async (artworkId, size) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("User not authenticated");
+      return;
+    }
+
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/cart",
+        { artwork_id: artworkId, size: size, quantity: 1 },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Fetch new cart count after adding item
+      const response = await axios.get("http://127.0.0.1:8000/api/cart",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCartCount(response.data.items_count);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
+
   if (loading) {
     return <div>Loading artworks...</div>;
   }
@@ -82,7 +108,7 @@ const NewArtwork = () => {
       <div className="container">
         <div className="see-all">
           <h2>New Artwork</h2>
-          <Link href="/collections">
+          <Link href="/shoop-art">
             See All <IoIosArrowForward />
           </Link>
         </div>
@@ -114,16 +140,23 @@ const NewArtwork = () => {
                       </div>
                     </Link>
                     <div className="overley-info">
-                      <div className="add-cart">
+                      <div className="add-cart"
+                        style={{ cursor: "pointer" }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addToCart(artwork.id, Object.keys(artwork.sizes_prices)[0]);
+                        }}>
                         <span className="cart-shopping">
-                          <Link href="#" className="reser-link">
+                          <i
+                            className="reser-link"
+                          >
                             <HiOutlineShoppingBag />
-                          </Link>
+                          </i>
                         </span>
                         <span className="plus">
-                          <Link href="#" className="reser-link">
+                          <i className="reser-link">
                             <GoPlus />
-                          </Link>
+                          </i>
                         </span>
                       </div>
                       <span className="heart">

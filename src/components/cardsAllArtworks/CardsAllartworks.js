@@ -8,12 +8,38 @@ import Link from "next/link";
 import axios from "axios";
 import "./cards-allartworks.css";
 import { useSearchParams } from "next/navigation";
+import { useCart } from "@/context/CartContext"; // Import cart context
 
 const CardsAllartworks = ({ stickyArtwork }) => {
+  const { setCartCount } = useCart();
   const searchParams = useSearchParams();
   const artworkId = searchParams.get("id");
   const [likedArtworks, setLikedArtworks] = useState(new Set());
   const [relatedArtworks, setRelatedArtworks] = useState([]);
+
+  const addToCart = async (artworkId, size) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("User not authenticated");
+      return;
+    }
+
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/cart",
+        { artwork_id: artworkId, size: size, quantity: 1 },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Fetch new cart count after adding item
+      const response = await axios.get("http://127.0.0.1:8000/api/cart",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCartCount(response.data.items_count);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchLikedArtworks = async () => {
@@ -94,12 +120,23 @@ const CardsAllartworks = ({ stickyArtwork }) => {
                       loading="lazy"
                     />
                     <div className="overley-info">
-                      <div className="add-cart">
-                        <span className="cart-shopping main-color">
-                          <HiOutlineShoppingBag />
+                      <div className="add-cart"
+                        style={{ cursor: "pointer" }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addToCart(artwork.id, Object.keys(artwork.sizes_prices)[0]);
+                        }}>
+                        <span className="cart-shopping">
+                          <i
+                            className="reser-link"
+                          >
+                            <HiOutlineShoppingBag />
+                          </i>
                         </span>
                         <span className="plus">
-                          <GoPlus />
+                          <i className="reser-link">
+                            <GoPlus />
+                          </i>
                         </span>
                       </div>
                       <span className="heart">

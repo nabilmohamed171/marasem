@@ -7,10 +7,36 @@ import { GoPlus } from "react-icons/go";
 import { FaRegHeart } from "react-icons/fa";
 import "./main-cover.css";
 import axios from "axios";
+import { useCart } from "@/context/CartContext"; // Import cart context
 
 const MainCover = () => {
+  const { setCartCount } = useCart();
   const [headerData, setHeaderData] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const addToCart = async (artworkId, size) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("User not authenticated");
+      return;
+    }
+
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/cart",
+        { artwork_id: artworkId, size: size, quantity: 1 },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Fetch new cart count after adding item
+      const response = await axios.get("http://127.0.0.1:8000/api/cart",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCartCount(response.data.items_count);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
 
   // Fetch header data from the backend
   useEffect(() => {
@@ -120,12 +146,23 @@ const MainCover = () => {
                       <FaRegHeart />
                     </span>
                   </div>
-                  <div className="add-cart">
+                  <div className="add-cart"
+                    style={{ cursor: "pointer" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      addToCart(artwork.id, Object.keys(artwork.sizes_prices)[0]);
+                    }}>
                     <span className="cart-shopping">
-                      <HiOutlineShoppingBag />
+                      <i
+                        className="reser-link"
+                      >
+                        <HiOutlineShoppingBag />
+                      </i>
                     </span>
                     <span className="plus">
-                      <GoPlus />
+                      <i className="reser-link">
+                        <GoPlus />
+                      </i>
                     </span>
                   </div>
                 </div>
@@ -141,7 +178,7 @@ const MainCover = () => {
                   </span>
                   <div className="user">
                     <div className="user-image">
-                      <Link href="#">
+                      <Link href={"/artist-profile?id=" + recentArtwork.artist.id}>
                         <Image
                           src={recentArtwork.artist ? recentArtwork.artist.profile_picture : "/images/avatar.avif"}
                           alt="User Avatar"
@@ -187,7 +224,7 @@ const MainCover = () => {
               <div key={category.id} className="col-md-4">
                 <div className="image-header x-small">
                   <div className="overley-o-b"></div>
-                  <Link href={`/product-list?category=${category.id}`}>
+                  <Link href={`/shop-art?term=${category.name}`}>
                     <Image
                       className="x-small-imge"
                       // Use a category image if available; otherwise use a default image.
@@ -201,7 +238,7 @@ const MainCover = () => {
                   </Link>
                   <div className="x-small-info">
                     <h2>
-                      <Link href={`/product-list?category=${category.id}`}>
+                      <Link href={`/shop-art?term=${category.name}`}>
                         {category.name}
                       </Link>
                     </h2>

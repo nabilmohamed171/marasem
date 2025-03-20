@@ -48,7 +48,6 @@ const AllArtworks = () => {
         setLiked(response.data.liked); // Set like status
         setFollowed(response.data.artist.followed);
         setLoading(false);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching artwork details:", error);
         setLoading(false);
