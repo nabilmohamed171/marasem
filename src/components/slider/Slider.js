@@ -59,7 +59,7 @@ export const SliderCategory = () => {
         >
           {sliderItems.map((item, index) => (
             <SwiperSlide key={index}>
-              <Link className="reser-link" href={"#" ?? '/tag?id='+ item.id}>
+              <Link className="reser-link" href={'/shop-art?term='+ item.name}>
                 <Image
                   src={item.src}
                   alt={item.alt}

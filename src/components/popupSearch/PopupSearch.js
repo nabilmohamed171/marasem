@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { IoSearchOutline, IoClose } from "react-icons/io5";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import axios from "axios";
 import "./search.css";
 
@@ -10,6 +10,8 @@ const PopupSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [tags, setTags] = useState([]);
   const router = useRouter();
+  const pathname = usePathname(); // Get the current route
+  const searchParams = useSearchParams(); // Get existing query params
 
   useEffect(() => {
     const fetchTags = async () => {
@@ -33,15 +35,27 @@ const PopupSearch = () => {
     }
   };
 
+  const navigateToSearch = (query) => {
+    const newUrl = `/shop-art?term=${encodeURIComponent(query)}`;
+
+    if (pathname === "/shop-art") {
+      router.replace(newUrl);
+    } else {
+      // If navigating from another page, just update the URL
+      router.push(newUrl);
+    }
+    setIsVisible(false);
+  };
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/shop-art?q=${encodeURIComponent(searchQuery)}`);
+      navigateToSearch(searchQuery);
     }
   };
 
   const handleTagClick = (tag) => {
-    router.push(`/shop-art?q=${encodeURIComponent(tag)}`);
+    navigateToSearch(tag);
   };
 
   if (!isVisible) return null;

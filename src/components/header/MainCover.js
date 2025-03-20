@@ -69,7 +69,7 @@ const MainCover = () => {
                       <li key={subcat.id} className="full-link">
                         <Link
                           className="reser-link"
-                          href={`/product-list?subcategory=${subcat.id}`}
+                          href={`/shop-art?term=${subcat.name}`}
                         >
                           {subcat.name}
                         </Link>

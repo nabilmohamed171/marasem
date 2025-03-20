@@ -15,9 +15,95 @@ import FindMobile from "@/components/filterMobile/FindMobile";
 import Image from "next/image";
 import Link from "next/link";
 import "./product-details.css";
+import { useSearchParams } from "next/navigation";
 
 const AllArtworks = () => {
-  const [userType, setUserType] = useState("guest");
+  const searchParams = useSearchParams();
+  const artworkId = searchParams.get("id"); // Get artwork ID from URL
+  const [userType, setUserType] = useState(null);
+  const [artwork, setArtwork] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [liked, setLiked] = useState(false);
+  const [isCustomizeVisible, setIsCustomizeVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState("story");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [mainImage, setMainImage] = useState(null);
+  const [isFollowActive, setIsFollowActive] = useState(false);
+  const [followed, setFollowed] = useState(false);
+
+  useEffect(() => {
+    if (!artworkId) return;
+
+    const fetchArtwork = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/artworks/${artworkId}/view`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setArtwork(response.data);
+        setMainImage(response.data.photos[0]); // Set first image as default
+        setLiked(response.data.liked); // Set like status
+        setFollowed(response.data.artist.followed);
+        setLoading(false);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching artwork details:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchArtwork();
+  }, [artworkId]);
+
+  const toggleLike = async (artworkId) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.error("User not authenticated");
+      return;
+    }
+    const isLiked = liked;
+    try {
+      if (isLiked) {
+        await axios.delete(`http://127.0.0.1:8000/api/artworks/${artworkId}/like`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setLiked(false);
+      } else {
+        await axios.post(`http://127.0.0.1:8000/api/artworks/${artworkId}/like`, {}, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setLiked(true);
+      }
+    } catch (error) {
+      console.error("Error toggling like:", error);
+    }
+  };
+
+  const toggleFollow = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.error("User not authenticated");
+      return;
+    }
+    try {
+      if (followed) {
+        await axios.post(`http://127.0.0.1:8000/api/artists/${artwork.artist.id}/unfollow`, {}, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setFollowed(false);
+      } else {
+        await axios.post(`http://127.0.0.1:8000/api/artists/${artwork.artist.id}/follow`, {}, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setFollowed(true);
+      }
+    } catch (error) {
+      console.error("Error toggling follow:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchUserType = async () => {
@@ -40,12 +126,6 @@ const AllArtworks = () => {
 
     fetchUserType();
   }, []);
-  const [activeTab, setActiveTab] = useState("story");
-  const [isCustomizeVisible, setIsCustomizeVisible] = useState(false);
-  const [mainImage, setMainImage] = useState("/images/88.jpeg");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFollowActive, setIsFollowActive] = useState(false);
-  const [isHeartFilled, setIsHeartFilled] = useState(false);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -59,33 +139,21 @@ const AllArtworks = () => {
     setMainImage(imageSrc);
   };
 
-  const thumbnails = [
-    "/images/88.jpeg",
-    "/images/view 1.png",
-    "/images/view 2.png",
-    "/images/view 3.png",
-  ];
-
   const handleNext = () => {
-    const newIndex = (currentIndex + 1) % thumbnails.length;
+    const newIndex = (currentIndex + 1) % artwork.photos;
     setCurrentIndex(newIndex);
-    setMainImage(thumbnails[newIndex]);
+    setMainImage(artwork.photos[newIndex]);
   };
 
   const handlePrevious = () => {
-    const newIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+    const newIndex = (currentIndex - 1 + artwork.photos.length) % artwork.photos.length;
     setCurrentIndex(newIndex);
-    setMainImage(thumbnails[newIndex]);
+    setMainImage(artwork.photos[newIndex]);
   };
 
-  const handleFollowClick = () => {
-    setIsFollowActive(!isFollowActive);
-  };
-
-  const handleHeartClick = () => {
-    setIsHeartFilled(!isHeartFilled);
-  };
-
+  if (loading) {
+    return <div>Loading artwork details...</div>;
+  }
   return (
     <>
       {userType === "artist" ? (
@@ -106,22 +174,22 @@ const AllArtworks = () => {
           <div className="container-all-artworks-user">
             <div className="path">
               <p>
-                <Link className="reser-link" href="/collections">
+                <Link className="reser-link" href="/shop-art">
                   All Artworks
                 </Link>
                 <IoIosArrowForward />
-                <Link className="reser-link" href="/artist-profile">
-                  Omer Mohsen
+                <Link className="reser-link" href={"/artist-profile?id=" + artwork.artist.id}>
+                  {artwork.artist.first_name + " " + artwork.artist.last_name}
                 </Link>
                 <IoIosArrowForward />
-                <span className="main-color"> Balzi Rossi</span>
+                <span className="main-color">{artwork.name}</span>
               </p>
             </div>
             <div className="all-artworks">
               <div className="row">
                 <div className="col-md-2 col-12 d-none d-md-block">
                   <div className="left-images">
-                    {thumbnails.map((src, index) => (
+                    {artwork.photos.map((src, index) => (
                       <div
                         key={index}
                         className="images"
@@ -152,7 +220,7 @@ const AllArtworks = () => {
                       </button>
                     </div>
                     <Image
-                      src={mainImage}
+                      src={artwork.photos[0]}
                       alt="Main artwork"
                       width={395}
                       height={475}
@@ -169,7 +237,7 @@ const AllArtworks = () => {
                       <div className="col-md-6 col-6">
                         <div className="user-name">
                           <Image
-                            src="/images/avatar2.png"
+                            src={artwork.artist.profile_picture}
                             alt="Avatar"
                             width={50}
                             height={50}
@@ -179,25 +247,18 @@ const AllArtworks = () => {
                           />
                         </div>
                         <span>
-                          <Link className="reser-link" href="/artist-profile">
-                            Omer Mohsen
+                          <Link className="reser-link" href={"/artist-profile?id=" + artwork.artist.id}>
+                            {artwork.artist.first_name + " " + artwork.artist.last_name}
                           </Link>
                         </span>
                       </div>
                       <div className="col-md-6 col-6">
                         <div className="buttons-follow">
-                          <span
-                            className={`icon-heart ${isHeartFilled ? "filled" : ""
-                              }`}
-                            onClick={handleHeartClick}
-                          >
-                            {isHeartFilled ? <FaHeart /> : <FaRegHeart />}
+                          <span className="icon-heart" onClick={() => toggleLike(artwork.id)}>
+                            {liked ? <FaHeart color="red" /> : <FaRegHeart />}
                           </span>
-                          <button
-                            className={isFollowActive ? "follow-active" : ""}
-                            onClick={handleFollowClick}
-                          >
-                            {isFollowActive ? "Unfollow" : "+ Follow"}
+                          <button className={followed ? "follow-active" : ""} onClick={toggleFollow}>
+                            {followed ? "Unfollow" : "+ Follow"}
                           </button>
                         </div>
                       </div>
@@ -205,23 +266,27 @@ const AllArtworks = () => {
                   </div>
 
                   <div className="image-heading">
-                    <h2>Balzi Rossi Oil Painting</h2>
-                    <p>20 x 29 x 3.5 cm , 2024 , 48/58 Lnk On Paper</p>
+                    <h2>{artwork.name}</h2>
+                    <p>{Object.keys(artwork.sizes_prices)[0]}</p>
                   </div>
                   <div className="price-custom">
                     <div className="row">
                       <div className="col-md-4 col-4">
                         <p>Price</p>
-                        <h3>EGP 2.500</h3>
+                        <h3>EGP {Object.values(artwork.sizes_prices)[0]}</h3>
                       </div>
                       <div className="col-md-8 col-12">
                         <div className="custom-buttons">
-                          <button onClick={toggleCustomizeArtwork}>
-                            Customize
-                          </button>
+                          {artwork.artwork_status !== "ready_to_ship" ? (
+                            <button onClick={toggleCustomizeArtwork}>
+                              Customize
+                            </button>
+                          ) : (
+                            ""
+                          )}
 
-                          <button disabled>
-                            <Link href="/cart"></Link>Own It
+                          <button>
+                            <Link href="/cart" style={{ color: "inherit", textDecoration: "none" }}>Own It</Link>
                           </button>
                         </div>
                       </div>
@@ -253,13 +318,7 @@ const AllArtworks = () => {
                       }}
                     >
                       <p>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                      </p>
-                      <p>
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book.
+                        {artwork.description}
                       </p>
                     </div>
 
@@ -275,13 +334,15 @@ const AllArtworks = () => {
                       <table className="table table-striped table-dark">
                         <tbody>
                           <tr>
-                            <td>Variant</td>
-                            <td>Oil Painting</td>
+                            <td>Artwork Type</td>
+                            <td>{artwork.art_type}</td>
                           </tr>
-                          <tr>
-                            <td>Type</td>
-                            <td>Lace, Leather</td>
-                          </tr>
+                          {artwork.artwork_status !== "ready_to_ship" && (
+                            <tr>
+                              <td>Customization Duration</td>
+                              <td>{artwork.duration}</td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
                     </div>
@@ -296,7 +357,7 @@ const AllArtworks = () => {
 
       <FilterPc />
 
-      <CardsAllartworks />
+      <CardsAllartworks stickyArtwork={artwork} />
 
       {isCustomizeVisible && <CustomizeArtwork />}
 

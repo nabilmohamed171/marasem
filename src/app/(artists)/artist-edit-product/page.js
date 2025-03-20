@@ -1,45 +1,51 @@
 "use client";
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { FaRegHeart, FaHeart } from "react-icons/fa6";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import Navbar_Home from "@/components/all-navbars/NavbarHome";
-import Navbar_Buyer from "@/components/all-navbars/NavbarBuyer";
 import Navbar from "@/components/all-navbars/NavbarArtists";
 import Footer from "@/components/footer/Footer";
 import FooterAccordion from "@/components/footer/FooterAccordion";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import "./artist-edit-product.css";
+import { Router } from "next/router";
 
 const ArtistEditProduct = () => {
-  const [userType, setUserType] = useState("guest");
+  const searchParams = useSearchParams();
+  const artworkId = searchParams.get("id"); // Get artwork ID from URL
+  const [artwork, setArtwork] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("story");
+  const [mainImage, setMainImage] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const fetchUserType = async () => {
-      const token = localStorage.getItem("authToken");
-      if (!token) return;
+    if (!artworkId) return;
 
+    const fetchArtwork = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-          withCredentials: true,
-        });
-        setUserType(response.data.user_type);
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/artworks/${artworkId}/view`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        if (response.data.artist.id != JSON.parse(localStorage.getItem("user"))["id"]) {
+          window.location.href = "/";
+        }
+        setArtwork(response.data);
+        setMainImage(response.data.photos[0]); // Set first image as default
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching user type:", error);
+        console.error("Error fetching artwork details:", error);
+        setLoading(false);
       }
     };
 
-    fetchUserType();
-  }, []);
-  const [activeTab, setActiveTab] = useState("story");
-  const [mainImage, setMainImage] = useState("/images/88.jpeg");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHeartFilled, setIsHeartFilled] = useState(false);
+    fetchArtwork();
+  }, [artworkId]);
 
   const handleTabClick = useCallback((tab) => {
     setActiveTab(tab);
@@ -49,65 +55,50 @@ const ArtistEditProduct = () => {
     setMainImage(imageSrc);
   }, []);
 
-  const thumbnails = [
-    "/images/88.jpeg",
-    "/images/view 1.png",
-    "/images/view 2.png",
-    "/images/view 3.png",
-  ];
-
   const handleNext = useCallback(() => {
-    const newIndex = (currentIndex + 1) % thumbnails.length;
+    if (!artwork) return;
+    const newIndex = (currentIndex + 1) % artwork.photos.length;
     setCurrentIndex(newIndex);
-    setMainImage(thumbnails[newIndex]);
-  }, [currentIndex, thumbnails]);
+    setMainImage(artwork.photos[newIndex]);
+  }, [currentIndex, artwork]);
 
   const handlePrevious = useCallback(() => {
-    const newIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+    if (!artwork) return;
+    const newIndex = (currentIndex - 1 + artwork.photos.length) % artwork.photos.length;
     setCurrentIndex(newIndex);
-    setMainImage(thumbnails[newIndex]);
-  }, [currentIndex, thumbnails]);
+    setMainImage(artwork.photos[newIndex]);
+  }, [currentIndex, artwork]);
 
-  const handleHeartClick = useCallback(() => {
-    setIsHeartFilled((prev) => !prev);
-  }, []);
+  if (loading) {
+    return <div>Loading artwork details...</div>;
+  }
 
   return (
     <>
-      {userType === "artist" ? (
-        <Navbar />
-      ) : userType === "buyer" ? (
-        <Navbar_Buyer />
-      ) : (
-        <Navbar_Home />
-      )}
+      <Navbar />
 
       <div className="container">
         <div className="all-artworks-user">
           <span className="prev">
-            <Link className="reser-link" href="/collections">
+            <Link className="reser-link" href="/artist-profile-page">
               <IoIosArrowBack />
             </Link>
           </span>
           <div className="container-all-artworks-user">
             <div className="path">
               <p>
-                <Link className="reser-link" href="/collections">
-                  All Artworks
+                <Link className="reser-link" href="/artist-profile-page">
+                  My Artworks
                 </Link>
                 <IoIosArrowForward />
-                <Link className="reser-link" href="/artist-profile">
-                  Omer Mohsen
-                </Link>
-                <IoIosArrowForward />
-                <span className="main-color">Balzi Rossi</span>
+                <span className="main-color">{artwork.name}</span>
               </p>
             </div>
             <div className="all-artworks">
               <div className="row">
                 <div className="col-md-2 col-12 d-none d-md-block">
                   <div className="left-images">
-                    {thumbnails.map((src, index) => (
+                    {artwork.photos.map((src, index) => (
                       <div
                         key={index}
                         className="images"
@@ -120,8 +111,7 @@ const ArtistEditProduct = () => {
                           height={108}
                           quality={70}
                           className="flex-r-image"
-                          priority={index === 0}
-                          loading={index === 0 ? "eager" : "lazy"}
+                          loading="lazy"
                         />
                       </div>
                     ))}
@@ -158,8 +148,8 @@ const ArtistEditProduct = () => {
                       <div className="col-md-6 col-6">
                         <div className="user-name">
                           <Image
-                            src="/images/avatar2.png"
-                            alt="Avatar"
+                            src={artwork.artist.profile_picture}
+                            alt="Artist Avatar"
                             width={50}
                             height={50}
                             quality={70}
@@ -168,93 +158,74 @@ const ArtistEditProduct = () => {
                           />
                         </div>
                         <span>
-                          <Link className="reser-link" href="/artist-profile">
-                            Omer Mohsen
-                          </Link>
+                          {artwork.artist.first_name} {artwork.artist.last_name}
                         </span>
                       </div>
                       <div className="col-md-6 col-6">
                         <div className="buttons-follow">
-                          <span
-                            className={`icon-heart ${isHeartFilled ? "filled" : ""
-                              }`}
-                            onClick={handleHeartClick}
-                          >
-                            {isHeartFilled ? <FaHeart /> : <FaRegHeart />}
-                          </span>
-                          <button className="edit-artwork">Edit Artwork</button>
+                          <Link href={`/edit-artwork?id=${artwork.id}`}>
+                            <button className="edit-artwork">Edit Artwork
+                            </button>
+                          </Link>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <div className="image-heading">
-                    <h2>Balzi Rossi Oil Painting</h2>
-                    <p>20 x 29 x 3.5 cm , 2024 , 48/58 Lnk On Paper</p>
-                    <p className="custom">This artwork Customizable</p>
+                    <h2>{artwork.name} - {artwork.art_type}</h2>
+                    <p>Dimensions: {Object.keys(artwork.sizes_prices)[0]}</p>
+                    <p className="custom">
+                      {artwork.artwork_status !== "ready_to_ship"
+                        ? "This artwork is customizable"
+                        : "This artwork is ready to ship"}
+                    </p>
                   </div>
                   <div className="price-custom">
                     <div className="row">
                       <div className="col-12">
                         <p>Price</p>
-                        <h3>EGP 2.500</h3>
+                        <h3>EGP {Object.values(artwork.sizes_prices)[0]}</h3>
                       </div>
                     </div>
                   </div>
                   <div className="image-story-tap">
                     <div className="tabs">
                       <button
-                        className={`tab-link ${activeTab === "story" ? "active" : ""
-                          }`}
+                        className={`tab-link ${activeTab === "story" ? "active" : ""}`}
                         onClick={() => handleTabClick("story")}
                       >
                         Story
                       </button>
                       <button
-                        className={`tab-link ${activeTab === "specifications" ? "active" : ""
-                          }`}
+                        className={`tab-link ${activeTab === "specifications" ? "active" : ""}`}
                         onClick={() => handleTabClick("specifications")}
                       >
                         Specifications
                       </button>
                     </div>
                     <div
-                      className={`tab-content ${activeTab === "story" ? "active" : ""
-                        }`}
+                      className={`tab-content ${activeTab === "story" ? "active" : ""}`}
                       id="story-content"
-                      style={{
-                        display: activeTab === "story" ? "block" : "none",
-                      }}
+                      style={{ display: activeTab === "story" ? "block" : "none" }}
                     >
-                      <p>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                      </p>
-                      <p>
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book.
-                      </p>
+                      <p>{artwork.description}</p>
                     </div>
 
                     <div
-                      className={`tab-content ${activeTab === "specifications" ? "active" : ""
-                        }`}
+                      className={`tab-content ${activeTab === "specifications" ? "active" : ""}`}
                       id="specifications-content"
-                      style={{
-                        display:
-                          activeTab === "specifications" ? "block" : "none",
-                      }}
+                      style={{ display: activeTab === "specifications" ? "block" : "none" }}
                     >
                       <table className="table table-striped table-dark">
                         <tbody>
                           <tr>
                             <td>Variant</td>
-                            <td>Oil Painting</td>
+                            <td>{artwork.art_type}</td>
                           </tr>
                           <tr>
                             <td>Type</td>
-                            <td>Lace, Leather</td>
+                            <td>{artwork.medium}</td>
                           </tr>
                         </tbody>
                       </table>

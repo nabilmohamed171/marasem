@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IoIosArrowForward } from "react-icons/io";
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart } from "react-icons/fa"; // Import both icons
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
 import Link from "next/link";
@@ -17,6 +17,7 @@ import axios from "axios";
 const MostReview = () => {
   const [artworks, setArtworks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [likedArtworks, setLikedArtworks] = useState(new Set());
 
   useEffect(() => {
     axios
@@ -30,6 +31,50 @@ const MostReview = () => {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    const fetchLikedArtworks = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setLikedArtworks(new Set(response.data.likedArtworks)); // ✅ Store IDs as a Set
+      } catch (error) {
+        console.error("Error fetching liked artworks:", error);
+      }
+    };
+    fetchLikedArtworks();
+  }, []);
+
+  const toggleLike = async (artworkId) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("You must be logged in to like artworks.");
+      return;
+    }
+
+    const isLiked = likedArtworks.has(artworkId);
+    const url = `http://127.0.0.1:8000/api/artworks/${artworkId}/like`;
+
+    try {
+      if (isLiked) {
+        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
+        setLikedArtworks((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(artworkId);
+          return newSet;
+        });
+      } else {
+        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` } });
+        setLikedArtworks((prev) => new Set(prev).add(artworkId));
+      }
+    } catch (error) {
+      console.error("Error toggling like:", error);
+    }
+  };
 
   if (loading) {
     return <div>Loading artworks...</div>;
@@ -93,10 +138,17 @@ const MostReview = () => {
                         </span>
                       </div>
                       <span className="heart">
-                        <Link href="#" className="reser-link">
-                          <FaRegHeart />
-                        </Link>
-                      </span>
+                          <Link
+                            href="#"
+                            className="reser-link"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              toggleLike(artwork.id);
+                            }}
+                          >
+                            {likedArtworks.has(artwork.id) ? <FaHeart color="red" /> : <FaRegHeart />}
+                          </Link>
+                        </span>
                       <div className="user-art">
                         <div className="user-image">
                           <Link href={artwork.artistLink}>

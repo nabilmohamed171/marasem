@@ -7,7 +7,7 @@ import { HiOutlineBars3BottomRight } from "react-icons/hi2";
 import { LuMapPin } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
 import { IoIosArrowForward } from "react-icons/io";
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart } from "react-icons/fa"; // Import both icons
 import { LiaMapMarkedAltSolid } from "react-icons/lia";
 import { CgNotes } from "react-icons/cg";
 import { TbCreditCard } from "react-icons/tb";
@@ -26,6 +26,7 @@ const Navbar_Home = () => {
   const [isStickyNavbar, setIsStickyNavbar] = useState(false);
   const [isPopupSearchOpen, setIsPopupSearchOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [likedArtworks, setLikedArtworks] = useState(new Set());
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -73,6 +74,23 @@ const Navbar_Home = () => {
     { name: "EGP 5,000 to 10,000", href: "#" },
     { name: "EGP 10,000 & Over", href: "#" },
   ];
+
+  useEffect(() => {
+    const fetchLikedArtworks = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setLikedArtworks(new Set(response.data.likedArtworks)); // ✅ Store IDs as a Set
+      } catch (error) {
+        console.error("Error fetching liked artworks:", error);
+      }
+    };
+    fetchLikedArtworks();
+  }, []);
 
   return (
     <nav
@@ -137,7 +155,7 @@ const Navbar_Home = () => {
                                     <li key={subcat.id}>
                                       <Link
                                         className="link-style"
-                                        href={`/product-list?subcategory=${subcat.id}`}
+                                        href={`/shop-art?term=${subcat.name}`}
                                       >
                                         {subcat.name}
                                       </Link>
@@ -277,7 +295,7 @@ const Navbar_Home = () => {
                             <div className="favorites-icon-mobile">
                               <FaRegHeart />
                               <div className="favorites-number-mobile">
-                                <span>0</span>
+                                <span>{likedArtworks.size}</span>
                               </div>
                             </div>
                           </Link>

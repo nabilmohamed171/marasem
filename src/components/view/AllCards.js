@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { IoIosArrowForward, IoMdClose } from "react-icons/io";
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart } from "react-icons/fa"; // Import both icons
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
@@ -21,10 +22,14 @@ const SliderTags = () => {
   const [totalArtworks, setTotalArtworks] = useState(0);
   const [allTags, setAllTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [likedArtworks, setLikedArtworks] = useState(new Set());
 
   // Pagination state.
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
+
+  const searchParams = useSearchParams();
+  const searchTerm = searchParams.get("term") || "";
 
   // Fetch artworks from backend when currentPage or selectedTags change.
   useEffect(() => {
@@ -34,32 +39,70 @@ const SliderTags = () => {
           limit: itemsPerPage,
           offset: (currentPage - 1) * itemsPerPage,
         };
-        if (selectedTags.length > 0) {
-          params.tags = selectedTags.join(",");
+
+        let endpoint = "http://127.0.0.1:8000/api/artworks";
+
+        if (searchTerm) {
+          endpoint = "http://127.0.0.1:8000/api/search";
+          params.q = searchTerm;
         }
-        const response = await axios.get("http://127.0.0.1:8000/api/artworks", {
-          params,
-        });
+
+        const response = await axios.get(endpoint, { params });
         setArtworksData(response.data.artworks);
         setTotalArtworks(response.data.total);
+        setAllTags(response.data.tags);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching artworks", error);
       }
     };
-    fetchArtworks();
-  }, [currentPage, selectedTags]);
 
-  // Fetch all tags sorted by admin.
+    fetchArtworks();
+  }, [currentPage, selectedTags, searchTerm]);
+
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/tags/all")
-      .then((response) => {
-        setAllTags(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching tags", error);
-      });
+    const fetchLikedArtworks = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setLikedArtworks(new Set(response.data.likedArtworks)); // ✅ Store IDs as a Set
+      } catch (error) {
+        console.error("Error fetching liked artworks:", error);
+      }
+    };
+    fetchLikedArtworks();
   }, []);
+
+  const toggleLike = async (artworkId) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("You must be logged in to like artworks.");
+      return;
+    }
+
+    const isLiked = likedArtworks.has(artworkId);
+    const url = `http://127.0.0.1:8000/api/artworks/${artworkId}/like`;
+
+    try {
+      if (isLiked) {
+        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
+        setLikedArtworks((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(artworkId);
+          return newSet;
+        });
+      } else {
+        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` } });
+        setLikedArtworks((prev) => new Set(prev).add(artworkId));
+      }
+    } catch (error) {
+      console.error("Error toggling like:", error);
+    }
+  };
 
   // Scrolling and dragging handlers for the tags slider.
   const handleWheel = (e) => {
@@ -200,69 +243,82 @@ const SliderTags = () => {
       <div className="images-items-collections">
         <div className="container">
           <div className="row">
-            {artworksData.map((artwork) => (
-              <div key={artwork.id} className="col-lg-3 col-md-4 col-6">
-                <div className="items-collections-info">
-                  <div className="image-card">
-                    <Link href={'/product-details/' + artwork.id} className="reser-link">
-                      <div className="overley"></div>
-                      <div className="items-collections-image">
-                        <Image
-                          src={artwork.photos[0]}
-                          alt={artwork.name}
-                          width={312}
-                          height={390}
-                          quality={70}
-                          className="flex-r-image"
-                          loading="lazy"
-                        />
-                      </div>
-                    </Link>
-                    <div className="overley-info">
-                      <div className="add-cart">
-                        <span className="cart-shopping main-color">
-                          <Link href="#" className="reser-link">
-                            <HiOutlineShoppingBag />
-                          </Link>
-                        </span>
-                        <span className="plus">
-                          <Link href="#" className="reser-link">
-                            <GoPlus />
-                          </Link>
-                        </span>
-                      </div>
-                      <span className="heart">
-                        <Link href="#" className="reser-link">
-                          <FaRegHeart />
-                        </Link>
-                      </span>
-                      <div className="user-art">
-                        <div className="user-image">
+            {artworksData
+              .filter((artwork) =>
+                selectedTags.length === 0
+                  ? true
+                  : artwork.tags.some((tag) => selectedTags.includes(tag.id))
+              )
+              .map((artwork) => (
+                <div key={artwork.id} className="col-lg-3 col-md-4 col-6">
+                  <div className="items-collections-info">
+                    <div className="image-card">
+                      <Link href={'/product-details/' + artwork.id} className="reser-link">
+                        <div className="overley"></div>
+                        <div className="items-collections-image">
                           <Image
-                            src={artwork.artist.profile_picture}
-                            alt="avatar"
-                            width={50}
-                            height={50}
+                            src={artwork.photos[0]}
+                            alt={artwork.name}
+                            width={312}
+                            height={390}
                             quality={70}
                             className="flex-r-image"
                             loading="lazy"
                           />
                         </div>
-                        <Link href={"/artist-profile/" + artwork.artist.id} className="reser-link">
-                          <span>{artwork.artist.first_name} {artwork.artist.last_name}</span>
-                        </Link>
+                      </Link>
+                      <div className="overley-info">
+                        <div className="add-cart">
+                          <span className="cart-shopping main-color">
+                            <Link href="#" className="reser-link">
+                              <HiOutlineShoppingBag />
+                            </Link>
+                          </span>
+                          <span className="plus">
+                            <Link href="#" className="reser-link">
+                              <GoPlus />
+                            </Link>
+                          </span>
+                        </div>
+                        <span className="heart">
+                          <Link
+                            href="#"
+                            className="reser-link"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              toggleLike(artwork.id);
+                            }}
+                          >
+                            {likedArtworks.has(artwork.id) ? <FaHeart color="red" /> : <FaRegHeart />}
+                          </Link>
+                        </span>
+                        <div className="user-art">
+                          <div className="user-image">
+                            <Image
+                              src={artwork.artist.profile_picture}
+                              alt="avatar"
+                              width={50}
+                              height={50}
+                              quality={70}
+                              className="flex-r-image"
+                              loading="lazy"
+                            />
+                          </div>
+                          <Link href={"/artist-profile/" + artwork.artist.id} className="reser-link">
+                            <span>{artwork.artist.first_name} {artwork.artist.last_name}</span>
+                          </Link>
+                        </div>
                       </div>
                     </div>
+                    <h2>{artwork.name}</h2>
+                    <p>{artwork.description}</p>
+                    <h3>
+                      {"EGP " +
+                        Number(Object.values(artwork.sizes_prices)[0]).toLocaleString("en-US")}
+                    </h3>
                   </div>
-                  <h2>{artwork.name}</h2>
-                  <p>{artwork.description}</p>
-                  <h3>
-                    {"EGP " +
-                      Number(Object.values(artwork.sizes_prices)[0]).toLocaleString("en-US")}
-                  </h3>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>

@@ -32,6 +32,7 @@ export default function Navbar() {
   const [isStickyNavbar, setIsStickyNavbar] = useState(false);
   const [isPopupSearchOpen, setIsPopupSearchOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [likedArtworks, setLikedArtworks] = useState(new Set());
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("authToken");
@@ -92,6 +93,24 @@ export default function Navbar() {
         console.error("Error fetching filters:", err.response || err);
       });
   }, []);
+
+  useEffect(() => {
+    const fetchLikedArtworks = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setLikedArtworks(new Set(response.data.likedArtworks)); // ✅ Store IDs as a Set
+      } catch (error) {
+        console.error("Error fetching liked artworks:", error);
+      }
+    };
+    fetchLikedArtworks();
+  }, []);
+
   const forYourBudgetLinks = [
     { name: "EGP 500 & Under", href: "#" },
     { name: "EGP 1,000 to 5,000", href: "#" },
@@ -126,9 +145,8 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`navbar navbar-expand-lg ${
-        isStickyNavbar ? "sticky-navbar" : ""
-      }`}
+      className={`navbar navbar-expand-lg ${isStickyNavbar ? "sticky-navbar" : ""
+        }`}
     >
       <div className="container">
         <Link className="navbar-brand logo-pc" href="/">
@@ -188,7 +206,7 @@ export default function Navbar() {
                                     <li key={subcat.id}>
                                       <Link
                                         className="link-style"
-                                        href={`/product-list?subcategory=${subcat.id}`}
+                                        href={`/shop-art?term=${subcat.name}`}
                                       >
                                         {subcat.name}
                                       </Link>
@@ -413,7 +431,7 @@ export default function Navbar() {
                             <div className="favorites-icon-mobile">
                               <FaRegHeart />
                               <div className="favorites-number-mobile">
-                                <span>0</span>
+                                <span>{likedArtworks.size}</span>
                               </div>
                             </div>
                           </Link>

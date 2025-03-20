@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
 import Link from "next/link";
 import Image from "next/image";
+import axios from "axios";
 
 const Gallary = () => {
   const [items, setItems] = useState([
@@ -63,13 +64,50 @@ const Gallary = () => {
       isFavorited: false,
     },
   ]);
+  const [likedArtworks, setLikedArtworks] = useState(new Set());
 
-  const toggleFavorite = (index) => {
-    setItems((prevItems) =>
-      prevItems.map((item, i) =>
-        i === index ? { ...item, isFavorited: !item.isFavorited } : item
-      )
-    );
+  useEffect(() => {
+    const fetchLikedArtworks = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setLikedArtworks(new Set(response.data.likedArtworks)); // ✅ Store IDs as a Set
+      } catch (error) {
+        console.error("Error fetching liked artworks:", error);
+      }
+    };
+    fetchLikedArtworks();
+  }, []);
+
+  const toggleLike = async (artworkId) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("You must be logged in to like artworks.");
+      return;
+    }
+
+    const isLiked = likedArtworks.has(artworkId);
+    const url = `http://127.0.0.1:8000/api/artworks/${artworkId}/like`;
+
+    try {
+      if (isLiked) {
+        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
+        setLikedArtworks((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(artworkId);
+          return newSet;
+        });
+      } else {
+        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` } });
+        setLikedArtworks((prev) => new Set(prev).add(artworkId));
+      }
+    } catch (error) {
+      console.error("Error toggling like:", error);
+    }
   };
 
   return (
@@ -102,14 +140,17 @@ const Gallary = () => {
                 </span>
               </div>
               <span className="heart">
-                <Link
-                  href="#"
-                  className="reser-link"
-                  onClick={() => toggleFavorite(index)}
-                >
-                  {item.isFavorited ? <FaHeart /> : <FaRegHeart />}{" "}
-                </Link>
-              </span>
+                          <Link
+                            href="#"
+                            className="reser-link"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              toggleLike(item.id);
+                            }}
+                          >
+                            {likedArtworks.has(item.id) ? <FaHeart color="red" /> : <FaRegHeart />}
+                          </Link>
+                        </span>
               <div className="user-art">
                 <div className="user-image">
                   <Image
