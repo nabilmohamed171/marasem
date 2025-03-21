@@ -1,37 +1,97 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { BsCreditCard2Back } from "react-icons/bs";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa6";
 import { PiInvoiceLight } from "react-icons/pi";
-import Image from "next/image";
+import { IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import axios from "axios";
 import "./order-details.css";
 
 const OrderDetails = () => {
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("id");
+  const customizedId = searchParams.get("customized_id");
+
+  const [orderDetails, setOrderDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchOrderDetails = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          setError("User not authenticated");
+          setLoading(false);
+          return;
+        }
+        let endpoint = "";
+        if (customizedId) {
+          endpoint = `http://127.0.0.1:8000/api/user/customized-orders/${customizedId}`;
+        } else if (orderId) {
+          endpoint = `http://127.0.0.1:8000/api/user/my-orders/${orderId}`;
+        } else {
+          setError("No order ID provided");
+          setLoading(false);
+          return;
+        }
+        const response = await axios.get(endpoint, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (customizedId) {
+          setOrderDetails(response.data.customized_order_details);
+        } else {
+          setOrderDetails(response.data.order_details);
+        }
+        console.log(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching order details:", err);
+        setError("Error fetching order details");
+        setLoading(false);
+      }
+    };
+    fetchOrderDetails();
+  }, [orderId, customizedId]);
+
+  if (loading) return <div>Loading order details...</div>;
+  if (error) return <div>{error}</div>;
+  if (!orderDetails) return <div>No order details found.</div>;
+
   return (
     <div className="container">
       <div className="order-details">
         <div className="row">
+          {/* Main Order Details */}
           <div className="col-md-8 col-12">
             <div className="main-order">
               <div className="order-number-items">
                 <div className="row">
                   <div className="col-8">
-                    <p className="order-number">Order MARASEM237417894V.</p>
-                    <p className="order-date">Placed on Dec 2, 2022</p>
+                    <p className="order-number">{orderDetails.title}</p>
+                    <p className="order-date">Placed on {orderDetails.date}</p>
                   </div>
                   <div className="col-4">
-                    <p className="pending">PENDING</p>
-                    <p className="item-number">3 Items</p>
+                    <p className='pending'>{orderDetails.status.toUpperCase()}</p>
+                    <p className="item-number">
+                      {orderDetails.artworks ? orderDetails.artworks.length : 1} Item
+                      {orderDetails.artworks && orderDetails.artworks.length > 1 ? "s" : ""}
+                    </p>
                   </div>
-                  <div className="col-12">
-                    <Link className="reser-link" href="/request-successfully">
-                      <span className="icon-invoice">
-                        <PiInvoiceLight />
-                      </span>
-                      Order Invoice
-                    </Link>
-                  </div>
+                  {orderDetails.invoice &&
+                    <div className="col-12">
+                      <Link className="reser-link" href={`${orderDetails.invoice.path.replace("localhost", "127.0.0.1:8000")}`} target="_blank">
+                        <span className="icon-invoice">
+                          <PiInvoiceLight />
+                        </span>
+                        Order Invoice
+                      </Link>
+                    </div>
+                  }
                 </div>
               </div>
               <div className="shipping-address">
@@ -43,12 +103,13 @@ const OrderDetails = () => {
                     </span>
                     Home
                   </span>
-                  <p className="username">Omar Mohsen</p>
+                  <p className="username">{orderDetails.customer_name}</p>
                   <p className="full-address">
-                    Apartment 10, flat 5, building 8, 373R+M8 - Sarayat El-maadi
-                    - Cairo Governorate, Egypt
+                    {orderDetails.customer_address}
                   </p>
-                  <p className="phone-number">+20-10-12424029</p>
+                  <p className="phone-number">
+                    {orderDetails.customer_phone}
+                  </p>
                   <span className="check-number-phone">
                     <FaCheck />
                   </span>
@@ -63,120 +124,167 @@ const OrderDetails = () => {
                         <span className="icon-credit">
                           <BsCreditCard2Back />
                         </span>
-                        Credit Card
+                        {orderDetails.payment_method || "Credit Card"}
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="shipment first-shipment">
-                <div className="item">
+              {/* Standard Order Shipments */}
+              {orderDetails.artworks && (
+                <div className="shipment first-shipment">
+                  {orderDetails.artworks.map((item, index) => (
+                    <div key={index} className="item">
+                      <div className="row">
+                        <div className="col-6 shipment-upper">
+                          <span className="shipment-number">Shipment {index + 1}</span>
+                        </div>
+                        <div className="col-6">
+                          <span className="pending">{orderDetails.status.toUpperCase()}</span>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-2 col-4">
+                          <div className="image-item">
+                            <Image
+                              src={item.image || item.photos[0]}
+                              alt={item.title}
+                              width={105}
+                              height={95}
+                              loading="lazy"
+                              quality={70}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-10 col-8">
+                          <div className="info-item">
+                            <h2>{item.title}</h2>
+                            <p>{item.type || ""} - {item.size || ""}</p>
+                            <span>EGP {item.price}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* Customized Order */}
+              {orderDetails.custom_order && (
+                <div className="shipment first-shipment">
                   <div className="row">
                     <div className="col-6 shipment-upper">
-                      <span className="shipment-number">Shipment 1</span>
+                      <span className="shipment-number">Customized Order</span>
                     </div>
                     <div className="col-6">
-                      <span className="delevired">DELEVIRED</span>
+                      <span className="pending">{orderDetails.status.toUpperCase()}</span>
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-2 col-4">
-                      <div className="image-item">
-                        <Image
-                          src="/images/55.png"
-                          alt="Artwork Image"
-                          width={105}
-                          height={95}
-                          loading="lazy"
-                          quality={70}
-                        />
+                    {orderDetails.custom_order.reference_images.map((image, index) => (
+                      <div key={index} className="col-md-2 col-4">
+                        <div className="image-item">
+                          <Image
+                            src={image}
+                            alt={`Reference Image ${index + 1}`}
+                            width={100}
+                            height={95}
+                            loading="lazy"
+                            quality={70}
+                          />
+                        </div>
                       </div>
-                    </div>
+                    ))}
                     <div className="col-md-10 col-8">
                       <div className="info-item">
-                        <h2>Art Work Name,Type,Calligraphy</h2>
-                        <p>
-                          Omar Mohsen, Calligraphy , 2021, 48/58 Ink on Paper
-                          7.87 x 11.41 x 1.37 Inches 20 x 29 x 3.5 cm
-                        </p>
-                        <span>EGP 2,079.00</span>
+                        <h2>{orderDetails.custom_order.description}</h2>
+                        <h2>{orderDetails.custom_order.desired_size}</h2>
+                        <span>EGP {orderDetails.custom_order.offering_price}</span>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="shipment last-shipment">
-                <div className="item">
-                  <div className="row">
-                    <div className="col-6 shipment-upper">
-                      <span className="shipment-number">Shipment 2</span>
-                    </div>
-                    <div className="col-6">
-                      <span className="delevired pending">PENDING</span>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-2 col-4">
-                      <div className="image-item">
-                        <Image
-                          src="/images/22.png"
-                          alt="Artwork Image"
-                          width={105}
-                          height={95}
-                          loading="lazy"
-                          quality={70}
-                          objectFit="cover"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-10 col-8">
-                      <div className="info-item">
-                        <h2>Art Work Name,Type, Calligraphy</h2>
-                        <p>
-                          Omar Mohsen, Calligraphy , 2021, 48/58 Ink on Paper
-                          7.87 x 11.41 x 1.37 Inches 20 x 29 x 3.5 cm
-                        </p>
-                        <span>EGP 2,079.00</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
           </div>
+          {/* Order Summary */}
           <div className="col-md-4 col-12">
             <div className="order-summary">
               <h2>Order Summary</h2>
               <div className="order-summary-mobile">
-                <div className="row">
-                  <div className="col-6">
-                    <p className="subtotal">Subtotal / 3 items</p>
+                {orderDetails.custom_order ?
+                  <div className="row">
+                    <div className="col-6">
+                      <p className="subtotal">
+                        Subtotal / 1 item
+                      </p>
+                    </div>
+                    <div className="col-6">
+                      <p className="price-all-items t-r">EGP {orderDetails.offering_price}</p>
+                    </div>
+                    {orderDetails.shipping && (
+                      <>
+                        <div className="col-6">
+                          <p className="promocode">
+                            Shipping <span className="color-m">Details</span>
+                          </p>
+                        </div>
+                        <div className="col-6">
+                          <p className="price-promocode">EGP {orderDetails.shipping}</p>
+                        </div>
+                      </>
+                    )}
                   </div>
-                  <div className="col-6">
-                    <p className="price-all-items t-r color-g">EGP 3,738.00</p>
-                  </div>
-                  <div className="col-6">
-                    <p className="promocode">
-                      Shipping <span className="color-m">Details</span>
-                    </p>
-                  </div>
-                  <div className="col-6">
-                    <p className="price-promocode color-g">EGP 37.00</p>
-                  </div>
-                  <div className="col-6">
-                    <p className="promocode">Marasem Credit</p>
-                  </div>
-                  <div className="col-6">
-                    <p className="price-promocode main-color">- EGP 37.00</p>
-                  </div>
-                </div>
+                  :
+                  <div className="row">
+                    <div className="col-6">
+                      <p className="subtotal">
+                        Subtotal /{" "}
+                        {orderDetails.artworks
+                          ? orderDetails.artworks.length
+                          : orderDetails.custom_order
+                            ? 1
+                            : 0}{" "}
+                        item
+                        {orderDetails.artworks && orderDetails.artworks.length > 1 ? "s" : ""}
+                      </p>
+                    </div>
+                    <div className="col-6">
+                      <p className="price-all-items t-r">EGP {orderDetails.price_breakdown?.artworks_total}</p>
+                    </div>
+                    {orderDetails.price_breakdown?.shipping && (
+                      <>
+                        <div className="col-6">
+                          <p className="promocode">
+                            Shipping <span className="color-m">Details</span>
+                          </p>
+                        </div>
+                        <div className="col-6">
+                          <p className="price-promocode">EGP {orderDetails.price_breakdown?.shipping}</p>
+                        </div>
+                      </>
+                    )}
+                    {orderDetails.price_breakdown?.marasem_credit_used !== "0.00" && (
+                      <>
+                        <div className="col-6">
+                          <p className="promocode">Marasem Credit</p>
+                        </div>
+                        <div className="col-6">
+                          <p className="price-promocode main-color">
+                            - EGP {orderDetails.price_breakdown?.marasem_credit_used}
+                          </p>
+                        </div>
+                      </>
+                    )}
+                  </div>}
                 <hr />
                 <div className="row">
                   <div className="col-6">
                     <p className="total-price">Total Price</p>
                   </div>
                   <div className="col-6">
-                    <p className="total-price-number color-f">EGP 3,777.00</p>
+                    <p className="total-price-number color-f">
+                      EGP {orderDetails.custom_order ? orderDetails.offering_price : orderDetails.price_breakdown?.final_total}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -184,7 +292,7 @@ const OrderDetails = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

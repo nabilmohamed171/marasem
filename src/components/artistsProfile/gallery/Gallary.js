@@ -6,66 +6,10 @@ import { GoPlus } from "react-icons/go";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
-import { useCart } from "@/context/CartContext"; // Import cart context
+import { useCart } from "@/context/CartContext";
 
-const Gallary = () => {
+const Gallary = ({ artworks }) => {
   const { setCartCount } = useCart();
-  const [items, setItems] = useState([
-    {
-      name: "Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-      price: "EGP 2,500",
-      imageSrc: "/images/22.jpeg",
-      artist: "Omar Mohsen",
-      artistImage: "/images/avatar2.png",
-      isFavorited: false,
-    },
-    {
-      name: "Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-      price: "EGP 3,000",
-      imageSrc: "/images/88.jpeg",
-      artist: "Ahmed Ali",
-      artistImage: "/images/avatar2.png",
-      isFavorited: false,
-    },
-    {
-      name: "Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-      price: "EGP 4,000",
-      imageSrc: "/images/1.png",
-      artist: "Fatma Nabil",
-      artistImage: "/images/avatar2.png",
-      isFavorited: false,
-    },
-    {
-      name: "Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-      price: "EGP 5,000",
-      imageSrc: "/images/view 2.png",
-      artist: "Sara Ibrahim",
-      artistImage: "/images/avatar2.png",
-      isFavorited: false,
-    },
-    {
-      name: "Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-      price: "EGP 6,000",
-      imageSrc: "/images/view 4.png",
-      artist: "Mohamed Youssef",
-      artistImage: "/images/avatar2.png",
-      isFavorited: false,
-    },
-    {
-      name: "Lorem Ipsum",
-      description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-      price: "EGP 7,500",
-      imageSrc: "/images/view 5.png",
-      artist: "Nadia Mansour",
-      artistImage: "/images/avatar2.png",
-      isFavorited: false,
-    },
-  ]);
   const [likedArtworks, setLikedArtworks] = useState(new Set());
 
   useEffect(() => {
@@ -137,77 +81,79 @@ const Gallary = () => {
   };
 
   return (
-    <div className="row">
-      {items.map((item, index) => (
-        <div key={index} className="col-md-4 col-6">
-          <div className="item-image">
-            <div className="overley"></div>
-            <div className="photo">
-              <Image
-                src={item.imageSrc}
-                alt={`Artwork ${index + 1}`}
-                width={312}
-                height={390}
-                quality={70}
-                loading="lazy"
-              />
-            </div>
-            <div className="overley-info">
-              <div className="add-cart"
-                style={{ cursor: "pointer" }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  addToCart(artwork.id, Object.keys(artwork.sizes_prices)[0]);
-                }}>
-                <span className="cart-shopping">
-                  <i
-                    className="reser-link"
-                  >
-                    <HiOutlineShoppingBag />
-                  </i>
-                </span>
-                <span className="plus">
-                  <i className="reser-link">
-                    <GoPlus />
-                  </i>
-                </span>
+    <div className="collections-artist">
+      <div className="row">
+        {artworks.map((item, index) => (
+          <div key={index} className="col-md-4 col-6">
+            <div className="item-image">
+              <div className="overley"></div>
+              <div className="photo">
+                <Image
+                  src={item.photos[0]}
+                  alt={`Artwork ${index + 1}`}
+                  width={312}
+                  height={390}
+                  quality={70}
+                  loading="lazy"
+                />
               </div>
-              <span className="heart">
-                <Link
-                  href="#"
-                  className="reser-link"
+              <div className="overley-info">
+                <div className="add-cart"
+                  style={{ cursor: "pointer" }}
                   onClick={(e) => {
                     e.preventDefault();
-                    toggleLike(item.id);
-                  }}
-                >
-                  {likedArtworks.has(item.id) ? <FaHeart color="red" /> : <FaRegHeart />}
-                </Link>
-              </span>
-              <div className="user-art">
-                <div className="user-image">
-                  <Image
-                    src={item.artistImage}
-                    alt="avatar"
-                    width={50}
-                    height={50}
-                    quality={70}
-                    loading="lazy"
-                  />
+                    addToCart(item.id, Object.keys(item.sizes_prices)[0]);
+                  }}>
+                  <span className="cart-shopping">
+                    <i
+                      className="reser-link"
+                    >
+                      <HiOutlineShoppingBag />
+                    </i>
+                  </span>
+                  <span className="plus">
+                    <i className="reser-link">
+                      <GoPlus />
+                    </i>
+                  </span>
                 </div>
-                <Link href="#" className="reser-link">
-                  <span>{item.artist}</span>
-                </Link>
+                <span className="heart">
+                  <Link
+                    href="#"
+                    className="reser-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleLike(item.id);
+                    }}
+                  >
+                    {likedArtworks.has(item.id) ? <FaHeart color="red" /> : <FaRegHeart />}
+                  </Link>
+                </span>
+                <div className="user-art">
+                  <div className="user-image">
+                    <Image
+                      src={item.artist.profile_picture}
+                      alt="avatar"
+                      width={50}
+                      height={50}
+                      quality={70}
+                      loading="lazy"
+                    />
+                  </div>
+                  <Link href="#" className="reser-link">
+                    <span>{item.artist.first_name + " " + item.artist.last_name}</span>
+                  </Link>
+                </div>
               </div>
             </div>
+            <div className="photo-info">
+              <h2>{item.name}</h2>
+              <p>{item.description}</p>
+              <span>EGP {Object.values(item.sizes_prices)[0]}</span>
+            </div>
           </div>
-          <div className="photo-info">
-            <h2>{item.name}</h2>
-            <p>{item.description}</p>
-            <span>{item.price}</span>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

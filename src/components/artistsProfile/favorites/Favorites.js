@@ -1,41 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext"; // Import cart context
+import axios from "axios";
 
-const Favorites = ({ items }) => {
+const Favorites = ({ artworks }) => {
   const { setCartCount } = useCart();
-  const [favorites, setFavorites] = useState(items);
+  const [favorites, setFavorites] = useState(artworks);
   const [likedArtworks, setLikedArtworks] = useState(new Set());
 
-  const addToCart = async (artworkId, size) => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      console.log("User not authenticated");
-      return;
-    }
-
-    try {
-      await axios.post(
-        "http://127.0.0.1:8000/api/cart",
-        { artwork_id: artworkId, size: size, quantity: 1 },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      // Fetch new cart count after adding item
-      const response = await axios.get("http://127.0.0.1:8000/api/cart",
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setCartCount(response.data.items_count);
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-    }
-  };
-
+  // 🔹 **Fetch user liked artworks on mount**
   useEffect(() => {
     const fetchLikedArtworks = async () => {
       const token = localStorage.getItem("authToken");
@@ -53,6 +31,32 @@ const Favorites = ({ items }) => {
     fetchLikedArtworks();
   }, []);
 
+  // 🔹 **Handle adding to cart**
+  const addToCart = async (artworkId, size) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("User not authenticated");
+      return;
+    }
+
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/cart",
+        { artwork_id: artworkId, size: size, quantity: 1 },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Fetch new cart count after adding item
+      const response = await axios.get("http://127.0.0.1:8000/api/cart", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCartCount(response.data.items_count);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
+
+  // 🔹 **Toggle Liking an Artwork**
   const toggleLike = async (artworkId) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -83,14 +87,14 @@ const Favorites = ({ items }) => {
   return (
     <div className="collections-artist">
       <div className="row">
-        {favorites.map((item, index) => (
-          <div key={index} className="col-md-4 col-6">
+        {favorites.map((item) => (
+          <div key={item.id} className="col-md-4 col-6">
             <div className="item-image">
               <div className="overley"></div>
               <div className="photo">
                 <Image
-                  src={item.imageSrc}
-                  alt={`Artwork ${index + 1}`}
+                  src={item.photos[0]} // ✅ Fix this (get first image)
+                  alt={item.name}
                   width={312}
                   height={390}
                   quality={70}
@@ -98,16 +102,17 @@ const Favorites = ({ items }) => {
                 />
               </div>
               <div className="overley-info">
-                <div className="add-cart"
+                {/* 🔹 **Add to Cart Button** */}
+                <div
+                  className="add-cart"
                   style={{ cursor: "pointer" }}
                   onClick={(e) => {
                     e.preventDefault();
-                    addToCart(artwork.id, Object.keys(artwork.sizes_prices)[0]);
-                  }}>
+                    addToCart(item.id, Object.keys(item.sizes_prices)[0]); // ✅ Fix this
+                  }}
+                >
                   <span className="cart-shopping">
-                    <i
-                      className="reser-link"
-                    >
+                    <i className="reser-link">
                       <HiOutlineShoppingBag />
                     </i>
                   </span>
@@ -117,22 +122,26 @@ const Favorites = ({ items }) => {
                     </i>
                   </span>
                 </div>
+
+                {/* 🔹 **Like Button** */}
                 <span className="heart">
                   <Link
                     href="#"
                     className="reser-link"
                     onClick={(e) => {
                       e.preventDefault();
-                      toggleLike(artwork.id);
+                      toggleLike(item.id);
                     }}
                   >
-                    {likedArtworks.has(artwork.id) ? <FaHeart color="red" /> : <FaRegHeart />}
+                    {likedArtworks.has(item.id) ? <FaHeart color="red" /> : <FaRegHeart />}
                   </Link>
                 </span>
+
+                {/* 🔹 **Artist Profile** */}
                 <div className="user-art">
                   <div className="user-image">
                     <Image
-                      src={item.artistImage}
+                      src={item.artist.profile_picture} // ✅ Fix artist profile picture
                       alt="avatar"
                       width={50}
                       height={50}
@@ -141,15 +150,22 @@ const Favorites = ({ items }) => {
                     />
                   </div>
                   <Link href="#" className="reser-link">
-                    <span>{item.artist}</span>
+                    <span>{item.artist.first_name} {item.artist.last_name}</span>
                   </Link>
                 </div>
               </div>
             </div>
+
+            {/* 🔹 **Artwork Details** */}
             <div className="photo-info">
               <h2>{item.name}</h2>
               <p>{item.description}</p>
-              <span>{item.price}</span>
+              <span>
+                EGP{" "}
+                {Object.values(item.sizes_prices)[0]
+                  ? Number(Object.values(item.sizes_prices)[0]).toLocaleString("en-US")
+                  : "N/A"}
+              </span>
             </div>
           </div>
         ))}
@@ -158,36 +174,4 @@ const Favorites = ({ items }) => {
   );
 };
 
-const items = [
-  {
-    name: "Lorem Ipsum",
-    description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-    price: "EGP 2,500",
-    imageSrc: "/images/22.jpeg",
-    artist: "Omar Mohsen",
-    artistImage: "/images/avatar2.png",
-    isFavorited: true,
-  },
-  {
-    name: "Lorem Ipsum",
-    description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-    price: "EGP 3,000",
-    imageSrc: "/images/33.jpeg",
-    artist: "Ahmed Ali",
-    artistImage: "/images/avatar2.png",
-    isFavorited: true,
-  },
-  {
-    name: "Lorem Ipsum",
-    description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-    price: "EGP 4,500",
-    imageSrc: "/images/7.png",
-    artist: "Fatma Nabil",
-    artistImage: "/images/avatar2.png",
-    isFavorited: true,
-  },
-];
-
-export default function App() {
-  return <Favorites items={items} />;
-}
+export default Favorites;

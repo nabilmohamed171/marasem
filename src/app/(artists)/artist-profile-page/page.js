@@ -27,10 +27,56 @@ import Link from "next/link";
 import Image from "next/image";
 import "./profile.css";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const MyProfilePage = () => {
+  const router = useRouter();
   const [userType, setUserType] = useState("guest");
+  const [loading, setLoading] = useState(true);
+  const [artistData, setArtistData] = useState(null);
+  const [activeSection, setActiveSection] = useState("gallery");
+  const [moreInfoActive, setMoreInfoActive] = useState(false);
+  const [editProfileVisible, setEditProfileVisible] = useState(true);
+  const [overlayVisible, setOverlayVisible] = useState(false);
+  const [editCoverProfileVisible, setEditCoverProfileVisible] = useState(false);
+  const [editPhotoProfileVisible, setEditPhotoProfileVisible] = useState(false);
+  const [headerImage, setHeaderImage] = useState(null);
+  const [avatar, setAvatar] = useState(null);
 
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab) {
+      setActiveSection(tab);
+    }
+  }, [searchParams]);
+
+  const handleLogout = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) return;
+
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/logout",
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      localStorage.removeItem("authToken");
+      if (window.location.pathname === "/") {
+        window.location.reload();
+      } else {
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
+  // Fetch the user type and redirect if not an artist
   useEffect(() => {
     const fetchUserType = async () => {
       const token = localStorage.getItem("authToken");
@@ -44,40 +90,43 @@ const MyProfilePage = () => {
           },
           withCredentials: true,
         });
+        console.log("User type:", response.data.user_type);
         setUserType(response.data.user_type);
+        if (response.data.user_type !== "artist") {
+          router.push("/");
+        }
       } catch (error) {
         console.error("Error fetching user type:", error);
+        if (error.response && error.response.status === 403) {
+          router.push("/");
+        }
       }
     };
 
     fetchUserType();
-  }, []);
-  const [activeSection, setActiveSection] = useState("gallery");
-  const [moreInfoActive, setMoreInfoActive] = useState(false);
-  const [editProfileVisible, setEditProfileVisible] = useState(true);
-  const [editCoverProfileVisible, setEditCoverProfileVisible] = useState(false);
-  const [editPhotoProfileVisible, setEditPhotoProfileVisible] = useState(false);
-  const [overlayVisible, setOverlayVisible] = useState(false);
+  }, [router]);
 
-  const [avatar, setAvatar] = useState("/images/avatar2.png");
-  const [headerImage, setHeaderImage] = useState("/images/header3.jpg");
+  // Fetch profile data only if user is an artist
+  useEffect(() => {
+    if (userType !== "artist") return;
 
-  const artistData = {
-    name: "Nour Elmasry",
-    location: "Cairo, Egypt",
-    avatar: "/images/avatar2.png",
-    headerImage: "/images/header3.jpg",
-    stats: {
-      projectViews: 5989,
-      appreciations: 6403,
-      followers: 3352,
-      following: 1329,
-    },
-    about:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s...",
-    focus: ["Posters", "Painting", "Drawing"],
-    memberSince: "DECEMBER 2, 2014",
-  };
+    const fetchProfileData = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/artist/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log("Artist profile data:", response.data);
+        setArtistData(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching artist data:", err);
+        setLoading(false);
+      }
+    };
+    fetchProfileData();
+  }, [userType]);
 
   useEffect(() => {
     setActiveSection("gallery");
@@ -120,6 +169,8 @@ const MyProfilePage = () => {
     }
   }, []);
 
+  if (loading) return <div>Loading profile...</div>;
+
   return (
     <>
       {userType === "artist" ? (
@@ -133,7 +184,7 @@ const MyProfilePage = () => {
       <div className="header-artist-profile">
         <div className="overley"></div>
         <Image
-          src={headerImage}
+          src={artistData.artist.cover_img ?? "/images/header3.jpg"}
           alt="Artist Header"
           width={1920}
           height={200}
@@ -150,9 +201,8 @@ const MyProfilePage = () => {
         </form>
 
         <div
-          className={`edit-cover-profile ${
-            editCoverProfileVisible ? "d-block" : "d-none"
-          }`}
+          className={`edit-cover-profile ${editCoverProfileVisible ? "d-block" : "d-none"
+            }`}
         >
           <span className="pen-icon">
             {" "}
@@ -174,7 +224,7 @@ const MyProfilePage = () => {
                       style={{ display: overlayVisible ? "block" : "none" }}
                     ></div>
                     <Image
-                      src={avatar}
+                      src={artistData.artist.profile_picture}
                       alt="Artist Avatar"
                       width={92}
                       height={92}
@@ -182,9 +232,8 @@ const MyProfilePage = () => {
                       loading="lazy"
                     />
                     <div
-                      className={`edit-photo-profile ${
-                        editPhotoProfileVisible ? "d-block" : "d-none"
-                      }`}
+                      className={`edit-photo-profile ${editPhotoProfileVisible ? "d-block" : "d-none"
+                        }`}
                     >
                       <form className="upload-photo-profile">
                         <input
@@ -203,9 +252,9 @@ const MyProfilePage = () => {
                 </div>
                 <div className="col-md-12 col-9">
                   <div className="art-name">
-                    <h2>{artistData.name}</h2>
+                    <h2>{artistData.artist.first_name} {artistData.artist.last_name}</h2>
                     <span>
-                      <FaMapMarkerAlt /> {artistData.location}
+                      <FaMapMarkerAlt /> {artistData.artist.artist_details.pickup_location.city} {artistData.artist.artist_details.pickup_location.zone}
                     </span>
                   </div>
                 </div>
@@ -231,9 +280,8 @@ const MyProfilePage = () => {
                   <div className="col-md-12 col-6">
                     <div className="d-block d-md-none">
                       <button
-                        className={`button-more-info ${
-                          moreInfoActive ? "active-more-info" : ""
-                        }`}
+                        className={`button-more-info ${moreInfoActive ? "active-more-info" : ""
+                          }`}
                         type="button"
                         aria-expanded="false"
                         aria-label="More options"
@@ -241,9 +289,8 @@ const MyProfilePage = () => {
                       >
                         More Info
                         <span
-                          className={`arrow-down-icon ${
-                            moreInfoActive ? "active-more-info" : ""
-                          }`}
+                          className={`arrow-down-icon ${moreInfoActive ? "active-more-info" : ""
+                            }`}
                         >
                           <IoIosArrowDown />
                         </span>
@@ -254,9 +301,8 @@ const MyProfilePage = () => {
               </div>
 
               <div
-                className={`artist-public-info ${
-                  moreInfoActive ? "d-block" : ""
-                }`}
+                className={`artist-public-info ${moreInfoActive ? "d-block" : ""
+                  }`}
               >
                 <div className="row">
                   <div className="col-md-8 col-6">
@@ -266,18 +312,17 @@ const MyProfilePage = () => {
                     <p>Following</p>
                   </div>
                   <div className="col-md-4 col-6 number">
-                    <p>{artistData.stats.projectViews}</p>
-                    <p>{artistData.stats.appreciations}</p>
-                    <p>{artistData.stats.followers}</p>
-                    <p>{artistData.stats.following}</p>
+                    <p>{artistData.insights.project_views}</p>
+                    <p>{artistData.insights.appreciations}</p>
+                    <p>{artistData.insights.followers}</p>
+                    <p>{artistData.insights.following}</p>
                   </div>
                 </div>
               </div>
 
               <div
-                className={`box-orders-profile-page ${
-                  moreInfoActive ? "d-block" : ""
-                }`}
+                className={`box-orders-profile-page ${moreInfoActive ? "d-block" : ""
+                  }`}
               >
                 <div className="box-list-orders">
                   <ul className="list-unstyled">
@@ -320,18 +365,18 @@ const MyProfilePage = () => {
                     className={`about-me ${moreInfoActive ? "d-block" : ""}`}
                   >
                     <h2>About Me</h2>
-                    <p>{artistData.about}</p>
+                    <p>{artistData.artist.artist_details.summary}</p>
                   </div>
 
                   <div className={`tags ${moreInfoActive ? "d-block" : ""}`}>
                     <h2>Focus</h2>
-                    {artistData.focus.map((tag, index) => (
-                      <span key={index}>{tag}</span>
+                    {artistData.artist.subcategories.map((tag, index) => (
+                      <span key={index}>{tag.name}</span>
                     ))}
                   </div>
 
                   <p className="text-center member">
-                    MEMBER SINCE {artistData.memberSince}
+                    MEMBER SINCE {new Date(artistData.artist.created_at).toLocaleDateString()}
                   </p>
                 </>
               )}
@@ -339,7 +384,8 @@ const MyProfilePage = () => {
               <div className={`buttons ${moreInfoActive ? "d-block" : ""}`}>
                 <div className="row">
                   <div className="col-md-12 text-center">
-                    <div className="button-logout">
+                    <div className="button-logout"
+                      onClick={handleLogout}>
                       <button
                         className="logout"
                         type="button"
@@ -365,56 +411,51 @@ const MyProfilePage = () => {
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "gallery" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "gallery" ? "active-sub-menu" : ""
+                          }`}
                         onClick={() => handleMenuClick("gallery")}
                       >
                         Gallery
                       </Link>
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "collections"
-                            ? "active-sub-menu"
-                            : ""
-                        }`}
+                        className={`nav-link ${activeSection === "collections"
+                          ? "active-sub-menu"
+                          : ""
+                          }`}
                         onClick={() => handleMenuClick("collections")}
                       >
                         Collections
                       </Link>
-                    </li>
+                    </li> */}
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "toDo" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "toDo" ? "active-sub-menu" : ""
+                          }`}
                         onClick={() => handleMenuClick("toDo")}
                       >
-                        To Do <span className="todo-count-number">(23)</span>
+                        To Do <span className="todo-count-number">({artistData.insights.to_do_count ?? 0})</span>
                       </Link>
                     </li>
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "favorites" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "favorites" ? "active-sub-menu" : ""
+                          }`}
                         onClick={() => handleMenuClick("favorites")}
                       >
                         Favorites
-                        <span className="favorites-count-number"> (30)</span>
+                        <span className="favorites-count-number"> ({artistData.liked_artworks.length})</span>
                       </Link>
                     </li>
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "insights" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "insights" ? "active-sub-menu" : ""
+                          }`}
                         onClick={() => handleMenuClick("insights")}
                       >
                         Insights
@@ -423,9 +464,8 @@ const MyProfilePage = () => {
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "draft" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "draft" ? "active-sub-menu" : ""
+                          }`}
                         onClick={() => handleMenuClick("draft")}
                       >
                         Draft
@@ -434,9 +474,8 @@ const MyProfilePage = () => {
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "soldOut" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "soldOut" ? "active-sub-menu" : ""
+                          }`}
                         onClick={() => handleMenuClick("soldOut")}
                       >
                         Sold Out
@@ -448,37 +487,37 @@ const MyProfilePage = () => {
 
               {activeSection === "gallery" && (
                 <div className="collections-artist">
-                  <SectionGallery />
+                  <SectionGallery artworks={artistData.artworks} />
                 </div>
               )}
-              {activeSection === "collections" && (
+              {/* {activeSection === "collections" && (
                 <div className="collections-artist">
                   <SectionCollections />
                 </div>
-              )}
+              )} */}
               {activeSection === "favorites" && (
                 <div className="collections-favorites">
-                  <SectionFavorites />
+                  <SectionFavorites artworks={artistData.liked_artworks} />
                 </div>
               )}
               {activeSection === "soldOut" && (
                 <div className="collections-sold-out">
-                  <SectionSoldOut />
+                  <SectionSoldOut artworks={artistData.sold_out_artworks} />
                 </div>
               )}
               {activeSection === "toDo" && (
                 <div className="collections-to-do">
-                  <SectionToDo />
+                  <SectionToDo toDo={artistData.to_do} />
                 </div>
               )}
               {activeSection === "draft" && (
                 <div className="collections-draft">
-                  <SectionDraft />
+                  <SectionDraft drafts={artistData.drafts} />
                 </div>
               )}
               {activeSection === "insights" && (
                 <div className="collections-insights">
-                  <SectionInsights />
+                  <SectionInsights insights={artistData} />
                 </div>
               )}
               {activeSection === "editProfile" && (
@@ -488,7 +527,7 @@ const MyProfilePage = () => {
               )}
               {activeSection === "addresses" && (
                 <div className="collections-addresses">
-                  <SectionAddresses />
+                  <SectionAddresses pickup={artistData.artist.artist_details.pickup_location} addresses={artistData.artist.addresses} />
                 </div>
               )}
               {activeSection === "orders" && (

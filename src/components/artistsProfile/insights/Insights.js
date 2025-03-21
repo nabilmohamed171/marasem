@@ -1,7 +1,8 @@
+"use client";
 import "./insights.css";
 import Image from "next/image";
 
-const Insights = () => {
+const Insights = ({ insights }) => {
   return (
     <>
       <div className="insights d-sm-none d-md-block d-xl-block d-lg-block">
@@ -10,25 +11,25 @@ const Insights = () => {
             <div className="col-md-3">
               <div className="total-sales">
                 <h3>Total Sales Amount</h3>
-                <span>EGP 29.2K</span>
+                <span>EGP {insights.insights.total_sales.toLocaleString()}</span>
               </div>
             </div>
             <div className="col-md-3">
               <div className="total-sold">
                 <h3>Total Sold Artworks</h3>
-                <span>29</span>
+                <span>{insights.insights.total_sold_artworks}</span>
               </div>
             </div>
             <div className="col-md-3">
               <div className="total-todo">
                 <h3>To Do</h3>
-                <span>3</span>
+                <span>{insights.insights.to_do_count}</span>
               </div>
             </div>
             <div className="col-md-3">
               <div className="total-viewa">
                 <h3>Profile Views</h3>
-                <span>2.2K</span>
+                <span>{insights.insights.profile_views.toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -38,25 +39,25 @@ const Insights = () => {
             <div className="col-md-3">
               <div className="project-amount">
                 <h3>Project Views</h3>
-                <span>29K</span>
+                <span>{insights.insights.project_views.toLocaleString()}</span>
               </div>
             </div>
             <div className="col-md-3">
               <div className="appreciations">
                 <h3>Appreciations</h3>
-                <span>46</span>
+                <span>{insights.insights.appreciations}</span>
               </div>
             </div>
             <div className="col-md-3">
               <div className="followers">
                 <h3>Followers</h3>
-                <span>352</span>
+                <span>{insights.insights.followers}</span>
               </div>
             </div>
             <div className="col-md-3">
               <div className="following">
                 <h3>Following</h3>
-                <span>1,329</span>
+                <span>{insights.insights.following}</span>
               </div>
             </div>
           </div>
@@ -79,118 +80,47 @@ const Insights = () => {
               </div>
             </div>
 
-            <div className="row table-row">
-              <div className="col-md-2">
-                <div className="performance-image">
-                  <div className="overley"></div>
-                  <Image
-                    src="/images/55.png"
-                    alt="image"
-                    width={140}
-                    height={140}
-                    objectFit="cover"
-                    quality={70}
-                    loading="lazy"
-                  />
+            {insights.artworks.map((artwork, index) => (
+              <div key={index} className="row table-row">
+                <div className="col-md-2">
+                  <div className="performance-image">
+                    <div className="overley"></div>
+                    <Image
+                      src={artwork.photos?.[0] ?? "/images/default-artwork.jpg"}
+                      alt="image"
+                      width={140}
+                      height={140}
+                      objectFit="cover"
+                      quality={70}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+                <div className="col-md-3">
+                  <div className="performance-info">
+                    <h3>
+                      {artwork.name} , {artwork.art_type} , {artwork.sizes_prices ? `EGP ${Object.values(artwork.sizes_prices)[0]}` : "N/A"}
+                    </h3>
+                    <span>Published {new Date(artwork.created_at).toLocaleDateString()}</span>
+                  </div>
+                </div>
+                <div className="col-md-2">
+                  <div className="performance-view text-center">
+                    <span>{artwork.views}</span>
+                  </div>
+                </div>
+                <div className="col-md-2">
+                  <div className="performance-appreciations text-center">
+                    <span>{artwork.appreciations}</span>
+                  </div>
+                </div>
+                <div className="col-md-3">
+                  <div className="performance-artwork-status text-center">
+                    <span>{(artwork.status.replace('_', ' '))}</span>
+                  </div>
                 </div>
               </div>
-              <div className="col-md-3">
-                <div className="performance-info">
-                  <h3>Art Work Name , Type , Calligraphy EGP 2,079.00</h3>
-                  <span>Published September 17th, 2025</span>
-                </div>
-              </div>
-              <div className="col-md-2">
-                <div className="performance-view text-center">
-                  <span>255</span>
-                </div>
-              </div>
-              <div className="col-md-2">
-                <div className="performance-appreciations text-center">
-                  <span>15</span>
-                </div>
-              </div>
-              <div className="col-md-3">
-                <div className="performance-artwork-status text-center">
-                  <span>Sold</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="row table-row">
-              <div className="col-md-2">
-                <div className="performance-image">
-                  <Image
-                    src="/images/55.png"
-                    alt="image"
-                    width={140}
-                    height={140}
-                    objectFit="cover"
-                    quality={70}
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-              <div className="col-md-3">
-                <div className="performance-info">
-                  <h3>Art Work Name , Type , Calligraphy EGP 2,079.00</h3>
-                  <span>Published September 17th, 2025</span>
-                </div>
-              </div>
-              <div className="col-md-2">
-                <div className="performance-view text-center">
-                  <span>255</span>
-                </div>
-              </div>
-              <div className="col-md-2">
-                <div className="performance-appreciations text-center">
-                  <span>15</span>
-                </div>
-              </div>
-              <div className="col-md-3">
-                <div className="performance-artwork-status text-center">
-                  <span></span>
-                </div>
-              </div>
-            </div>
-
-            <div className="row table-row">
-              <div className="col-md-2">
-                <div className="performance-image">
-                  <div className="overley"></div>
-                  <Image
-                    src="/images/55.png"
-                    alt="image"
-                    width={140}
-                    height={140}
-                    objectFit="cover"
-                    quality={70}
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-              <div className="col-md-3">
-                <div className="performance-info">
-                  <h3>Art Work Name , Type , Calligraphy EGP 2,079.00</h3>
-                  <span>Published September 17th, 2025</span>
-                </div>
-              </div>
-              <div className="col-md-2">
-                <div className="performance-view text-center">
-                  <span>255</span>
-                </div>
-              </div>
-              <div className="col-md-2">
-                <div className="performance-appreciations text-center">
-                  <span>15</span>
-                </div>
-              </div>
-              <div className="col-md-3">
-                <div className="performance-artwork-status text-center">
-                  <span>Sold</span>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -201,13 +131,13 @@ const Insights = () => {
             <div className="col-7">
               <div className="total-sales">
                 <h3>Total Sales Amount</h3>
-                <span>EGP 29.2K</span>
+                <span>EGP {insights.insights.total_sales.toLocaleString()}</span>
               </div>
             </div>
             <div className="col-5">
               <div className="total-sold">
                 <h3>Total Sold Artworks</h3>
-                <span>29</span>
+                <span>{insights.insights.total_sold_artworks}</span>
               </div>
             </div>
           </div>
@@ -217,25 +147,25 @@ const Insights = () => {
             <div className="col-3">
               <div className="total-todo">
                 <h3>To Do</h3>
-                <span>3</span>
+                <span>{insights.insights.to_do_count}</span>
               </div>
             </div>
             <div className="col-3">
               <div className="total-viewa">
                 <h3>Profile Views</h3>
-                <span>2.2K</span>
+                <span>{insights.insights.profile_views.toLocaleString()}</span>
               </div>
             </div>
             <div className="col-3">
               <div className="project-amount">
                 <h3>Project Views</h3>
-                <span>29K</span>
+                <span>{insights.insights.project_views.toLocaleString()}</span>
               </div>
             </div>
             <div className="col-3">
               <div className="appreciations">
                 <h3>Appreciations</h3>
-                <span>46</span>
+                <span>{insights.insights.appreciations}</span>
               </div>
             </div>
           </div>
@@ -245,19 +175,19 @@ const Insights = () => {
             <div className="col-4">
               <div className="followers">
                 <h3>Followers</h3>
-                <span>352</span>
+                <span>{insights.insights.followers}</span>
               </div>
             </div>
             <div className="col-4">
               <div className="following">
                 <h3>Following</h3>
-                <span>1,329</span>
+                <span>{insights.insights.following}</span>
               </div>
             </div>
             <div className="col-4">
               <div className="sold-out">
                 <h3>Sold Out</h3>
-                <span>52</span>
+                <span>{insights.sold_out_artworks.length}</span>
               </div>
             </div>
           </div>

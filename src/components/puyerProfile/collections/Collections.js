@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import "./collections.css";
 import { useCart } from "@/context/CartContext"; // Import cart context
+import axios from "axios";
 
 const Gallary = () => {
   const { setCartCount } = useCart();

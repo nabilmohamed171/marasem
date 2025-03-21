@@ -30,6 +30,31 @@ const Navbar_Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [likedArtworks, setLikedArtworks] = useState(new Set());
 
+  const handleLogout = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) return;
+
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/logout",
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      localStorage.removeItem("authToken"); // ✅ Remove token from localStorage
+      setUser({}); // Clear user state
+      if (window.location.pathname === "/") {
+        window.location.reload(); // ✅ Refresh if already on homepage
+      } else {
+        router.push("/"); // ✅ Redirect if not on homepage
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
@@ -283,7 +308,7 @@ const Navbar_Home = () => {
                     <div className="box-list-profile">
                       <ul className="list-unstyled">
                         <li className="cart-mobile">
-                          <Link href="">
+                          <Link href="/cart">
                             My Cart
                             <div className="cart-icon-mobile">
                               <CiShoppingCart />
@@ -323,23 +348,23 @@ const Navbar_Home = () => {
                   <div className="box-list-collection">
                     <ul className="list-unstyled">
                       <li>
-                        <Link href="">
+                        <Link href="/shop-art">
                           Shop Art
                           <span className="arrow-icon-1">
                             <IoIosArrowForward />
                           </span>
                         </Link>
                       </li>
-                      <li>
+                      {/* <li>
                         <Link href="">
                           Collections
                           <span className="arrow-icon-2">
                             <IoIosArrowForward />
                           </span>
                         </Link>
-                      </li>
+                      </li> */}
                       <li>
-                        <Link href="">
+                        <Link href="/artists">
                           Artists
                           <span className="arrow-icon-3">
                             <IoIosArrowForward />
@@ -349,7 +374,7 @@ const Navbar_Home = () => {
                     </ul>
                   </div>
                 </div>
-                <div className="box-orders">
+                {/* <div className="box-orders">
                   <div className="box-list-orders">
                     <ul className="list-unstyled">
                       <li>
@@ -378,9 +403,9 @@ const Navbar_Home = () => {
                       </li>
                     </ul>
                   </div>
-                </div>
+                </div> */}
                 <div className="box-button-logout">
-                  <Link className="" href="">
+                  <Link className="" href="" onClick={handleLogout}>
                     <span className="logout-icon">
                       <RiLogoutCircleRLine />
                     </span>

@@ -311,27 +311,27 @@ export default function Navbar() {
                   </button>
                   <ul className="dropdown-menu">
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item" href="/artist-profile-page">
                         My Profile
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item" href="/artist-profile-page?tab=favorites">
                         Favorites
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item" href="/artist-profile-page?tab=addresses">
                         Addresses
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item" href="/artist-profile-page?tab=orders">
                         Orders
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item" href="/artist-profile-page?tab=credit">
                         Marasem Credit
                       </a>
                     </li>
@@ -387,7 +387,7 @@ export default function Navbar() {
                         <div className="profile-image">
                           <Image
                             className="photo-profile-img"
-                            src="/images/avatar2.png"
+                            src={user.profile_picture ?? "/images/avatar2.png"}
                             alt="photo"
                             width={60}
                             height={60}
@@ -399,12 +399,12 @@ export default function Navbar() {
                       </div>
                       <div className="col-7">
                         <div className="profile-name">
-                          <h3>Omer Mohsen</h3>
+                          <h3>{user.first_name + " " + user.last_name}</h3>
                           <span>
                             <span className="map-icon">
                               <LuMapPin />
                             </span>{" "}
-                            Cairo, Egypt
+                            {user.city} {user.zone}
                           </span>
                         </div>
                       </div>
@@ -417,12 +417,12 @@ export default function Navbar() {
                     <div className="box-list-profile">
                       <ul className="list-unstyled">
                         <li className="cart-mobile">
-                          <Link href="">
+                          <Link href="/cart">
                             My Cart
                             <div className="cart-icon-mobile">
                               <CiShoppingCart />
                               <div className="cart-number-mobile">
-                                <span>0</span>
+                                <span>{cartCount}</span>
                               </div>
                             </div>
                           </Link>
@@ -452,7 +452,7 @@ export default function Navbar() {
                       </ul>
                     </div>
                     <div className="box-button-profile">
-                      <Link className="" href="">
+                      <Link className="" href="/sell-your-artwork">
                         Sell Your Artwork
                       </Link>
                     </div>
@@ -462,23 +462,23 @@ export default function Navbar() {
                   <div className="box-list-collection">
                     <ul className="list-unstyled">
                       <li>
-                        <Link href="">
+                        <Link href="/shop-art">
                           Shop Art
                           <span className="arrow-icon-1">
                             <IoIosArrowForward />
                           </span>
                         </Link>
                       </li>
-                      <li>
-                        <Link href="">
+                      {/* <li>
+                        <Link href="#">
                           Collections
                           <span className="arrow-icon-2">
                             <IoIosArrowForward />
                           </span>
                         </Link>
-                      </li>
+                      </li> */}
                       <li>
-                        <Link href="">
+                        <Link href="/artists">
                           Artists
                           <span className="arrow-icon-3">
                             <IoIosArrowForward />
@@ -492,7 +492,7 @@ export default function Navbar() {
                   <div className="box-list-orders">
                     <ul className="list-unstyled">
                       <li>
-                        <Link href="">
+                        <Link href="/artist-profile-page?tab=addresses">
                           Addresses
                           <span className="addresses-icon">
                             <LiaMapMarkedAltSolid />
@@ -500,7 +500,7 @@ export default function Navbar() {
                         </Link>
                       </li>
                       <li>
-                        <Link href="">
+                        <Link href="/artist-profile-page?tab=orders">
                           Orders
                           <span className="order-icon">
                             <CgNotes />
@@ -508,7 +508,7 @@ export default function Navbar() {
                         </Link>
                       </li>
                       <li>
-                        <Link href="">
+                        <Link href="/artist-profile-page?tab=credit">
                           Mrasem Credit
                           <span className="credit-icon">
                             <TbCreditCard />

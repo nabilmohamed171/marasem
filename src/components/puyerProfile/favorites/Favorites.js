@@ -1,68 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FaRegHeart, FaHeart } from "react-icons/fa"; // Import both icons
+import axios from "axios";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GoPlus } from "react-icons/go";
 import Link from "next/link";
 import Image from "next/image";
-import { useCart } from "@/context/CartContext"; // Import cart context
-
-const items = [
-  {
-    name: "Lorem Ipsum",
-    description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-    price: "EGP 2,500",
-    imageSrc: "/images/22.jpeg",
-    artist: "Omar Mohsen",
-    artistImage: "/images/avatar2.png",
-    isFavorited: true,
-  },
-  {
-    name: "Lorem Ipsum",
-    description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-    price: "EGP 3,000",
-    imageSrc: "/images/33.jpeg",
-    artist: "Ahmed Ali",
-    artistImage: "/images/avatar2.png",
-    isFavorited: true,
-  },
-  {
-    name: "Lorem Ipsum",
-    description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-    price: "EGP 4,500",
-    imageSrc: "/images/7.png",
-    artist: "Fatma Nabil",
-    artistImage: "/images/avatar2.png",
-    isFavorited: true,
-  },
-  {
-    name: "Lorem Ipsum",
-    description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-    price: "EGP 2,500",
-    imageSrc: "/images/view 1.png",
-    artist: "Omar Mohsen",
-    artistImage: "/images/avatar2.png",
-    isFavorited: true,
-  },
-  {
-    name: "Lorem Ipsum",
-    description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-    price: "EGP 3,000",
-    imageSrc: "/images/view 2.png",
-    artist: "Ahmed Ali",
-    artistImage: "/images/avatar2.png",
-    isFavorited: true,
-  },
-  {
-    name: "Lorem Ipsum",
-    description: "Lorem Ipsum, Lorem Ipsum, Lorem Ipsum",
-    price: "EGP 4,500",
-    imageSrc: "/images/view 3.png",
-    artist: "Fatma Nabil",
-    artistImage: "/images/avatar2.png",
-    isFavorited: true,
-  },
-];
+import { useCart } from "@/context/CartContext";
 
 const Favorites = ({ items }) => {
   const { setCartCount } = useCart();
@@ -75,18 +19,15 @@ const Favorites = ({ items }) => {
       console.log("User not authenticated");
       return;
     }
-
     try {
       await axios.post(
         "http://127.0.0.1:8000/api/cart",
         { artwork_id: artworkId, size: size, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      // Fetch new cart count after adding item
-      const response = await axios.get("http://127.0.0.1:8000/api/cart",
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const response = await axios.get("http://127.0.0.1:8000/api/cart", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setCartCount(response.data.items_count);
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -97,12 +38,11 @@ const Favorites = ({ items }) => {
     const fetchLikedArtworks = async () => {
       const token = localStorage.getItem("authToken");
       if (!token) return;
-
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setLikedArtworks(new Set(response.data.likedArtworks)); // ✅ Store IDs as a Set
+        setLikedArtworks(new Set(response.data.likedArtworks));
       } catch (error) {
         console.error("Error fetching liked artworks:", error);
       }
@@ -116,10 +56,8 @@ const Favorites = ({ items }) => {
       console.log("You must be logged in to like artworks.");
       return;
     }
-
     const isLiked = likedArtworks.has(artworkId);
     const url = `http://127.0.0.1:8000/api/artworks/${artworkId}/like`;
-
     try {
       if (isLiked) {
         await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
@@ -146,7 +84,7 @@ const Favorites = ({ items }) => {
               <div className="overley"></div>
               <div className="photo">
                 <Image
-                  src={item.imageSrc}
+                  src={item.photos[0]}
                   alt={`Artwork ${index + 1}`}
                   width={312}
                   height={390}
@@ -155,23 +93,19 @@ const Favorites = ({ items }) => {
                 />
               </div>
               <div className="overley-info">
-                <div className="add-cart"
+                <div
+                  className="add-cart"
                   style={{ cursor: "pointer" }}
                   onClick={(e) => {
                     e.preventDefault();
-                    addToCart(artwork.id, Object.keys(artwork.sizes_prices)[0]);
-                  }}>
+                    addToCart(item.id, Object.keys(item.sizes_prices)[0]);
+                  }}
+                >
                   <span className="cart-shopping">
-                    <i
-                      className="reser-link"
-                    >
-                      <HiOutlineShoppingBag />
-                    </i>
+                    <HiOutlineShoppingBag />
                   </span>
                   <span className="plus">
-                    <i className="reser-link">
-                      <GoPlus />
-                    </i>
+                    <GoPlus />
                   </span>
                 </div>
                 <span className="heart">
@@ -180,17 +114,17 @@ const Favorites = ({ items }) => {
                     className="reser-link"
                     onClick={(e) => {
                       e.preventDefault();
-                      toggleLike(artwork.id);
+                      toggleLike(item.id);
                     }}
                   >
-                    {likedArtworks.has(artwork.id) ? <FaHeart color="red" /> : <FaRegHeart />}
+                    {likedArtworks.has(item.id) ? <FaHeart color="red" /> : <FaRegHeart />}
                   </Link>
                 </span>
                 <div className="user-art">
                   <div className="user-image">
                     <Image
-                      src={item.artistImage}
-                      alt="avatar"
+                      src={item.artist.profile_picture}
+                      alt="artist avatar"
                       width={50}
                       height={50}
                       quality={70}
@@ -198,7 +132,7 @@ const Favorites = ({ items }) => {
                     />
                   </div>
                   <Link href="#" className="reser-link">
-                    <span>{item.artist}</span>
+                    <span>{`${item.artist.first_name} ${item.artist.last_name}`}</span>
                   </Link>
                 </div>
               </div>
@@ -206,7 +140,7 @@ const Favorites = ({ items }) => {
             <div className="photo-info">
               <h2>{item.name}</h2>
               <p>{item.description}</p>
-              <span>{item.price}</span>
+              <span>{`EGP ${item.min_price}`}</span>
             </div>
           </div>
         ))}
@@ -215,6 +149,4 @@ const Favorites = ({ items }) => {
   );
 };
 
-export default function App() {
-  return <Favorites items={items} />;
-}
+export default Favorites;

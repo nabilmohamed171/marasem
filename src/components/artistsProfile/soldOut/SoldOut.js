@@ -1,57 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import "./sold-out.css";
+import axios from "axios";
 
-const SoldOut = () => {
-  const [favorites, setFavorites] = useState([
-    {
-      imageSrc: "/images/22.jpeg",
-      name: "Artwork 1",
-      price: "EGP 2,500",
-      isFavorited: false,
-      soldTo: "Ahmed Nasser",
-    },
-    {
-      imageSrc: "/images/33.jpeg",
-      name: "Lorem Ipsum",
-      price: "EGP 2,500",
-      isFavorited: false,
-      soldTo: "Sara Ahmed",
-    },
-    {
-      imageSrc: "/images/44.jpeg",
-      name: "Lorem Ipsum",
-      price: "EGP 2,500",
-      isFavorited: false,
-      soldTo: "Mohamed Ali",
-    },
-    {
-      imageSrc: "/images/66.jpeg",
-      name: "Lorem Ipsum",
-      price: "EGP 2,500",
-      isFavorited: false,
-      soldTo: "Fatima Youssef",
-    },
-    {
-      imageSrc: "/images/88.jpeg",
-      name: "Lorem Ipsum",
-      price: "EGP 2,500",
-      isFavorited: false,
-      soldTo: "Omar Khattab",
-    },
-    {
-      imageSrc: "/images/77.jpeg",
-      name: "Lorem Ipsum",
-      price: "EGP 2,500",
-      isFavorited: false,
-      soldTo: "Laila Samir",
-    },
-  ]);
+const SoldOut = ({ artworks }) => {
+  const [soldOutArtworks, setSoldOutArtworks] = useState(artworks);
   const [likedArtworks, setLikedArtworks] = useState(new Set());
 
+  // Fetch Liked Artworks on Mount
   useEffect(() => {
     const fetchLikedArtworks = async () => {
       const token = localStorage.getItem("authToken");
@@ -69,6 +28,7 @@ const SoldOut = () => {
     fetchLikedArtworks();
   }, []);
 
+  // Handle Liking an Artwork
   const toggleLike = async (artworkId) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -99,14 +59,14 @@ const SoldOut = () => {
   return (
     <div className="collections-artist">
       <div className="row">
-        {favorites.map((item, index) => (
-          <div key={index} className="col-md-4 col-6">
+        {soldOutArtworks.map((item) => (
+          <div key={item.artwork.id} className="col-md-4 col-6">
             <div className="item-image">
               <div className="overley-sold-out"></div>
               <div className="photo">
                 <Image
-                  src={item.imageSrc}
-                  alt={`Artwork ${index + 1}`}
+                  src={item.artwork.photos[0]} // ✅ Fix image source
+                  alt={item.artwork.name}
                   width={312}
                   height={390}
                   quality={70}
@@ -117,27 +77,32 @@ const SoldOut = () => {
                   <span className="sold-out">Sold Out</span>
                 </div>
                 <span className="heart">
-                          <Link
-                            href="#"
-                            className="reser-link"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              toggleLike(artwork.id);
-                            }}
-                          >
-                            {likedArtworks.has(artwork.id) ? <FaHeart color="red" /> : <FaRegHeart />}
-                          </Link>
-                        </span>
+                  <Link
+                    href="#"
+                    className="reser-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleLike(item.artwork.id);
+                    }}
+                  >
+                    {likedArtworks.has(item.artwork.id) ? <FaHeart color="red" /> : <FaRegHeart />}
+                  </Link>
+                </span>
                 <div className="sold-to">
                   <span className="current-owner">Current Owner</span>
-                  <span>{item.soldTo}</span>
+                  <span>{item.artwork.sold_to || "N/A"}</span> {/* ✅ Fix sold-to field */}
                 </div>
               </div>
             </div>
             <div className="photo-info">
-              <h2>{item.name}</h2>
-              <p>Lorem Ipsum, Lorem Ipsum, Lorem Ipsum,</p>
-              <span>{item.price}</span>
+              <h2>{item.artwork.name}</h2>
+              <p>{item.artwork.description}</p>
+              <span>
+                EGP 
+                {Object.values(item.artwork.sizes_prices)[0]
+                  ? Number(Object.values(item.artwork.sizes_prices)[0]).toLocaleString("en-US")
+                  : "N/A"}
+              </span>
             </div>
           </div>
         ))}

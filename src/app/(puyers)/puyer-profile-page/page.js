@@ -23,15 +23,45 @@ import Footer from "@/components/footer/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import "./profile.css";
+import { useRouter } from "next/navigation";
 
 const PuyerProfilePage = () => {
+  const router = useRouter();
   const [userType, setUserType] = useState("guest");
+  const [accountData, setAccountData] = useState(null);
+  const [loadingAccount, setLoadingAccount] = useState(true);
+  const [activeSection, setActiveSection] = useState("favorites");
+  const [moreInfoActive, setMoreInfoActive] = useState(false);
+  const [editProfileVisible, setEditProfileVisible] = useState(true);
+  const [editPhotoProfileVisible, setEditPhotoProfileVisible] = useState(false);
+  const [overlayVisible, setOverlayVisible] = useState(false);
+  const [showLinks, setShowLinks] = useState(false);
+  const [avatar, setAvatar] = useState("/images/avatar2.png");
+
+  const handleLogout = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) return;
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/logout",
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      localStorage.removeItem("authToken");
+      if (window.location.pathname === "/") {
+        window.location.reload();
+      } else {
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchUserType = async () => {
       const token = localStorage.getItem("authToken");
       if (!token) return;
-
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
           headers: {
@@ -41,34 +71,35 @@ const PuyerProfilePage = () => {
           withCredentials: true,
         });
         setUserType(response.data.user_type);
+        if (response.data.user_type === "artist") {
+          router.push("/");
+        }
       } catch (error) {
         console.error("Error fetching user type:", error);
       }
     };
-
     fetchUserType();
+  }, [router]);
+
+  useEffect(() => {
+    const fetchAccountData = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user/account", {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
+        setAccountData(response.data);
+        console.log("Account data:", response.data);
+        setLoadingAccount(false);
+      } catch (error) {
+        console.error("Error fetching account data:", error);
+        setLoadingAccount(false);
+      }
+    };
+    fetchAccountData();
   }, []);
-  const [activeSection, setActiveSection] = useState("favorites");
-  const [moreInfoActive, setMoreInfoActive] = useState(false);
-  const [editProfileVisible, setEditProfileVisible] = useState(true);
-  const [editPhotoProfileVisible, setEditPhotoProfileVisible] = useState(false);
-  const [overlayVisible, setOverlayVisible] = useState(false);
-  const [showLinks, setShowLinks] = useState(false);
-
-  const [avatar, setAvatar] = useState("/images/avatar2.png");
-
-  const artistData = {
-    name: "Nour Elmasry",
-    location: "Cairo, Egypt",
-    avatar: "/images/avatar2.png",
-  };
-
-  const itemsCount = {
-    favorites: 737,
-    following: 55,
-    collections: 20,
-    artists: 10,
-  };
 
   useEffect(() => {
     setActiveSection("favorites");
@@ -76,15 +107,11 @@ const PuyerProfilePage = () => {
 
   const handleMenuClick = (section) => {
     setActiveSection(section);
-    if (section === "following") {
-      setShowLinks(true);
-    } else {
-      setShowLinks(false);
-    }
+    setShowLinks(section === "following");
   };
 
   const handleMoreInfoClick = () => {
-    setMoreInfoActive(!moreInfoActive);
+    setMoreInfoActive((prev) => !prev);
   };
 
   const handleEditProfileClick = () => {
@@ -105,6 +132,13 @@ const PuyerProfilePage = () => {
     }
   };
 
+  if (loadingAccount) return <div>Loading profile...</div>;
+
+  const favoritesCount = accountData.orders ? accountData.orders.length : 0;
+  const followingCount = accountData.followed_artists ? accountData.followed_artists.length : 0;
+  const collectionsCount = accountData.followed_collections ? accountData.followed_collections.length : 0;
+  const artistsCount = followingCount;
+
   return (
     <>
       {userType === "artist" ? (
@@ -122,30 +156,18 @@ const PuyerProfilePage = () => {
               <div className="row">
                 <div className="col-md-12 col-3">
                   <div className="puyer-photo">
-                    <div
-                      className="overley"
-                      style={{ display: overlayVisible ? "block" : "none" }}
-                    ></div>
+                    <div className="overley" style={{ display: overlayVisible ? "block" : "none" }}></div>
                     <Image
-                      src={avatar}
-                      alt="Artist Avatar"
+                      src={accountData.user.profile_picture ?? avatar}
+                      alt="Profile Avatar"
                       width={92}
                       height={92}
                       quality={70}
                       loading="lazy"
                     />
-                    <div
-                      className={`edit-photo-profile ${
-                        editPhotoProfileVisible ? "d-block" : "d-none"
-                      }`}
-                    >
+                    <div className={`edit-photo-profile ${editPhotoProfileVisible ? "d-block" : "d-none"}`}>
                       <form className="upload-photo-profile">
-                        <input
-                          type="file"
-                          name="image"
-                          accept="image/*"
-                          onChange={handleAvatarImageChange}
-                        />
+                        <input type="file" name="image" accept="image/*" onChange={handleAvatarImageChange} />
                       </form>
                       <span className="pen-icon">
                         <GoPencil />
@@ -156,9 +178,9 @@ const PuyerProfilePage = () => {
                 </div>
                 <div className="col-md-12 col-9">
                   <div className="art-name">
-                    <h2>{artistData.name}</h2>
+                    <h2>{accountData.user.first_name} {accountData.user.last_name}</h2>
                     <span>
-                      <FaMapMarkerAlt /> {artistData.location}
+                      <FaMapMarkerAlt /> {accountData.user.main_address?.city} {accountData.user.main_address?.zone}
                     </span>
                   </div>
                 </div>
@@ -184,20 +206,14 @@ const PuyerProfilePage = () => {
                   <div className="col-md-12 col-6">
                     <div className="d-block d-md-none">
                       <button
-                        className={`button-more-info ${
-                          moreInfoActive ? "active-more-info" : ""
-                        }`}
+                        className={`button-more-info ${moreInfoActive ? "active-more-info" : ""}`}
                         type="button"
                         aria-expanded="false"
                         aria-label="More options"
                         onClick={handleMoreInfoClick}
                       >
                         More Info
-                        <span
-                          className={`arrow-down-icon ${
-                            moreInfoActive ? "active-more-info" : ""
-                          }`}
-                        >
+                        <span className={`arrow-down-icon ${moreInfoActive ? "active-more-info" : ""}`}>
                           <IoIosArrowDown />
                         </span>
                       </button>
@@ -206,60 +222,33 @@ const PuyerProfilePage = () => {
                 </div>
               </div>
 
-              <div
-                className={`box-orders-profile-page ${
-                  moreInfoActive ? "d-block" : ""
-                }`}
-              >
+              <div className={`box-orders-profile-page ${moreInfoActive ? "d-block" : ""}`}>
                 <div className="box-list-orders">
                   <ul className="list-unstyled">
-                    <li
-                      className={activeSection === "favorites" ? "active" : ""}
-                    >
-                      <Link
-                        href="#"
-                        onClick={() => handleMenuClick("favorites")}
-                      >
+                    <li className={activeSection === "favorites" ? "active" : ""}>
+                      <Link href="#" onClick={() => handleMenuClick("favorites")}>
                         Favorites{" "}
-                        <span
-                          className={`favorites-number ${
-                            activeSection === "favorites" ? "active-color" : ""
-                          }`}
-                        >
-                          {itemsCount.favorites}{" "}
+                        <span className={`favorites-number ${activeSection === "favorites" ? "active-color" : ""}`}>
+                          {accountData.liked_artworks.length}{" "}
                           <span className="arrow-next">
                             <IoIosArrowForward />
                           </span>
                         </span>
                       </Link>
                     </li>
-                    <li
-                      className={activeSection === "following" ? "active" : ""}
-                    >
-                      <Link
-                        href="#"
-                        onClick={() => handleMenuClick("following")}
-                      >
+                    <li className={activeSection === "following" ? "active" : ""}>
+                      <Link href="#" onClick={() => handleMenuClick("following")}>
                         Following{" "}
-                        <span
-                          className={`following-number ${
-                            activeSection === "following" ? "active-color" : ""
-                          }`}
-                        >
-                          {itemsCount.following}{" "}
+                        <span className={`following-number ${activeSection === "following" ? "active-color" : ""}`}>
+                          {accountData.followed_artists.length}{" "}
                           <span className="arrow-next">
                             <IoIosArrowForward />
                           </span>
                         </span>
                       </Link>
                     </li>
-                    <li
-                      className={activeSection === "addresses" ? "active" : ""}
-                    >
-                      <Link
-                        href="#"
-                        onClick={() => handleMenuClick("addresses")}
-                      >
+                    <li className={activeSection === "addresses" ? "active" : ""}>
+                      <Link href="#" onClick={() => handleMenuClick("addresses")}>
                         <span className="addresses-icon">
                           <LiaMapMarkedAltSolid />
                         </span>
@@ -289,16 +278,14 @@ const PuyerProfilePage = () => {
               <div className={`buttons ${moreInfoActive ? "d-block" : ""}`}>
                 <div className="row">
                   <div className="col-md-12 text-center">
-                    <button
-                      className="logout"
-                      type="button"
-                      aria-label="Logout"
-                    >
-                      <span className="logout-icon">
-                        <RiLogoutCircleRLine />
-                      </span>
-                      Logout
-                    </button>
+                    <div className="button-logout" onClick={handleLogout}>
+                      <button className="logout" type="button" aria-label="Logout">
+                        <span className="logout-icon">
+                          <RiLogoutCircleRLine />
+                        </span>
+                        Logout
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -313,9 +300,7 @@ const PuyerProfilePage = () => {
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "favorites" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "favorites" ? "active-sub-menu" : ""}`}
                         onClick={() => handleMenuClick("favorites")}
                       >
                         Favorites
@@ -324,9 +309,7 @@ const PuyerProfilePage = () => {
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "following" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "following" ? "active-sub-menu" : ""}`}
                         onClick={() => handleMenuClick("following")}
                       >
                         Following
@@ -335,9 +318,7 @@ const PuyerProfilePage = () => {
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "addresses" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "addresses" ? "active-sub-menu" : ""}`}
                         onClick={() => handleMenuClick("addresses")}
                       >
                         Addresses
@@ -346,9 +327,7 @@ const PuyerProfilePage = () => {
                     <li className="nav-item">
                       <Link
                         href="#"
-                        className={`nav-link ${
-                          activeSection === "orders" ? "active-sub-menu" : ""
-                        }`}
+                        className={`nav-link ${activeSection === "orders" ? "active-sub-menu" : ""}`}
                         onClick={() => handleMenuClick("orders")}
                       >
                         Orders
@@ -362,44 +341,34 @@ const PuyerProfilePage = () => {
                       <li className="nav-item">
                         <Link
                           href="#"
-                          className={`nav-link nav-collections-artists-sm ${
-                            activeSection === "collections"
-                              ? "active-sub-menu"
-                              : ""
-                          }`}
-                          onClick={() => handleMenuClick("collections")}
-                        >
-                          Collections{" "}
-                          <span className="item-count">
-                            ({itemsCount.collections})
-                          </span>
-                        </Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link
-                          href="#"
-                          className={`nav-link nav-collections-artists-sm ${
-                            activeSection === "artists" ? "active-sub-menu" : ""
-                          }`}
+                          className={`nav-link nav-collections-artists-sm ${activeSection === "artists" ? "active-sub-menu" : ""}`}
                           onClick={() => handleMenuClick("following")}
                         >
                           Artists{" "}
-                          <span className="item-count">
-                            ({itemsCount.artists})
-                          </span>
+                          <span className="item-count">({artistsCount})</span>
                         </Link>
                       </li>
+                      {/* <li className="nav-item">
+                        <Link
+                          href="#"
+                          className={`nav-link nav-collections-artists-sm ${activeSection === "collections" ? "active-sub-menu" : ""}`}
+                          onClick={() => handleMenuClick("collections")}
+                        >
+                          Collections{" "}
+                          <span className="item-count">({collectionsCount})</span>
+                        </Link>
+                      </li> */}
                     </>
                   )}
                 </ul>
               </div>
-              {activeSection === "favorites" && <SectionFavorites />}
-              {activeSection === "following" && <SectionFollowing />}
-              {activeSection === "addresses" && <SectionAddresses />}
+              {activeSection === "favorites" && <SectionFavorites items={accountData.liked_artworks} />}
+              {activeSection === "following" && <SectionFollowing data={accountData.followed_artists} />}
+              {activeSection === "addresses" && <SectionAddresses addresses={accountData.addresses} />}
               {activeSection === "orders" && <SectionOrders />}
               {activeSection === "credit" && <SectionCredit />}
-              {activeSection === "collections" && <SectionCollections />}
-              {activeSection === "editProfile" && <SectionEditProfile />}
+              {activeSection === "collections" && <SectionCollections data={accountData.followed_collections} />}
+              {activeSection === "editProfile" && <SectionEditProfile data={accountData.user} />}
             </div>
           </div>
         </div>
