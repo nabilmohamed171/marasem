@@ -297,7 +297,7 @@ const SliderTags = () => {
                 <div key={artwork.id} className="col-lg-3 col-md-4 col-6">
                   <div className="items-collections-info">
                     <div className="image-card">
-                      <Link href={'/product-details/' + artwork.id} className="reser-link">
+                      <Link href={'/product-details?id=' + artwork.id} className="reser-link">
                         <div className="overley"></div>
                         <div className="items-collections-image">
                           <Image
@@ -355,7 +355,7 @@ const SliderTags = () => {
                               loading="lazy"
                             />
                           </div>
-                          <Link href={"/artist-profile/" + artwork.artist.id} className="reser-link">
+                          <Link href={"/artist-profile?id=" + artwork.artist.id} className="reser-link">
                             <span>{artwork.artist.first_name} {artwork.artist.last_name}</span>
                           </Link>
                         </div>

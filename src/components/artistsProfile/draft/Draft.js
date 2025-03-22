@@ -9,7 +9,7 @@ const Draft = (drafts) => {
     <div className="section-draft">
       <div className="row">
         {drafts[0].map((draft, index) => (
-          <div className="col-md-4 col-12">
+          <div className="col-md-4 col-12" key={index}>
             <div className="box-draft">
               <div className="draft-image">
                 <div className="overley"></div>
@@ -33,17 +33,22 @@ const Draft = (drafts) => {
                 </span>
               </div> */}
               <div className="draft-button">
-                <Link href={"/artist-edit-product?id=" + draft.id} className="edite-artwork">Edit Artwork</Link>
+                <Link href={"/artist-edit-product?id=" + draft.id} style={{ textDecoration: "none" }}> <button className="edite-artwork">edit artwork</button></Link>
                 <button className="delete-artwork">Delete Artwork</button>
                 <p>Last Modified {new Date(draft.updated_at).toLocaleDateString()}</p>
               </div>
+              {/* <div className="draft-button">
+                <Link href={"/artist-edit-product?id=" + draft.id} className="edite-artwork">Edit Artwork</Link>
+                <button className="delete-artwork">Delete Artwork</button>
+                <p>Last Modified {new Date(draft.updated_at).toLocaleDateString()}</p>
+              </div> */}
             </div>
           </div>
         ))}
       </div>
       <div className="row">
         {drafts[1].map((draft, index) => (
-          <div className="col-md-4 col-12">
+          <div className="col-md-4 col-12" key={index}>
             <div className="box-draft">
               <div className="draft-image">
                 <div className="overley"></div>
@@ -67,7 +72,7 @@ const Draft = (drafts) => {
                 </span>
               </div> */}
               <div className="draft-button">
-              <p>Last Modified {new Date(draft.updated_at).toLocaleDateString()}</p>
+                <p>Last Modified {new Date(draft.updated_at).toLocaleDateString()}</p>
               </div>
             </div>
           </div>

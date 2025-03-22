@@ -91,6 +91,7 @@ const PuyerProfilePage = () => {
           withCredentials: true,
         });
         setAccountData(response.data);
+        setAvatar(response.data.user.profile_picture);
         console.log("Account data:", response.data);
         setLoadingAccount(false);
       } catch (error) {
@@ -121,14 +122,28 @@ const PuyerProfilePage = () => {
     setActiveSection("editProfile");
   };
 
-  const handleAvatarImageChange = (e) => {
+  const handleAvatarImageChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+    const token = localStorage.getItem("authToken");
+    const formData = new FormData();
+    formData.append("profile_picture", file);
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/user/profile-picture",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data.message);
+      // Update the profile picture state with the new picture URL from the response
+      setAvatar(response.data.profile_picture);
+    } catch (error) {
+      console.error("Error updating profile picture:", error);
     }
   };
 
@@ -158,7 +173,7 @@ const PuyerProfilePage = () => {
                   <div className="puyer-photo">
                     <div className="overley" style={{ display: overlayVisible ? "block" : "none" }}></div>
                     <Image
-                      src={accountData.user.profile_picture ?? avatar}
+                      src={avatar}
                       alt="Profile Avatar"
                       width={92}
                       height={92}
@@ -367,7 +382,7 @@ const PuyerProfilePage = () => {
               {activeSection === "addresses" && <SectionAddresses addresses={accountData.addresses} />}
               {activeSection === "orders" && <SectionOrders />}
               {activeSection === "credit" && <SectionCredit />}
-              {activeSection === "collections" && <SectionCollections data={accountData.followed_collections} />}
+              {/* {activeSection === "collections" && <SectionCollections data={accountData.followed_collections} />} */}
               {activeSection === "editProfile" && <SectionEditProfile data={accountData.user} />}
             </div>
           </div>

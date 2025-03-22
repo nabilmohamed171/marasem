@@ -333,7 +333,7 @@ const SliderTags = () => {
                         </span>
                         <div className="user-art">
                           <div className="user-image">
-                            <Link href="/artist-profile" className="reser-link">
+                          <Link href={"/artwork-details?id=" + artwork.id} className="reser-link">
                               <Image
                                 src={artwork.artist.profile_picture}
                                 alt="avatar"
@@ -344,7 +344,7 @@ const SliderTags = () => {
                               />
                             </Link>
                           </div>
-                          <Link href="/artist-profile" className="reser-link">
+                          <Link href={"/artist-profile?id=" + artwork.artist.id} className="reser-link">
                             <span>{artwork.artist.name}</span>
                           </Link>
                         </div>

@@ -163,7 +163,7 @@ const ArtistEditProduct = () => {
                       </div>
                       <div className="col-md-6 col-6">
                         <div className="buttons-follow">
-                          <Link href={`/edit-artwork?id=${artwork.id}`}>
+                          <Link href={`/artist-edit-product?id=${artwork.id}`}>
                             <button className="edit-artwork">Edit Artwork
                             </button>
                           </Link>
@@ -173,7 +173,7 @@ const ArtistEditProduct = () => {
                   </div>
 
                   <div className="image-heading">
-                    <h2>{artwork.name} - {artwork.art_type}</h2>
+                    <h2>{artwork.name}</h2>
                     <p>Dimensions: {Object.keys(artwork.sizes_prices)[0]}</p>
                     <p className="custom">
                       {artwork.artwork_status !== "ready_to_ship"
@@ -220,13 +220,15 @@ const ArtistEditProduct = () => {
                       <table className="table table-striped table-dark">
                         <tbody>
                           <tr>
-                            <td>Variant</td>
+                            <td>Artwork Type</td>
                             <td>{artwork.art_type}</td>
                           </tr>
-                          <tr>
-                            <td>Type</td>
-                            <td>{artwork.medium}</td>
-                          </tr>
+                          {artwork.artwork_status !== "ready_to_ship" && (
+                            <tr>
+                              <td>Customization Duration</td>
+                              <td>{artwork.duration}</td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
                     </div>

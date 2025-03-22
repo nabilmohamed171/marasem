@@ -10,7 +10,7 @@ import { GoEye } from "react-icons/go";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import "@/app/_css/login.css";
 
 const Login = () => {
@@ -21,6 +21,14 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const token = searchParams.get("token");
+    if (token) {
+      localStorage.setItem("authToken", token);
+      router.push("/");
+    }
+  }, [searchParams, router]);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -156,15 +164,15 @@ const Login = () => {
 
               <div className="social-login">
                 <span>Or Login with social</span>
-                <Link className="google" href="#">
+                <a className="google" href="http://127.0.0.1:8000/login/google/redirect">
                   <FaGoogle />
-                </Link>
-                <Link className="facebook" href="#">
+                </a>
+                <a className="facebook" href="http://127.0.0.1:8000/login/facebook/redirect">
                   <FaFacebookF />
-                </Link>
-                <Link className="behance" href="#">
+                </a>
+                <a className="behance" href="http://127.0.0.1:8000/login/behance/redirect">
                   <FaBehance />
-                </Link>
+                </a>
               </div>
             </form>
           </div>

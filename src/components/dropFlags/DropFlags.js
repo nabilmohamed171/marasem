@@ -1,7 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import { MdKeyboardArrowUp } from "react-icons/md";
+import React, { useState, useEffect } from "react";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import "./drop-flags.css";
 
 const countryOptions = [
@@ -12,18 +11,27 @@ const countryOptions = [
   { value: "🇮🇶", label: "(+964)", flag: "iq" },
 ];
 
-const PhoneInput = ({ onChange }) => {
-  const [selectedFlag, setSelectedFlag] = useState(countryOptions[0]);
+const PhoneInput = ({ onChange, initialCountryCode = "+20", initialPhone = "" }) => {
+  const initialFlag =
+    countryOptions.find((c) => c.label.replace(/[()]/g, "") === initialCountryCode) ||
+    countryOptions[0];
+  const [selectedFlag, setSelectedFlag] = useState(initialFlag);
   const [isOpen, setIsOpen] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(initialPhone);
   const [error, setError] = useState("");
-  const [countryCode, setCountryCode] = useState("+20");
+  const [countryCode, setCountryCode] = useState(initialCountryCode);
+
+  useEffect(() => {
+    setPhoneNumber(initialPhone);
+    setCountryCode(initialCountryCode);
+  }, [initialPhone, initialCountryCode]);
 
   const handleSelect = (country) => {
     setSelectedFlag(country);
-    setCountryCode(country.label.split(" ")[0]);
+    const formattedCountryCode = country.label.replace(/[()]/g, "");
+    setCountryCode(formattedCountryCode);
     setIsOpen(false);
-    if (onChange) onChange(country);
+    if (onChange) onChange({ countryCode: formattedCountryCode, phone: phoneNumber });
   };
 
   const toggleDropdown = () => {
@@ -43,7 +51,7 @@ const PhoneInput = ({ onChange }) => {
       setError("");
     }
 
-    if (onChange) onChange(validInput);
+    if (onChange) onChange({ countryCode, phone: validInput });
   };
 
   const handleBlur = () => {
@@ -68,9 +76,7 @@ const PhoneInput = ({ onChange }) => {
           ) : (
             "Select a country"
           )}
-          <span>
-            {isOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
-          </span>
+          <span>{isOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}</span>
         </div>
 
         {isOpen && (
@@ -100,7 +106,7 @@ const PhoneInput = ({ onChange }) => {
         onBlur={handleBlur}
         className="phone-input"
       />
-      {error && <span className="error">{error}</span>} {""}
+      {error && <span className="error">{error}</span>}
     </div>
   );
 };

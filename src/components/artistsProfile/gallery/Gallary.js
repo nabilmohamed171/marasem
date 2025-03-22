@@ -140,7 +140,7 @@ const Gallary = ({ artworks }) => {
                       loading="lazy"
                     />
                   </div>
-                  <Link href="#" className="reser-link">
+                  <Link href={"/artist-profile?id=" + item.artist.id} className="reser-link">
                     <span>{item.artist.first_name + " " + item.artist.last_name}</span>
                   </Link>
                 </div>

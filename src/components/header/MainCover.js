@@ -76,7 +76,7 @@ const MainCover = () => {
       <div className="row">
         <div className="col-md-4">
           <div className="image-header full">
-            <Link href="#">
+            <Link href={"/product-details?id=" + recentArtwork.id}>
               <Image
                 className="full-image"
                 src={cover_img} // Dynamic cover image from backend
@@ -102,7 +102,7 @@ const MainCover = () => {
                       </li>
                     ))}
                   <li className="full-link">
-                    <Link className="reser-link" href="#">
+                    <Link className="reser-link" href="/shop-art">
                       & More
                     </Link>
                   </li>
@@ -117,7 +117,7 @@ const MainCover = () => {
             <div className="col-md-5">
               <div className="image-header small">
                 <div className="overley"></div>
-                <Link href="#">
+                <Link href={"/product-details?id=" + recentArtwork.id}>
                   {recentArtwork ? (
                     <Image
                       className="small-image"

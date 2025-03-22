@@ -117,8 +117,9 @@ const MyProfilePage = () => {
         const response = await axios.get("http://127.0.0.1:8000/api/artist/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("Artist profile data:", response.data);
         setArtistData(response.data);
+        setAvatar(response.data.artist.profile_picture);
+        setHeaderImage(response.data.artist.cover_img);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching artist data:", err);
@@ -147,27 +148,53 @@ const MyProfilePage = () => {
     setOverlayVisible(true);
   }, []);
 
-  const handleCoverImageChange = useCallback((e) => {
+  const handleCoverImageChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setHeaderImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+    const token = localStorage.getItem("authToken");
+    const formData = new FormData();
+    formData.append("cover_img", file);
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/user/cover-image",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data.message);
+      setHeaderImage(response.data.cover_img);
+    } catch (error) {
+      console.error("Error updating cover image:", error);
     }
-  }, []);
+  };
 
-  const handleAvatarImageChange = useCallback((e) => {
+  const handleAvatarImageChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+    const token = localStorage.getItem("authToken");
+    const formData = new FormData();
+    formData.append("profile_picture", file);
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/user/profile-picture",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setAvatar(response.data.profile_picture);
+    } catch (error) {
+      console.error("Error updating profile picture:", error);
     }
-  }, []);
+  };
+
 
   if (loading) return <div>Loading profile...</div>;
 
@@ -184,7 +211,7 @@ const MyProfilePage = () => {
       <div className="header-artist-profile">
         <div className="overley"></div>
         <Image
-          src={artistData.artist.cover_img ?? "/images/header3.jpg"}
+          src={headerImage ?? "/images/header3.jpg"}
           alt="Artist Header"
           width={1920}
           height={200}
@@ -224,7 +251,7 @@ const MyProfilePage = () => {
                       style={{ display: overlayVisible ? "block" : "none" }}
                     ></div>
                     <Image
-                      src={artistData.artist.profile_picture}
+                      src={avatar}
                       alt="Artist Avatar"
                       width={92}
                       height={92}
@@ -522,7 +549,7 @@ const MyProfilePage = () => {
               )}
               {activeSection === "editProfile" && (
                 <div className="collections-edit-profile">
-                  <SectionEditProfile />
+                  <SectionEditProfile data={artistData.artist} />
                 </div>
               )}
               {activeSection === "addresses" && (

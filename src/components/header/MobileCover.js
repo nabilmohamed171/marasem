@@ -92,7 +92,7 @@ const MobileCover = () => {
           <div className="row">
             <div className="col-12">
               <div className="sec-image">
-                <Link href="#">
+                <Link href={"/product-details?id=" + recentArtwork.id}>
                   {recentArtwork ? (
                     <Image
                       src={
