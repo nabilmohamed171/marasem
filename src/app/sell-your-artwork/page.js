@@ -25,6 +25,10 @@ const ShareArtwork = () => {
           withCredentials: true,
         });
         setUserType(response.data.user_type);
+        console.log("User type fetched:", response.data.user_type);
+        if(response.data.user_type !== "artist"){
+          window.location.href = "/";
+        }
       } catch (error) {
         console.error("Error fetching user type:", error);
       }

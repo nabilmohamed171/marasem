@@ -13,10 +13,14 @@ export const CartProvider = ({ children }) => {
 
     const fetchCartCount = async () => {
         const token = localStorage.getItem("authToken");
-        if (!token) return;
+        if (!token) {
+            setCartCount(0);
+            return;
+        }
         try {
             const response = await axios.get("http://127.0.0.1:8000/api/user", {
                 headers: { Authorization: `Bearer ${token}` },
+                withCredentials: true,
             });
             setCartCount(response.data.cart_items_count);
         } catch (error) {

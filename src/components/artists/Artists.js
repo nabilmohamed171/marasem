@@ -24,7 +24,9 @@ const Artists = () => {
   useEffect(() => {
     const fetchArtists = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/artists");
+        const response = await axios.get("http://127.0.0.1:8000/api/artists", {
+          withCredentials: true,
+        });
         setArtists(response.data.artists);
         setTags(response.data.tags);
 
@@ -60,7 +62,7 @@ const Artists = () => {
         await axios.post(
           `http://127.0.0.1:8000/api/artists/${artistId}/unfollow`,
           {},
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
         );
         setFollowedArtists((prev) => {
           const newSet = new Set(prev);
@@ -72,7 +74,7 @@ const Artists = () => {
         await axios.post(
           `http://127.0.0.1:8000/api/artists/${artistId}/follow`,
           {},
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
         );
         setFollowedArtists((prev) => new Set(prev).add(artistId));
       }

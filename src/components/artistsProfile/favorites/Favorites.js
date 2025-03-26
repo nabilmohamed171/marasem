@@ -22,6 +22,7 @@ const Favorites = ({ artworks }) => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         setLikedArtworks(new Set(response.data.likedArtworks)); // ✅ Store IDs as a Set
       } catch (error) {
@@ -43,12 +44,13 @@ const Favorites = ({ artworks }) => {
       await axios.post(
         "http://127.0.0.1:8000/api/cart",
         { artwork_id: artworkId, size: size, quantity: 1 },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
 
       // Fetch new cart count after adding item
       const response = await axios.get("http://127.0.0.1:8000/api/cart", {
         headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
       });
       setCartCount(response.data.items_count);
     } catch (error) {
@@ -69,14 +71,14 @@ const Favorites = ({ artworks }) => {
 
     try {
       if (isLiked) {
-        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
         setLikedArtworks((prev) => {
           const newSet = new Set(prev);
           newSet.delete(artworkId);
           return newSet;
         });
       } else {
-        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
         setLikedArtworks((prev) => new Set(prev).add(artworkId));
       }
     } catch (error) {

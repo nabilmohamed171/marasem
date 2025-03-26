@@ -41,6 +41,7 @@ const OrderDetails = () => {
         }
         const response = await axios.get(endpoint, {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         if (customizedId) {
           setOrderDetails(response.data.customized_order_details);
@@ -103,12 +104,12 @@ const OrderDetails = () => {
                     </span>
                     Home
                   </span>
-                  <p className="username">{orderDetails.customer_name}</p>
+                  <p className="username">{orderDetails.customer_name ?? orderDetails.custom_order.user.first_name + " " + orderDetails.custom_order.user.last_name}</p>
                   <p className="full-address">
-                    {orderDetails.customer_address}
+                    {orderDetails.customer_address ?? orderDetails.address.city + ", " + orderDetails.address.zone + ", " + orderDetails.address.address}
                   </p>
                   <p className="phone-number">
-                    {orderDetails.customer_phone}
+                    {orderDetails.customer_phone ?? orderDetails.custom_order.user.country_code + orderDetails.custom_order.user.phone}
                   </p>
                   <span className="check-number-phone">
                     <FaCheck />
@@ -124,7 +125,7 @@ const OrderDetails = () => {
                         <span className="icon-credit">
                           <BsCreditCard2Back />
                         </span>
-                        {orderDetails.payment_method || "Credit Card"}
+                        {orderDetails.payment_method || "Cash"}
                       </button>
                     </div>
                   </div>

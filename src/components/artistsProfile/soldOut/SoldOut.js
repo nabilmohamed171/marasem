@@ -19,6 +19,7 @@ const SoldOut = ({ artworks }) => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         setLikedArtworks(new Set(response.data.likedArtworks)); // ✅ Store IDs as a Set
       } catch (error) {
@@ -41,14 +42,14 @@ const SoldOut = ({ artworks }) => {
 
     try {
       if (isLiked) {
-        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
         setLikedArtworks((prev) => {
           const newSet = new Set(prev);
           newSet.delete(artworkId);
           return newSet;
         });
       } else {
-        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
         setLikedArtworks((prev) => new Set(prev).add(artworkId));
       }
     } catch (error) {

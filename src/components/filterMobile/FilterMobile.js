@@ -42,7 +42,9 @@ const FilterMobile = ({ closeFilter }) => {
   });
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/filters/get")
+    axios.get("http://127.0.0.1:8000/api/filters/get", {
+      withCredentials: true,
+    })
       .then(response => {
         setCategories(response.data.featured_categories || []);
         setLocations(response.data.locations || {});
@@ -152,29 +154,29 @@ const FilterMobile = ({ closeFilter }) => {
                 <div className="accordion-section" id="location-accordion">
                   <div className="accordion accordion-flush">
                     {Object.entries(locations).map(([country, cities], index) => (
-                      country ? 
-                      <div key={index} className="accordion-item">
-                        <h2 className="accordion-header">
-                          <button
-                            className={`accordion-button ${collapsed[country] ? "active" : ""}`}
-                            type="button"
-                            onClick={() => setCollapsed(prev => ({ ...prev, [country]: !prev[country] }))}
-                          >
-                            {country}
-                          </button>
-                        </h2>
-                        <div className={`accordion-collapse collapse ${collapsed[country] ? "show" : ""}`}>
-                          <div className="accordion-body">
-                            <ul className="list-unstyled">
-                              {[...new Set(cities.map(city => city.city))].map((city, index) => (
-                                <li key={index} onClick={() => handleFilterSelection("location", city)}>
-                                  {city}
-                                </li>
-                              ))}
-                            </ul>
+                      country ?
+                        <div key={index} className="accordion-item">
+                          <h2 className="accordion-header">
+                            <button
+                              className={`accordion-button ${collapsed[country] ? "active" : ""}`}
+                              type="button"
+                              onClick={() => setCollapsed(prev => ({ ...prev, [country]: !prev[country] }))}
+                            >
+                              {country}
+                            </button>
+                          </h2>
+                          <div className={`accordion-collapse collapse ${collapsed[country] ? "show" : ""}`}>
+                            <div className="accordion-body">
+                              <ul className="list-unstyled">
+                                {[...new Set(cities.map(city => city.city))].map((city, index) => (
+                                  <li key={index} onClick={() => handleFilterSelection("location", city)}>
+                                    {city}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
                           </div>
-                        </div>
-                      </div> : ''
+                        </div> : ''
                     ))}
                   </div>
                 </div>

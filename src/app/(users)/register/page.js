@@ -6,8 +6,11 @@ import Image from "next/image";
 import PhoneInput from "@/components/dropFlags/DropFlags";
 import { GoEye } from "react-icons/go";
 import "@/app/_css/login.css";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 function CreateAccount() {
+  const router = useRouter();
   const searchParams = useSearchParams(); // Get query params
   const isArtistParam = searchParams.get("artist"); // Read 'artist' from URL
   const [isArtist, setIsArtist] = useState("lover");
@@ -112,10 +115,32 @@ function CreateAccount() {
     return formIsValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form is valid, submitting data...", formData);
+      try {
+        const response = await axios.post("http://127.0.0.1:8000/api/register", {
+          first_name: formData.firstname,
+          last_name: formData.lastname,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.phone,
+          country_code: formData.country_code,
+          is_artist: isArtist === "artist",
+        }, {
+          withCredentials: true,
+        });
+        localStorage.setItem("authToken", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        if (isArtist === "artist") {
+          router.push("/about-you");
+        } else {
+          router.push("/");
+        }
+      } catch (error) {
+        console.error("Registration failed:", error);
+        setErrors(error.response?.data?.errors || {});
+      }
     }
   };
 
@@ -127,10 +152,11 @@ function CreateAccount() {
     setIsFormValid(isArtist && validateForm());
   }, [formData, isArtist]);
 
-  const handlePhoneNumberInput = (value) => {
+  const handlePhoneNumberInput = ({ countryCode, phone }) => {
     setFormData((prevData) => ({
       ...prevData,
-      phone: value,
+      phone: phone,
+      country_code: countryCode,
     }));
   };
 
@@ -214,8 +240,8 @@ function CreateAccount() {
                       <input
                         type="text"
                         className={`form-control ${errors.firstname && touchedFields.firstname
-                            ? "border-red"
-                            : ""
+                          ? "border-red"
+                          : ""
                           }`}
                         id="firstname"
                         name="firstname"
@@ -239,8 +265,8 @@ function CreateAccount() {
                       <input
                         type="text"
                         className={`form-control ${errors.lastname && touchedFields.lastname
-                            ? "border-red"
-                            : ""
+                          ? "border-red"
+                          : ""
                           }`}
                         id="lastname"
                         name="lastname"
@@ -330,8 +356,8 @@ function CreateAccount() {
                       required
                       placeholder={TEXTS.passwordPlaceholder}
                       className={`form-control ${errors.password && touchedFields.password
-                          ? "border-red"
-                          : ""
+                        ? "border-red"
+                        : ""
                         }`}
                       value={formData.password}
                       onChange={handleChange}
@@ -347,15 +373,13 @@ function CreateAccount() {
 
               <div className="row">
                 <div className="col-12">
-                  <Link href="about-you">
-                    <button
-                      type="submit"
-                      className="create-account-btn"
-                      disabled={!isFormValid}
-                    >
-                      {TEXTS.createAccountBtn}
-                    </button>
-                  </Link>
+                  <button
+                    type="submit"
+                    className="create-account-btn"
+                    disabled={!isFormValid}
+                  >
+                    {TEXTS.createAccountBtn}
+                  </button>
                 </div>
               </div>
             </form>

@@ -1,60 +1,82 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
 import "@/app/_css/login.css";
+import { useRouter } from "next/navigation";
 
 function CategoriesPage() {
   const [activeItems, setActiveItems] = useState(new Set());
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
-  const toggleActiveClass = (item) => {
-    setActiveItems((prevItems) => {
-      const updatedItems = new Set(prevItems);
-      if (updatedItems.has(item)) {
-        updatedItems.delete(item);
-      } else {
-        updatedItems.add(item);
+  // Fetch categories and user's followed subcategories from backend
+  useEffect(() => {
+    const fetchFocus = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://127.0.0.1:8000/api/artist/focus", {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
+        // response.data contains: categories (with subcategories) and user_subcategories array
+        setCategories(response.data.categories);
+        setActiveItems(new Set(response.data.user_subcategories));
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching focus data:", error);
+        setLoading(false);
       }
-      return updatedItems;
+    };
+    fetchFocus();
+  }, []);
+
+  const toggleActiveClass = (subId) => {
+    setActiveItems((prevItems) => {
+      const updated = new Set(prevItems);
+      if (updated.has(subId)) {
+        updated.delete(subId);
+      } else {
+        updated.add(subId);
+      }
+      return updated;
     });
   };
 
-  const categories = [
-    {
-      title: "Fine Art",
-      items: [
-        "Paintings",
-        "Drawings",
-        "Mosaic",
-        "Sculptures",
-        "Collage Art",
-        "Glass",
-      ],
-    },
-    {
-      title: "Hand Craft",
-      items: [
-        "Ceramics",
-        "Leather Craft",
-        "Wood Craft",
-        "Furniture",
-        "Jewelry & Accessories",
-        "Fashion Art",
-      ],
-    },
-    {
-      title: "Digital Prints",
-      items: [
-        "Digital Paintings",
-        "Illustrations",
-        "Posters",
-        "3D Print",
-        "Photography",
-        "Illustrations Books",
-        "Printed Products",
-      ],
-    },
-  ];
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await axios.put(
+        "http://127.0.0.1:8000/api/artist/focus",
+        { subcategories: Array.from(activeItems) },
+        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
+      );
+      console.log(response.data.message);
+      router.push("/pickup-location");
+    } catch (error) {
+      console.error("Error updating focus:", error);
+    }
+  };
+
+  const handleSkip = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await axios.put(
+        "http://127.0.0.1:8000/api/artist/focus",
+        { subcategories: [] },
+        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
+      );
+      console.log(response.data.message);
+      router.push("/pickup-location");
+    } catch (error) {
+      console.error("Error updating focus (skip):", error);
+    }
+  };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="categories-page">
@@ -85,42 +107,38 @@ function CategoriesPage() {
               />
             </div>
             <span className="skip">
-              <Link href="my-wishes">Skip</Link>
+              <Link href="#" onClick={handleSkip}>Skip</Link>
               <i className="fa-solid fa-arrow-right"></i>
             </span>
             <div className="cate-info">
               <h2>Select Your Categories</h2>
               <h4>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Ducimus minima, explicabo voluptatem ratione dolor
+                Choose the art styles that best represent your work. You can
+                update this later if needed.
               </h4>
             </div>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="cate-section">
                 <div className="row">
-                  {categories.map((category, index) => (
-                    <div key={index} className="col-12">
-                      <h3>{category.title}</h3>
+                  {categories.map((category) => (
+                    <div key={category.id} className="col-12">
+                      <h3>{category.name}</h3>
                       <ul className="list-unstyled">
-                        {category.items.map((item, itemIndex) => (
+                        {category.subcategories.map((sub) => (
                           <li
-                            key={itemIndex}
-                            className={
-                              activeItems.has(item) ? "active-cate" : ""
-                            }
-                            onClick={() => toggleActiveClass(item)}
+                            key={sub.id}
+                            className={activeItems.has(sub.id) ? "active-cate" : ""}
+                            onClick={() => toggleActiveClass(sub.id)}
                           >
-                            {item}
+                            {sub.name}
                           </li>
                         ))}
                       </ul>
                     </div>
                   ))}
-                  <Link href="pickup-location">
-                    <button type="button" className="create-cate-btn">
-                      Create
-                    </button>
-                  </Link>
+                  <button type="submit" className="create-cate-btn">
+                    Create
+                  </button>
                 </div>
               </div>
             </form>

@@ -7,6 +7,7 @@ import { ImBin } from "react-icons/im";
 import FinalTouches from "./FinalTouches";
 import Image from "next/image";
 import "./share-artwork.css";
+import axios from "axios";
 
 const ShareArtwork = () => {
   const [images, setImages] = useState([]);
@@ -19,6 +20,19 @@ const ShareArtwork = () => {
   const [showFinalTouches, setShowFinalTouches] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
   const [subCategory, setSubCategory] = useState("");
+  const [categories, setCategories] = useState({});
+  const [tags, setTags] = useState([]);
+  const [collections, setCollections] = useState([]);
+  const [description, setDescription] = useState("");
+  const [duration, setDuration] = useState("");
+  // Add new state variables at the top of ShareArtwork:
+  const [files, setFiles] = useState([]);
+  const [finalTouchesData, setFinalTouchesData] = useState({
+    subcategories: [],
+    collections: [],
+    customizable: false,
+    duration: "",
+  });
 
   const [imageUploaded, setImageUploaded] = useState(false);
 
@@ -32,17 +46,14 @@ const ShareArtwork = () => {
   };
 
   const handleImageUpload = (e) => {
-    const files = e.target.files;
-    const imagesArray = Array.from(files).map((file) =>
-      URL.createObjectURL(file)
-    );
-
+    const selectedFiles = Array.from(e.target.files);
+    setFiles(selectedFiles);
+    const imagesArray = selectedFiles.map((file) => URL.createObjectURL(file));
     if (imagesArray.length > 7) {
       setImages(imagesArray.slice(0, 7));
     } else {
       setImages(imagesArray);
     }
-
     setMainImage(imagesArray[0]);
     setShowOverlayImage(true);
     setImageUploaded(true);
@@ -56,6 +67,10 @@ const ShareArtwork = () => {
 
   const handleContinueClick = () => {
     setShowFinalTouches((prevState) => !prevState);
+  };
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
   };
 
   const validateForm = () => {
@@ -81,10 +96,91 @@ const ShareArtwork = () => {
     }
   };
 
-  const subCategories = {
-    "Fine Art": ["Painting", "Drawing", "Sculptures", "Mosaic", "Glass Art"],
-    "Hand Crafts": ["Pottery", "Weaving", "Woodworking", "Metalwork"],
-    "Digital Prints": ["Photography", "Digital Illustration", "3D Art"],
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://127.0.0.1:8000/api/get-categories", {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
+        setCategories(response.data.categories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+
+  // Fetch tags and collections
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/tags/all", {
+          withCredentials: true,
+        });
+        setTags(response.data);
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+      }
+    };
+    fetchTags();
+  }, []);
+  useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get("http://127.0.0.1:8000/api/collections", {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
+        setCollections(response.data);
+      } catch (error) {
+        console.error("Error fetching collections:", error);
+      }
+    };
+    fetchCollections();
+  }, []);
+
+  // Add new function to handle artwork creation:
+  const handleCreateArtwork = async (publish = true) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const formData = new FormData();
+      formData.append("name", artworkName);
+      files.forEach((file) => formData.append("images[]", file));
+      formData.append("art_type", artworkType);
+      formData.append("artwork_status", artworkStatus);
+      // make sizes an array
+      sizes.forEach((s) => formData.append("sizes[]", s.size));
+      sizes.forEach((s) => formData.append("prices[]", s.price));
+      // Use finalTouchesData.description as the artwork story
+      formData.append("description", description);
+      finalTouchesData.collections.forEach((col) =>
+        formData.append("collections[]", col)
+      );
+      formData.append("customizable", artworkStatus == "both" || artworkStatus == "customized_only" ? 1 : 0);
+      if (artworkStatus == "both" || artworkStatus == "customized_only") {
+        formData.append("duration", duration);
+      }
+      formData.append("pending", publish ? 0 : 1);
+      // add tags array
+      finalTouchesData.tags.forEach((tag) => formData.append("tags[]", tag));
+
+      const response = await axios.post("http://127.0.0.1:8000/api/artworks", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
+      console.log(response.data);
+      // Redirect
+      window.location.href = "/request-successfully";
+    } catch (error) {
+      console.error("Error creating artwork:", error);
+    }
   };
 
   return (
@@ -94,9 +190,9 @@ const ShareArtwork = () => {
           <div className="row">
             <div className="col-12">
               <div className="buttons">
-                <button className="save-as" type="button">
+                {/* <button className="save-as" type="button">
                   Save as draft
-                </button>
+                </button> */}
                 <button
                   className="continue"
                   type="button"
@@ -208,7 +304,6 @@ const ShareArtwork = () => {
                     required
                   />
                 </div>
-
                 <div className="form-group">
                   <label htmlFor="artworkType">
                     <span className="main-color">*</span>Artwork Type
@@ -224,9 +319,11 @@ const ShareArtwork = () => {
                     required
                   >
                     <option value="">Select Type</option>
-                    <option value="Fine Art">Fine Art</option>
-                    <option value="Hand Crafts">Hand Crafts</option>
-                    <option value="Digital Prints">Digital Prints</option>
+                    {Object.keys(categories).map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -243,9 +340,9 @@ const ShareArtwork = () => {
                       required
                     >
                       <option value="">Select Sub Category</option>
-                      {subCategories[artworkType]?.map((sub, index) => (
-                        <option key={index} value={sub}>
-                          {sub}
+                      {categories[artworkType]?.map((sub) => (
+                        <option key={sub.id} value={sub.id}>
+                          {sub.name}
                         </option>
                       ))}
                     </select>
@@ -264,15 +361,15 @@ const ShareArtwork = () => {
                     required
                   >
                     <option value="">Select Artwork Status</option>
-                    <option value="available">Ready to Ship</option>
-                    <option value="sold">Customize Only</option>
+                    <option value="ready_to_ship">Ready to Ship</option>
+                    <option value="customized_only">Customize Only</option>
                     <option value="both">
                       Both (Ready to ship & able to Customize)
                     </option>
                   </select>
                 </div>
 
-                {(artworkStatus === "sold" || artworkStatus === "both") && (
+                {(artworkStatus === "customized_only" || artworkStatus === "both") && (
                   <div className="form-group">
                     <label htmlFor="customizeTime">
                       <span className="main-color">*</span>Customize Time
@@ -281,6 +378,10 @@ const ShareArtwork = () => {
                       id="customizeTime"
                       className="form-control"
                       required
+                      value={duration}
+                      onChange={(e) =>
+                        setDuration(e.target.value)
+                      }
                     >
                       <option value="">Select Customize Time</option>
                       <option value="5">5 Working Days</option>
@@ -348,14 +449,16 @@ const ShareArtwork = () => {
                 </div>
                 <hr />
                 <div className="story">
-                  <label htmlFor="size">
+                  <label htmlFor="story">
                     <span className="main-color"></span>The Story
                   </label>
-                  <p>
-                    is simply dummy text of the printing and typesetting
-                    industry. Lorem Ipsum has been the industry’s standard dummy
-                    text ever since the 1500s.
-                  </p>
+                  <textarea
+                    id="story"
+                    rows="4"
+                    className="form-control"
+                    placeholder="Enter your story here"
+                    onChange={handleDescriptionChange}
+                  ></textarea>
                 </div>
               </div>
             </div>
@@ -363,7 +466,14 @@ const ShareArtwork = () => {
         </div>
       </div>
 
-      {showFinalTouches && <FinalTouches />}
+      {showFinalTouches && (
+        <FinalTouches
+          tags={tags}
+          collections={collections}
+          onFinalize={setFinalTouchesData}
+          onSave={handleCreateArtwork}
+        />
+      )}
     </>
   );
 };

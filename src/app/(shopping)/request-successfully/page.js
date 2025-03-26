@@ -6,9 +6,14 @@ import Navbar_Buyer from "@/components/all-navbars/NavbarBuyer";
 import Navbar from "@/components/all-navbars/NavbarArtists";
 import { FaRegCheckCircle } from "react-icons/fa";
 import "./request.css";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const RequestSuccessfully = () => {
   const [userType, setUserType] = useState("guest");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("order_id");
+  const customizedId = searchParams.get("customized_id");
 
   useEffect(() => {
     const fetchUserType = async () => {
@@ -31,6 +36,19 @@ const RequestSuccessfully = () => {
 
     fetchUserType();
   }, []);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (orderId) {
+        router.push(`/order-details?id=${orderId}`);
+      } else if (customizedId) {
+        router.push(`/order-details?customized_id=${customizedId}`);
+      }
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [orderId, router]);
+
   return (
     <>
       {userType === "artist" ? (

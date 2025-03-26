@@ -25,7 +25,9 @@ const Following = ({ data }) => {
   useEffect(() => {
     const fetchArtists = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/artists");
+        const response = await axios.get("http://127.0.0.1:8000/api/artists", {
+          withCredentials: true,
+        });
         setArtists(response.data.artists);
 
         // Extract followed artists based on API response
@@ -57,7 +59,7 @@ const Following = ({ data }) => {
         await axios.post(
           `http://127.0.0.1:8000/api/artists/${artistId}/unfollow`,
           {},
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
         );
         setFollowedArtists((prev) => {
           const newSet = new Set(prev);
@@ -69,7 +71,7 @@ const Following = ({ data }) => {
         await axios.post(
           `http://127.0.0.1:8000/api/artists/${artistId}/follow`,
           {},
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
         );
         setFollowedArtists((prev) => new Set(prev).add(artistId));
       }

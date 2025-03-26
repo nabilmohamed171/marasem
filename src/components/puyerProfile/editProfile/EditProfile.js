@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import DropFlag from "@/components/dropFlags/DropFlags";
 import axios from "axios";
 import "./edit-profile.css";
+import { useRouter } from "next/navigation";
 
 const EditProfile = ({ data }) => {
   const [firstName, setFirstName] = useState("");
@@ -10,6 +11,7 @@ const EditProfile = ({ data }) => {
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("");
   const [email, setEmail] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     if (data) {
@@ -45,9 +47,24 @@ const EditProfile = ({ data }) => {
       };
       const response = await axios.put("http://127.0.0.1:8000/api/user/account", payload, {
         headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
       });
     } catch (error) {
       console.error("Error updating profile:", error);
+    }
+  };
+
+  const handleBecomeArtist = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await axios.put("http://127.0.0.1:8000/api/buyer/become-artist", {}, {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
+      console.log(response.data.message);
+      router.push("/about-you");
+    } catch (error) {
+      console.error("Error converting account:", error);
     }
   };
 
@@ -105,7 +122,9 @@ const EditProfile = ({ data }) => {
                       <p>Creat Artist Account</p>
                     </div>
                     <div className="col-md-6 col-12">
-                      <button type="button">I`m an Artist</button>
+                      <button type="button" onClick={handleBecomeArtist}>
+                        I'm an Artist
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -239,7 +258,9 @@ const EditProfile = ({ data }) => {
                     <p>Creat Artist Account</p>
                   </div>
                   <div className="col-6">
-                    <button type="button">I`m an Artist</button>
+                    <button type="button" onClick={handleBecomeArtist}>
+                      I'm an Artist
+                    </button>
                   </div>
                 </div>
               </div>

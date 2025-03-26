@@ -61,7 +61,7 @@ export const SliderCategory = () => {
             <SwiperSlide key={index}>
               <Link className="reser-link" href={'/shop-art?term='+ item.name}>
                 <Image
-                  src={item.src}
+                  src={item.src ?? "/images/slider 4.png"}
                   alt={item.alt}
                   width={156}
                   height={156}

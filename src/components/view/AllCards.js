@@ -44,12 +44,15 @@ const SliderTags = () => {
       await axios.post(
         "http://127.0.0.1:8000/api/cart",
         { artwork_id: artworkId, size: size, quantity: 1 },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
 
       // Fetch new cart count after adding item
       const response = await axios.get("http://127.0.0.1:8000/api/cart",
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
       );
       setCartCount(response.data.items_count);
     } catch (error) {
@@ -60,8 +63,6 @@ const SliderTags = () => {
   // Fetch artworks from backend when currentPage or selectedTags change.
   useEffect(() => {
     const fetchArtworks = async () => {
-      console.log("Fetching with params:", searchParams.toString());
-
       try {
         // Prepare request parameters
         const params = {
@@ -92,7 +93,7 @@ const SliderTags = () => {
           if (sort) params.sort = sort;
         }
 
-        const response = await axios.get(endpoint, { params });
+        const response = await axios.get(endpoint, { params, withCredentials: true });
         setArtworksData(response.data.artworks);
         setTotalArtworks(response.data.total);
         setAllTags(response.data.tags);
@@ -112,6 +113,7 @@ const SliderTags = () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         setLikedArtworks(new Set(response.data.likedArtworks)); // ✅ Store IDs as a Set
       } catch (error) {
@@ -133,14 +135,14 @@ const SliderTags = () => {
 
     try {
       if (isLiked) {
-        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
         setLikedArtworks((prev) => {
           const newSet = new Set(prev);
           newSet.delete(artworkId);
           return newSet;
         });
       } else {
-        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
         setLikedArtworks((prev) => new Set(prev).add(artworkId));
       }
     } catch (error) {
@@ -312,25 +314,25 @@ const SliderTags = () => {
                         </div>
                       </Link>
                       <div className="overley-info">
-                      <div className="add-cart"
-                        style={{ cursor: "pointer" }}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          addToCart(artwork.id, Object.keys(artwork.sizes_prices)[0]);
-                        }}>
-                        <span className="cart-shopping">
-                          <i
-                            className="reser-link"
-                          >
-                            <HiOutlineShoppingBag />
-                          </i>
-                        </span>
-                        <span className="plus">
-                          <i className="reser-link">
-                            <GoPlus />
-                          </i>
-                        </span>
-                      </div>
+                        <div className="add-cart"
+                          style={{ cursor: "pointer" }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            addToCart(artwork.id, Object.keys(artwork.sizes_prices)[0]);
+                          }}>
+                          <span className="cart-shopping">
+                            <i
+                              className="reser-link"
+                            >
+                              <HiOutlineShoppingBag />
+                            </i>
+                          </span>
+                          <span className="plus">
+                            <i className="reser-link">
+                              <GoPlus />
+                            </i>
+                          </span>
+                        </div>
                         <span className="heart">
                           <Link
                             href="#"

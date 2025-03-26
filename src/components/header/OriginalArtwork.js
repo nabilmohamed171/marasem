@@ -7,7 +7,7 @@ const OriginalArtwork = () => {
     <div className="original-artwork">
       <div className="container">
         <div className="artwork-image">
-          <Link href="/collections">
+          <Link href="#">
             <Image
               src="/images/artworks.png"
               alt="Modern Art"

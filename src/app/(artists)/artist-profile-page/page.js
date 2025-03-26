@@ -62,6 +62,7 @@ const MyProfilePage = () => {
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         }
       );
 
@@ -116,7 +117,9 @@ const MyProfilePage = () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/artist/profile", {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
+        console.log("Artist data:", response.data);
         setArtistData(response.data);
         setAvatar(response.data.artist.profile_picture);
         setHeaderImage(response.data.artist.cover_img);
@@ -163,6 +166,7 @@ const MyProfilePage = () => {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
+          withCredentials: true,
         }
       );
       console.log(response.data.message);
@@ -187,6 +191,7 @@ const MyProfilePage = () => {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
+          withCredentials: true,
         }
       );
       setAvatar(response.data.profile_picture);
@@ -195,6 +200,19 @@ const MyProfilePage = () => {
     }
   };
 
+  const refetchProfileData = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+      const response = await axios.get("http://127.0.0.1:8000/api/artist/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
+      setArtistData(response.data);
+    } catch (error) {
+      console.error("Error re-fetching profile data:", error);
+    }
+  };
 
   if (loading) return <div>Loading profile...</div>;
 
@@ -534,7 +552,7 @@ const MyProfilePage = () => {
               )}
               {activeSection === "toDo" && (
                 <div className="collections-to-do">
-                  <SectionToDo toDo={artistData.to_do} />
+                  <SectionToDo toDo={artistData.to_do} refetchToDo={refetchProfileData} />
                 </div>
               )}
               {activeSection === "draft" && (

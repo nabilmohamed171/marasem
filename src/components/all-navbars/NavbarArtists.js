@@ -42,6 +42,7 @@ export default function Navbar() {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user", {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
 
         const userData = response.data;
@@ -102,6 +103,7 @@ export default function Navbar() {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         setLikedArtworks(new Set(response.data.likedArtworks)); // ✅ Store IDs as a Set
       } catch (error) {
@@ -128,6 +130,7 @@ export default function Navbar() {
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         }
       );
 
@@ -246,13 +249,17 @@ export default function Navbar() {
                         <div className="section-five">
                           <h4>For Your Budget</h4>
                           <ul className="list-unstyled">
-                            {forYourBudgetLinks.map((link) => (
-                              <li key={link.name}>
-                                <Link className="link-style" href={link.href}>
-                                  {link.name}
-                                </Link>
-                              </li>
-                            ))}
+                            {forYourBudgetLinks.map((link) => {
+                              const params = new URLSearchParams();
+                              params.set('price', link.name);
+                              return (
+                                <li key={link.name}>
+                                  <Link className="link-style" href={`/shop-art?${params.toString()}`}>
+                                    {link.name}
+                                  </Link>
+                                </li>
+                              );
+                            })}
                           </ul>
                         </div>
                       </div>

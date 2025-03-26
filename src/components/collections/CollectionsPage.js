@@ -37,12 +37,15 @@ const SliderTags = () => {
       await axios.post(
         "http://127.0.0.1:8000/api/cart",
         { artwork_id: artworkId, size: size, quantity: 1 },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
 
       // Fetch new cart count after adding item
       const response = await axios.get("http://127.0.0.1:8000/api/cart",
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
       );
       setCartCount(response.data.items_count);
     } catch (error) {
@@ -54,7 +57,9 @@ const SliderTags = () => {
     if (!collectionId) return;
     const fetchCollection = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/collections/${collectionId}`);
+        const response = await axios.get(`http://127.0.0.1:8000/api/collections/${collectionId}`, {
+          withCredentials: true,
+        });
         setCollection(response.data);
         setLoading(false);
       } catch (error) {
@@ -73,6 +78,7 @@ const SliderTags = () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         setLikedArtworks(new Set(response.data.likedArtworks)); // ✅ Store IDs as a Set
       } catch (error) {
@@ -94,14 +100,14 @@ const SliderTags = () => {
 
     try {
       if (isLiked) {
-        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
         setLikedArtworks((prev) => {
           const newSet = new Set(prev);
           newSet.delete(artworkId);
           return newSet;
         });
       } else {
-        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
         setLikedArtworks((prev) => new Set(prev).add(artworkId));
       }
     } catch (error) {
@@ -333,7 +339,7 @@ const SliderTags = () => {
                         </span>
                         <div className="user-art">
                           <div className="user-image">
-                          <Link href={"/artwork-details?id=" + artwork.id} className="reser-link">
+                            <Link href={"/artwork-details?id=" + artwork.id} className="reser-link">
                               <Image
                                 src={artwork.artist.profile_picture}
                                 alt="avatar"

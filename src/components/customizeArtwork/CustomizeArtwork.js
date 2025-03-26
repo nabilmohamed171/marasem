@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiUpload } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -7,10 +7,13 @@ import Image from "next/image";
 import AddAddress from "@/components/addressCart/addAddress/AddAddress";
 import Link from "next/link";
 import "./customize-artwork.css";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
-const CustomizeArtwork = () => {
+const CustomizeArtwork = ({ artwork }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [images, setImages] = useState({ main: null, secondary: [] });
+  const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     size: "",
     price: "",
@@ -18,18 +21,21 @@ const CustomizeArtwork = () => {
   });
   const [isFormValid, setIsFormValid] = useState(false);
   const [showAddAddress, setShowAddAddress] = useState(false);
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const router = useRouter();
 
   const handleClose = () => {
     setIsVisible(false);
   };
 
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length > 0) {
-      const mainImage = URL.createObjectURL(files[0]);
-      const secondaryImages = files
-        .slice(1, 4)
-        .map((file) => URL.createObjectURL(file));
+    const selectedFiles = Array.from(e.target.files);
+    setFiles(selectedFiles); // store file objects
+    if (selectedFiles.length > 0) {
+      const mainImage = URL.createObjectURL(selectedFiles[0]);
+      const secondaryImages = selectedFiles.slice(1, 4).map((file) =>
+        URL.createObjectURL(file)
+      );
       setImages({ main: mainImage, secondary: secondaryImages });
     }
   };
@@ -40,9 +46,9 @@ const CustomizeArtwork = () => {
       const newFormData = { ...prevState, [name]: value };
       setIsFormValid(
         newFormData.size &&
-          newFormData.price &&
-          newFormData.description &&
-          images.main
+        newFormData.price &&
+        newFormData.description &&
+        images.main
       );
       return newFormData;
     });
@@ -53,6 +59,47 @@ const CustomizeArtwork = () => {
   };
 
   if (!isVisible) return null;
+
+  useEffect(() => {
+    if (selectedAddressId !== null) {
+      handlePlaceCustomOrder();
+    }
+  }, [selectedAddressId]);
+
+  // Add the following function to handle order submission:
+  const handlePlaceCustomOrder = async () => {
+    // Ensure required data is present
+    try {
+      const token = localStorage.getItem("authToken");
+      const formDataPayload = new FormData();
+      formDataPayload.append("artist_id", artwork.artist.id);
+      formDataPayload.append("desired_size", formData.size);
+      formDataPayload.append("offering_price", parseFloat(formData.price));
+      formDataPayload.append("address_id", selectedAddressId);
+      formDataPayload.append("description", formData.description);
+      files.forEach((file) => {
+        formDataPayload.append("reference_images[]", file);
+      });
+      const response = await axios.post("http://127.0.0.1:8000/api/custom-order", formDataPayload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
+      console.log(response.data.message);
+      setTimeout(() => {
+        router.push(`/request-successfully?customized_id=${response.data.customized_order.id}`);
+      }, 2000);
+    } catch (error) {
+      console.error("Error placing customized order:", error);
+    }
+  };
+
+  const onAddressCreated = (addressId) => {
+    setSelectedAddressId(addressId);
+    setShowAddAddress(false);
+  };
 
   return (
     <div className="customize-artwork">
@@ -130,7 +177,7 @@ const CustomizeArtwork = () => {
               <div className="user">
                 <div className="user-name">
                   <Image
-                    src="/images/avatar2.png"
+                    src={artwork?.artist?.profile_picture}
                     alt="User Avatar"
                     className="img-fluid flex-r-image"
                     width={50}
@@ -139,9 +186,9 @@ const CustomizeArtwork = () => {
                     loading="lazy"
                   />
                 </div>
-                <span className="name">Omer Mohsen</span>
+                <span className="name">{artwork?.artist?.first_name} {artwork?.artist?.last_name}</span>
                 <span className="address">
-                  <FaMapMarkerAlt /> Cairo, Egypt
+                  <FaMapMarkerAlt /> {artwork?.artist?.artistDetails?.city} {artwork?.artist?.artistDetails?.zone}
                 </span>
               </div>
               <div className="row g-3">
@@ -183,12 +230,18 @@ const CustomizeArtwork = () => {
                 </div>
                 <div className="col-12">
                   <div className="button-send-request">
-                    <Link href="/request-successfully">
+                    <Link href="#">
                       <button
                         type="button"
                         className="btn"
                         disabled={!isFormValid}
-                        onClick={handleSendRequestClick}
+                        onClick={() => {
+                          if (!selectedAddressId) {
+                            setShowAddAddress(true);
+                          } else {
+                            handlePlaceCustomOrder();
+                          }
+                        }}
                       >
                         Send Request
                       </button>
@@ -200,7 +253,9 @@ const CustomizeArtwork = () => {
           </div>
         </div>
       </div>
-      {showAddAddress && <AddAddress />}
+      {showAddAddress && (
+        <AddAddress onClose={onAddressCreated} />
+      )}
     </div>
   );
 };

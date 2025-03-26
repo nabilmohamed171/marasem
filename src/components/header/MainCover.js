@@ -25,12 +25,15 @@ const MainCover = () => {
       await axios.post(
         "http://127.0.0.1:8000/api/cart",
         { artwork_id: artworkId, size: size, quantity: 1 },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
 
       // Fetch new cart count after adding item
       const response = await axios.get("http://127.0.0.1:8000/api/cart",
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
       );
       setCartCount(response.data.items_count);
     } catch (error) {
@@ -150,7 +153,7 @@ const MainCover = () => {
                     style={{ cursor: "pointer" }}
                     onClick={(e) => {
                       e.preventDefault();
-                      addToCart(artwork.id, Object.keys(artwork.sizes_prices)[0]);
+                      addToCart(recentArtwork.id, Object.keys(recentArtwork.sizes_prices)[0]);
                     }}>
                     <span className="cart-shopping">
                       <i

@@ -20,6 +20,7 @@ const Orders = () => {
         }
         const response = await axios.get("http://127.0.0.1:8000/api/user/my-orders", {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         setOrders(response.data.orders);
         setLoading(false);

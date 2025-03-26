@@ -5,7 +5,7 @@ import { FaCheck } from "react-icons/fa";
 import { MdOutlineEdit } from "react-icons/md";
 import "./shipping-address.css";
 
-const Address = ({ id, name, address, phone, isDefault, onSelect }) => (
+const Address = ({ id, name, address, country_code, phone, isChecked, isDefault, onSelect }) => (
   <div className="address-info-shipping">
     <div className="form-check">
       <input
@@ -13,7 +13,7 @@ const Address = ({ id, name, address, phone, isDefault, onSelect }) => (
         type="radio"
         name="flexRadioDefault"
         id={id}
-        checked={isDefault}
+        checked={isChecked}
         onChange={onSelect}
       />
       <label className="form-check-label username" htmlFor={id}>
@@ -22,24 +22,30 @@ const Address = ({ id, name, address, phone, isDefault, onSelect }) => (
     </div>
     {isDefault && <span className="span-default">Default</span>}
     <p className="full-address">{address}</p>
-    <p className="phone-number">{phone}</p>
+    <p className="phone-number">{country_code}{phone}</p>
     <span className="check-number-phone">
       <FaCheck />
     </span>
   </div>
 );
 
-const ShippingAddress = () => {
+const ShippingAddress = ({ addresses = [], onSelectAddress, onAddAddress }) => {
+  const defaultAddress = addresses.find(addr => addr.is_default) || addresses[0] || null;
   const [isPopupVisible, setIsPopupVisible] = useState(true);
-  const [selectedAddress, setSelectedAddress] = useState("address-1");
+  const [selectedAddress, setSelectedAddress] = useState(defaultAddress ? defaultAddress.id : null);
+  const defaultId = defaultAddress ? defaultAddress.id : null;
 
   const handleClosePopup = () => {
     setIsPopupVisible(false);
   };
 
   const handleSelectAddress = (event) => {
-    setSelectedAddress(event.target.id);
-  };
+    const selectedId = parseInt(event.target.id, 10);
+    setSelectedAddress(selectedId);
+    if (onSelectAddress) {
+      onSelectAddress(selectedId);
+    }
+  };  
 
   return (
     isPopupVisible && (
@@ -52,52 +58,40 @@ const ShippingAddress = () => {
             </span>
           </div>
           <div className="row">
-            <div className="col-12">
-              <div className="default-address">
-                <div className="edit-address-popup">
-                  <span className="icon-edit">
-                    <MdOutlineEdit />
-                  </span>
-                  <span>Edit</span>
+            {addresses.map((addr) => (
+              <div className="col-12" key={addr.id}>
+                <div className={addr.is_default || selectedAddress === addr.id ? "default-address" : "sec-address"}>
+                  <div className="edit-address-popup">
+                    <span className="icon-edit">
+                      <MdOutlineEdit />
+                    </span>
+                    <span>Edit</span>
+                  </div>
+                  <Address
+                    id={addr.id.toString()}
+                    name={addr.name || `${addr.first_name || ''} ${addr.last_name || ''}`}
+                    address={`${addr.address}, ${addr.zone}, ${addr.city}`}
+                    country_code={addr.country_code}
+                    phone={addr.phone}
+                    isChecked={selectedAddress === addr.id}
+                    isDefault={defaultId === addr.id}
+                    onSelect={handleSelectAddress}
+                  />
                 </div>
-                <Address
-                  id="address-1"
-                  name="Omar Mohsen"
-                  address="Apartment 10, flat 5, building 8, 373R+M8 - Sarayat El-maadi - Cairo Governorate, Egypt"
-                  phone="+20-10-12424029"
-                  isDefault={selectedAddress === "address-1"}
-                  onSelect={handleSelectAddress}
-                />
+              </div>
+            ))}
+          </div>
+          <div className="row">
+            <div className="col-md-6 col-12">
+              <div className="new-address">
+                <button type="button" onClick={onAddAddress}>
+                  + Add a New address
+                </button>
               </div>
             </div>
-            <div className="col-md-12">
-              <div className="sec-address">
-                <div className="edit-address-popup">
-                  <span className="icon-edit">
-                    <MdOutlineEdit />
-                  </span>
-                  <span>Edit</span>
-                </div>
-                <Address
-                  id="address-2"
-                  name="Ahmed Ali"
-                  address="Apartment 5, flat 2, building 12, 123G+M9 - Nasr City - Cairo Governorate, Egypt"
-                  phone="+20-10-98765432"
-                  isDefault={selectedAddress === "address-2"}
-                  onSelect={handleSelectAddress}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6 col-12">
-                <div className="new-address">
-                  <button>+ Add a New address</button>
-                </div>
-              </div>
-              <div className="col-md-6 col-12">
-                <div className="save-address">
-                  <button>Save Address</button>
-                </div>
+            <div className="col-md-6 col-12">
+              <div className="save-address">
+                <button onClick={handleClosePopup}>Save Address</button>
               </div>
             </div>
           </div>

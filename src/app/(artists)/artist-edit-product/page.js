@@ -29,7 +29,8 @@ const ArtistEditProduct = () => {
         const response = await axios.get(
           `http://127.0.0.1:8000/api/artworks/${artworkId}/view`,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: `Bearer ${token}` }, 
+            withCredentials: true
           }
         );
         if (response.data.artist.id != JSON.parse(localStorage.getItem("user"))["id"]) {
@@ -176,9 +177,7 @@ const ArtistEditProduct = () => {
                     <h2>{artwork.name}</h2>
                     <p>Dimensions: {Object.keys(artwork.sizes_prices)[0]}</p>
                     <p className="custom">
-                      {artwork.artwork_status !== "ready_to_ship"
-                        ? "This artwork is customizable"
-                        : "This artwork is ready to ship"}
+                      {artwork.artwork_status}
                     </p>
                   </div>
                   <div className="price-custom">
@@ -223,7 +222,7 @@ const ArtistEditProduct = () => {
                             <td>Artwork Type</td>
                             <td>{artwork.art_type}</td>
                           </tr>
-                          {artwork.artwork_status !== "ready_to_ship" && (
+                          {artwork.artwork_status !== "available" && (
                             <tr>
                               <td>Customization Duration</td>
                               <td>{artwork.duration}</td>

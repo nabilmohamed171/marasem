@@ -62,7 +62,9 @@ const ArtistProfile = () => {
 
     const fetchArtistData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/artists/${artistId}`);
+        const response = await axios.get(`http://127.0.0.1:8000/api/artists/${artistId}`,
+          { withCredentials: true }
+        );
         setArtistData(response.data);
         setIsFollowing(response.data.artist.is_followed);
         setLoading(false);
@@ -85,9 +87,15 @@ const ArtistProfile = () => {
     try {
       const url = `http://127.0.0.1:8000/api/artists/${artistId}/follow`;
       if (isFollowing) {
-        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.delete(url, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
       } else {
-        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(url, {}, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
       }
       setIsFollowing(!isFollowing);
     } catch (error) {

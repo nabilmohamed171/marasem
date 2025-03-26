@@ -45,7 +45,10 @@ const PuyerProfilePage = () => {
       await axios.post(
         "http://127.0.0.1:8000/api/logout",
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
+        }
       );
       localStorage.removeItem("authToken");
       if (window.location.pathname === "/") {
@@ -137,6 +140,7 @@ const PuyerProfilePage = () => {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
+          withCredentials: true,
         }
       );
       console.log(response.data.message);

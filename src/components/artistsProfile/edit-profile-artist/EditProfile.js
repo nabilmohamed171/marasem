@@ -31,7 +31,8 @@ const EditProfile = ({ data }) => {
     const fetchCities = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/get-cities", {
-          params: { country: "Egypt" }
+          params: { country: "Egypt" },
+          withCredentials: true,
         });
         setCities(response.data);
       } catch (error) {
@@ -71,6 +72,7 @@ const EditProfile = ({ data }) => {
         const token = localStorage.getItem("authToken");
         const response = await axios.get("http://127.0.0.1:8000/api/get-categories", {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         setCategories(response.data.categories);
         console.log("Categories:", response.data.categories);
@@ -98,7 +100,7 @@ const EditProfile = ({ data }) => {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/add-pickup-location",
         { city, zone, address },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
       console.log(response.data.message);
       data.artist_details.pickup_location.city = city;
@@ -128,7 +130,7 @@ const EditProfile = ({ data }) => {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/user/subcategories",
         { subcategories: selectedSubcategories },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
       console.log(response.data.message);
     } catch (error) {
@@ -157,7 +159,7 @@ const EditProfile = ({ data }) => {
           country_code: countryCode,
           phone: phone,
         },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
       console.log(response.data.message);
     } catch (error) {
@@ -185,7 +187,7 @@ const EditProfile = ({ data }) => {
           portfolio_link: portfolioLink,
           other_link: otherLink,
         },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
       console.log(response.data.message);
     } catch (error) {

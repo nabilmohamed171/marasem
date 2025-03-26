@@ -49,6 +49,7 @@ const Collections = () => {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(`http://127.0.0.1:8000/api/collections/${collectionId}`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
+          withCredentials: true,
         });
 
         setCollection(response.data);
@@ -76,14 +77,14 @@ const Collections = () => {
         const response = await axios.post(
           `http://127.0.0.1:8000/api/collections/${collectionId}/unfollow`,
           {},
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
         );
         setIsFollowing(false);
       } else {
         const response = await axios.post(
           `http://127.0.0.1:8000/api/collections/${collectionId}/follow`,
           {},
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
         );
         setIsFollowing(true);
       }

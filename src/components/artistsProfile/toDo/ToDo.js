@@ -3,8 +3,27 @@ import Link from "next/link";
 import Image from "next/image";
 import { IoIosArrowForward } from "react-icons/io";
 import "./todo.css";
+import axios from "axios";
 
-const ToDo = ({ toDo }) => {
+const ToDo = ({ toDo, refetchToDo }) => {
+  const handleResponse = async (orderId, action) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await axios.post(
+        `http://127.0.0.1:8000/api/customized-order/${orderId}/respond`,
+        { action },
+        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
+      );
+      console.log(response.data.message);
+      // Re-fetch the to-do orders to update the local status
+      if (typeof refetchToDo === "function") {
+        refetchToDo();
+      }
+    } catch (error) {
+      console.error("Error responding to customized order:", error);
+    }
+  };
+
   return (
     <>
       <div className="section-todo d-sm-none d-md-block d-xl-block d-lg-block">
@@ -35,17 +54,29 @@ const ToDo = ({ toDo }) => {
                         <div className="todo-info">
                           <h3>Customized Order #{order.id}</h3>
                           <p>
-                            {order.customer_name}, {order.desired_size} placed on{" "}
+                            {order.customer_name ?? order.user?.first_name + " " + order.user?.last_name}, {order.desired_size} placed on{" "}
                             {new Date(order.created_at).toLocaleDateString()}
                           </p>
                           <span>EGP {parseFloat(order.offering_price).toLocaleString()}</span>
                         </div>
                       </div>
                       <div className="col-md-4 col-12">
-                        <div className="todo-buttons">
-                          <button className="button-reject">Reject</button>
-                          <button className="button-request">Accept request</button>
-                        </div>
+                        {order.status === "pending" && <>
+                          <div className="todo-buttons">
+                            <button
+                              className="button-reject"
+                              onClick={() => handleResponse(order.id, "reject")}
+                            >
+                              Reject
+                            </button>
+                            <button
+                              className="button-request"
+                              onClick={() => handleResponse(order.id, "accept")}
+                            >
+                              Accept request
+                            </button>
+                          </div>
+                        </>}
                       </div>
                       <div className="col-md-2 col-12">
                         <div className="todo-more">
@@ -62,7 +93,7 @@ const ToDo = ({ toDo }) => {
                   </div>
                 ))
               ) : (
-                <p>No customize requests available.</p>
+                <p>No customized requests available.</p>
               )}
             </div>
           </div>

@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import "@/app/_css/login.css";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const AboutYou = () => {
   const [socialMediaLink, setSocialMediaLink] = useState("");
@@ -10,9 +12,27 @@ const AboutYou = () => {
   const [websiteLink, setWebsiteLink] = useState("");
   const [otherSocialMediaLink, setOtherSocialMediaLink] = useState("");
   const [summary, setSummary] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await axios.put("http://127.0.0.1:8000/api/artist/about-me", {
+        summary,
+        social_media_link: socialMediaLink,
+        portfolio_link: portfolioLink,
+        website_link: websiteLink,
+        other_link: otherSocialMediaLink,
+      }, {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
+      console.log(response.data.message);
+      router.push("/my-wishes");
+    } catch (error) {
+      console.error("Error updating about me:", error);
+    }
   };
 
   return (
@@ -140,11 +160,9 @@ const AboutYou = () => {
                       placeholder="Write a brief summary about yourself"
                     />
                   </div>
-                  <Link href="my-wishes">
-                    <button type="submit" className="about-you-btn">
-                      Next
-                    </button>
-                  </Link>
+                  <button type="submit" className="about-you-btn">
+                    Next
+                  </button>
                 </div>
               </div>
             </form>

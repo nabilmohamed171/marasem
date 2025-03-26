@@ -47,6 +47,7 @@ const Cart = () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/cart", {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         setCartItems(response.data.cart_items);
         setSubtotal(response.data.total);
@@ -66,6 +67,7 @@ const Cart = () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         setLikedArtworks(new Set(response.data.likedArtworks));
       } catch (error) {
@@ -82,6 +84,7 @@ const Cart = () => {
     try {
       await axios.delete("http://127.0.0.1:8000/api/cart", {
         headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
         data: { artwork_id: artworkId, size },
       });
 
@@ -104,14 +107,17 @@ const Cart = () => {
 
     try {
       if (isLiked) {
-        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.delete(url, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
         setLikedArtworks((prev) => {
           const newSet = new Set(prev);
           newSet.delete(artworkId);
           return newSet;
         });
       } else {
-        await axios.post(url, {}, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(url, {}, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
         setLikedArtworks((prev) => new Set(prev).add(artworkId));
       }
     } catch (error) {

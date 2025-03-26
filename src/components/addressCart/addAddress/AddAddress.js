@@ -1,10 +1,12 @@
 "use client";
-import React, { useState } from "react";
-import { IoClose } from "react-icons/io5";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { IoMdClose } from "react-icons/io";
 import PhoneInput from "@/components/dropFlags/DropFlags";
+import Link from "next/link";
 import "./pickup-location.css";
 
-const PickupLocation = () => {
+const PickupLocation = ({ onClose }) => {
   const [city, setCity] = useState("");
   const [zone, setZone] = useState("");
   const [name, setName] = useState("");
@@ -12,26 +14,47 @@ const PickupLocation = () => {
   const [addressDetails, setAddressDetails] = useState("");
   const [isSaved, setIsSaved] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [cities, setCities] = useState([]);
 
   const handleCityChange = (event) => setCity(event.target.value);
   const handleZoneChange = (event) => setZone(event.target.value);
   const handleNameChange = (event) => setName(event.target.value);
-  const handlePhoneNumberChange = (event) => setPhoneNumber(event.target.value);
-  const handleAddressDetailsChange = (event) =>
-    setAddressDetails(event.target.value);
+  const handleAddressDetailsChange = (event) => setAddressDetails(event.target.value);
 
-  const handleSubmit = (event) => {
+  const handlePhoneNumberChange = (data) => {
+    setPhoneNumber(data.phone);
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const isCheckboxChecked = document.getElementById("saveAddress").checked;
-    if (
-      city &&
-      zone &&
-      name &&
-      phoneNumber &&
-      addressDetails &&
-      isCheckboxChecked
-    ) {
-      setIsSaved(true);
+    const isDefault = document.getElementById("saveAddress").checked;
+    if (city && zone && addressDetails) {
+      try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/add-address",
+          {
+            city,
+            zone,
+            address: addressDetails,
+            name,
+            phone: phoneNumber,
+            country_code: "+20", // hard-coded or you could add a field for it
+            is_default: isDefault,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          }
+        );
+        console.log("Address saved:", response.data);
+        setIsSaved(true);
+        if (onClose && typeof onClose === "function") {
+          onClose(response.data.id);
+        }
+      } catch (error) {
+        console.error("Error saving address:", error);
+      }
     }
   };
 
@@ -39,21 +62,33 @@ const PickupLocation = () => {
     setIsVisible(false);
   };
 
-  if (!isVisible) return null;
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/get-cities", {
+          params: { country: "Egypt" },
+          withCredentials: true,
+        });
+        setCities(response.data);
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
+    };
+    fetchCities();
+  }, []);
 
-  const handlePhoneChange = (phoneData) => {
-    setPhoneNumber(phoneData.phoneNumber);
-  };
+  if (!isVisible) return null;
 
   return (
     <div className="add-first-address">
       <div className="first-address">
         <span className="close" onClick={handleClose}>
-          <IoClose />
+          <IoMdClose />
         </span>
         <h2>Add Your First Address</h2>
         <form onSubmit={handleSubmit}>
           <div className="row">
+            {/* City Dropdown */}
             <div className="col-md-6 col-6">
               <div className="form-group">
                 <label htmlFor="city">
@@ -66,35 +101,38 @@ const PickupLocation = () => {
                   onChange={handleCityChange}
                   required
                 >
-                  <option value="">Select City</option>
-                  <option value="city1">City 1</option>
-                  <option value="city2">City 2</option>
-                  <option value="city3">City 3</option>
+                  <option value="" disabled>
+                    Select your city
+                  </option>
+                  {cities.map((cityOption, index) => (
+                    <option key={index} value={cityOption}>
+                      {cityOption}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
+            {/* Zone as Text Input */}
             <div className="col-md-6 col-6">
               <div className="form-group">
                 <label htmlFor="zone">
                   <span className="main-color">* </span>Zone
                 </label>
-                <select
+                <input
+                  type="text"
                   id="zone"
                   className="form-control"
+                  placeholder="Enter your zone"
                   value={zone}
                   onChange={handleZoneChange}
                   required
-                >
-                  <option value="">Select Zone</option>
-                  <option value="zone1">Zone 1</option>
-                  <option value="zone2">Zone 2</option>
-                  <option value="zone3">Zone 3</option>
-                </select>
+                />
               </div>
             </div>
           </div>
 
           <div className="row">
+            {/* Address Details */}
             <div className="col-md-12">
               <div className="form-group">
                 <label htmlFor="addressDetails">
@@ -103,7 +141,7 @@ const PickupLocation = () => {
                 <textarea
                   id="addressDetails"
                   className="form-control"
-                  placeholder="Enter your address details"
+                  placeholder="Enter your full address here"
                   value={addressDetails}
                   onChange={handleAddressDetailsChange}
                   rows="4"
@@ -115,6 +153,7 @@ const PickupLocation = () => {
 
           <h2>Personal Info</h2>
           <div className="row">
+            {/* Name Field */}
             <div className="col-md-6 col-12">
               <div className="form-group">
                 <label htmlFor="name">
@@ -131,14 +170,13 @@ const PickupLocation = () => {
                 />
               </div>
             </div>
+            {/* Phone Number using PhoneInput */}
             <div className="col-md-6 col-12">
               <div className="form-group">
                 <label htmlFor="phoneNumber">
                   <span className="main-color">* </span>Phone Number
                 </label>
-                <div>
-                  <PhoneInput onChange={handlePhoneChange} />
-                </div>
+                <PhoneInput onChange={handlePhoneNumberChange} />
               </div>
             </div>
           </div>

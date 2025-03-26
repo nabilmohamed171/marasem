@@ -24,6 +24,7 @@ const Credit = () => {
         if (!token) return;
         const response = await axios.get("http://127.0.0.1:8000/api/user/account", {
           headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         setAccount(response.data);
       } catch (error) {
