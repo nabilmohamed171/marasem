@@ -13,17 +13,15 @@ export const CartProvider = ({ children }) => {
 
     const fetchCartCount = async () => {
         const token = localStorage.getItem("authToken");
-        if (!token) {
-            setCartCount(0);
-            return;
-        }
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
         try {
             const response = await axios.get("http://127.0.0.1:8000/api/user", {
-                headers: { Authorization: `Bearer ${token}` },
+                headers,
                 withCredentials: true,
             });
             setCartCount(response.data.cart_items_count);
         } catch (error) {
+            setCartCount(0);
             console.error("Error fetching cart count:", error);
         }
     };

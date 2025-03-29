@@ -34,31 +34,27 @@ const SliderTags = () => {
   const searchTerm = searchParams.get("term") || "";
 
   const addToCart = async (artworkId, size) => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      console.log("User not authenticated");
-      return;
-    }
+  const token = localStorage.getItem("authToken");
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  
+  try {
+    await axios.post(
+      "http://127.0.0.1:8000/api/cart",
+      { artwork_id: artworkId, size: size, quantity: 1 },
+      { headers: headers, withCredentials: true }
+    );
+    
+    // Fetch new cart count after adding the item
+    const response = await axios.get("http://127.0.0.1:8000/api/cart", {
+      headers: headers,
+      withCredentials: true,
+    });
+    setCartCount(response.data.items_count);
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+  }
+};
 
-    try {
-      await axios.post(
-        "http://127.0.0.1:8000/api/cart",
-        { artwork_id: artworkId, size: size, quantity: 1 },
-        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
-      );
-
-      // Fetch new cart count after adding item
-      const response = await axios.get("http://127.0.0.1:8000/api/cart",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        }
-      );
-      setCartCount(response.data.items_count);
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-    }
-  };
 
   // Fetch artworks from backend when currentPage or selectedTags change.
   useEffect(() => {

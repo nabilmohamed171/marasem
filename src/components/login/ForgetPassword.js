@@ -1,64 +1,87 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import PhoneInput from "@/components/dropFlags/DropFlags";
 import { IoMdClose } from "react-icons/io";
 import "@/app/_css/login.css";
+import axios from "axios";
 
 function ForgetPassword() {
   const [usePhone, setUsePhone] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     phone: "",
+    country_code: "", // add country_code if needed
   });
-
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const router = useRouter();
 
   const toggleEmailPhone = () => {
-    setUsePhone(!usePhone);
+    setUsePhone((prev) => !prev);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
   const handlePhoneNumberInput = (value) => {
-    setFormData((prevData) => ({
-      ...prevData,
+    setFormData((prev) => ({
+      ...prev,
       phone: value,
     }));
   };
 
   const validateForm = () => {
-    let formIsValid = true;
-
-    if (!usePhone && !formData.email) {
-      formIsValid = false;
-    }
-
-    if (usePhone && !formData.phone) {
-      formIsValid = false;
-    }
-
-    return formIsValid;
+    if (!usePhone && !formData.email) return false;
+    if (usePhone && !formData.phone) return false;
+    return true;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (validateForm()) {
-      const phoneNumberWithCountryCode = usePhone
-        ? `${countryCode}${formData.phone}`
-        : formData.phone;
-
-      console.log("Form is valid, submitting data...", {
-        email: formData.email,
-        phone: phoneNumberWithCountryCode,
-      });
+      let payload = {};
+      if (usePhone) {
+        payload = {
+          identifier: formData.phone.phone,
+          type: "phone",
+          country_code: "+20", // ensure this field is provided
+        };
+      } else {
+        payload = {
+          identifier: formData.email,
+          type: "email",
+        };
+      }
+      console.log("Submitting payload", payload);
+      // Build query parameters for the redirect.
+      let query = `?identifier=${encodeURIComponent(payload.identifier)}&type=${payload.type}`;
+      if (payload.country_code) {
+        query += `&country_code=${encodeURIComponent(payload.country_code)}`;
+      }
+      console.log("going to", `/verify-phone${query}`)
+      axios
+        .post("http://127.0.0.1:8000/api/send-otp", payload, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        })
+        .then((response) => {
+          const data = response.data;
+          if (data.message) {
+            console.log("OTP sent", data);
+            router.push(`/verify-phone${query}`);
+          } else if (data.error) {
+            console.error("Error:", data.error);
+          }
+        })
+        .catch((err) => {
+          console.error("Error sending OTP:", err);
+        });
     }
   };
 
@@ -80,14 +103,11 @@ function ForgetPassword() {
                 <IoMdClose />
               </Link>
             </span>
-
             <h2>Forget Password?</h2>
             <p>
-              Enter Your Phone Number or Email and we'll send you a link to
-              reset your password
+              Enter Your Phone Number or Email and we'll send you a verification code
             </p>
-
-            <form method="POST" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               {!usePhone ? (
                 <div className="enter-email" id="email-field">
                   <span className="user-phone">
@@ -119,22 +139,28 @@ function ForgetPassword() {
                   <label className="phone" htmlFor="phone">
                     <span className="req">*</span>Phone Number
                   </label>
-
                   <PhoneInput
                     onChange={handlePhoneNumberInput}
                     value={formData.phone}
                   />
+                  {/* Optionally, you can add an input for country code */}
+                  {/* <input
+                    type="text"
+                    name="country_code"
+                    placeholder="+20"
+                    className="form-control mt-2"
+                    value={formData.country_code}
+                    onChange={handleChange}
+                  /> */}
                 </div>
               )}
-              <Link href="verify-phone">
-                <button
-                  type="submit"
-                  className="forget-passowrd-btn"
-                  disabled={isButtonDisabled}
-                >
-                  Reset Password
-                </button>
-              </Link>
+              <button
+                type="submit"
+                className="forget-passowrd-btn"
+                disabled={isButtonDisabled}
+              >
+                Reset Password
+              </button>
             </form>
           </div>
         </div>

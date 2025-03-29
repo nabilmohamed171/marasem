@@ -43,7 +43,7 @@ const PickupLocation = ({ onClose }) => {
             is_default: isDefault,
           },
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
             withCredentials: true,
           }
         );

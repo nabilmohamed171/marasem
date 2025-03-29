@@ -23,12 +23,8 @@ const OrderDetails = () => {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
+        // For authenticated users, use the token; otherwise, send no Authorization header.
         const token = localStorage.getItem("authToken");
-        if (!token) {
-          setError("User not authenticated");
-          setLoading(false);
-          return;
-        }
         let endpoint = "";
         if (customizedId) {
           endpoint = `http://127.0.0.1:8000/api/user/customized-orders/${customizedId}`;
@@ -39,10 +35,13 @@ const OrderDetails = () => {
           setLoading(false);
           return;
         }
+
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
         const response = await axios.get(endpoint, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers,
           withCredentials: true,
         });
+
         if (customizedId) {
           setOrderDetails(response.data.customized_order_details);
         } else {

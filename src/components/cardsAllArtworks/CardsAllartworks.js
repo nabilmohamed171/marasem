@@ -19,30 +19,26 @@ const CardsAllartworks = ({ stickyArtwork }) => {
 
   const addToCart = async (artworkId, size) => {
     const token = localStorage.getItem("authToken");
-    if (!token) {
-      console.log("User not authenticated");
-      return;
-    }
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
     try {
       await axios.post(
         "http://127.0.0.1:8000/api/cart",
         { artwork_id: artworkId, size: size, quantity: 1 },
-        { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
+        { headers: headers, withCredentials: true }
       );
 
-      // Fetch new cart count after adding item
-      const response = await axios.get("http://127.0.0.1:8000/api/cart",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        }
-      );
+      // Fetch new cart count after adding the item
+      const response = await axios.get("http://127.0.0.1:8000/api/cart", {
+        headers: headers,
+        withCredentials: true,
+      });
       setCartCount(response.data.items_count);
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
   };
+
 
   useEffect(() => {
     const fetchLikedArtworks = async () => {
@@ -225,7 +221,12 @@ const CardsAllartworks = ({ stickyArtwork }) => {
                         </span>
                       </div> */}
                       <div className="col-md-12">
-                        <button className="btn-own">Own It</button>
+                        <button className="btn-own"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            addToCart(stickyArtwork.id, Object.keys(stickyArtwork.sizes_prices)[0]);
+                          }}
+                        >Own It</button>
                       </div>
                     </div>
                   </div>

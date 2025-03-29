@@ -13,8 +13,10 @@ import FooterAccordion from "@/components/footer/FooterAccordion";
 import Image from "next/image";
 import Link from "next/link";
 import "./cart.css";
+import { useCart } from "@/context/CartContext"; // Import cart context
 
 const Cart = () => {
+  const { setCartCount } = useCart();
   const [userType, setUserType] = useState("guest");
   const [cartItems, setCartItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
@@ -42,11 +44,10 @@ const Cart = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       const token = localStorage.getItem("authToken");
-      if (!token) return;
-
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/cart", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers,
           withCredentials: true,
         });
         setCartItems(response.data.cart_items);
@@ -58,6 +59,24 @@ const Cart = () => {
 
     fetchCartItems();
   }, []);
+
+  const removeItem = async (artworkId, size) => {
+    const token = localStorage.getItem("authToken");
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    try {
+      const response = await axios.delete("http://127.0.0.1:8000/api/cart", {
+        headers,
+        withCredentials: true,
+        data: { artwork_id: artworkId, size },
+      });
+
+      setCartItems((prev) => prev.filter((item) => !(item.artwork.id === artworkId && item.size === size)));
+      setSubtotal((prev) => prev - cartItems.find((item) => item.artwork.id === artworkId).price);
+      setCartCount(response.data.items_count);
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchLikedArtworks = async () => {
@@ -76,24 +95,6 @@ const Cart = () => {
     };
     fetchLikedArtworks();
   }, []);
-
-  const removeItem = async (artworkId, size) => {
-    const token = localStorage.getItem("authToken");
-    if (!token) return;
-
-    try {
-      await axios.delete("http://127.0.0.1:8000/api/cart", {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
-        data: { artwork_id: artworkId, size },
-      });
-
-      setCartItems((prev) => prev.filter((item) => !(item.artwork.id === artworkId && item.size === size)));
-      setSubtotal((prev) => prev - cartItems.find((item) => item.artwork.id === artworkId).price);
-    } catch (error) {
-      console.error("Error removing item from cart:", error);
-    }
-  };
 
   const toggleLike = async (artworkId) => {
     const token = localStorage.getItem("authToken");

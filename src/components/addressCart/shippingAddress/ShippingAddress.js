@@ -5,7 +5,7 @@ import { FaCheck } from "react-icons/fa";
 import { MdOutlineEdit } from "react-icons/md";
 import "./shipping-address.css";
 
-const Address = ({ id, name, address, country_code, phone, isChecked, isDefault, onSelect }) => (
+const Address = ({ id, name, address, country_code, phone, isDefault, onSelect }) => (
   <div className="address-info-shipping">
     <div className="form-check">
       <input
@@ -13,7 +13,7 @@ const Address = ({ id, name, address, country_code, phone, isChecked, isDefault,
         type="radio"
         name="flexRadioDefault"
         id={id}
-        checked={isChecked}
+        // checked={isChecked}
         onChange={onSelect}
       />
       <label className="form-check-label username" htmlFor={id}>
@@ -73,7 +73,7 @@ const ShippingAddress = ({ addresses = [], onSelectAddress, onAddAddress }) => {
                     address={`${addr.address}, ${addr.zone}, ${addr.city}`}
                     country_code={addr.country_code}
                     phone={addr.phone}
-                    isChecked={selectedAddress === addr.id}
+                    // isChecked={selectedAddress === addr.id}
                     isDefault={defaultId === addr.id}
                     onSelect={handleSelectAddress}
                   />

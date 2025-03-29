@@ -299,7 +299,7 @@ const MyProfilePage = () => {
                   <div className="art-name">
                     <h2>{artistData.artist.first_name} {artistData.artist.last_name}</h2>
                     <span>
-                      <FaMapMarkerAlt /> {artistData.artist.artist_details.pickup_location.city} {artistData.artist.artist_details.pickup_location.zone}
+                      <FaMapMarkerAlt /> {artistData.artist.artist_details.pickup_location?.city} {artistData.artist.artist_details.pickup_location?.zone}
                     </span>
                   </div>
                 </div>

@@ -19,7 +19,7 @@ const Addresses = ({ addresses: initialAddresses }) => {
     }
     try {
       const response = await axios.delete(`http://127.0.0.1:8000/api/delete-address/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
         withCredentials: true,
       });
       console.log(response.data.message);

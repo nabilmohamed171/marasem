@@ -16,12 +16,24 @@ export const SliderCategory = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/tags")
+      .get("http://127.0.0.1:8000/api/get-categories")
       .then((response) => {
-        setSliderItems(response.data);
+        // response.data.categories is an object where each key maps to an array of categories
+        const categoriesObj = response.data.categories;
+        // Flatten the object into an array of items
+        const sliderArray = Object.entries(categoriesObj).flatMap(
+          ([group, items]) =>
+            items.map((item) => ({
+              ...item,
+              group, // Optionally include the group name
+              src: item.image || "/images/slider 4.png",
+              alt: item.name,
+            }))
+        );
+        setSliderItems(sliderArray);
       })
       .catch((error) => {
-        console.error("Error fetching admin tags", error);
+        console.error("Error fetching categories", error);
       });
   }, []);
 
@@ -59,7 +71,7 @@ export const SliderCategory = () => {
         >
           {sliderItems.map((item, index) => (
             <SwiperSlide key={index}>
-              <Link className="reser-link" href={'/shop-art?term='+ item.name}>
+              <Link className="reser-link" href={'/shop-art?term=' + item.name}>
                 <Image
                   src={item.src ?? "/images/slider 4.png"}
                   alt={item.alt}

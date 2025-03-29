@@ -14,7 +14,6 @@ const ToDo = ({ toDo, refetchToDo }) => {
         { action },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
-      console.log(response.data.message);
       // Re-fetch the to-do orders to update the local status
       if (typeof refetchToDo === "function") {
         refetchToDo();
@@ -124,7 +123,7 @@ const ToDo = ({ toDo, refetchToDo }) => {
                         <div className="todo-info">
                           <h3>{item.artwork.name}</h3>
                           <p>
-                            {item.order.user.first_name} {item.order.user.last_name}, {item.size} placed on{" "}
+                            {item.order.customer_name}, {item.size} placed on{" "}
                             {new Date(item.created_at).toLocaleDateString()}
                           </p>
                           <span>EGP {parseFloat(item.price).toLocaleString()}</span>

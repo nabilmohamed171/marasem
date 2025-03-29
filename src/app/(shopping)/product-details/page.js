@@ -14,8 +14,8 @@ import CustomizeArtwork from "@/components/customizeArtwork/CustomizeArtwork";
 import FindMobile from "@/components/filterMobile/FindMobile";
 import Image from "next/image";
 import Link from "next/link";
-import "./product-details.css";
 import { useSearchParams } from "next/navigation";
+import "./product-details.css";
 
 const AllArtworks = () => {
   const searchParams = useSearchParams();
@@ -40,7 +40,7 @@ const AllArtworks = () => {
         const response = await axios.get(
           `http://127.0.0.1:8000/api/artworks/${artworkId}/view`,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
             withCredentials: true,
           }
         );
@@ -58,25 +58,45 @@ const AllArtworks = () => {
     fetchArtwork();
   }, [artworkId]);
 
+  const addToCart = async (artworkId, size) => {
+    // Get token if available (for authenticated users)
+    const token = localStorage.getItem("authToken");
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/cart",
+        { artwork_id: artworkId, size: size, quantity: 1 },
+        { headers, withCredentials: true }
+      );
+      // Optionally, you can fetch the new cart count here or simply redirect to the cart page
+      window.location.href = "/cart";
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
+
   const toggleLike = async (artworkId) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
       console.error("User not authenticated");
       return;
     }
-    const isLiked = liked;
     try {
-      if (isLiked) {
+      if (liked) {
         await axios.delete(`http://127.0.0.1:8000/api/artworks/${artworkId}/like`, {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
         setLiked(false);
       } else {
-        await axios.post(`http://127.0.0.1:8000/api/artworks/${artworkId}/like`, {}, {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        });
+        await axios.post(
+          `http://127.0.0.1:8000/api/artworks/${artworkId}/like`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          }
+        );
         setLiked(true);
       }
     } catch (error) {
@@ -92,16 +112,24 @@ const AllArtworks = () => {
     }
     try {
       if (followed) {
-        await axios.post(`http://127.0.0.1:8000/api/artists/${artwork.artist.id}/unfollow`, {}, {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        });
+        await axios.post(
+          `http://127.0.0.1:8000/api/artists/${artwork.artist.id}/unfollow`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          }
+        );
         setFollowed(false);
       } else {
-        await axios.post(`http://127.0.0.1:8000/api/artists/${artwork.artist.id}/follow`, {}, {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        });
+        await axios.post(
+          `http://127.0.0.1:8000/api/artists/${artwork.artist.id}/follow`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          }
+        );
         setFollowed(true);
       }
     } catch (error) {
@@ -113,7 +141,6 @@ const AllArtworks = () => {
     const fetchUserType = async () => {
       const token = localStorage.getItem("authToken");
       if (!token) return;
-
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
           headers: {
@@ -127,7 +154,6 @@ const AllArtworks = () => {
         console.error("Error fetching user type:", error);
       }
     };
-
     fetchUserType();
   }, []);
 
@@ -144,7 +170,7 @@ const AllArtworks = () => {
   };
 
   const handleNext = () => {
-    const newIndex = (currentIndex + 1) % artwork.photos;
+    const newIndex = (currentIndex + 1) % artwork.photos.length;
     setCurrentIndex(newIndex);
     setMainImage(artwork.photos[newIndex]);
   };
@@ -158,6 +184,7 @@ const AllArtworks = () => {
   if (loading) {
     return <div>Loading artwork details...</div>;
   }
+
   return (
     <>
       {userType === "artist" ? (
@@ -194,11 +221,7 @@ const AllArtworks = () => {
                 <div className="col-md-2 col-12 d-none d-md-block">
                   <div className="left-images">
                     {artwork.photos.map((src, index) => (
-                      <div
-                        key={index}
-                        className="images"
-                        onClick={() => handleImageClick(src)}
-                      >
+                      <div key={index} className="images" onClick={() => handleImageClick(src)}>
                         <Image
                           src={src}
                           alt={`Artwork view ${index + 1}`}
@@ -212,7 +235,6 @@ const AllArtworks = () => {
                     ))}
                   </div>
                 </div>
-
                 <div className="col-md-5 col-12">
                   <div className="main-image">
                     <div className="slider-buttons">
@@ -224,7 +246,7 @@ const AllArtworks = () => {
                       </button>
                     </div>
                     <Image
-                      src={artwork.photos[0]}
+                      src={mainImage || artwork.photos[0]}
                       alt="Main artwork"
                       width={395}
                       height={475}
@@ -234,7 +256,6 @@ const AllArtworks = () => {
                     />
                   </div>
                 </div>
-
                 <div className="col-md-5 col-12">
                   <div className="art-user">
                     <div className="row">
@@ -282,15 +303,15 @@ const AllArtworks = () => {
                       <div className="col-md-8 col-12">
                         <div className="custom-buttons">
                           {artwork.artwork_status !== "ready_to_ship" ? (
-                            <button onClick={toggleCustomizeArtwork}>
-                              Customize
-                            </button>
-                          ) : (
-                            ""
-                          )}
-
-                          <button>
-                            <Link href="/cart" style={{ color: "inherit", textDecoration: "none" }}>Own It</Link>
+                            <button onClick={toggleCustomizeArtwork}>Customize</button>
+                          ) : null}
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              addToCart(artwork.id, Object.keys(artwork.sizes_prices)[0]);
+                            }}
+                          >
+                            Own It
                           </button>
                         </div>
                       </div>
@@ -299,41 +320,29 @@ const AllArtworks = () => {
                   <div className="image-story-tap">
                     <div className="tabs">
                       <button
-                        className={`tab-link ${activeTab === "story" ? "active" : ""
-                          }`}
+                        className={`tab-link ${activeTab === "story" ? "active" : ""}`}
                         onClick={() => handleTabClick("story")}
                       >
                         Story
                       </button>
                       <button
-                        className={`tab-link ${activeTab === "specifications" ? "active" : ""
-                          }`}
+                        className={`tab-link ${activeTab === "specifications" ? "active" : ""}`}
                         onClick={() => handleTabClick("specifications")}
                       >
                         Specifications
                       </button>
                     </div>
                     <div
-                      className={`tab-content ${activeTab === "story" ? "active" : ""
-                        }`}
+                      className={`tab-content ${activeTab === "story" ? "active" : ""}`}
                       id="story-content"
-                      style={{
-                        display: activeTab === "story" ? "block" : "none",
-                      }}
+                      style={{ display: activeTab === "story" ? "block" : "none" }}
                     >
-                      <p>
-                        {artwork.description}
-                      </p>
+                      <p>{artwork.description}</p>
                     </div>
-
                     <div
-                      className={`tab-content ${activeTab === "specifications" ? "active" : ""
-                        }`}
+                      className={`tab-content ${activeTab === "specifications" ? "active" : ""}`}
                       id="specifications-content"
-                      style={{
-                        display:
-                          activeTab === "specifications" ? "block" : "none",
-                      }}
+                      style={{ display: activeTab === "specifications" ? "block" : "none" }}
                     >
                       <table className="table table-striped table-dark">
                         <tbody>
@@ -360,11 +369,8 @@ const AllArtworks = () => {
       </div>
 
       <FilterPc />
-
       <CardsAllartworks stickyArtwork={artwork} />
-
       {isCustomizeVisible && <CustomizeArtwork artwork={artwork} />}
-
       <Footer />
       <FooterAccordion />
     </>

@@ -52,6 +52,7 @@ const CheckOut = () => {
     const fetchCheckoutData = async () => {
       try {
         const token = localStorage.getItem("authToken");
+        console.log("token", token);
         const response = await axios.get("http://127.0.0.1:8000/api/checkout", {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
           withCredentials: true,
@@ -142,7 +143,7 @@ const CheckOut = () => {
         use_marasem_credit: isChecked,
       };
       const response = await axios.post("http://127.0.0.1:8000/api/order", payload, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
         withCredentials: true,
       });
       if (response.data.redirect_url) {
@@ -203,15 +204,15 @@ const CheckOut = () => {
                       </span>
                       {currentAddress?.name || "Address"}
                     </span>
-                    <p className="username">{user.first_name} {user.last_name}</p>
+                    <p className="username">{currentAddress.name}</p>
                     <p className="full-address">
                       {currentAddress
                         ? `${currentAddress.address}, ${currentAddress.zone}, ${currentAddress.city}`
                         : "No address available"}
                     </p>
                     <p className="phone-number">
-                      {checkoutData?.addresses[0]?.country_code || ""}
-                      {checkoutData?.addresses[0]?.phone || ""}
+                      {currentAddress?.country_code || ""}
+                      {currentAddress?.phone || ""}
                     </p>
                     <span className="check-number-phone-checkout">
                       <FaCheck />

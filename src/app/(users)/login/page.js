@@ -43,12 +43,16 @@ const Login = () => {
     setErrorMessage(""); // Clear previous errors
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/login", {
-        email: emailOrPhone,
-        password: password,
-      }, {
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/login",
+        {
+          emailOrPhone: emailOrPhone, // changed field name here
+          password: password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
       if (response.status === 200) {
         // Save token and user info
@@ -56,7 +60,6 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(response.data.user));
 
         console.log("Login successful:", response.data);
-
         router.push("/");
       }
     } catch (error) {
