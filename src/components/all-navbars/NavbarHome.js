@@ -36,7 +36,7 @@ const Navbar_Home = () => {
 
     try {
       await axios.post(
-        "http://127.0.0.1:8000/api/logout",
+        "https://marasem-art.net/api/logout",
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -85,7 +85,7 @@ const Navbar_Home = () => {
   // Fetch filters (dynamic navigation data)
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/filters")
+      .get("https://marasem-art.net/api/filters")
       .then((response) => {
         const data = response.data;
         setFeaturedCategories(data.featured_categories);
@@ -109,7 +109,7 @@ const Navbar_Home = () => {
       if (!token) return;
 
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
+        const response = await axios.get("https://marasem-art.net/api/user/likes", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });

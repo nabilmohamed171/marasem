@@ -35,7 +35,7 @@ const ResetPassword = () => {
       };
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/reset-password",
+        "https://marasem-art.net/api/reset-password",
         payload,
         {
           headers: { "Content-Type": "application/json" },

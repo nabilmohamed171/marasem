@@ -42,7 +42,7 @@ const FilterMobile = ({ closeFilter }) => {
   });
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/filters/get", {
+    axios.get("https://marasem-art.net/api/filters/get", {
       withCredentials: true,
     })
       .then(response => {

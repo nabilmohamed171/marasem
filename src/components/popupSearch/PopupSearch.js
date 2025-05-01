@@ -16,7 +16,7 @@ const PopupSearch = () => {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/tags/all", {
+        const response = await axios.get("https://marasem-art.net/api/tags/all", {
           withCredentials: true,
         });
         setTags(response.data.slice(0, 4)); // Show only the first 4 tags

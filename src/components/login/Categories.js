@@ -17,7 +17,7 @@ function CategoriesPage() {
     const fetchFocus = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://127.0.0.1:8000/api/artist/focus", {
+        const response = await axios.get("https://marasem-art.net/api/artist/focus", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
@@ -50,7 +50,7 @@ function CategoriesPage() {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.put(
-        "http://127.0.0.1:8000/api/artist/focus",
+        "https://marasem-art.net/api/artist/focus",
         { subcategories: Array.from(activeItems) },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
@@ -65,7 +65,7 @@ function CategoriesPage() {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.put(
-        "http://127.0.0.1:8000/api/artist/focus",
+        "https://marasem-art.net/api/artist/focus",
         { subcategories: [] },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );

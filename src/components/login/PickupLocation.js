@@ -17,7 +17,7 @@ const PickupLocation = () => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/get-cities", {
+        const response = await axios.get("https://marasem-art.net/get-cities", {
           params: { country: "Egypt" },
           withCredentials: true,
         });
@@ -45,7 +45,7 @@ const PickupLocation = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("authToken");
-      const response = await axios.put("http://127.0.0.1:8000/api/artist/pickup-location", {
+      const response = await axios.put("https://marasem-art.net/api/artist/pickup-location", {
         city,
         zone,
         address,

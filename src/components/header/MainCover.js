@@ -20,13 +20,13 @@ const MainCover = () => {
   
   try {
     await axios.post(
-      "http://127.0.0.1:8000/api/cart",
+      "https://marasem-art.net/api/cart",
       { artwork_id: artworkId, size: size, quantity: 1 },
       { headers: headers, withCredentials: true }
     );
     
     // Fetch new cart count after adding the item
-    const response = await axios.get("http://127.0.0.1:8000/api/cart", {
+    const response = await axios.get("https://marasem-art.net/api/cart", {
       headers: headers,
       withCredentials: true,
     });
@@ -40,7 +40,7 @@ const MainCover = () => {
   // Fetch header data from the backend
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/headers")
+      .get("https://marasem-art.net/api/headers")
       .then((response) => {
         setHeaderData(response.data);
         setLoading(false);

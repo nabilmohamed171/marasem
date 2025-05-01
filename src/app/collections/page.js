@@ -20,7 +20,7 @@ const Collections = () => {
       if (!token) return;
 
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
+        const response = await axios.get("https://marasem-art.net/api/user-type", {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: "application/json",
@@ -47,7 +47,7 @@ const Collections = () => {
     const fetchCollection = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await axios.get(`http://127.0.0.1:8000/api/collections/${collectionId}`, {
+        const response = await axios.get(`https://marasem-art.net/api/collections/${collectionId}`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
           withCredentials: true,
         });
@@ -75,14 +75,14 @@ const Collections = () => {
     try {
       if (isFollowing) {
         const response = await axios.post(
-          `http://127.0.0.1:8000/api/collections/${collectionId}/unfollow`,
+          `https://marasem-art.net/api/collections/${collectionId}/unfollow`,
           {},
           { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
         );
         setIsFollowing(false);
       } else {
         const response = await axios.post(
-          `http://127.0.0.1:8000/api/collections/${collectionId}/follow`,
+          `https://marasem-art.net/api/collections/${collectionId}/follow`,
           {},
           { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
         );

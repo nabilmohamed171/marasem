@@ -18,7 +18,7 @@ const Addresses = ({ pickup, addresses: initialAddresses }) => {
       return;
     }
     try {
-      const response = await axios.delete(`http://127.0.0.1:8000/api/delete-address/${id}`, {
+      const response = await axios.delete(`https://marasem-art.net/api/delete-address/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });

@@ -31,7 +31,7 @@ const FilterPc = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/filters/get")
+      .get("https://marasem-art.net/api/filters/get")
       .then((response) => {
         setCategories(response.data.featured_categories || []);
         setLocations(response.data.locations || {});

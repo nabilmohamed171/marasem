@@ -23,7 +23,7 @@ const EventPage = () => {
       if (!token) return;
 
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
+        const response = await axios.get("https://marasem-art.net/api/user-type", {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: "application/json",
@@ -50,7 +50,7 @@ const EventPage = () => {
   // Fetch events from backend
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/events")
+      .get("https://marasem-art.net/api/events")
       .then((response) => {
         setEvents(response.data);
         setLoading(false);

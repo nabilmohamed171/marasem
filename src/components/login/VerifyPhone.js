@@ -41,7 +41,7 @@ const VerifyPhoneNumber = () => {
     e.preventDefault();
     const otpCode = verificationCode.join("");
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/verify-otp", {
+      const response = await axios.post("https://marasem-art.net/api/verify-otp", {
         identifier: identifier,
         type: type,
         country_code: type === "phone" ? countryCode : undefined,

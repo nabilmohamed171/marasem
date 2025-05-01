@@ -27,9 +27,9 @@ const OrderDetails = () => {
         const token = localStorage.getItem("authToken");
         let endpoint = "";
         if (customizedId) {
-          endpoint = `http://127.0.0.1:8000/api/user/customized-orders/${customizedId}`;
+          endpoint = `https://marasem-art.net/api/user/customized-orders/${customizedId}`;
         } else if (orderId) {
-          endpoint = `http://127.0.0.1:8000/api/user/my-orders/${orderId}`;
+          endpoint = `https://marasem-art.net/api/user/my-orders/${orderId}`;
         } else {
           setError("No order ID provided");
           setLoading(false);

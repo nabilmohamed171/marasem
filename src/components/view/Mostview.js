@@ -23,7 +23,7 @@ const MostReview = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/most-viewed-artworks?limit=6")
+      .get("https://marasem-art.net/api/most-viewed-artworks?limit=6")
       .then((response) => {
         setArtworks(response.data);
         setLoading(false);
@@ -40,7 +40,7 @@ const MostReview = () => {
       if (!token) return;
 
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
+        const response = await axios.get("https://marasem-art.net/api/user/likes", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
@@ -60,7 +60,7 @@ const MostReview = () => {
     }
 
     const isLiked = likedArtworks.has(artworkId);
-    const url = `http://127.0.0.1:8000/api/artworks/${artworkId}/like`;
+    const url = `https://marasem-art.net/api/artworks/${artworkId}/like`;
 
     try {
       if (isLiked) {
@@ -85,13 +85,13 @@ const MostReview = () => {
   
   try {
     await axios.post(
-      "http://127.0.0.1:8000/api/cart",
+      "https://marasem-art.net/api/cart",
       { artwork_id: artworkId, size: size, quantity: 1 },
       { headers: headers, withCredentials: true }
     );
     
     // Fetch new cart count after adding the item
-    const response = await axios.get("http://127.0.0.1:8000/api/cart", {
+    const response = await axios.get("https://marasem-art.net/api/cart", {
       headers: headers,
       withCredentials: true,
     });

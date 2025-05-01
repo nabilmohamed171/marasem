@@ -18,7 +18,7 @@ const Credit = () => {
       try {
         const token = localStorage.getItem("authToken");
         if (!token) return;
-        const response = await axios.get("http://127.0.0.1:8000/api/user/account", {
+        const response = await axios.get("https://marasem-art.net/api/user/account", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });

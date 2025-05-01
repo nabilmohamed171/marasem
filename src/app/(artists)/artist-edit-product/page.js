@@ -27,7 +27,7 @@ const ArtistEditProduct = () => {
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/artworks/${artworkId}/view`,
+          `https://marasem-art.net/api/artworks/${artworkId}/view`,
           {
             headers: { Authorization: `Bearer ${token}` }, 
             withCredentials: true

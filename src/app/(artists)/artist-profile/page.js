@@ -33,7 +33,7 @@ const ArtistProfile = () => {
       if (!token) return;
 
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
+        const response = await axios.get("https://marasem-art.net/api/user-type", {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: "application/json",
@@ -62,7 +62,7 @@ const ArtistProfile = () => {
 
     const fetchArtistData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/artists/${artistId}`,
+        const response = await axios.get(`https://marasem-art.net/api/artists/${artistId}`,
           { withCredentials: true }
         );
         setArtistData(response.data);
@@ -85,7 +85,7 @@ const ArtistProfile = () => {
     }
 
     try {
-      const url = `http://127.0.0.1:8000/api/artists/${artistId}/follow`;
+      const url = `https://marasem-art.net/api/artists/${artistId}/follow`;
       if (isFollowing) {
         await axios.delete(url, {
           headers: { Authorization: `Bearer ${token}` },

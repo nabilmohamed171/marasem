@@ -45,7 +45,7 @@ const EditProfile = ({ data }) => {
         country_code: countryCode,
         phone: phone,
       };
-      const response = await axios.put("http://127.0.0.1:8000/api/user/account", payload, {
+      const response = await axios.put("https://marasem-art.net/api/user/account", payload, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });
@@ -57,7 +57,7 @@ const EditProfile = ({ data }) => {
   const handleBecomeArtist = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await axios.put("http://127.0.0.1:8000/api/buyer/become-artist", {}, {
+      const response = await axios.put("https://marasem-art.net/api/buyer/become-artist", {}, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });

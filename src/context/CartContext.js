@@ -15,7 +15,7 @@ export const CartProvider = ({ children }) => {
         const token = localStorage.getItem("authToken");
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
         try {
-            const response = await axios.get("http://127.0.0.1:8000/api/user", {
+            const response = await axios.get("https://marasem-art.net/api/user", {
                 headers,
                 withCredentials: true,
             });

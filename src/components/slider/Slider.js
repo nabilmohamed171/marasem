@@ -16,7 +16,7 @@ export const SliderCategory = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/get-categories")
+      .get("https://marasem-art.net/api/get-categories")
       .then((response) => {
         // response.data.categories is an object where each key maps to an array of categories
         const categoriesObj = response.data.categories;

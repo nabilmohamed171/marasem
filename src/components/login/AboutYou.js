@@ -18,7 +18,7 @@ const AboutYou = () => {
     event.preventDefault();
     try {
       const token = localStorage.getItem("authToken");
-      const response = await axios.put("http://127.0.0.1:8000/api/artist/about-me", {
+      const response = await axios.put("https://marasem-art.net/api/artist/about-me", {
         summary,
         social_media_link: socialMediaLink,
         portfolio_link: portfolioLink,

@@ -31,7 +31,7 @@ const CheckOut = () => {
       if (!token) return;
 
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
+        const response = await axios.get("https://marasem-art.net/api/user-type", {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: "application/json",
@@ -53,7 +53,7 @@ const CheckOut = () => {
       try {
         const token = localStorage.getItem("authToken");
         console.log("token", token);
-        const response = await axios.get("http://127.0.0.1:8000/api/checkout", {
+        const response = await axios.get("https://marasem-art.net/api/checkout", {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
           withCredentials: true,
         });
@@ -109,7 +109,7 @@ const CheckOut = () => {
   const handleCloseAlert = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await axios.get("http://127.0.0.1:8000/api/checkout", {
+      const response = await axios.get("https://marasem-art.net/api/checkout", {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
         withCredentials: true,
       });
@@ -142,7 +142,7 @@ const CheckOut = () => {
         promo_code: "", // include promo code if applicable
         use_marasem_credit: isChecked,
       };
-      const response = await axios.post("http://127.0.0.1:8000/api/order", payload, {
+      const response = await axios.post("https://marasem-art.net/api/order", payload, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
         withCredentials: true,
       });

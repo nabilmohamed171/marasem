@@ -43,7 +43,7 @@ const PuyerProfilePage = () => {
     if (!token) return;
     try {
       await axios.post(
-        "http://127.0.0.1:8000/api/logout",
+        "https://marasem-art.net/api/logout",
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -66,7 +66,7 @@ const PuyerProfilePage = () => {
       const token = localStorage.getItem("authToken");
       if (!token) return;
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
+        const response = await axios.get("https://marasem-art.net/api/user-type", {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: "application/json",
@@ -89,7 +89,7 @@ const PuyerProfilePage = () => {
       const token = localStorage.getItem("authToken");
       if (!token) return;
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user/account", {
+        const response = await axios.get("https://marasem-art.net/api/user/account", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
@@ -133,7 +133,7 @@ const PuyerProfilePage = () => {
     formData.append("profile_picture", file);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/user/profile-picture",
+        "https://marasem-art.net/api/user/profile-picture",
         formData,
         {
           headers: {

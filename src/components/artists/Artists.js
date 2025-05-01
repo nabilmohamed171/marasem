@@ -24,7 +24,7 @@ const Artists = () => {
   useEffect(() => {
     const fetchArtists = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/artists", {
+        const response = await axios.get("https://marasem-art.net/api/artists", {
           withCredentials: true,
         });
         setArtists(response.data.artists);
@@ -60,7 +60,7 @@ const Artists = () => {
       if (followedArtists.has(artistId)) {
         // Unfollow request
         await axios.post(
-          `http://127.0.0.1:8000/api/artists/${artistId}/unfollow`,
+          `https://marasem-art.net/api/artists/${artistId}/unfollow`,
           {},
           { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
         );
@@ -72,7 +72,7 @@ const Artists = () => {
       } else {
         // Follow request
         await axios.post(
-          `http://127.0.0.1:8000/api/artists/${artistId}/follow`,
+          `https://marasem-art.net/api/artists/${artistId}/follow`,
           {},
           { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
         );

@@ -18,7 +18,7 @@ const SoldOut = ({ artworks }) => {
       if (!token) return;
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/user/likes",
+          "https://marasem-art.net/api/user/likes",
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
@@ -41,7 +41,7 @@ const SoldOut = ({ artworks }) => {
       return;
     }
     const isLiked = likedArtworks.has(artworkId);
-    const url = `http://127.0.0.1:8000/api/artworks/${artworkId}/like`;
+    const url = `https://marasem-art.net/api/artworks/${artworkId}/like`;
     try {
       if (isLiked) {
         await axios.delete(url, {

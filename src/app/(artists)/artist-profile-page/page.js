@@ -58,7 +58,7 @@ const MyProfilePage = () => {
 
     try {
       await axios.post(
-        "http://127.0.0.1:8000/api/logout",
+        "https://marasem-art.net/api/logout",
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -84,7 +84,7 @@ const MyProfilePage = () => {
       if (!token) return;
 
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
+        const response = await axios.get("https://marasem-art.net/api/user-type", {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: "application/json",
@@ -115,7 +115,7 @@ const MyProfilePage = () => {
       const token = localStorage.getItem("authToken");
       if (!token) return;
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/artist/profile", {
+        const response = await axios.get("https://marasem-art.net/api/artist/profile", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
@@ -159,7 +159,7 @@ const MyProfilePage = () => {
     formData.append("cover_img", file);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/user/cover-image",
+        "https://marasem-art.net/api/user/cover-image",
         formData,
         {
           headers: {
@@ -184,7 +184,7 @@ const MyProfilePage = () => {
     formData.append("profile_picture", file);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/user/profile-picture",
+        "https://marasem-art.net/api/user/profile-picture",
         formData,
         {
           headers: {
@@ -204,7 +204,7 @@ const MyProfilePage = () => {
     try {
       const token = localStorage.getItem("authToken");
       if (!token) return;
-      const response = await axios.get("http://127.0.0.1:8000/api/artist/profile", {
+      const response = await axios.get("https://marasem-art.net/api/artist/profile", {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });

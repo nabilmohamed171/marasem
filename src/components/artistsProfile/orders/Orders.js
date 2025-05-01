@@ -18,7 +18,7 @@ const Orders = () => {
           setLoading(false);
           return;
         }
-        const response = await axios.get("http://127.0.0.1:8000/api/user/my-orders", {
+        const response = await axios.get("https://marasem-art.net/api/user/my-orders", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });

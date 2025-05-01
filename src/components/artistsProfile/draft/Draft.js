@@ -12,7 +12,7 @@ const Draft = ({ drafts: initialDrafts }) => {
   const handleDelete = async (id, groupIndex) => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await axios.delete(`http://127.0.0.1:8000/api/artworks/${id}`, {
+      const response = await axios.delete(`https://marasem-art.net/api/artworks/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });

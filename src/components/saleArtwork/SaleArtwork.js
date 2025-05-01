@@ -100,7 +100,7 @@ const ShareArtwork = () => {
     const fetchCategories = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://127.0.0.1:8000/api/get-categories", {
+        const response = await axios.get("https://marasem-art.net/api/get-categories", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
@@ -117,7 +117,7 @@ const ShareArtwork = () => {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/tags/all", {
+        const response = await axios.get("https://marasem-art.net/api/tags/all", {
           withCredentials: true,
         });
         setTags(response.data);
@@ -131,7 +131,7 @@ const ShareArtwork = () => {
     const fetchCollections = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://127.0.0.1:8000/api/collections", {
+        const response = await axios.get("https://marasem-art.net/api/collections", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
@@ -168,7 +168,7 @@ const ShareArtwork = () => {
       // add tags array
       finalTouchesData.tags.forEach((tag) => formData.append("tags[]", tag));
 
-      const response = await axios.post("http://127.0.0.1:8000/api/artworks", formData, {
+      const response = await axios.post("https://marasem-art.net/api/artworks", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

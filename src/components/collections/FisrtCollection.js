@@ -11,7 +11,7 @@ const FirstCollections = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/featured-collections?limit=2&offset=0")
+      .get("https://marasem-art.net/api/featured-collections?limit=2&offset=0")
       .then((response) => {
         setCollections(response.data);
         setLoading(false);

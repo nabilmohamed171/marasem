@@ -30,7 +30,7 @@ const EditProfile = ({ data }) => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/get-cities", {
+        const response = await axios.get("https://marasem-art.net/get-cities", {
           params: { country: "Egypt" },
           withCredentials: true,
         });
@@ -70,7 +70,7 @@ const EditProfile = ({ data }) => {
     const fetchCategories = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await axios.get("http://127.0.0.1:8000/api/get-categories", {
+        const response = await axios.get("https://marasem-art.net/api/get-categories", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
@@ -98,7 +98,7 @@ const EditProfile = ({ data }) => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/add-pickup-location",
+        "https://marasem-art.net/api/add-pickup-location",
         { city, zone, address },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
@@ -128,7 +128,7 @@ const EditProfile = ({ data }) => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/user/subcategories",
+        "https://marasem-art.net/api/user/subcategories",
         { subcategories: selectedSubcategories },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );
@@ -151,7 +151,7 @@ const EditProfile = ({ data }) => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/artist/update-general-info",
+        "https://marasem-art.net/api/artist/update-general-info",
         {
           first_name: firstName,
           last_name: lastName,
@@ -179,7 +179,7 @@ const EditProfile = ({ data }) => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/artist/update-about-me",
+        "https://marasem-art.net/api/artist/update-about-me",
         {
           summary: summary,
           social_media_link: socialMediaLink,

@@ -12,7 +12,7 @@ export default function CsrfProvider({ children }) {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
       axios
-        .get("http://127.0.0.1:8000/sanctum/csrf-cookie", {
+        .get("https://marasem-art.net/sanctum/csrf-cookie", {
           withCredentials: true,
         })
         .then(() => {

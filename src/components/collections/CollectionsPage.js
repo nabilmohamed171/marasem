@@ -32,13 +32,13 @@ const SliderTags = () => {
   
   try {
     await axios.post(
-      "http://127.0.0.1:8000/api/cart",
+      "https://marasem-art.net/api/cart",
       { artwork_id: artworkId, size: size, quantity: 1 },
       { headers: headers, withCredentials: true }
     );
     
     // Fetch new cart count after adding the item
-    const response = await axios.get("http://127.0.0.1:8000/api/cart", {
+    const response = await axios.get("https://marasem-art.net/api/cart", {
       headers: headers,
       withCredentials: true,
     });
@@ -53,7 +53,7 @@ const SliderTags = () => {
     if (!collectionId) return;
     const fetchCollection = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/collections/${collectionId}`, {
+        const response = await axios.get(`https://marasem-art.net/api/collections/${collectionId}`, {
           withCredentials: true,
         });
         setCollection(response.data);
@@ -72,7 +72,7 @@ const SliderTags = () => {
       if (!token) return;
 
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user/likes", {
+        const response = await axios.get("https://marasem-art.net/api/user/likes", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
@@ -92,7 +92,7 @@ const SliderTags = () => {
     }
 
     const isLiked = likedArtworks.has(artworkId);
-    const url = `http://127.0.0.1:8000/api/artworks/${artworkId}/like`;
+    const url = `https://marasem-art.net/api/artworks/${artworkId}/like`;
 
     try {
       if (isLiked) {

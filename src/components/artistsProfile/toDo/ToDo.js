@@ -10,7 +10,7 @@ const ToDo = ({ toDo, refetchToDo }) => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/customized-order/${orderId}/respond`,
+        `https://marasem-art.net/api/customized-order/${orderId}/respond`,
         { action },
         { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
       );

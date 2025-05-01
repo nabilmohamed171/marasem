@@ -32,7 +32,7 @@ const PickupLocation = ({ onClose }) => {
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/add-address",
+          "https://marasem-art.net/api/add-address",
           {
             city,
             zone,
@@ -65,7 +65,7 @@ const PickupLocation = ({ onClose }) => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/get-cities", {
+        const response = await axios.get("https://marasem-art.net/get-cities", {
           params: { country: "Egypt" },
           withCredentials: true,
         });

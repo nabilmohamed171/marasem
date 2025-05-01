@@ -44,7 +44,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/login",
+        "https://marasem-art.net/api/login",
         {
           emailOrPhone: emailOrPhone, // changed field name here
           password: password,
@@ -169,13 +169,13 @@ const Login = () => {
 
               <div className="social-login">
                 <span>Or Login with social</span>
-                <a className="google" href="http://127.0.0.1:8000/login/google/redirect">
+                <a className="google" href="https://marasem-art.net/login/google/redirect">
                   <FaGoogle />
                 </a>
-                <a className="facebook" href="http://127.0.0.1:8000/login/facebook/redirect">
+                <a className="facebook" href="https://marasem-art.net/login/facebook/redirect">
                   <FaFacebookF />
                 </a>
-                <a className="behance" href="http://127.0.0.1:8000/login/behance/redirect">
+                <a className="behance" href="https://marasem-art.net/login/behance/redirect">
                   <FaBehance />
                 </a>
               </div>

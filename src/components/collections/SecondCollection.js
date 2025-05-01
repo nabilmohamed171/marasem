@@ -11,7 +11,7 @@ const SecCollections = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/featured-collections?limit=2&offset=2")
+      .get("https://marasem-art.net/api/featured-collections?limit=2&offset=2")
       .then((response) => {
         setCollections(response.data);
         setLoading(false);

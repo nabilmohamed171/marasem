@@ -80,7 +80,7 @@ const CustomizeArtwork = ({ artwork }) => {
       files.forEach((file) => {
         formDataPayload.append("reference_images[]", file);
       });
-      const response = await axios.post("http://127.0.0.1:8000/api/custom-order", formDataPayload, {
+      const response = await axios.post("https://marasem-art.net/api/custom-order", formDataPayload, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

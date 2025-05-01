@@ -38,7 +38,7 @@ const AllArtworks = () => {
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/artworks/${artworkId}/view`,
+          `https://marasem-art.net/api/artworks/${artworkId}/view`,
           {
             headers: token ? { Authorization: `Bearer ${token}` } : {},
             withCredentials: true,
@@ -64,7 +64,7 @@ const AllArtworks = () => {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     try {
       await axios.post(
-        "http://127.0.0.1:8000/api/cart",
+        "https://marasem-art.net/api/cart",
         { artwork_id: artworkId, size: size, quantity: 1 },
         { headers, withCredentials: true }
       );
@@ -83,14 +83,14 @@ const AllArtworks = () => {
     }
     try {
       if (liked) {
-        await axios.delete(`http://127.0.0.1:8000/api/artworks/${artworkId}/like`, {
+        await axios.delete(`https://marasem-art.net/api/artworks/${artworkId}/like`, {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
         setLiked(false);
       } else {
         await axios.post(
-          `http://127.0.0.1:8000/api/artworks/${artworkId}/like`,
+          `https://marasem-art.net/api/artworks/${artworkId}/like`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -113,7 +113,7 @@ const AllArtworks = () => {
     try {
       if (followed) {
         await axios.post(
-          `http://127.0.0.1:8000/api/artists/${artwork.artist.id}/unfollow`,
+          `https://marasem-art.net/api/artists/${artwork.artist.id}/unfollow`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -123,7 +123,7 @@ const AllArtworks = () => {
         setFollowed(false);
       } else {
         await axios.post(
-          `http://127.0.0.1:8000/api/artists/${artwork.artist.id}/follow`,
+          `https://marasem-art.net/api/artists/${artwork.artist.id}/follow`,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -142,7 +142,7 @@ const AllArtworks = () => {
       const token = localStorage.getItem("authToken");
       if (!token) return;
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/user-type", {
+        const response = await axios.get("https://marasem-art.net/api/user-type", {
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: "application/json",

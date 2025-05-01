@@ -119,7 +119,7 @@ function CreateAccount() {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await axios.post("http://127.0.0.1:8000/api/register", {
+        const response = await axios.post("https://marasem-art.net/api/register", {
           first_name: formData.firstname,
           last_name: formData.lastname,
           email: formData.email,
